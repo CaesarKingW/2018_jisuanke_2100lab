@@ -1,0 +1,18 @@
+{
+    "extends": [
+        "stylelint-config-standard",
+        "stylelint-config-recessorder"
+    ],
+    "rules": {
+        "at-rule-no-unknown": [
+            true,
+            {
+                "ignoreAtRules": [
+                    "mixin",
+                    "extend",
+                    "content"
+                ]
+            }
+        ]
+    }
+}
