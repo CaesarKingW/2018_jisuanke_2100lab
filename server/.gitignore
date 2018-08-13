@@ -1,2 +1,3 @@
-**/*/__pycache__/
 .vscode/
+project_lab/static/
+project_lab/migration/
