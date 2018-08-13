@@ -1,7 +1,7 @@
 {
     "extends": [
         "stylelint-config-standard",
-        "stylelint-config-recessorder"
+        "stylelint-config-recess-order"
     ],
     "rules": {
         "at-rule-no-unknown": [

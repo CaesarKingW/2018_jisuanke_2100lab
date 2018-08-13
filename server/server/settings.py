@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'project_lab'
 ]
 
 MIDDLEWARE = [
@@ -76,6 +77,9 @@ WSGI_APPLICATION = 'server.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        'USER': 'root',
+        'PASSWORD': 'vagrant',
+        'NAME': 'project_lab',
         'OPTIONS': {
             'read_default_file': os.path.join(BASE_DIR, 'server/database.cnf'),
         }
@@ -105,9 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -123,3 +127,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '../frontend/dist/static'),
 ]
+#设置静态文件的本地绝对路径
+STATIC_ROOT = os.path.join(BASE_DIR, 'project_lab', 'static')
+#设置动态文件的本地绝对路径
+MEDIA_URL = '/static/media/'
+MEDIA_ROOT = os.path.join(STATIC_ROOT, "media").replace('\\','/')
