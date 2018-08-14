@@ -27,6 +27,7 @@ Vagrant.configure(2) do |config|
       systemctl start mariadb
       mysqladmin -u root password vagrant
       mysql -uroot -pvagrant -e "CREATE DATABASE test_database CHARACTER SET utf8;"
+      mysql -uroot -pvagrant -e "CREATE DATABASE project_lab CHARACTER SET utf8;"
     )
 
     type -fp nginx &>/dev/null || (
