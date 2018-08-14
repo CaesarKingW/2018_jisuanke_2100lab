@@ -17,7 +17,6 @@ class User(models.Model):
     Can_comment = models.BooleanField(default=True)
     Is_teacher = models.BooleanField(default=False)
 
-
 class Manager(models.Model):
     username = models.CharField(null=False, max_length=15)
     password = models.CharField(null=False, max_length=50)
