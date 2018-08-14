@@ -17,6 +17,10 @@ class User(models.Model):
     Can_comment = models.BooleanField(default=True)
     Is_teacher = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.phone_number
+
+
 class Manager(models.Model):
     username = models.CharField(null=False, max_length=15)
     password = models.CharField(null=False, max_length=50)
@@ -55,7 +59,7 @@ class Course(models.Model):
 
     def __str__(self):
         return str(self.id)
-       
+
 
 class Course_picture(models.Model):
     course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
@@ -63,3 +67,18 @@ class Course_picture(models.Model):
         ("课程图片"), upload_to='course_picture', blank=True, null=True)
     start_time = models.DurationField((""))
     end_time = models.DurationField((""))
+
+
+class Takes(models.Model):
+    user_phone = models.ForeignKey("User", on_delete=models.CASCADE)
+    course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
+    start_time = models.DateTimeField(("开始学习时间"), auto_now_add=True)
+
+
+class Order(models.Model):
+    Order_number = models.CharField(("订单号"), max_length=30, primary_key=True)
+    user_phone = models.ForeignKey("User", on_delete=models.CASCADE)
+    course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
+    course_price = models.FloatField(("价格"))
+    status = models.CharField('订单状态', max_length=10)
+    create_at = models.DateTimeField(auto_now_add=True)
