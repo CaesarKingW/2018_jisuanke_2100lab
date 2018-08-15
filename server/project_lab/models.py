@@ -104,3 +104,11 @@ class Reply(models.Model):
         "User", verbose_name=("用户号码"), on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
+
+
+class Praise(models.Model):
+    user_phone = models.ForeignKey(
+        "User", verbose_name=("用户号码"), on_delete=models.CASCADE)
+    message_id = models.ForeignKey(
+        "Message", verbose_name=("留言编号"), on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
