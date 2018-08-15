@@ -2,6 +2,13 @@
 <div id="UserLogin">
     <span href="#" class="button" id="toggle-login">2100-LAB</span>
     <div id="triangle"></div>
+    <h1>登录</h1>
+    <form>
+    <input type="phone" placeholder="手机号码" />
+    <input type="id_code" placeholder="验证码" />
+    <div><input type="submit" value="获取验证码" /></div>
+    <div><input type="submit" value="登录" /></div>
+    </form>
 </div>
 </template>
 <style scoped>
