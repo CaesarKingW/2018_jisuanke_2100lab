@@ -9,7 +9,7 @@ from django.utils import timezone
 
 # Create your models here.
 class User(models.Model):
-    phone_number = models.CharField(max_length=11)
+    phone_number = models.CharField(max_length=11, primary_key=True)
     username = models.CharField(blank=True, null=True, max_length=15)
     head_protrait = models.ImageField(
         upload_to='user_photos/', blank=True, null=True)
@@ -22,7 +22,7 @@ class User(models.Model):
 
 
 class Manager(models.Model):
-    username = models.CharField(null=False, max_length=15)
+    username = models.CharField(null=False, max_length=15, primary_key=True)
     password = models.CharField(null=False, max_length=50)
     Supermanager = models.BooleanField(default=False)
     Manage_course = models.BooleanField(default=False)
@@ -82,3 +82,33 @@ class Order(models.Model):
     course_price = models.FloatField(("价格"))
     status = models.CharField('订单状态', max_length=10)
     create_at = models.DateTimeField(auto_now_add=True)
+
+
+class Message(models.Model):
+    user_name = models.ForeignKey(
+        "User", verbose_name=("用户号码"), on_delete=models.CASCADE)
+    course_id = models.ForeignKey(
+        "Course", verbose_name=("课程编号"), on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+    praise_count = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class Reply(models.Model):
+    message_id = models.ForeignKey(
+        "Message", verbose_name=("留言编号"), on_delete=models.CASCADE)
+    user_phone = models.ForeignKey(
+        "User", verbose_name=("用户号码"), on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+
+
+class Praise(models.Model):
+    user_phone = models.ForeignKey(
+        "User", verbose_name=("用户号码"), on_delete=models.CASCADE)
+    message_id = models.ForeignKey(
+        "Message", verbose_name=("留言编号"), on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)

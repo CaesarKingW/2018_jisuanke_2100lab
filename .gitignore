@@ -3,3 +3,5 @@ frontend/node_modules/
 server/.vscode/
 server/project_lab/static/
 server/project_lab/migrations/
+.vscode/
+frontend/.vscode/
