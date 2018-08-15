@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <router-link to="UserLogin/"><button id="log_but">用户登录</button></router-link>
+    <hr width="90%" style="height: 1.5px;" color="#99cccc"/>
     <router-view/>
   </div>
 </template>
-
 <script>
 export default {
   name: 'App'
@@ -16,8 +16,14 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+#log_but {
+  background-color: #3399cc;
+  color: #ffffff;
+  text-align:center;
+  margin-left: 80%;
+  width: 90px;
+  height: 40px;
+  cursor:pointer;
 }
 </style>
