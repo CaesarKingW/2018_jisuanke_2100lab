@@ -10,3 +10,6 @@ def anthenticate(request):
 def forbid_user_speech(request):
     phone_number = request.POST.get('forbid_use_speech')
     User.objects.get(phone_number = phone_number).Can_comment = False
+def close_account(request):
+    phone_number = request.POST.get('close_account')
+    User.objects.get(phone_number = phone_number).delete()
