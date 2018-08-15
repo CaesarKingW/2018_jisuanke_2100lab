@@ -1,8 +1,3 @@
-# head_protrait = models.ImageField(
-#     upload_to=None,
-#     height_field=None,
-#     width_field=None,
-#     max_length=None)
 from django.db import models
 from django.utils import timezone
 
