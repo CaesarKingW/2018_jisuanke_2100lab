@@ -95,3 +95,12 @@ class Message(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class Reply(models.Model):
+    message_id = models.ForeignKey(
+        "Message", verbose_name=("留言编号"), on_delete=models.CASCADE)
+    user_phone = models.ForeignKey(
+        "User", verbose_name=("用户号码"), on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
