@@ -1,20 +1,30 @@
 from .models import Course, Manager, Operating_history
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.core import serializers
+import json
+import requests
 
 
-def course_title(request):
-    title = request.POST.get('title')
-    course = Course.objects.filter(title=title)
-    return render(request, 'course_edit.html', {'course', course})
+def search_managename(request):
+    response = {}
+    username = request.body
+    manager = Manager.objects.get(username=username)
+    response['manager'] = json.loads(serializers.serialize('json', manager))
+    return JsonResponse(response)
 
 
-def Manager_name(request):
-    username = request.POST.get('username')
-    manager = Manager.objects.filter(username=username)
-    return render(request, 'Manage_limits.html', {'manager', manager})
+def search_course(request):
+    response = {}
+    title = request.body
+    course = Course.objects.get(title=title)
+    response['course'] = json.loads(serializers.serialize('json', course))
+    return JsonResponse(response)
 
 
 def history(request):
-    oprating_history = request.objects.all()[:10]
-    return render(request, 'Operating_history.html',
-                  {'oprating_history', operating_history})
+    response = {}
+    histories = Operating_history.objects.all()
+    response['list'] = json.loads(serializers.serialize('json', histories))
+    return JsonResponse(response)
