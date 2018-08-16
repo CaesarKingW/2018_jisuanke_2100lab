@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <router-link to="UserLogin/"><Button type="primary" id="log_but">用户登录</Button></router-link>
-    <Divider />
+    <span><router-link to="/home"><Button type="primary" id="lab">2100-lab</Button></router-link></span>
     <router-view/>
   </div>
 </template>
@@ -18,8 +17,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   background-color: #c4e1ff
 }
-#log_but {
-  margin-left: 90%;
-  margin-top: 2%;
+#lab {
+  margin-left: 15%;
+  font-size: 18px;
+  float: left;
 }
 </style>
