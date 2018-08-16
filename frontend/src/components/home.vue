@@ -1,5 +1,8 @@
 <template>
  <div id="home">
+     <span><router-link to="/UserLogin"><Button type="primary" id="log_but">用户登录</Button></router-link></span>
+     <Divider />
+     <br>
      <!-- 600px * 400px -->
      <Carousel autoplay height="400px" v-model="value" loop>
         <CarouselItem>
@@ -43,7 +46,7 @@
         <div style="padding: 20px">
         <Card :bordered="false">
             <p slot="title">title</p>
-            <p><img src="../assets/logo.png"></p>
+            <p><img src="../assets/lab.png"></p>
         </Card>
         </div>
     </Row>
@@ -96,5 +99,9 @@
   color: #fff;
   text-align: center;
   border-radius: 2px;
+}
+#log_but {
+  margin-left: 90%;
+  float: left;
 }
 </style>
