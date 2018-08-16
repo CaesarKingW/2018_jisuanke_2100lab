@@ -2,6 +2,8 @@
 <div id="UserLogin">
     <!-- <span href="#" class="button" id="toggle-login">2100-LAB</span> -->
     <div id="triangle"></div>
+    <h1>2100实验室</h1>
+    <br>
     <h1>登录</h1>
     <form>
     <input type="phone" placeholder="手机号码" />
