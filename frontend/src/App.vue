@@ -15,7 +15,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #c4e1ff
+  background-color: #c4e1ff;
 }
 #lab {
   margin-left: 15%;

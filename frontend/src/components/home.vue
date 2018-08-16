@@ -27,10 +27,10 @@
     <Divider id="divider" orientation="right"><Button id="button" shape="circle">更多</Button></Divider>
     </div>
     <Row>
-        <div style="padding: 20px">
+        <div style="padding: 20px;">
         <Card :bordered="false">
             <p slot="title">title</p>
-            <p><img src="../assets/lab.png"></p>
+            <p><img src="../assets/logo.png"></p>
         </Card>
         </div>
     </Row>
@@ -57,26 +57,39 @@
 </template>
 <style scoped>
 .id {
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-family:
+    "Helvetica Neue",
+    Helvetica,
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Microsoft YaHei",
+    "微软雅黑",
+    Arial,
+    sans-serif;
 }
+
 .content-text {
   margin-left: 10%;
 }
+
 .more {
   margin-left: 65%;
 }
+
 .content {
   width: 80%;
   height: 20%;
 }
+
 #button {
-  color: #515a6e;
   font-size: 14px;
+  color: #515a6e;
 }
+
 .demo-carousel {
   margin-left: 30%;
 }
+
 #col_bg {
   background-color: #0072e3;
 }
