@@ -1,17 +1,18 @@
 <template>
 <div id="test">
-    <!-- <span href="#" class="button" id="toggle-login">2100-LAB</span> -->
     <div id="triangle"></div>
     <h1>2100实验室</h1>
     <br>
     <h1>登录</h1>
-    <form method="POST" @submit.prevent="getcode">
+    <form method="POST" @submit.prevent="Is_normal_nubmer">
     手机号码：
-    <input type="input" v-model="login.phone_number" />
-    <input type="submit" value="获取验证码" />
+    <input type="input" name="手机号码" v-model="login.phone_number"/>
+    <input type="submit" value="获取验证码"/>
     </form>
-    <input type="input" placeholder="验证码" />
-    <div><input type="submit" value="登录" /></div>
+    <form method="POST" @submit.prevent="comparecode">
+        验证码： <input type="input" v-model="login.usercode"/>
+        <input type="submit" value="登录"/>
+    </form>
 </div>
 </template>
 
@@ -19,9 +20,11 @@
 export default {
   data() {
     return {
+      commit_phone: null,
       login: {
         checkCode: null,
-        phone_number: null
+        phone_number: null,
+        usercode: null
       }
     }
   },
@@ -76,9 +79,9 @@ export default {
     },
 
     getcode: function() {
-      var phonenumber = JSON.stringify(this.login.phone_number)
-      console.log(phonenumber)
+      this.commit_phone = this.login.phone_number
       this.createCode()
+      var phonenumber = JSON.stringify(this.login)
       console.log(phonenumber)
       this.$http
         .post('http://192.168.55.33:8000/app/get_code_post', phonenumber)
@@ -90,6 +93,40 @@ export default {
             console.log('error')
           }
         )
+    },
+
+    comparecode: function() {
+      if (
+        !this.login.phone_number &&
+        typeof this.login.phone_number !== 'undefined' &&
+        this.login.phone_number !== 0
+      ) {
+        alert('请输入手机号')
+      } else if (
+        !this.login.usercode &&
+        typeof this.login.usercode !== 'undefined' &&
+        this.login.usercode !== 0
+      ) {
+        alert('请输入验证码')
+      } else if (
+        this.login.usercode === this.login.checkCode &&
+        this.commit_phone === this.login.phone_number
+      ) {
+        alert('登录成功')
+        this.login.phone_number = null
+        this.login.checkCode = null
+        this.login.usercode = null
+        this.commit_phone = null
+      } else alert('登录失败')
+      console.log(this.login.phone_number)
+    },
+
+    Is_normal_nubmer: function() {
+      if (!/^1[34578]\d{9}$/.test(this.login.phone_number)) {
+        alert('手机号码有误，请重填')
+      } else {
+        this.getcode()
+      }
     }
   }
 }

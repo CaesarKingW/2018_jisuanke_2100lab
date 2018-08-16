@@ -22,8 +22,8 @@ def get_code_post(request):
     try:
         if request.method == 'POST':
             req = json.loads(request.body)
-            yun_pian = YunPian("264fb31e3ba88e5c55572dd977b2f372")
-            yun_pian.send_sms(ran_number(), req)
+            # yun_pian = YunPian("264fb31e3ba88e5c55572dd977b2f372")
+            # yun_pian.send_sms(req['checkCode'], req['phone_number'])
             response['msg'] = 'success'
             response['error_num'] = 0
     except Exception as e:
