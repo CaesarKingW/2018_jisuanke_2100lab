@@ -31,6 +31,26 @@
         </Card>
         </div>
     </Row>
+    <div id="col_bg">
+    <Divider id="divider" orientation="left">
+        <Poptip trigger="hover" title="付费内容预览" content="点击更多查看所有付费文章。">
+        <Button :size="large" icon="md-bookmarks">付费内容</Button>
+        </Poptip>
+    </Divider>
+    <Divider id="divider" orientation="right"><Button id="button" shape="circle">更多</Button></Divider>
+    </div>
+    <Row>
+        <div style="padding: 20px">
+        <Card :bordered="false">
+            <p slot="title">title</p>
+            <p><img src="../assets/logo.png"></p>
+        </Card>
+        </div>
+    </Row>
+    <BackTop>
+        <div class="top">返回顶端</div>
+    </BackTop>
+ </div>
 </template>
 <style scoped>
 .id {
@@ -55,6 +75,13 @@
   margin-left: 30%;
 }
 #col_bg {
-    background-color: #0072e3;
+  background-color: #0072e3;
+}
+.top {
+  padding: 10px;
+  background: rgba(0, 153, 229, 0.7);
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
 }
 </style>
