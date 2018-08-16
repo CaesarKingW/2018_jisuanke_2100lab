@@ -3,6 +3,8 @@
     <span><router-link to="/home"><Button type="primary" id="home_but">前往首页</Button></router-link></span>
      <Divider />
     <div id="triangle"></div>
+    <h1>2100实验室</h1>
+    <br>
     <h1>登录</h1>
     <form>
     <input type="phone" placeholder="手机号码" />

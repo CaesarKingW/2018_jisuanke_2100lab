@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import UserLogin from '@/components/UserLogin'
+import A from '@/components/A'
+import test from '@/components/test'
 import home from '@/components/home'
 import backstage from '@/components/backstage'
 import course from '@/components/back/course'
@@ -16,9 +18,19 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/UserLogin',
+      path: '/A',
+      name: 'A',
+      component: A
+    },
+    {
+      path: '/login',
       name: 'UserLogin',
       component: UserLogin
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: test
     },
     {
       path: '/home',
