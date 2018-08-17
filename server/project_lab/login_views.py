@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
-# Create your views here.
 from django.shortcuts import render, HttpResponse, redirect
-# from .apps import AppnameConfig
 from project_lab.models import *
 from django.views.decorators.http import require_http_methods
 import json
