@@ -10,6 +10,8 @@ import order from '@/components/back/order'
 import data from '@/components/back/data'
 import authority from '@/components/back/authority'
 import log from '@/components/back/log'
+import CourseShow from '@/components/CourseShow'
+import FreeCourseIntro from '@/components/FreeCourseIntro'
 
 Vue.use(Router)
 
@@ -24,6 +26,16 @@ export default new Router({
       path: '/home',
       name: 'home',
       component: home
+    },
+    {
+      path: '/CourseShow',
+      name: 'CourseShow',
+      component: CourseShow
+    },
+    {
+      path: '/FreeCourseIntro',
+      name: 'FreeCourseIntro',
+      component: FreeCourseIntro
     },
     {
       path: '/backstage',

@@ -1,5 +1,6 @@
 <template>
  <div id="home">
+     <span><router-link to="/home"><Button type="primary" id="lab">2100-lab</Button></router-link></span>
      <span><router-link to="/UserLogin"><Button type="primary" id="log_but">用户登录</Button></router-link></span>
      <Divider />
      <br>
@@ -102,6 +103,11 @@
 }
 #log_but {
   margin-left: 90%;
+  float: left;
+}
+#lab {
+  margin-left: 15%;
+  font-size: 18px;
   float: left;
 }
 </style>
