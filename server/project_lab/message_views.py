@@ -21,3 +21,22 @@ def show_message(requset):
         response['error_num'] = 1
 
     return JsonResponse(response)
+
+
+@require_http_methods(["POST"])
+def add_message(request):
+    response = {}
+    try:
+        if request.method == 'POST':
+            req = json.loads(request.body)
+            user_name = User.objects.get(phone_number='17602284691')
+            course_id = Course.objects.get(id=1)
+            Message.objects.create(
+                user_name=user_name, course_id=course_id, content=req)
+            response['msg'] = 'success'
+            response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    
+    return JsonResponse(response)

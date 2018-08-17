@@ -10,7 +10,7 @@
       </div>
   </div>
     <form method="POST" @submit.prevent="commit_message">
-    <input type="input" name="留言" v-model="commit_message"/>
+    <input type="input" name="留言" v-model="message"/>
     <input type="submit" value="留言"/>
     </form>
 </div>
@@ -19,7 +19,7 @@
 export default {
   data() {
     return {
-      commit_message: null,
+      message: null,
       // messages:{
       //     user_name: null,
       //     content: null
@@ -39,6 +39,21 @@ export default {
       }
     )
   },
-  methods: {}
+  methods: {
+    commit_message: function() {
+      var formDate = JSON.stringify(this.message)
+      console.log(formDate)
+      this.$http
+        .post('http://192.168.55.33:8000/app/add_message', formDate)
+        .then(
+          response => {
+            console.log(response.date)
+          },
+          response => {
+            console.log('error')
+          }
+        )
+    }
+  }
 }
 </script>

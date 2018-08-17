@@ -6,5 +6,6 @@ urlpatterns = [
     path('show_books', kang_views.show_books),
     path('get_code_post', login_views.get_code_post),
     path('register_new_user', user_register.register_new_user),
-    path('show_message', message_views.show_message)
+    path('show_message', message_views.show_message),
+    path('add_message',message_views.add_message)
 ]
