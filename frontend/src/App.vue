@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <span><router-link to="/home"><Button type="primary" id="lab">2100-lab</Button></router-link></span>
-    <router-view/>
+  <router-view />
   </div>
 </template>
 <script>
@@ -16,10 +15,5 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #c4e1ff;
-}
-#lab {
-  margin-left: 15%;
-  font-size: 18px;
-  float: left;
 }
 </style>
