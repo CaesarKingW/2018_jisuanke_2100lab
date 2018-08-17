@@ -3,7 +3,10 @@ import Router from 'vue-router'
 import UserLogin from '@/components/UserLogin'
 import A from '@/components/A'
 import test from '@/components/test'
+<<<<<<< HEAD
 import messageboard from '@/components/message_board'
+=======
+>>>>>>> bb019e0b36a359ba5c0a62d0a042f0445eb0b4d9
 import home from '@/components/home'
 import backstage from '@/components/backstage'
 import course from '@/components/back/course'
@@ -13,6 +16,8 @@ import order from '@/components/back/order'
 import data from '@/components/back/data'
 import authority from '@/components/back/authority'
 import log from '@/components/back/log'
+import CourseShow from '@/components/CourseShow'
+import FreeCourseIntro from '@/components/FreeCourseIntro'
 
 Vue.use(Router)
 
@@ -34,14 +39,27 @@ export default new Router({
       component: test
     },
     {
+<<<<<<< HEAD
       path: '/message',
       name: 'message',
       component: messageboard
     },
     {
+=======
+>>>>>>> bb019e0b36a359ba5c0a62d0a042f0445eb0b4d9
       path: '/home',
       name: 'home',
       component: home
+    },
+    {
+      path: '/CourseShow',
+      name: 'CourseShow',
+      component: CourseShow
+    },
+    {
+      path: '/FreeCourseIntro',
+      name: 'FreeCourseIntro',
+      component: FreeCourseIntro
     },
     {
       path: '/backstage',
