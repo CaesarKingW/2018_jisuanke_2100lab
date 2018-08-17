@@ -3,6 +3,10 @@ import Router from 'vue-router'
 import UserLogin from '@/components/UserLogin'
 import A from '@/components/A'
 import test from '@/components/test'
+<<<<<<< HEAD
+import messageboard from '@/components/message_board'
+=======
+>>>>>>> bb019e0b36a359ba5c0a62d0a042f0445eb0b4d9
 import home from '@/components/home'
 import backstage from '@/components/backstage'
 import course from '@/components/back/course'
@@ -35,6 +39,14 @@ export default new Router({
       component: test
     },
     {
+<<<<<<< HEAD
+      path: '/message',
+      name: 'message',
+      component: messageboard
+    },
+    {
+=======
+>>>>>>> bb019e0b36a359ba5c0a62d0a042f0445eb0b4d9
       path: '/home',
       name: 'home',
       component: home

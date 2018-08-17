@@ -1,13 +1,7 @@
 <template>
 <div id="UserLogin">
-<<<<<<< HEAD
-    <span><router-link to="/home"><Button type="primary" id="lab">2100-lab</Button></router-link></span>
-    <span><router-link to="/home"><Button type="primary" id="home_but">前往首页</Button></router-link></span>
-    <Divider />
-=======
     <span><router-link to="/home"><Button type="primary" id="home_but">前往首页</Button></router-link></span>
      <Divider />
->>>>>>> f65423779162c9433a57e5ef4fdf3b1b249c3d14
     <div id="triangle"></div>
     <h1>2100实验室</h1>
     <br>
@@ -154,75 +148,6 @@ export default {
   cursor: pointer;
   transition: background 0.3s;
   -webkit-transition: background 0.3s;
-<<<<<<< HEAD
-}
-.button:hover {
-  background: #2288bb;
-}
-#UserLogin {
-  width: 400px;
-  margin: 0 auto;
-  margin-top: 8px;
-  margin-bottom: 2%;
-  transition: opacity 1s;
-  -webkit-transition: opacity 1s;
-  background-size: 150% 180%;
-  background-color: #c4e1ff;
-}
-#triangle {
-  width: 0;
-  border-top: 12x solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 12px solid #3399cc;
-  border-left: 12px solid transparent;
-  margin: 0 auto;
-}
-#UserLogin h1 {
-  background: #3399cc;
-  padding: 20px 0;
-  font-size: 160%;
-  font-weight: 300;
-  text-align: center;
-  color: #fff;
-}
-form {
-  background: #f0f0f0;
-  padding: 6% 4%;
-}
-input[type="input"] {
-  width: 100%;
-  background: #fff;
-  margin-bottom: 4%;
-  border: 1px solid #ccc;
-  padding: 4%;
-  font-family: "Open Sans", sans-serif;
-  font-size: 100%;
-  color: #555;
-}
-input[type="submit"] {
-  margin-top: 3%;
-  width: 100%;
-  background: #3399cc;
-  border: 0;
-  padding: 3%;
-  font-family: "Open Sans", sans-serif;
-  font-size: 100%;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.3s;
-  -webkit-transition: background 0.3s;
-}
-input[type="submit"]:hover {
-  background: #2288bb;
-}
-#home_but {
-  margin-left: 170%;
-  float: left;
-}
-#lab {
-  margin-left: -50%;
-  font-size: 18px;
-=======
 }
 .button:hover {
   background: #2288bb;
@@ -285,7 +210,6 @@ input[type="submit"]:hover {
 }
 #home_but {
   margin-left: 170%;
->>>>>>> f65423779162c9433a57e5ef4fdf3b1b249c3d14
   float: left;
 }
 </style>
