@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import UserLogin from '@/components/UserLogin'
 import test from '@/components/test'
+import messageboard from '@/components/message_board'
 import home from '@/components/home'
 import backstage from '@/components/backstage'
 import course from '@/components/back/course'
@@ -27,6 +28,11 @@ export default new Router({
       path: '/test',
       name: 'test',
       component: test
+    },
+    {
+      path: '/message',
+      name: 'message',
+      component: messageboard
     },
     {
       path: '/home',
