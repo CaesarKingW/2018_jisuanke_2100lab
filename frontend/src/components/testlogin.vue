@@ -113,12 +113,15 @@ export default {
         this.commit_phone === this.login.phone_number
       ) {
         alert('登录成功')
+        this.Register_new_user()
         this.login.phone_number = null
         this.login.checkCode = null
         this.login.usercode = null
         this.commit_phone = null
-      } else alert('登录失败')
-      console.log(this.login.phone_number)
+      } else {
+        alert('登录失败')
+        console.log(this.login.phone_number)
+      }
     },
 
     Is_normal_nubmer: function() {
@@ -127,6 +130,20 @@ export default {
       } else {
         this.getcode()
       }
+    },
+
+    Register_new_user: function() {
+      var userphone = JSON.stringify(this.login.phone_number)
+      this.$http
+        .post('http://192.168.55.33:8000/app/register_new_user', userphone)
+        .then(
+          response => {
+            console.log(response.data)
+          },
+          response => {
+            console.log('error')
+          }
+        )
     }
   }
 }
