@@ -1,5 +1,5 @@
 from django.urls import path
-from . import kang_views, login_views, user_register, message_views
+from . import  login_views, user_register, message_views
 
 urlpatterns = [
     path('get_code_post', login_views.get_code_post),
