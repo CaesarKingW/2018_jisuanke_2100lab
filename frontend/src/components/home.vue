@@ -1,26 +1,22 @@
 <template>
  <div id="home">
-     <router-link to="/home">
-     <Button type="primary" id="lab">2100-lab</Button>
-     </router-link>
-     <router-link to="/UserLogin">
-     <Button type="primary" id="log_but">用户登录</Button>
-     </router-link>
+     <router-link to="/home"><Button type="primary" id="lab">2100-lab</Button></router-link>
+     <router-link to="/UserLogin"><Button type="primary" id="log_but">用户登录</Button></router-link>
      <Divider />
      <br>
      <!-- 600px * 400px -->
      <Carousel autoplay height="400px" v-model="value" loop>
         <CarouselItem>
-            <div class="demo-carousel"><img class="roll_pic" src="../assets/1.png"></div>
+            <div class="demo-carousel"><img src="../assets/1.png"></div>
         </CarouselItem>
         <CarouselItem>
-            <div class="demo-carousel"><img class="roll_pic" src="../assets/2.png"></div>
+            <div class="demo-carousel"><img src="../assets/2.png"></div>
         </CarouselItem>
         <CarouselItem>
-            <div class="demo-carousel"><img class="roll_pic" src="../assets/3.png"></div>
+            <div class="demo-carousel"><img src="../assets/3.png"></div>
         </CarouselItem>
         <CarouselItem>
-            <div class="demo-carousel"><img class="roll_pic" src="../assets/4.png"></div>
+            <div class="demo-carousel"><img src="../assets/4.png"></div>
         </CarouselItem>
     </Carousel>
     <div id="col_bg">
@@ -35,7 +31,7 @@
         <div style="padding: 20px;">
         <Card :bordered="false">
             <p slot="title">title</p>
-            <p><img src="../assets/lab.png"></p>
+            <p><img src="../assets/logo.png"></p>
         </Card>
         </div>
     </Row>
@@ -92,7 +88,7 @@
 }
 
 .demo-carousel {
-  margin-left: 27%;
+  margin-left: 30%;
 }
 
 #col_bg {
@@ -113,9 +109,5 @@
   margin-left: 15%;
   font-size: 18px;
   float: left;
-}
-.roll_pic {
-    border:#99ccff solid 5px;
-    border-radius: 20px;
 }
 </style>
