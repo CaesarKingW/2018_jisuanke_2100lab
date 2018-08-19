@@ -1,18 +1,16 @@
 <template>
 <div id="UserLogin">
-    <span><router-link to="/home"><Button type="primary" id="home_but">前往首页</Button></router-link></span>
-     <Divider />
-    <div id="triangle"></div>
+    <router-link to="/home"><Button type="primary" id="lab">2100-lab</Button></router-link>
+    <router-link to="/home"><Button type="primary" id="home_but">前往首页</Button></router-link>
+    <Divider />
     <h1>2100实验室</h1>
-    <br>
-    <h1>登录</h1>
     <form method="POST" @submit.prevent="Is_normal_nubmer">
-    <Input type="input" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" name="手机号码" v-model="login.phone_number"/>
-    <input type="submit" value="获取验证码"/>
+    <span><Input type="input" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" style="width: 56%;" name="手机号码" v-model="login.phone_number"/></span>
+    <span><input type="submit" id="getCode" value="获取验证码" /></span>
     </form>
     <form method="POST" @submit.prevent="comparecode">
     <Input type="input" placeholder="请输入验证码"  size="large" icon="ios-key-outline" v-model="login.usercode"/>
-    <input type="submit" value="登录"/>
+    <input type="submit" id="login" value="登录"/>
     </form>
 </div>
 </template>
@@ -132,25 +130,13 @@ export default {
 }
 </script>
 <style scoped>
-#log_column {
-  text-align: center;
+#home_but {
+  margin-left: 170%;
+  float: left;
 }
-.button {
-  width: 100px;
-  background: #3399cc;
-  display: block;
-  margin: 0 auto;
-  margin-top: 1%;
-  padding: 10px;
-  text-align: center;
-  text-decoration: none;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.3s;
-  -webkit-transition: background 0.3s;
-}
-.button:hover {
-  background: #2288bb;
+#lab {
+  margin-left: -50%;
+  font-size: 18px;
 }
 #UserLogin {
   width: 400px;
@@ -161,55 +147,50 @@ export default {
   -webkit-transition: opacity 1s;
   background-size: 100% 100%;
 }
-#triangle {
-  width: 0;
-  border-top: 12x solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 12px solid #3399cc;
-  border-left: 12px solid transparent;
-  margin: 0 auto;
-}
 #UserLogin h1 {
-  background: #3399cc;
+  background: #2d8cf0;
   padding: 20px 0;
   font-size: 160%;
   font-weight: 300;
   text-align: center;
   color: #fff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+
 }
 form {
   background: #f0f0f0;
   padding: 6% 4%;
 }
-input[type="phone"],
-input[type="id_code"] {
-  width: 92%;
-  background: #fff;
-  margin-bottom: 4%;
-  border: 1px solid #ccc;
-  padding: 4%;
-  font-family: "Open Sans", sans-serif;
-  font-size: 100%;
-  color: #555;
-}
-input[type="submit"] {
-  margin-top: 1%;
-  width: 100%;
-  background: #3399cc;
-  border: 0;
-  padding: 4%;
-  font-family: "Open Sans", sans-serif;
-  font-size: 100%;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.3s;
-  -webkit-transition: background 0.3s;
-}
-input[type="submit"]:hover {
-  background: #2288bb;
-}
 #home_but {
   margin-left: 170%;
   float: left;
+}
+#getCode {
+  width: 43%;
+  height: 33px;
+  outline:none;
+  border-radius: 4px;
+  border:none;
+  background-color: #2d8cf0;
+  color:#fff;
+  cursor: pointer;
+}
+#getCode:hover {
+  background: #57a3f3;
+}
+#login {
+  width:100%;
+  height:33px;
+  margin-top:10px;
+  outline:none;
+  border-radius: 4px;
+  border: none;
+  background-color: #2d8cf0;
+  color:#fff;
+  cursor: pointer;
+}
+#login:hover {
+  background: #57a3f3;
 }
 </style>

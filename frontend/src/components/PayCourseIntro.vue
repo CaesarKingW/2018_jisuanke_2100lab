@@ -1,11 +1,11 @@
 <template>
-<div class="FreeCourseIntro">
-        <span><img id="test_pic" src="../assets/1.png"></span>
+<div class="PayCourseIntro">
+        <span><img id="test_pic" src="../assets/2.png"></span>
         <span><h1 id="courseTitle">标题：{{ courseTitle }}</h1></span>
-        <router-link to="/CourseShow"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link>
-        <Button @click="modal = true" id="share" icon="md-share" type="primary">分享课程</Button>
+        <Button id="buy" icon="logo-usd" type="primary">购买课程</Button>
+        <Button @click="modal = true" id="share" icon="ios-card" type="primary">分销课程</Button>
         <Modal
-        title="分享课程"
+        title="分销课程"
         v-model="modal"
         class-name="vertical-center-modal">
         <div style="text-align: center;padding:10px;"><span id="thisURL">本页地址：{{ message }}</span>
@@ -17,8 +17,8 @@
         </div>
     </Modal>
         <Alert id="tip" show-icon>
-        <Icon type="ios-bulb-outline" slot="icon"></Icon>
-        <template slot="desc">如果你喜欢本课程，就把它分享给朋友吧！ </template>
+        <Icon type="ios-trophy-outline" slot="icon"></Icon>
+        <template slot="desc">分销本课程，还可额外获得{{ award }}枚奖励币哦！ </template>
     </Alert>
     <div id="intro"><Collapse v-model="value">
         <Panel id="intro" name="1" style="font-size: 25px;">
@@ -37,19 +37,20 @@
 </template>
 <script>
 export default {
-  name: 'FreeCourseIntro',
+  name: 'PayCourseInfo',
   data() {
     return {
       courseTitle: '实验室制取CO2',
       split1: 0.49,
       modal: false,
-      message: window.location.href
+      message: window.location.href,
+      award: 10
     }
   }
 }
 </script>
 <style>
-.FreeCourseIntro {
+.PayCourseIntro {
   height: 480px;
   border: 1px solid #dcdee2;
   background-color: #c4e1ff;
@@ -74,7 +75,7 @@ export default {
     padding: 8px 50px;
     border: #99cccc dotted 3px;
 }
-#enter {
+#buy {
     width: 170px;
     height: 60px;
     text-align: center;
