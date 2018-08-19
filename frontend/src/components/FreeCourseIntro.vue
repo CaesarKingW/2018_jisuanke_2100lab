@@ -37,7 +37,7 @@
 </template>
 <script>
 export default {
-  name: 'CourseShow',
+  name: 'FreeCourseIntro',
   data() {
     return {
       courseTitle: '实验室制取CO2',
