@@ -14,7 +14,9 @@ import authority from '@/components/back/authority'
 import log from '@/components/back/log'
 import CourseShow from '@/components/CourseShow'
 import FreeCourseIntro from '@/components/FreeCourseIntro'
-
+import PayCourseIntro from '@/components/PayCourseIntro'
+import ShowUserInfo from '@/components/ShowUserInfo'
+import ModifyUserInfo from '@/components/ModifyUserInfo'
 Vue.use(Router)
 
 export default new Router({
@@ -48,6 +50,21 @@ export default new Router({
       path: '/FreeCourseIntro',
       name: 'FreeCourseIntro',
       component: FreeCourseIntro
+    },
+    {
+      path: '/PayCourseIntro',
+      name: 'PayCourseIntro',
+      component: PayCourseIntro
+    },
+    {
+      path: '/ShowUserInfo',
+      name: 'ShowUserInfo',
+      component: ShowUserInfo
+    },
+    {
+      path: '/ModifyUserInfo',
+      name: 'ModifyUserInfo',
+      component: ModifyUserInfo
     },
     {
       path: '/backstage',
