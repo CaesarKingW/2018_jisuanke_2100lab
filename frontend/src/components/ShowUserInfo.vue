@@ -4,7 +4,7 @@
     <div id="nickname_div">{{ nickname }}</div>
     <div id="phone_div">手机号码：{{ phone }}</div>
     <div id="award_div">奖励金数：<Icon type="logo-usd" />{{ award }}</div>
-    <Button style="margin: 10px;" size="large" type="primary">修改个人信息</Button>
+    <router-link to="/ModifyUserInfo"><Button style="margin: 10px;" size="large" type="primary">修改个人信息</Button></router-link>
     <div id="course">
     <div style="background:#eee;padding: 20px">
         <Card :bordered="false">
