@@ -1,12 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import UserLogin from '@/components/UserLogin'
-import A from '@/components/A'
 import test from '@/components/test'
-<<<<<<< HEAD
 import messageboard from '@/components/message_board'
-=======
->>>>>>> bb019e0b36a359ba5c0a62d0a042f0445eb0b4d9
 import home from '@/components/home'
 import backstage from '@/components/backstage'
 import course from '@/components/back/course'
@@ -18,18 +14,15 @@ import authority from '@/components/back/authority'
 import log from '@/components/back/log'
 import CourseShow from '@/components/CourseShow'
 import FreeCourseIntro from '@/components/FreeCourseIntro'
+import PayCourseIntro from '@/components/PayCourseIntro'
+import ShowUserInfo from '@/components/ShowUserInfo'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/A',
-      name: 'A',
-      component: A
-    },
-    {
-      path: '/login',
+      path: '/UserLogin',
       name: 'UserLogin',
       component: UserLogin
     },
@@ -39,14 +32,11 @@ export default new Router({
       component: test
     },
     {
-<<<<<<< HEAD
       path: '/message',
       name: 'message',
       component: messageboard
     },
     {
-=======
->>>>>>> bb019e0b36a359ba5c0a62d0a042f0445eb0b4d9
       path: '/home',
       name: 'home',
       component: home
@@ -60,6 +50,16 @@ export default new Router({
       path: '/FreeCourseIntro',
       name: 'FreeCourseIntro',
       component: FreeCourseIntro
+    },
+    {
+      path: '/PayCourseIntro',
+      name: 'PayCourseIntro',
+      component: PayCourseIntro
+    },
+    {
+      path: '/ShowUserInfo',
+      name: 'ShowUserInfo',
+      component: ShowUserInfo
     },
     {
       path: '/backstage',
