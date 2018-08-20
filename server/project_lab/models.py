@@ -1,11 +1,12 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 
 
 # Create your models here.
 class User(models.Model):
     phone_number = models.CharField(max_length=11, primary_key=True)
-    username = models.CharField(blank=True, null=True, max_length=15)
+    user_name = models.CharField(blank=True, null=True, max_length=15)
     head_protrait = models.ImageField(
         upload_to='user_photos/', blank=True, null=True)
     welfare = models.FloatField(default=0.0)
@@ -16,19 +17,21 @@ class User(models.Model):
         return self.phone_number
 
 
-class Manager(models.Model):
-    username = models.CharField(null=False, max_length=15, primary_key=True)
-    password = models.CharField(null=False, max_length=50)
+class Manager(AbstractUser):
     Supermanager = models.BooleanField(default=False)
     Manage_course = models.BooleanField(default=False)
     Manage_user = models.BooleanField(default=False)
     Manage_message = models.BooleanField(default=False)
+
+    class Meta(AbstractUser.Meta):
+        pass
 
     def __str__(self):
         return self.username
 
 
 class Operating_history(models.Model):
+    id = models.AutoField(primary_key=True)
     manager_username = models.ForeignKey('Manager', on_delete=models.CASCADE)
     operate_type = models.CharField('操作类型', max_length=50)
     object_type = models.CharField('操作对象', max_length=50)
@@ -37,6 +40,7 @@ class Operating_history(models.Model):
 
 
 class Course(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField('标题', max_length=50)
     brief_introduction = models.TextField('简介')
     audio = models.FileField(("音频"), upload_to='audio/', blank=True, null=True)
@@ -57,6 +61,7 @@ class Course(models.Model):
 
 
 class Course_picture(models.Model):
+    id = models.AutoField(primary_key=True)
     course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
     course_picture = models.ImageField(
         ("课程图片"), upload_to='course_picture', blank=True, null=True)
@@ -65,9 +70,11 @@ class Course_picture(models.Model):
 
 
 class Takes(models.Model):
+    id = models.AutoField(primary_key=True)
     user_phone = models.ForeignKey("User", on_delete=models.CASCADE)
     course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
     start_time = models.DateTimeField(("开始学习时间"), auto_now_add=True)
+    last_study_percent = models.DurationField(("上次学习进度条"), default=0)
 
 
 class Order(models.Model):
@@ -80,7 +87,8 @@ class Order(models.Model):
 
 
 class Message(models.Model):
-    user_name = models.ForeignKey(
+    id = models.AutoField(primary_key=True)
+    user_phone = models.ForeignKey(
         "User", verbose_name=("用户号码"), on_delete=models.CASCADE)
     course_id = models.ForeignKey(
         "Course", verbose_name=("课程编号"), on_delete=models.CASCADE)
@@ -93,6 +101,7 @@ class Message(models.Model):
 
 
 class Reply(models.Model):
+    id = models.AutoField(primary_key=True)
     message_id = models.ForeignKey(
         "Message", verbose_name=("留言编号"), on_delete=models.CASCADE)
     user_phone = models.ForeignKey(
@@ -102,6 +111,7 @@ class Reply(models.Model):
 
 
 class Praise(models.Model):
+    id = models.AutoField(primary_key=True)
     user_phone = models.ForeignKey(
         "User", verbose_name=("用户号码"), on_delete=models.CASCADE)
     message_id = models.ForeignKey(
