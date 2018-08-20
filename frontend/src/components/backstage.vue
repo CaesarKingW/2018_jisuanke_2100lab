@@ -1,6 +1,6 @@
 <template>
   <body>
-    <navibar :username="username"/>
+    <navibar :username="username" @logout="aa"/>
     <leftnav/>
     <router-view/>
     <footer></footer>
@@ -16,6 +16,13 @@ export default {
   data() {
     return {
       username: ''
+    }
+  },
+  methods: {
+    aa() {
+      console.log('this.username')
+      console.log(this.username)
+      console.log('this.username')
     }
   },
   mounted(request) {

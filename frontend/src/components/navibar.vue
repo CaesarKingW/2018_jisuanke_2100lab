@@ -13,7 +13,7 @@
           <p>{{username}},您好！</p>
         </div>
         <div class="fl menutext">
-          <p>登出</p>
+          <Button @click="logout">登出</Button>
         </div>
       </div>
     </header>
@@ -28,6 +28,12 @@ export default {
   data() {
     return {
 
+    }
+  },
+  methods: {
+    logout() {
+      this.$emit('clearusername', '')
+      this.$router.push({path: '/backlogin/'})
     }
   }
 }

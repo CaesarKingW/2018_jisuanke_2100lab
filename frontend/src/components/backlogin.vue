@@ -60,7 +60,7 @@ export default {
 <style scoped>
 
 .main {
-  margin: 300px 500px 300px 500px;
+  margin: 15% 30%;
 }
 
 .text {
