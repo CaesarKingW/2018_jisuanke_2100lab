@@ -34,22 +34,18 @@
     <Divider id="divider" orientation="right"><Button id="button" shape="circle">更多</Button></Divider>
     </div>
     <Row>
-        <Col span="12">
         <div style="padding: 20px;">
         <Card :bordered="false">
             <p style="text-align:center;" class="album_title" slot="title">{{ free_title1 }}</p>
             <p style="text-align:center;"><img class="album" src="../assets/album_1.png"></p>
         </Card>
         </div>
-        </Col>
-        <Col span="12">
         <div style="padding: 20px;">
         <Card :bordered="false">
             <p style="text-align:center;" class="album_title" slot="title">{{ free_title2 }}</p>
             <p style="text-align:center;"><img class="album" src="../assets/album_2.png"></p>
         </Card>
         </div>
-        </Col>
     </Row>
     <br>
     <div id="col_bg">
@@ -61,22 +57,18 @@
     <Divider id="divider" orientation="right"><Button id="button" shape="circle">更多</Button></Divider>
     </div>
     <Row>
-        <Col span="12">
         <div style="padding: 20px;">
         <Card :bordered="false">
             <p style="text-align:center;" class="album_title" slot="title">{{ pay_title1 }}</p>
             <p style="text-align:center;"><img class="album" src="../assets/album_3.png"></p>
         </Card>
         </div>
-        </Col>
-        <Col span="12">
         <div style="padding: 20px;">
         <Card :bordered="false">
             <p style="text-align:center;" class="album_title" slot="title">{{ pay_title2 }}</p>
             <p style="text-align:center;"><img class="album" src="../assets/album_4.png"></p>
         </Card>
         </div>
-        </Col>
     </Row>
     <BackTop>
         <div class="top">返回顶端</div>
