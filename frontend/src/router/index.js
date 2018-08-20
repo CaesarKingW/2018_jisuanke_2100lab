@@ -74,7 +74,7 @@ export default new Router({
       component: backlogin
     },
     {
-      path: '/backstage',
+      path: '/backstage/:user',
       name: 'backstage',
       component: backstage,
       children: [{

@@ -7,5 +7,6 @@ urlpatterns = [
     path('show_message', message_views.show_message),
     path('add_message', message_views.add_message),
     path('show_reply', message_views.show_reply),
-    path('user_comment', wyq_views.user_comment)
+    path('user_comment', wyq_views.user_comment),
+    path('user_login', wyq_views.user_login)
 ]

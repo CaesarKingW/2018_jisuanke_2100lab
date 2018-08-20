@@ -11,7 +11,7 @@
           <Icon type="ios-lock-outline" slot="prepend"></Icon>
       </FormItem>
       <FormItem>
-        <Button type="primary" @click="handleSubmit('formInline')">登录</Button>
+        <Button type="primary" @click="handleSubmit()">登录</Button>
       </FormItem>
     </Form>
   </div>
@@ -39,14 +39,19 @@ export default {
     }
   },
   methods: {
-    handleSubmit(name) {
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$Message.success('登陆成功！')
-        } else {
-          this.$Message.error('登陆失败')
-        }
-      })
+    handleSubmit() {
+      console.log(this.formInline)
+      // eslint-disable-next-line
+      var userlogin = JSON.stringify(this.formInline)
+      this.$http.post('http://192.168.55.33:8000/app/user_login', userlogin)
+        .then(response => {
+          console.log(response.data.data)
+          if (response.data.data === 'true') {
+            this.$router.push({path: '/backstage/' + this.formInline.user})
+          } else {
+            this.$Message.error('用户名或密码错误！')
+          }
+        })
     }
   }
 }

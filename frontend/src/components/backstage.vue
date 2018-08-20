@@ -1,6 +1,6 @@
 <template>
   <body>
-    <navibar/>
+    <navibar :username="username"/>
     <leftnav/>
     <router-view/>
     <footer></footer>
@@ -15,8 +15,11 @@ export default {
   name: 'backstage',
   data() {
     return {
-      username: 'hasaki'
+      username: ''
     }
+  },
+  mounted(request) {
+    this.username = this.$route.params.user
   },
   components: {
     navibar,

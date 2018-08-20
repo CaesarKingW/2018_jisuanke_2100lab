@@ -22,6 +22,7 @@ class Manager(AbstractUser):
     Manage_course = models.BooleanField(default=False)
     Manage_user = models.BooleanField(default=False)
     Manage_message = models.BooleanField(default=False)
+    Manage_order = models.BooleanField(default=False)
 
     class Meta(AbstractUser.Meta):
         pass

@@ -22,9 +22,12 @@
 <script>
 export default {
   name: 'navibar',
+  props: {
+    username: String
+  },
   data() {
     return {
-      username: 'hasaki'
+
     }
   }
 }
