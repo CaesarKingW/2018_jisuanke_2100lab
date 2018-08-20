@@ -4,6 +4,7 @@ import UserLogin from '@/components/UserLogin'
 import test from '@/components/test'
 import messageboard from '@/components/message_board'
 import home from '@/components/home'
+import backlogin from '@/components/backlogin'
 import backstage from '@/components/backstage'
 import course from '@/components/back/course'
 import comment from '@/components/back/comment'
@@ -66,6 +67,11 @@ export default new Router({
       path: '/ModifyUserInfo',
       name: 'ModifyUserInfo',
       component: ModifyUserInfo
+    },
+    {
+      path: '/backlogin',
+      name: 'backlogin',
+      component: backlogin
     },
     {
       path: '/backstage',
