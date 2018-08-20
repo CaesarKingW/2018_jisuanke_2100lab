@@ -17,6 +17,7 @@ import FreeCourseIntro from '@/components/FreeCourseIntro'
 import PayCourseIntro from '@/components/PayCourseIntro'
 import ShowUserInfo from '@/components/ShowUserInfo'
 import ModifyUserInfo from '@/components/ModifyUserInfo'
+import ReadAndBurn from '@/components/ReadAndBurn'
 Vue.use(Router)
 
 export default new Router({
@@ -65,6 +66,11 @@ export default new Router({
       path: '/ModifyUserInfo',
       name: 'ModifyUserInfo',
       component: ModifyUserInfo
+    },
+    {
+      path: '/ReadAndBurn',
+      name: 'ReadAndBurn',
+      component: ReadAndBurn
     },
     {
       path: '/backstage',

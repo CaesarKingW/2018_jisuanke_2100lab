@@ -10,7 +10,7 @@
         class-name="vertical-center-modal">
         <div style="text-align: center;padding:10px;"><span id="thisURL">本页地址：{{ message }}</span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button id="copy_button" type="button"
+        <button id="copy_button" type="button" 
         v-clipboard:copy="message"
         v-clipboard:success="onCopy"
         v-clipboard:error="onError">复制</button>
@@ -37,7 +37,7 @@
 </template>
 <script>
 export default {
-  name: 'FreeCourseIntro',
+  name: 'CourseShow',
   data() {
     return {
       courseTitle: '实验室制取CO2',

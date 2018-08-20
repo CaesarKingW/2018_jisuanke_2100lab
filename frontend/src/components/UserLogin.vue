@@ -6,10 +6,10 @@
     <h1>2100实验室</h1>
     <form method="POST" @submit.prevent="Is_normal_nubmer">
     <span><Input type="input" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" style="width: 56%;" name="手机号码" v-model="login.phone_number"/></span>
-    <span><input type="submit" id="getCode" value="获取验证码" /></span>
+    <span><input type="submit" id="getCodeButton" value="获取验证码" /></span>
     </form>
     <form method="POST" @submit.prevent="comparecode">
-    <Input type="input" placeholder="请输入验证码"  size="large" icon="ios-key-outline" v-model="login.usercode"/>
+    <Input type="input" placeholder="请输入验证码"  style="width: 100%;" size="large" icon="ios-key-outline" v-model="login.usercode"/>
     <input type="submit" id="login" value="登录"/>
     </form>
 </div>
@@ -131,12 +131,14 @@ export default {
 </script>
 <style scoped>
 #home_but {
-  margin-left: 170%;
+  margin-left: 130%;
   float: left;
+  font-size: 18px;
 }
 #lab {
-  margin-left: -50%;
+  margin-left: -60%;
   font-size: 18px;
+  float: left;
 }
 #UserLogin {
   width: 400px;
@@ -166,7 +168,7 @@ form {
   margin-left: 170%;
   float: left;
 }
-#getCode {
+#getCodeButton {
   width: 43%;
   height: 33px;
   outline:none;
@@ -176,7 +178,7 @@ form {
   color:#fff;
   cursor: pointer;
 }
-#getCode:hover {
+#getCodeButton:hover {
   background: #57a3f3;
 }
 #login {
