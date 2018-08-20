@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style scopeds>
+<style scoped>
 .fl {
   float: left;
 }
