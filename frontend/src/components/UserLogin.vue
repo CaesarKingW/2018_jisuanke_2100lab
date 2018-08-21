@@ -12,7 +12,9 @@
     <Poptip trigger="focus" title="提示" content="注意区分大小写！">
     <Input type="input" placeholder="请输入验证码"  style="width: 168%;" size="large" icon="ios-key-outline" v-model="login.usercode" />
     </Poptip>
-    <input type="submit" id="login" value="登录"  />
+    <br>
+    <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement" />我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
+    <input type="submit" id="login" value="登录" />
     </form>
 </div>
 </template>
@@ -25,10 +27,33 @@ export default {
         checkCode: null,
         phone_number: null,
         usercode: null
-      }
+      },
+      isDisabled: false,
+      isChecked: false
     }
   },
   methods: {
+    instance(type) {
+      const title = '2100实验室用户协议'
+      const content =
+        '<p><ul style="list-style: none;"><li>第一，绝不意气用事。</li><li>第二，绝不漏判任何一件坏事。</li><li>第三，绝对裁判的公正漂亮。</li></ul></p>'
+      switch (type) {
+        case 'info':
+          this.$Modal.info({
+            title: title,
+            content: content
+          })
+          break
+      }
+    },
+    handleDisabled: function() {
+      this.isChecked = !this.isChecked
+      if (this.isChecked === true) {
+        this.isDisabled = true
+      } else {
+        this.isDisabled = false
+      }
+    },
     createCode() {
       var code = ''
       var codeLength = 4 // 验证码的长度
@@ -93,7 +118,6 @@ export default {
           }
         )
     },
-
     comparecode: function() {
       if (
         !this.login.phone_number &&
@@ -107,6 +131,8 @@ export default {
         this.login.usercode !== 0
       ) {
         alert('请输入验证码')
+      } else if (this.isDisabled === false) {
+        alert('必须同意协议才可进行登录')
       } else if (
         this.login.usercode === this.login.checkCode &&
         this.commit_phone === this.login.phone_number
@@ -119,7 +145,6 @@ export default {
       } else alert('验证码错误')
       console.log(this.login.phone_number)
     },
-
     Is_normal_nubmer: function() {
       if (!/^1[34578]\d{9}$/.test(this.login.phone_number)) {
         alert('请输入正确的手机号码')
@@ -159,7 +184,6 @@ export default {
   color: #fff;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-
 }
 form {
   background: #f0f0f0;
@@ -172,28 +196,36 @@ form {
 #getCodeButton {
   width: 43%;
   height: 33px;
-  outline:none;
+  outline: none;
   border-radius: 4px;
-  border:none;
+  border: none;
   background-color: #2d8cf0;
-  color:#fff;
+  color: #fff;
   cursor: pointer;
 }
 #getCodeButton:hover {
   background: #57a3f3;
 }
 #login {
-  width:100%;
-  height:33px;
-  margin-top:10px;
-  outline:none;
+  width: 100%;
+  height: 33px;
+  margin-top: 10px;
+  outline: none;
   border-radius: 4px;
   border: none;
   background-color: #2d8cf0;
-  color:#fff;
+  color: #fff;
   cursor: pointer;
 }
 #login:hover {
   background: #57a3f3;
+}
+#readAgreement {
+  margin: 8px;
+}
+#agreement {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #0000d6;
 }
 </style>
