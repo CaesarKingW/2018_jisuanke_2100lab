@@ -20,6 +20,7 @@ import PayCourseIntro from '@/components/PayCourseIntro'
 import ShowUserInfo from '@/components/ShowUserInfo'
 import ModifyUserInfo from '@/components/ModifyUserInfo'
 import ReadAndBurn from '@/components/ReadAndBurn'
+import NiceMsgBoard from '@/components/NiceMsgBoard'
 Vue.use(Router)
 
 export default new Router({
@@ -73,6 +74,11 @@ export default new Router({
       path: '/ReadAndBurn',
       name: 'ReadAndBurn',
       component: ReadAndBurn
+    },
+    {
+      path: '/NiceMsgBoard',
+      name: 'NiceMsgBoard',
+      component: NiceMsgBoard
     },
     {
       path: '/backlogin',
