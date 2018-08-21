@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import User, Manager, Operating_history, Course
-from .models import Course_picture, Takes, Order, Message, Reply
+from .models import Course_picture, Takes, Order, Message, Reply, Praise
 # Register your models here.
 admin.site.register(User)
 admin.site.register(Manager)
@@ -11,3 +11,4 @@ admin.site.register(Takes)
 admin.site.register(Order)
 admin.site.register(Message)
 admin.site.register(Reply)
+admin.site.register(Praise)
