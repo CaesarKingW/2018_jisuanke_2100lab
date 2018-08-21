@@ -58,7 +58,6 @@
 </template>
 
 <script>
-
 import courseblock from './courseblock'
 
 export default {
@@ -84,5 +83,4 @@ export default {
   padding-left: 400px;
   font-size: 20px;
 }
-
 </style>

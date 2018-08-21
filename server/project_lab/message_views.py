@@ -67,6 +67,7 @@ def show_reply(request):
 
     return JsonResponse(response)
 
+
 @require_http_methods(["POST"])
 def add_reply(request):
     response = {}
