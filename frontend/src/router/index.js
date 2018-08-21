@@ -4,6 +4,7 @@ import UserLogin from '@/components/UserLogin'
 import test from '@/components/test'
 import messageboard from '@/components/message_board'
 import home from '@/components/home'
+import backlogin from '@/components/backlogin'
 import backstage from '@/components/backstage'
 import course from '@/components/back/course'
 import comment from '@/components/back/comment'
@@ -12,6 +13,7 @@ import order from '@/components/back/order'
 import data from '@/components/back/data'
 import authority from '@/components/back/authority'
 import log from '@/components/back/log'
+import deny from '@/components/back/deny'
 import CourseShow from '@/components/CourseShow'
 import FreeCourseIntro from '@/components/FreeCourseIntro'
 import PayCourseIntro from '@/components/PayCourseIntro'
@@ -67,6 +69,11 @@ export default new Router({
       component: ModifyUserInfo
     },
     {
+      path: '/backlogin',
+      name: 'backlogin',
+      component: backlogin
+    },
+    {
       path: '/backstage',
       name: 'backstage',
       component: backstage,
@@ -104,6 +111,11 @@ export default new Router({
         path: 'log',
         name: 'log',
         component: log
+      },
+      {
+        path: 'deny',
+        name: 'deny',
+        component: deny
       }
       ]
     }

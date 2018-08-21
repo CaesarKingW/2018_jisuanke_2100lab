@@ -1,5 +1,5 @@
 from django.urls import path
-from . import  login_views, user_register, message_views, praise_views
+from . import  login_views, user_register, message_views, praise_views ,wyq_views
 
 urlpatterns = [
     path('get_code_post', login_views.get_code_post),
@@ -8,5 +8,6 @@ urlpatterns = [
     path('add_message', message_views.add_message),
     path('show_reply', message_views.show_reply),
     path('praise',praise_views.praise_record),
-    path('add_reply', message_views.add_reply)
+    path('add_reply', message_views.add_reply),
+    path('user_comment', wyq_views.user_comment)
 ]
