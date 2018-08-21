@@ -30,33 +30,33 @@ export default {
       },
       isDisabled: false,
       isChecked: false
-    };
+    }
   },
   methods: {
     instance(type) {
-      const title = "2100实验室用户协议";
+      const title = '2100实验室用户协议'
       const content =
-        '<p><ul style="list-style: none;"><li>第一，绝不意气用事。</li><li>第二，绝不漏判任何一件坏事。</li><li>第三，绝对裁判的公正漂亮。</li></ul></p>';
+        '<p><ul style="list-style: none;"><li>第一，绝不意气用事。</li><li>第二，绝不漏判任何一件坏事。</li><li>第三，绝对裁判的公正漂亮。</li></ul></p>'
       switch (type) {
-        case "info":
+        case 'info':
           this.$Modal.info({
             title: title,
             content: content
-          });
-          break;
+          })
+          break
       }
     },
     handleDisabled: function() {
-      this.isChecked = !this.isChecked;
+      this.isChecked = !this.isChecked
       if (this.isChecked === true) {
-        this.isDisabled = true;
+        this.isDisabled = true
       } else {
-        this.isDisabled = false;
+        this.isDisabled = false
       }
     },
     createCode() {
-      var code = "";
-      var codeLength = 4; // 验证码的长度
+      var code = ''
+      var codeLength = 4 // 验证码的长度
       var random = [
         0,
         1,
@@ -68,94 +68,93 @@ export default {
         7,
         8,
         9,
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G",
-        "H",
-        "I",
-        "J",
-        "K",
-        "L",
-        "M",
-        "N",
-        "O",
-        "P",
-        "Q",
-        "R",
-        "S",
-        "T",
-        "U",
-        "V",
-        "W",
-        "X",
-        "Y",
-        "Z"
-      ]; // 随机数
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z'
+      ] // 随机数
       for (var i = 0; i < codeLength; i++) {
         // 循环操作
-        var index = Math.floor(Math.random() * 36); // 取得随机数的索引（0~35）
-        code += random[index]; // 根据索引取得随机数加到code上
+        var index = Math.floor(Math.random() * 36) // 取得随机数的索引（0~35）
+        code += random[index] // 根据索引取得随机数加到code上
       }
-      this.login.checkCode = code; // 把code值赋给验证码
+      this.login.checkCode = code // 把code值赋给验证码
     },
 
     getcode: function() {
-      this.commit_phone = this.login.phone_number;
-      this.createCode();
-      var phonenumber = JSON.stringify(this.login);
-      console.log(phonenumber);
+      this.commit_phone = this.login.phone_number
+      this.createCode()
+      var phonenumber = JSON.stringify(this.login)
+      console.log(phonenumber)
       this.$http
-        .post("http://192.168.55.33:8000/app/get_code_post", phonenumber)
+        .post('http://192.168.55.33:8000/app/get_code_post', phonenumber)
         .then(
           response => {
-            console.log(response.data);
+            console.log(response.data)
           },
           response => {
-            console.log("error");
+            console.log('error')
           }
-        );
+        )
     },
-
     comparecode: function() {
       if (
         !this.login.phone_number &&
-        typeof this.login.phone_number !== "undefined" &&
+        typeof this.login.phone_number !== 'undefined' &&
         this.login.phone_number !== 0
       ) {
-        alert("请输入手机号");
+        alert('请输入手机号')
       } else if (
         !this.login.usercode &&
-        typeof this.login.usercode !== "undefined" &&
+        typeof this.login.usercode !== 'undefined' &&
         this.login.usercode !== 0
       ) {
-        alert("请输入验证码");
+        alert('请输入验证码')
       } else if (this.isDisabled === false) {
-        alert("必须同意协议才可进行登录");
+        alert('必须同意协议才可进行登录')
       } else if (
         this.login.usercode === this.login.checkCode &&
         this.commit_phone === this.login.phone_number
       ) {
-        alert("登录成功");
-        this.login.phone_number = null;
-        this.login.checkCode = null;
-        this.login.usercode = null;
-        this.commit_phone = null;
-      } else alert("验证码错误");
-      console.log(this.login.phone_number);
+        alert('登录成功')
+        this.login.phone_number = null
+        this.login.checkCode = null
+        this.login.usercode = null
+        this.commit_phone = null
+      } else alert('验证码错误')
+      console.log(this.login.phone_number)
     },
     Is_normal_nubmer: function() {
       if (!/^1[34578]\d{9}$/.test(this.login.phone_number)) {
-        alert("请输入正确的手机号码");
+        alert('请输入正确的手机号码')
       } else {
-        this.getcode();
+        this.getcode()
       }
     }
   }
-};
+}
 </script>
 <style scoped>
 #home_but {
