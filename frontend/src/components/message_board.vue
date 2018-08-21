@@ -6,9 +6,10 @@
           <h4>用户：{{item.fields.user_phone}}</h4>
           <h4>
               {{item.fields.content}}
-              {{index}}
           </h4>
-          <reply v-bind:title="item.pk"></reply>
+          <button v-on:click="praise(item.pk, index)">👍 :{{item.fields.praise_count}}</button>
+          <!-- #v-bind将"  "内内容解释为表达式 -->
+          <reply v-bind:title="item.pk" v-bind:user_phone="user_phone"></reply>
       </div>
   </div>
     <form method="POST" @submit.prevent="commit_message">
@@ -23,13 +24,10 @@ export default {
   data() {
     return {
       message: null,
-      // messages:{
-      //     user_name: null,
-      //     content: null
-      // }
       messages: [],
       reply: [],
       replies: [],
+      // 先假定当前课程为1，用户手机号为17602284691
       course_id: 1,
       user_phone: '17602284691'
     }
@@ -38,23 +36,41 @@ export default {
     reply
   },
   mounted: function() {
-    this.$http
-      .post(
-        'http://192.168.55.33:8000/app/show_message',
-        JSON.stringify(this.course_id)
-      )
-      .then(
-        response => {
-          this.messages = response.data.list
-          console.log(this.messages)
-          console.log('success')
-        },
-        response => {
-          console.log('error')
-        }
-      )
+    // this.$http
+    //   .post(
+    //     'http://192.168.55.33:8000/app/show_message',
+    //     JSON.stringify(this.course_id)
+    //   )
+    //   .then(
+    //     response => {
+    //       this.messages = response.data.list
+    //       console.log(this.messages)
+    //       console.log('success')
+    //     },
+    //     response => {
+    //       console.log('error')
+    //     }
+    //   )
+    this.show_message()
   },
   methods: {
+    show_message: function() {
+      this.$http
+        .post(
+          'http://192.168.55.33:8000/app/show_message',
+          JSON.stringify(this.course_id)
+        )
+        .then(
+          response => {
+            this.messages = response.data.list
+            console.log(this.messages)
+            console.log('success')
+          },
+          response => {
+            console.log('error')
+          }
+        )
+    },
     commit_message: function() {
       var formDate = JSON.stringify({
         content: this.message,
@@ -66,12 +82,35 @@ export default {
         .post('http://192.168.55.33:8000/app/add_message', formDate)
         .then(
           response => {
+            this.show_message()
             console.log(response.data)
           },
           response => {
             console.log('error')
           }
         )
+    },
+    praise: function(messageid, index) {
+      var formDate = JSON.stringify({
+        message_id: messageid,
+        user_phone: this.user_phone
+      })
+      this.$http.post('http://192.168.55.33:8000/app/praise', formDate).then(
+        response => {
+          var hasPraise = response.data.has_praise
+          // if (hasPraise) {
+          //   this.messages[index].fields.praise_count--
+          // } else {
+          //   this.messages[index].fields.praise_count++
+          // }
+          this.show_message()
+          console.log(response.data)
+          console.log(hasPraise)
+        },
+        response => {
+          console.log('error')
+        }
+      )
     }
   }
 }
