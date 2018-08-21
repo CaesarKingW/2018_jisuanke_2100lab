@@ -25,4 +25,4 @@ class YunPian(object):
     
 # if __name__=="__main__":
 #       yun_pian = YunPian("264fb31e3ba88e5c55572dd977b2f372")
-#       yun_pian.send_sms("2222", "13102250021")
+#       yun_pian.send_sms("2222", "17602284691")

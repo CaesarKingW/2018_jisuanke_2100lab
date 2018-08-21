@@ -107,7 +107,6 @@ export default {
       this.commit_phone = this.login.phone_number
       this.createCode()
       var phonenumber = JSON.stringify(this.login)
-      console.log(phonenumber)
       this.$http
         .post('http://192.168.55.33:8000/app/get_code_post', phonenumber)
         .then(
