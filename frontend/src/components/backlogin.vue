@@ -1,0 +1,72 @@
+<template>
+  <div class="main">
+    <p class="text">2100lab后台管理员登陆</p>
+    <Form ref="formInline" :model="formInline" :rules="ruleInline" label-position="centre" :label-width="100">
+      <FormItem prop="user" label="用户名：">
+        <Input type="text" v-model="formInline.user" placeholder="Username" class="input"/>
+          <Icon type="ios-person-outline" slot="prepend"></Icon>
+      </FormItem>
+      <FormItem prop="password" label="密码：">
+        <Input type="password" v-model="formInline.password" placeholder="Password" class="input"/>
+          <Icon type="ios-lock-outline" slot="prepend"></Icon>
+      </FormItem>
+      <FormItem>
+        <Button type="primary" @click="handleSubmit('formInline')">登录</Button>
+      </FormItem>
+    </Form>
+  </div>
+</template>
+
+<script>
+
+export default {
+  name: 'backlogin',
+  data() {
+    return {
+      formInline: {
+        user: '',
+        password: ''
+      },
+      ruleInline: {
+        user: [
+          { required: true, message: '请输入账号', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { type: 'string', min: 6, message: '密码不能短于6位！', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  methods: {
+    handleSubmit(name) {
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          this.$Message.success('登陆成功！')
+        } else {
+          this.$Message.error('登陆失败')
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+.main {
+  margin: 300px 500px 300px 500px;
+}
+
+.text {
+  position: center;
+  margin-bottom: 20px;
+  font-size: 40px;
+}
+
+.input {
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+</style>

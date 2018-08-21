@@ -9,10 +9,8 @@
     <span><input type="submit" id="getCodeButton" value="获取验证码" /></span>
     </form>
     <form method="POST" @submit.prevent="comparecode">
-    <Poptip trigger="focus" title="提示" content="注意区分大小写！">
-    <Input type="input" placeholder="请输入验证码"  style="width: 168%;" size="large" icon="ios-key-outline" v-model="login.usercode"/>
-    </Poptip>
-    <input type="submit" id="login" value="登录"/>
+    <Input type="input" placeholder="请输入验证码"  style="width: 100%;" size="large" icon="ios-key-outline" v-model="login.usercode" />
+    <input type="submit" id="login" value="登录"  />
     </form>
 </div>
 </template>
