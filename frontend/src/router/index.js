@@ -19,7 +19,7 @@ import FreeCourseIntro from '@/components/FreeCourseIntro'
 import PayCourseIntro from '@/components/PayCourseIntro'
 import ShowUserInfo from '@/components/ShowUserInfo'
 import ModifyUserInfo from '@/components/ModifyUserInfo'
-import NiceMessageBoard from '@/components/NiceMessageBoard'
+import ReadAndBurn from '@/components/ReadAndBurn'
 Vue.use(Router)
 
 export default new Router({
@@ -70,9 +70,9 @@ export default new Router({
       component: ModifyUserInfo
     },
     {
-      path: '/NiceMessageBoard',
-      name: 'NiceMessageBoard',
-      component: NiceMessageBoard
+      path: '/ReadAndBurn',
+      name: 'ReadAndBurn',
+      component: ReadAndBurn
     },
     {
       path: '/backlogin',

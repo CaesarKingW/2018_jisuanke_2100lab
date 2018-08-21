@@ -9,6 +9,7 @@
      <Divider />
      <br>
      <!-- 600px * 400px -->
+     <div align="center">
      <Carousel autoplay height="400px" v-model="value" loop>
         <CarouselItem>
             <div class="demo-carousel"><img class="roll_pic" src="../assets/1.png"></div>
@@ -23,10 +24,11 @@
             <div class="demo-carousel"><img class="roll_pic" src="../assets/4.png"></div>
         </CarouselItem>
     </Carousel>
+    </div>
     <div id="col_bg">
     <Divider id="divider" orientation="left">
         <Poptip trigger="hover" title="免费内容预览" content="点击更多查看所有免费文章。">
-        <Button :size="large" icon="md-bookmarks">免费内容</Button>
+        <div class="myContent"><Alert style="font-size: 20px;text-align: center;"><Icon type="md-bookmarks" />&nbsp;免费内容</Alert></div>
         </Poptip>
     </Divider>
     <Divider id="divider" orientation="right"><Button id="button" shape="circle">更多</Button></Divider>
@@ -34,24 +36,37 @@
     <Row>
         <div style="padding: 20px;">
         <Card :bordered="false">
-            <p slot="title">title</p>
-            <p><img src="../assets/lab.png"></p>
+            <p style="text-align:center;" class="album_title" slot="title">{{ free_title1 }}</p>
+            <p style="text-align:center;"><img class="album" src="../assets/album_1.png"></p>
+        </Card>
+        </div>
+        <div style="padding: 20px;">
+        <Card :bordered="false">
+            <p style="text-align:center;" class="album_title" slot="title">{{ free_title2 }}</p>
+            <p style="text-align:center;"><img class="album" src="../assets/album_2.png"></p>
         </Card>
         </div>
     </Row>
+    <br>
     <div id="col_bg">
     <Divider id="divider" orientation="left">
         <Poptip trigger="hover" title="付费内容预览" content="点击更多查看所有付费文章。">
-        <Button :size="large" icon="md-bookmarks">付费内容</Button>
+        <div class="myContent"><Alert style="font-size: 20px;text-align: center;"><Icon type="logo-usd" />&nbsp;付费内容</Alert></div>
         </Poptip>
     </Divider>
     <Divider id="divider" orientation="right"><Button id="button" shape="circle">更多</Button></Divider>
     </div>
     <Row>
-        <div style="padding: 20px">
+        <div style="padding: 20px;">
         <Card :bordered="false">
-            <p slot="title">title</p>
-            <p><img src="../assets/lab.png"></p>
+            <p style="text-align:center;" class="album_title" slot="title">{{ pay_title1 }}</p>
+            <p style="text-align:center;"><img class="album" src="../assets/album_3.png"></p>
+        </Card>
+        </div>
+        <div style="padding: 20px;">
+        <Card :bordered="false">
+            <p style="text-align:center;" class="album_title" slot="title">{{ pay_title2 }}</p>
+            <p style="text-align:center;"><img class="album" src="../assets/album_4.png"></p>
         </Card>
         </div>
     </Row>
@@ -60,6 +75,20 @@
     </BackTop>
  </div>
 </template>
+<script>
+export default {
+  name: 'home',
+  data() {
+    return {
+      free_title1: '季节是怎么形成的',
+      free_title2: '谁住在壳里',
+      pay_title1: '夜行性动物住在哪儿',
+      pay_title2: '如果我们不睡觉'
+    }
+  }
+}
+</script>
+
 <style scoped>
 .id {
   font-family:
@@ -91,10 +120,6 @@
   color: #515a6e;
 }
 
-.demo-carousel {
-  margin-left: 27%;
-}
-
 #col_bg {
   background-color: #0072e3;
 }
@@ -117,5 +142,15 @@
 .roll_pic {
     border:#99ccff solid 5px;
     border-radius: 20px;
+}
+.myContent {
+    font-size: 63px;
+}
+.album {
+    border:#99ccff solid 5px;
+    border-radius: 20px;
+}
+.album_title {
+    font-size: 20px;
 }
 </style>
