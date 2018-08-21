@@ -13,6 +13,14 @@
         验证码： <input type="input" v-model="login.usercode"/>
         <input type="submit" value="登录"/>
     </form>
+    <template>
+<div id ='(test)add_picture'>
+    <Upload action="http://192.168.55.33:8000/app/add_picture" accept="image">
+       <!-- <img id="avatar" src="../assets/little_avatar.png"> -->
+       <div><Button style="margin: 10px;" size="large" type="primary">上传头像</Button></div>
+    </Upload>
+</div>
+</template>
 </div>
 </template>
 
