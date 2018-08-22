@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 # Create your models here.
+# 用户表
 class User(models.Model):
     phone_number = models.CharField(max_length=11, primary_key=True)
     user_name = models.CharField(blank=True, null=True, max_length=15)
@@ -18,6 +19,7 @@ class User(models.Model):
         return self.phone_number
 
 
+# 管理员表
 class Manager(AbstractUser):
     Supermanager = models.BooleanField(default=False)
     Manage_course = models.BooleanField(default=False)
@@ -32,6 +34,7 @@ class Manager(AbstractUser):
         return self.username
 
 
+# 操作历史表
 class Operating_history(models.Model):
     id = models.AutoField(primary_key=True)
     manager_username = models.ForeignKey('Manager', on_delete=models.CASCADE)
@@ -41,6 +44,7 @@ class Operating_history(models.Model):
         default=timezone.now, auto_now=False, auto_now_add=False)
 
 
+# 课程 表
 class Course(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField('标题', max_length=50)
@@ -62,6 +66,7 @@ class Course(models.Model):
         return str(self.id)
 
 
+# 课程内容图片表
 class Course_picture(models.Model):
     id = models.AutoField(primary_key=True)
     course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
@@ -71,6 +76,7 @@ class Course_picture(models.Model):
     end_time = models.DurationField((""))
 
 
+# 用户学习课程记录表
 class Takes(models.Model):
     id = models.AutoField(primary_key=True)
     user_phone = models.ForeignKey("User", on_delete=models.CASCADE)
@@ -79,6 +85,7 @@ class Takes(models.Model):
     last_study_percent = models.DurationField(("上次学习进度条"), default=0)
 
 
+# 订单表
 class Order(models.Model):
     Order_number = models.CharField(("订单号"), max_length=30, primary_key=True)
     user_phone = models.ForeignKey("User", on_delete=models.CASCADE)
@@ -88,6 +95,7 @@ class Order(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
 
 
+# 留言表
 class Message(models.Model):
     id = models.AutoField(primary_key=True)
     user_phone = models.ForeignKey(
@@ -103,6 +111,7 @@ class Message(models.Model):
         return str(self.id)
 
 
+# 回复表
 class Reply(models.Model):
     id = models.AutoField(primary_key=True)
     message_id = models.ForeignKey(
@@ -113,6 +122,7 @@ class Reply(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
 
+# 点赞表
 class Praise(models.Model):
     id = models.AutoField(primary_key=True)
     user_phone = models.ForeignKey(
@@ -120,3 +130,11 @@ class Praise(models.Model):
     message_id = models.ForeignKey(
         "Message", verbose_name=("留言编号"), on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
+
+
+#课程封面图片表
+class Cover_picture(models.Model):
+    id = models.AutoField(primary_key=True)
+    course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
+    Cover_picture = models.ImageField(
+        ("课程图片"), upload_to='course_picture', blank=True, null=True)
