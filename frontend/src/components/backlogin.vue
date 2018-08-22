@@ -1,8 +1,5 @@
 <template>
   <div class="main">
-		<label>请选择一个图像文件：</label>
-		<input type="file" id="pic_selector" multiple/> <!--multiple，可选择多张图片-->
-		<button>提交</button>
     <p class="text">2100lab后台管理员登陆</p>
     <Form ref="formInline" :model="formInline" :rules="ruleInline" label-position="centre" :label-width="100">
       <FormItem prop="user" label="用户名：">
