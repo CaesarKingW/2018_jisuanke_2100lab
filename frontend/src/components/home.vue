@@ -233,4 +233,11 @@ export default {
   flex-grow: 3;
   text-align: center;
 }
+.top {
+  padding: 12px;
+  background: rgba(13, 102, 146, 0.9);
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+}
 </style>
