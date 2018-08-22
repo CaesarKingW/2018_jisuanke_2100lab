@@ -9,6 +9,13 @@ class UserSerializer(serializers.ModelSerializer):
                   'Can_comment', 'Is_teacher')
 
 
+
+class ManagerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Manager
+        fields = ('username', 'Supermanager', 'Manage_course', 'Manage_user',
+                  'Manage_message', 'Manage_order')
+
 class MessageSerializer(serializers.ModelSerializer):
     course_title = serializers.SerializerMethodField()
 
@@ -34,6 +41,7 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = ('title', 'brief_introduction', 'audio', 'whole_introduction',
                   'Is_distory', 'distory_time', 'Is_free', 'price',
                   'share_rate', 'can_comment')
+
 
 
 class Course_pictureSerializer(serializers.ModelSerializer):
