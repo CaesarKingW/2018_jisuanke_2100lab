@@ -22,6 +22,7 @@ import ModifyUserInfo from '@/components/ModifyUserInfo'
 import ReadAndBurn from '@/components/ReadAndBurn'
 import useModify from '@/components/use_modify'
 import NiceMsgBoard from '@/components/NiceMsgBoard'
+import destroy from '@/components/account_cancellation'
 Vue.use(Router)
 
 export default new Router({
@@ -31,11 +32,13 @@ export default new Router({
       name: 'UserLogin',
       component: UserLogin
     },
+    // 测试用
     {
       path: '/test',
       name: 'test',
       component: test
     },
+    //
     {
       path: '/message',
       name: 'message',
@@ -134,6 +137,11 @@ export default new Router({
         path: 'deny',
         name: 'deny',
         component: deny
+      },
+      {
+        path: 'account_destroy',
+        name: 'account_destroy',
+        component: destroy
       }
       ]
     }
