@@ -1,5 +1,8 @@
 <template>
   <div class="main">
+		<label>请选择一个图像文件：</label>
+		<input type="file" id="pic_selector" multiple/> <!--multiple，可选择多张图片-->
+		<button>提交</button>
     <p class="text">2100lab后台管理员登陆</p>
     <Form ref="formInline" :model="formInline" :rules="ruleInline" label-position="centre" :label-width="100">
       <FormItem prop="user" label="用户名：">
@@ -18,7 +21,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'backlogin',
   data() {
@@ -28,12 +30,15 @@ export default {
         password: ''
       },
       ruleInline: {
-        user: [
-          { required: true, message: '请输入账号', trigger: 'blur' }
-        ],
+        user: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
-          { type: 'string', min: 6, message: '密码不能短于6位！', trigger: 'blur' }
+          {
+            type: 'string',
+            min: 6,
+            message: '密码不能短于6位！',
+            trigger: 'blur'
+          }
         ]
       }
     }
@@ -42,12 +47,19 @@ export default {
     handleSubmit() {
       console.log(this.formInline)
       // eslint-disable-next-line
-      var userlogin = JSON.stringify(this.formInline)
-      this.$http.post('http://192.168.55.33:8000/app/user_login', userlogin)
+      var managerlogin = JSON.stringify(this.formInline)
+      this.$http
+        .post('http://192.168.55.33:8000/app/manager_login', managerlogin)
         .then(response => {
           console.log(response.data.data)
           if (response.data.data === 'true') {
-            this.$router.push({path: '/backstage/' + this.formInline.user})
+            this.$router.push({
+              path: '/backstage',
+              name: 'backstage',
+              params: {
+                user: this.formInline.user
+              }
+            })
           } else {
             this.$Message.error('用户名或密码错误！')
           }
@@ -58,7 +70,6 @@ export default {
 </script>
 
 <style scoped>
-
 .main {
   margin: 15% 30%;
 }
@@ -73,5 +84,4 @@ export default {
   width: 300px;
   margin-bottom: 20px;
 }
-
 </style>

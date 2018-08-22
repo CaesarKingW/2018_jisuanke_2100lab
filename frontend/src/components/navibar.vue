@@ -32,8 +32,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$emit('clearusername', '')
-      this.$router.push({path: '/backlogin/'})
+      this.$router.push({path: '/backlogin'})
     }
   }
 }
