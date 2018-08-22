@@ -7,16 +7,16 @@ test:
     tags:
         - shared
     script:
-        - pip3 install coverage --quiet
-        - python -m coverage run --source="." manage.py test
-        - python -m coverage report
+        # - pip3 install coverage --quiet
+        # - python -m coverage run --source="." manage.py test
+        # - python -m coverage report
 
 lint:
     stage: lint
     tags:
         - shared
     script:
-        pip install pylint==1.7.5 --quiet
-        pip install pylint-django --quiet
-        -pylint --rcfile=.pylintrc || exit $((35 & $?))
+        # pip install pylint==1.7.5 --quiet
+        # pip install pylint-django --quiet
+        # -pylint --rcfile=.pylintrc || exit $((35 & $?))
     allow_failure: false
