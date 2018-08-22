@@ -7,9 +7,17 @@ test:
     tags:
         - shared
     script:
+        - wget "https://pypi.python.org/packages/source/p/pip/pip-1.5.4.tar.gz#md5=834b2904f92d46aaa333267fb1c922bb" --no-check-certificate
+        - pip install coverage --quiet
+        - python -m coverage run --source="." manage.py test
+        - python -m coverage report
+
 lint:
     stage: lint
     tags:
         - shared
     script:
+        pip install pylint==1.7.5 --quiet
+        pip install pylint-django --quiet
+        -pylint --rcfile=.pylintrc || exit $((35 & $?))
     allow_failure: false
