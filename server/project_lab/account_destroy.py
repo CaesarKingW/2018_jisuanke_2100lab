@@ -13,8 +13,9 @@ def account_destroy(request):
         if request.method == 'POST':
             req = json.loads(request.body)
             current_user = User.objects.get(phone_number=req)
-            current_user.is_active = False
-            response['msg'] = 'success'
+            current_user.exists = False
+            current_user.save()
+            response['msg'] = req
             response['error_num'] = 0
     except Exception as e:
         response['msg'] = str(e)

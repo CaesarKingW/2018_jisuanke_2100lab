@@ -53,3 +53,19 @@ def get_user_phone(request):
         response['msg'] = str(e)
         response['error_num'] = 1
     return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+def update_nickname(request):
+    response = {}
+    try:
+        if request.method == 'POST':
+            req = json.loads(request.body)
+            user = User.objects.get(phone_number=req['phone_number'])
+            user.user_name = req['nickname']
+            user.save()
+            response['msg'] = 'success'
+            response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
