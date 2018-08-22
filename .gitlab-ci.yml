@@ -7,7 +7,7 @@ test:
     tags:
         - shared
     script:
-        - pip3 install coverage --quiet
+        - pip install coverage --quiet
         - python -m coverage run --source="." manage.py test
         - python -m coverage report
 
