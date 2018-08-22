@@ -120,12 +120,3 @@ class Praise(models.Model):
     message_id = models.ForeignKey(
         "Message", verbose_name=("留言编号"), on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
-
-
-class Course_picture(models.Model):
-    id = models.AutoField(primary_key=True)
-    course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
-    course_picture = models.ImageField(
-        ("课程图片"), upload_to='course_picture', blank=True, null=True)
-    start_time = models.DurationField((""))
-    end_time = models.DurationField((""))
