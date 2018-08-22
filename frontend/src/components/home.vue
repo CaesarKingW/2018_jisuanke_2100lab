@@ -11,16 +11,13 @@
      <div align="center" id="carousel">
      <Carousel autoplay height="400px" v-model="value" loop>
         <CarouselItem>
-            <div class="demo-carousel"><img class="roll_pic" src="../assets/1.png"></div>
+            <div class="demo-carousel"><Card>
+            <p style="text-align:center;"><img class="roll_pic" src="../assets/home_1.png"></p>
+        </Card>
+        </div>
         </CarouselItem>
         <CarouselItem>
-            <div class="demo-carousel"><img class="roll_pic" src="../assets/2.png"></div>
-        </CarouselItem>
-        <CarouselItem>
-            <div class="demo-carousel"><img class="roll_pic" src="../assets/3.png"></div>
-        </CarouselItem>
-        <CarouselItem>
-            <div class="demo-carousel"><img class="roll_pic" src="../assets/4.png"></div>
+            <div class="demo-carousel"><img class="roll_pic" src="../assets/home_2.png"></div>
         </CarouselItem>
     </Carousel>
     </div>
@@ -167,14 +164,13 @@ export default {
   float: left;
 }
 .roll_pic {
-  border: #99ccff solid 5px;
-  border-radius: 20px;
+  width: 100%;
+  height: 400px;
 }
 .myContent {
   font-size: 63px;
 }
 .album {
-  border: #99ccff solid 5px;
   border-radius: 20px;
 }
 .album_title {
