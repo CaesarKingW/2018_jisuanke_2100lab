@@ -1,0 +1,22 @@
+stages:
+    - test
+    - lint
+
+test:
+    stage: test
+    tags:
+        - test
+    script:
+        - pip3 install coverage --quiet
+        - python -m coverage run --source="." manage.py test
+        - python -m coverage report
+
+lint:
+    stage: lint
+    tags:
+        - test
+    script:
+        pip install pylint==1.7.5 --quiet
+        pip install pylint-django --quiet
+        -pylint --rcfile=.pylintrc || exit $((35 & $?))
+    allow_failure: false
