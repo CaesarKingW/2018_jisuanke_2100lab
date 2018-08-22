@@ -1,6 +1,6 @@
 <template>
     <header class="header">
-      <div >
+      <div>
         <div class="fl img">
           <img src="../assets/scienceCaptain.jpg">
         </div>

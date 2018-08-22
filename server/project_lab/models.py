@@ -82,7 +82,7 @@ class Order(models.Model):
     Order_number = models.CharField(("订单号"), max_length=30, primary_key=True)
     user_phone = models.ForeignKey("User", on_delete=models.CASCADE)
     course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
-    course_price = models.FloatField(("价格"))
+    amount_of_money = models.FloatField(("支付金额"))
     status = models.CharField('订单状态', max_length=10)
     create_at = models.DateTimeField(auto_now_add=True)
 

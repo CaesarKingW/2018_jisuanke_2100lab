@@ -1,5 +1,5 @@
 <template>
-<div id="CourseShow">
+<div id="CourseShow" style="background-color: #c4e1ff;">
     <Divider><h1 class="title">{{ title }}</h1></Divider>
     <Divider orientation="right"><p class="read_time" style="font-size: 24px;">浏览量：{{ times }} 次</p></Divider>
     <div class="test_pic"><img id="changePic" src="../assets/2.png"></div>
