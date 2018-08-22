@@ -11,14 +11,13 @@
           <Icon type="ios-lock-outline" slot="prepend"></Icon>
       </FormItem>
       <FormItem>
-        <Button type="primary" @click="handleSubmit('formInline')">登录</Button>
+        <Button type="primary" @click="handleSubmit()">登录</Button>
       </FormItem>
     </Form>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'backlogin',
   data() {
@@ -28,34 +27,48 @@ export default {
         password: ''
       },
       ruleInline: {
-        user: [
-          { required: true, message: '请输入账号', trigger: 'blur' }
-        ],
+        user: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
-          { type: 'string', min: 6, message: '密码不能短于6位！', trigger: 'blur' }
+          {
+            type: 'string',
+            min: 6,
+            message: '密码不能短于6位！',
+            trigger: 'blur'
+          }
         ]
       }
     }
   },
   methods: {
-    handleSubmit(name) {
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$Message.success('登陆成功！')
-        } else {
-          this.$Message.error('登陆失败')
-        }
-      })
+    handleSubmit() {
+      console.log(this.formInline)
+      // eslint-disable-next-line
+      var managerlogin = JSON.stringify(this.formInline)
+      this.$http
+        .post('http://192.168.55.33:8000/app/manager_login', managerlogin)
+        .then(response => {
+          console.log(response.data.data)
+          if (response.data.data === 'true') {
+            this.$router.push({
+              path: '/backstage',
+              name: 'backstage',
+              params: {
+                user: this.formInline.user
+              }
+            })
+          } else {
+            this.$Message.error('用户名或密码错误！')
+          }
+        })
     }
   }
 }
 </script>
 
 <style scoped>
-
 .main {
-  margin: 300px 500px 300px 500px;
+  margin: 15% 30%;
 }
 
 .text {
@@ -68,5 +81,4 @@ export default {
   width: 300px;
   margin-bottom: 20px;
 }
-
 </style>

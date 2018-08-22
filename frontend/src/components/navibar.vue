@@ -13,7 +13,7 @@
           <p>{{username}},您好！</p>
         </div>
         <div class="fl menutext">
-          <p>登出</p>
+          <Button @click="logout">登出</Button>
         </div>
       </div>
     </header>
@@ -22,9 +22,17 @@
 <script>
 export default {
   name: 'navibar',
+  props: {
+    username: String
+  },
   data() {
     return {
-      username: 'hasaki'
+
+    }
+  },
+  methods: {
+    logout() {
+      this.$router.push({path: '/backlogin'})
     }
   }
 }
