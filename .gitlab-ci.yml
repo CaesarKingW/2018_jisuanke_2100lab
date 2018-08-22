@@ -1,0 +1,18 @@
+stages:
+    - test
+    - lint
+
+test:
+    stage: test
+    tags:
+        - shared
+    script:
+        - cd ..
+
+lint:
+    stage: lint
+    tags:
+        - shared
+    script:
+        - cd ..
+    allow_failure: false
