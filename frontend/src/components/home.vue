@@ -1,21 +1,20 @@
 <template>
  <div id="home">
-     <!-- 两个按钮 -->
-    <div class="button_container">
-    <div class="logo"><router-link to="/home">
-     <Button type="primary" id="lab">2100-lab</Button>
-     </router-link>
-    </div>
-    <div class="login">
-     <router-link to="/UserLogin">
-     <Button type="primary" id="log_but">用户登录</Button>
-     </router-link>
-    </div>
-    </div>
-    <Divider />
+     <!-- 导航栏 -->
+    <div class="navibar">
+    <a class="navi" href="#carousel">内容展示</a>
+    <Divider type="vertical" />
+    <a class="navi" href="#free_col">免费内容</a>
+    <Divider type="vertical" />
+    <a class="navi" href="#pay_col">付费内容</a>
+    <Divider type="vertical" />
+    <a class="navi" href="#aboutus">关于我们</a>
+    <Divider type="vertical" />
+    <router-link to="/UserLogin"><a class="navi">用户登录</a></router-link>
+     </div>
      <!-- 走马灯 -->
-     <div align="center" id="carousel">
-     <Carousel autoplay height="400px" v-model="value" loop>
+     <div align="center" id="carousel" class="carousel">
+     <Carousel autoplay v-model="value" loop>
         <CarouselItem>
             <div class="demo-carousel"><Card>
             <p style="text-align:center;"><img class="roll_pic" src="../assets/home_1.png"></p>
@@ -129,32 +128,27 @@ export default {
     return {
       title1: '季节是怎么形成的',
       title2: '谁住在壳里',
-      title3: '夜行性动物住在哪儿'
+      title3: '夜行性动物住在哪儿',
+      value: 0
     }
   }
 }
 </script>
 <style scoped>
-.button_container {
-  display: flex;
-  display: -webkit-flex;
-  display: -moz-flex;
-  height: 80px;
-  width: 80%;
+.navibar {
+  z-index: 9999;
+  background-color: #fff;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  opacity: 0.9;
+  padding: 25px;
 }
-.logo {
-  flex-grow: 5;
-  margin-top: 20px;
-}
-.login {
-  flex-grow: 1;
-  margin-left: 60%;
-  margin-top: 20px;
-}
-.item {
-  flex-grow: 1;
-  margin-top: 20px;
-  margin-bottom: 20px;
+.navi {
+  font-size: 23px;
+  color: #022336;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 .container {
   display: flex;
@@ -215,18 +209,19 @@ export default {
   color: #fff;
   margin-top: 6px;
 }
-#log_but {
-  margin-left: 90%;
-  float: left;
-}
 #lab {
   margin-left: 15%;
   font-size: 18px;
   float: left;
 }
+.item {
+  flex-grow: 1;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .roll_pic {
   width: 100%;
-  height: 400px;
+  height: 450px;
 }
 .myContent {
   font-size: 40px;

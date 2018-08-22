@@ -11,7 +11,7 @@
     </form>
     <form id="log_down" method="POST" @submit.prevent="comparecode">
     <Poptip trigger="focus" title="提示" content="注意区分大小写！">
-    <Input type="input" placeholder="请输入验证码"  style="width: 168%;" size="large" icon="ios-key-outline" v-model="login.usercode" />
+    <Input type="input" placeholder="请输入验证码" style="width: 168%;" size="large" icon="ios-key-outline" v-model="login.usercode" />
     </Poptip>
     <br>
     <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement" />我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
