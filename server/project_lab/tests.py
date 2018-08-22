@@ -30,7 +30,7 @@ class PostTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-验证短信发送功能
+#验证短信发送功能
 class SendMessage(TestCase):
     def test_yunpian(self):
         yun_pian = YunPian("264fb31e3ba88e5c55572dd977b2f372")

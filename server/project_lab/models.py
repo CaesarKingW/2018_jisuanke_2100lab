@@ -8,7 +8,7 @@ class User(models.Model):
     phone_number = models.CharField(max_length=11, primary_key=True)
     user_name = models.CharField(blank=True, null=True, max_length=15)
     head_protrait = models.ImageField(
-        upload_to='user_photos/', blank=True, null=True)
+        upload_to='user_photos', blank=True, null=True)
     welfare = models.FloatField(default=0.0)
     Can_comment = models.BooleanField(default=True)
     Is_teacher = models.BooleanField(default=False)

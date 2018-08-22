@@ -159,7 +159,6 @@ export default {
   color: #fff;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-
 }
 form {
   background: #f0f0f0;
@@ -172,25 +171,25 @@ form {
 #getCodeButton {
   width: 43%;
   height: 33px;
-  outline:none;
+  outline: none;
   border-radius: 4px;
-  border:none;
+  border: none;
   background-color: #2d8cf0;
-  color:#fff;
+  color: #fff;
   cursor: pointer;
 }
 #getCodeButton:hover {
   background: #57a3f3;
 }
 #login {
-  width:100%;
-  height:33px;
-  margin-top:10px;
-  outline:none;
+  width: 100%;
+  height: 33px;
+  margin-top: 10px;
+  outline: none;
   border-radius: 4px;
   border: none;
   background-color: #2d8cf0;
-  color:#fff;
+  color: #fff;
   cursor: pointer;
 }
 #login:hover {

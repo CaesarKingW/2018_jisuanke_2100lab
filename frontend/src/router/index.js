@@ -20,6 +20,7 @@ import PayCourseIntro from '@/components/PayCourseIntro'
 import ShowUserInfo from '@/components/ShowUserInfo'
 import ModifyUserInfo from '@/components/ModifyUserInfo'
 import ReadAndBurn from '@/components/ReadAndBurn'
+import useModify from '@/components/use_modify'
 Vue.use(Router)
 
 export default new Router({
@@ -68,6 +69,11 @@ export default new Router({
       path: '/ModifyUserInfo',
       name: 'ModifyUserInfo',
       component: ModifyUserInfo
+    },
+    {
+      path: '/user_modify',
+      name: 'user_modify',
+      component: useModify
     },
     {
       path: '/ReadAndBurn',
