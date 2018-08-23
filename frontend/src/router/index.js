@@ -25,6 +25,7 @@ import NiceMsgBoard from '@/components/NiceMsgBoard'
 import destroy from '@/components/account_cancellation'
 import freeCourse from '@/components/show_free_course'
 import payingCourse from '@/components/show_paying_course'
+import recommendCourse from '@/components/recommend'
 Vue.use(Router)
 
 export default new Router({
@@ -157,6 +158,11 @@ export default new Router({
       path: '/paying_course',
       name: 'paying_course',
       component: payingCourse
+    },
+    {
+      path: '/recommend_course',
+      name: 'recommend_course',
+      component: recommendCourse
     }
   ]
 })

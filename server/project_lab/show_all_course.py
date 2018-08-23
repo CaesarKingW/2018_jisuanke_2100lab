@@ -12,7 +12,7 @@ def show_free_course(request):
     response = {}
     try:
         if request.method == 'GET':
-            course = Course.objects.filter(price=0)
+            course = Course.objects.filter(price=0).order_by('-created_at')
             response['list'] = json.loads(
                 serializers.serialize("json", course))
             response['msg'] = 'success'
@@ -29,7 +29,7 @@ def show_paying_course(request):
     response = {}
     try:
         if request.method == 'GET':
-            course = Course.objects.exclude(price=0)
+            course = Course.objects.exclude(price=0).order_by('-created_at')
             response['list'] = json.loads(
                 serializers.serialize("json", course))
             response['msg'] = 'success'
