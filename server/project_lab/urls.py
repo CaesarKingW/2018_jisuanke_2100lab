@@ -30,5 +30,6 @@ urlpatterns = [
     path('search_order', wq_views.search_order),
     path('refund', wq_views.refund),
     path('account_destroy', account_destroy.account_destroy),
-    path('show_all_course', show_all_course.show_all_course)
+    path('show_free_course', show_all_course.show_free_course),
+    path('show_paying_course', show_all_course.show_paying_course)
 ]
