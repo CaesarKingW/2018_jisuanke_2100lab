@@ -7,11 +7,7 @@ from django.core import serializers
 from django.forms.models import model_to_dict
 import json
 import requests
-<<<<<<< HEAD
-from .serializer import UserSerializer
-=======
 from .serializer import UserSerializer, ManagerSerializer, Course_pictureSerializer
->>>>>>> cd07fe786558079e714175ba2e2ab47433c5995f
 
 # @require_http_methods(['POST', 'GET'])
 # def user_comment1(request):
