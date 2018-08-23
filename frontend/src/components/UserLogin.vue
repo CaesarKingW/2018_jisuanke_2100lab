@@ -1,20 +1,20 @@
 <template>
 <div id="UserLogin">
-    <router-link to="/home"><button id="lab">2100-lab <Icon type="md-log-in" /></button></router-link>
+    <Button id="lab" ghost><router-link to="/home"><div id="button_text">2100-lab <Icon type="md-log-in" /></div></router-link></Button>
     <br>
     <br>
     <div id="log_column">
     <h1>2100实验室</h1>
     <form method="POST" @submit.prevent="Is_normal_nubmer">
-    <Input type="input" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" style="width: 56%;" name="手机号码" v-model="phone_number"/>
+    <Input type="input" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" style="width: 56%;" v-model="login.phone_number"/>
     <input type="submit" id="getCodeButton" value="获取验证码" />
     </form>
     <form id="log_down" method="POST" @submit.prevent="comparecode">
     <Poptip trigger="focus" title="提示" content="注意区分大小写！">
-    <Input type="input" placeholder="请输入验证码" style="width: 168%;" size="large" icon="ios-key-outline" v-model="usercode" />
+    <Input type="input" placeholder="请输入验证码" size="large" style="width: 366px;" icon="ios-key-outline" v-model="login.usercode"/>
     </Poptip>
     <br>
-    <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement" />我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
+    <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement"/>我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
     <input type="submit" id="login" value="登录" />
     </form>
     </div>
@@ -159,28 +159,27 @@ export default {
 </script>
 <style scoped>
 #lab {
-  margin-left: 81.5%;
+  margin-left: 1032px;
   font-size: 18px;
-  margin-top: 18px;
+  margin-top: 28px;
   margin-bottom: 18px;
-  width: 120px;
   height: 41px;
-  outline: none;
   border-radius: 4px;
   border: none;
   background-color: #075182;
-  color: #fff;
-  cursor: pointer;
 }
 #lab:hover {
   background: #285f83;
+}
+#button_text {
+  color: #fff;
 }
 #UserLogin {
   background-image: url('../assets/BALL.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 583px;
-  background-attachment: fixed;
+  /* background-attachment: fixed; */
 }
 #log_column {
   width: 400px;

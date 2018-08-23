@@ -23,6 +23,10 @@ import ReadAndBurn from '@/components/ReadAndBurn'
 import useModify from '@/components/use_modify'
 import NiceMsgBoard from '@/components/NiceMsgBoard'
 import destroy from '@/components/account_cancellation'
+import AllFreeCourse from '@/components/AllFreeCourse'
+import AllPayCourse from '@/components/AllPayCourse'
+import PersonalCenter from '@/components/PersonalCenter'
+import NiceUserModify from '@/components/NiceUserModify'
 import freeCourse from '@/components/show_free_course'
 import payingCourse from '@/components/show_paying_course'
 import recommendCourse from '@/components/recommend'
@@ -91,6 +95,31 @@ export default new Router({
       path: '/NiceMsgBoard',
       name: 'NiceMsgBoard',
       component: NiceMsgBoard
+    },
+    {
+      path: '/AllFreeCourse',
+      name: 'AllFreeCourse',
+      component: AllFreeCourse
+    },
+    {
+      path: '/AllPayCourse',
+      name: 'AllPayCourse',
+      component: AllPayCourse
+    },
+    {
+      path: '/PersonalCenter',
+      name: 'PersonalCenter',
+      component: PersonalCenter
+    },
+    {
+      path: '/message_board',
+      name: 'message_board',
+      component: messageboard
+    },
+    {
+      path: '/NiceUserModify',
+      name: 'NiceUserModify',
+      component: NiceUserModify
     },
     {
       path: '/backlogin',
