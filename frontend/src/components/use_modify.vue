@@ -29,17 +29,12 @@ export default {
       document.getElementById('head').click()
     },
     Upload_head: function(e) {
-      // 上传当前手机号到后端
-      this.$http.post(
-        'http://192.168.55.33:8000/app/get_user_phone',
-        JSON.stringify({ user_phone: this.user_phone })
-      )
-
       // 上传图片到后端
       var formdate = new FormData()
       var fileinfo = document.querySelector('input[type=file]').files[0]
-      // event.targer.files[0];//t.target.file["0"]
+      // 获取上传的第一份文件event.targer.files[0];//t.target.file["0"]
       formdate.append('file', fileinfo)
+      formdate.append('user_phone', this.user_phone)
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
         .post('http://192.168.55.33:8000/app/update_avator', formdate, config)
