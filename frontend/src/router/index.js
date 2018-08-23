@@ -23,6 +23,8 @@ import ReadAndBurn from '@/components/ReadAndBurn'
 import useModify from '@/components/use_modify'
 import NiceMsgBoard from '@/components/NiceMsgBoard'
 import destroy from '@/components/account_cancellation'
+import AllFreeCourse from '@/components/AllFreeCourse'
+import AllPayCourse from '@/components/AllPayCourse'
 Vue.use(Router)
 
 export default new Router({
@@ -88,6 +90,16 @@ export default new Router({
       path: '/NiceMsgBoard',
       name: 'NiceMsgBoard',
       component: NiceMsgBoard
+    },
+    {
+      path: '/AllFreeCourse',
+      name: 'AllFreeCourse',
+      component: AllFreeCourse
+    },
+    {
+      path: '/AllPayCourse',
+      name: 'AllPayCourse',
+      component: AllPayCourse
     },
     {
       path: '/backlogin',
