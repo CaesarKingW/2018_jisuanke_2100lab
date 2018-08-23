@@ -23,6 +23,7 @@ import ReadAndBurn from '@/components/ReadAndBurn'
 import useModify from '@/components/use_modify'
 import NiceMsgBoard from '@/components/NiceMsgBoard'
 import destroy from '@/components/account_cancellation'
+import allCourse from '@/components/show_all_course'
 Vue.use(Router)
 
 export default new Router({
@@ -145,6 +146,11 @@ export default new Router({
       path: '/account_destroy',
       name: 'account_destroy',
       component: destroy
+    },
+    {
+      path: '/all_course',
+      name: 'all_course',
+      component: allCourse
     }
   ]
 })

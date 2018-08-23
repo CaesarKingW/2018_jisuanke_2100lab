@@ -2,6 +2,7 @@ from django.urls import path
 from . import login_views, user_register, message_views, praise_views, wyq_views, update_personal_information, wq_views
 from . import  pic_views
 from . import account_destroy
+from . import show_all_course
 
 urlpatterns = [
     path('get_code_post', login_views.get_code_post),
@@ -28,5 +29,6 @@ urlpatterns = [
     path('delete_comment', wq_views.delete_comment),
     path('search_order', wq_views.search_order),
     path('refund', wq_views.refund),
-    path('account_destroy', account_destroy.account_destroy)
+    path('account_destroy', account_destroy.account_destroy),
+    path('show_all_course', show_all_course.show_all_course)
 ]
