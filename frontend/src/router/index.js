@@ -20,9 +20,18 @@ import PayCourseIntro from '@/components/PayCourseIntro'
 import ShowUserInfo from '@/components/ShowUserInfo'
 import ModifyUserInfo from '@/components/ModifyUserInfo'
 import ReadAndBurn from '@/components/ReadAndBurn'
+import useModify from '@/components/use_modify'
 import NiceMsgBoard from '@/components/NiceMsgBoard'
 import editCourse from '@/components/back/editCourse'
 import addCourse from '@/components/back/addCourse'
+import destroy from '@/components/account_cancellation'
+import AllFreeCourse from '@/components/AllFreeCourse'
+import AllPayCourse from '@/components/AllPayCourse'
+import PersonalCenter from '@/components/PersonalCenter'
+import NiceUserModify from '@/components/NiceUserModify'
+import freeCourse from '@/components/show_free_course'
+import payingCourse from '@/components/show_paying_course'
+import recommendCourse from '@/components/recommend'
 Vue.use(Router)
 
 export default new Router({
@@ -32,11 +41,13 @@ export default new Router({
       name: 'UserLogin',
       component: UserLogin
     },
+    // 测试用
     {
       path: '/test',
       name: 'test',
       component: test
     },
+    //
     {
       path: '/message',
       name: 'message',
@@ -73,6 +84,11 @@ export default new Router({
       component: ModifyUserInfo
     },
     {
+      path: '/user_modify',
+      name: 'user_modify',
+      component: useModify
+    },
+    {
       path: '/ReadAndBurn',
       name: 'ReadAndBurn',
       component: ReadAndBurn
@@ -83,11 +99,37 @@ export default new Router({
       component: NiceMsgBoard
     },
     {
+      path: '/AllFreeCourse',
+      name: 'AllFreeCourse',
+      component: AllFreeCourse
+    },
+    {
+      path: '/AllPayCourse',
+      name: 'AllPayCourse',
+      component: AllPayCourse
+    },
+    {
+      path: '/PersonalCenter',
+      name: 'PersonalCenter',
+      component: PersonalCenter
+    },
+    {
+      path: '/message_board',
+      name: 'message_board',
+      component: messageboard
+    },
+    {
+      path: '/NiceUserModify',
+      name: 'NiceUserModify',
+      component: NiceUserModify
+    },
+    {
       path: '/backlogin',
       name: 'backlogin',
       component: backlogin
     },
     {
+      // path: '/backstage/:user',
       path: '/backstage',
       name: 'backstage',
       component: backstage,
@@ -142,6 +184,26 @@ export default new Router({
         component: deny
       }
       ]
+    },
+    {
+      path: '/account_destroy',
+      name: 'account_destroy',
+      component: destroy
+    },
+    {
+      path: '/free_course',
+      name: 'free_course',
+      component: freeCourse
+    },
+    {
+      path: '/paying_course',
+      name: 'paying_course',
+      component: payingCourse
+    },
+    {
+      path: '/recommend_course',
+      name: 'recommend_course',
+      component: recommendCourse
     }
   ]
 })

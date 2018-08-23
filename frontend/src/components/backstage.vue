@@ -1,6 +1,7 @@
+/* eslint-disable */
 <template>
   <body>
-    <navibar/>
+    <navibar :username="username" />
     <leftnav/>
     <router-view/>
     <footer></footer>
@@ -15,7 +16,17 @@ export default {
   name: 'backstage',
   data() {
     return {
-      username: 'hasaki'
+      username: ''
+    }
+  },
+  methods: {
+    aa() {
+      console.log('this.username')
+      console.log(this.username)
+      console.log('this.username')
+    },
+    mounted(request) {
+      this.username = this.$route.params.user
     }
   },
   components: {
@@ -33,4 +44,5 @@ export default {
 .fr {
   float: right;
 }
+
 </style>
