@@ -63,6 +63,8 @@ class Course(models.Model):
     view_count = models.PositiveIntegerField(("观看量"), default=0)
     share_rate = models.FloatField(("分销比例"), blank=True, null=True)
     can_comment = models.BooleanField(("允许用户留言"), default=True)
+    created_at = models.DateTimeField(
+        default=timezone.now, auto_now=False, auto_now_add=False)
 
     def __str__(self):
         return str(self.id)
