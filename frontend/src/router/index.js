@@ -23,7 +23,8 @@ import ReadAndBurn from '@/components/ReadAndBurn'
 import useModify from '@/components/use_modify'
 import NiceMsgBoard from '@/components/NiceMsgBoard'
 import destroy from '@/components/account_cancellation'
-import allCourse from '@/components/show_all_course'
+import freeCourse from '@/components/show_free_course'
+import payingCourse from '@/components/show_paying_course'
 Vue.use(Router)
 
 export default new Router({
@@ -148,9 +149,14 @@ export default new Router({
       component: destroy
     },
     {
-      path: '/all_course',
-      name: 'all_course',
-      component: allCourse
+      path: '/free_course',
+      name: 'free_course',
+      component: freeCourse
+    },
+    {
+      path: '/paying_course',
+      name: 'paying_course',
+      component: payingCourse
     }
   ]
 })
