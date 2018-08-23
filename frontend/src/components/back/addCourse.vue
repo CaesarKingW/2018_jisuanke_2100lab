@@ -11,7 +11,7 @@ import datetime
 <div><h2 v-if="first_notice">开始播放音频前，请上传课程的第一张图片</h2>
 <h2 v-if="contin">继续上传课程的剩下图片</h2>
 <p v-if="upload_pic"><input type="file" name="pic_upload"><button @click="PicUpload()">上传</button></p>
-<p v-if="show_pic"><img v-bind:src="pic" width=90px height=90px/></p>
+<p v-if="show_pic"><img v-bind:src="pic" id="sp"/></p>
 <p><button v-if="set_start_time" @click="setStartTime()">将音频当前播放点设为图片开始时间</button><span v-if="start_time">图片开始时间当前被设置为：{{startTime}}</span></p>
 <p v-if="set_end_time"><button @click="setEndTime()">将音频当前播放点设为图片结束时间</button><span v-if="end_time">图片结束时间当前被设置为：{{endTime}}</span></p>
 <p v-if="start_time&&end_time&&!preview">当前图片的开始时间与结束时间均已被设置好，确认提交并继续上传下一张图片吗？<button @click="continu()">确认</button></p>
@@ -20,7 +20,7 @@ import datetime
 </div>
 <div v-if="real_preview">
   <div v-if="show_real_pic" >
-    <img v-bind:src="pic_to_show" width=150px height=150px/>
+    <img v-bind:src="pic_to_show" id="pts"/>
   </div>
   <audio controls="controls" id="audio" @play="Play()" @pause="Pause()" @ended="Ended()">
   <source v-bind:src="audio" type="audio/mpeg">
@@ -278,5 +278,13 @@ export default {
   background-image: 'url(../assets/jiantou.jpg)';
   width: 50px;
   height: 30px;
+}
+#sp {
+  width: 90px;
+  height: 90px;
+}
+#pts {
+  width: 150px;
+  height: 150px;
 }
 </style>
