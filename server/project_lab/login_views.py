@@ -50,4 +50,26 @@ def get_code_post(request):
     return JsonResponse(response)
 
 
-
+@require_http_methods(['POST', 'GET'])
+def get_user_code(request):
+    response = {}
+    try:
+        if request.method == 'POST':
+            global code
+            global user_phone
+            #获取用户输入的验证码
+            req = json.loads(request.body)
+            userPhone = req['phone_number']
+            userCode = req['code']
+            if userPhone == user_phone and userCode == code:
+                response['status'] = True
+                code = ''
+                user_phone = ''
+            else:
+                response['status'] = False
+            response['msg'] = 'success'
+            response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
