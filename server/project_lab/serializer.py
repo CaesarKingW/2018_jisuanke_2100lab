@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Message, Course, Order, Course_picture
+from .models import User, Message, Course, Order, Course_picture, Manager
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -7,6 +7,13 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('phone_number', 'user_name', 'head_protrait', 'welfare',
                   'Can_comment', 'Is_teacher')
+
+
+class ManagerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Manager
+        fields = ('username', 'Supermanager', 'Manage_course', 'Manage_user',
+                  'Manage_message', 'Manage_order')
 
 
 class MessageSerializer(serializers.ModelSerializer):
