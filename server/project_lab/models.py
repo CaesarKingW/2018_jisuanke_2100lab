@@ -34,6 +34,7 @@ class Manager(AbstractUser):
         return self.username
 
 
+
 # 操作历史表
 class Operating_history(models.Model):
     id = models.AutoField(primary_key=True)
@@ -138,3 +139,4 @@ class Cover_picture(models.Model):
     course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
     Cover_picture = models.ImageField(
         ("课程图片"), upload_to='course_picture', blank=True, null=True)
+        

@@ -138,13 +138,13 @@ export default new Router({
         path: 'deny',
         name: 'deny',
         component: deny
-      },
-      {
-        path: 'account_destroy',
-        name: 'account_destroy',
-        component: destroy
       }
       ]
+    },
+    {
+      path: '/account_destroy',
+      name: 'account_destroy',
+      component: destroy
     }
   ]
 })
