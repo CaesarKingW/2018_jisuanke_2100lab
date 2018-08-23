@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Message, Course, Order, Course_picture
+from .models import User, Message, Course, Order, Course_picture, Manager
 
 
 class UserSerializer(serializers.ModelSerializer):
