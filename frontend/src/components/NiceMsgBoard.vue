@@ -182,7 +182,7 @@ export default {
   cursor: pointer;
 }
 #post_button:hover {
-  background: #57a3f3;
+  background: rgb(245, 242, 242);
   cursor: pointer;
 }
 #like_button {
