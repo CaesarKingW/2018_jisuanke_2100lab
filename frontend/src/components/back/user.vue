@@ -4,6 +4,7 @@
     <button @click="search()">搜索</button>
     <div v-show="is_show">
       <div v-if="is_null==false">
+        <div><img v-bind:src="head_protrait" width=60px height=80px /></div>
         <p>用户名：<span>{{username}}</span></p>
         <p>奖励金：<span>{{welfare}}元</span></p>
         <div>
@@ -26,9 +27,7 @@ export default {
     return {
       is_show: false,
       phone_number: '',
-
       is_null: null,
-
       username: '',
       welfare: 0,
       head_protrait: '',
@@ -50,9 +49,9 @@ export default {
           console.log(res)
           this.is_null = res.is_null
           if (this.is_null === false) {
-            this.username = res.user_info.username
+            this.username = res.user_info.user_name
             this.welfare = res.user_info.welfare
-            this.head_protrait = res.user_info.head_protrait
+            this.head_protrait = 'http://192.168.55.33:8000' + res.user_info.head_protrait
             if (res.user_info.Is_teacher === true) {
               this.is_teacher = '是'
               this.authenticate_button = '取消大V身份'

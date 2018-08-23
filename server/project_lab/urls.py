@@ -29,6 +29,12 @@ urlpatterns = [
     path('delete_comment', wq_views.delete_comment),
     path('search_order', wq_views.search_order),
     path('refund', wq_views.refund),
+    path('add_img', wq_views.add_img),
+    path('add_audi', wq_views.add_audi),
+    path('set_start_time', wq_views.set_start_time),
+    path('set_end_time', wq_views.set_end_time),
+    path('add_course', wq_views.add_course),
+    path('preview', wq_views.preview),
     path('account_destroy', account_destroy.account_destroy),
     path('show_free_course', show_all_course.show_free_course),
     path('show_paying_course', show_all_course.show_paying_course)

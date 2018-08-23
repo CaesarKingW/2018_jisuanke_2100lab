@@ -21,11 +21,13 @@ def praise_record(request):
         if praise_record.count() == 0:
             response['has_praise'] = False
             Praise.objects.create(message_id=message, user_phone=user)
-            Message.objects.filter(id=message_id).update(praise_count=message.praise_count+1)
+            Message.objects.filter(id=message_id).update(
+                praise_count=message.praise_count + 1)
         else:
             response['has_praise'] = True
             Praise.objects.filter(message_id=message, user_phone=user).delete()
-            Message.objects.filter(id=message_id).update(praise_count=message.praise_count-1)
+            Message.objects.filter(id=message_id).update(
+                praise_count=message.praise_count - 1)
         response['count'] = praise_record.count()
         response['msg'] = 'success'
         response['error_num'] = 0

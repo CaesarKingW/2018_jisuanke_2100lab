@@ -6,7 +6,9 @@ from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse
 import json
 from rest_framework.response import Response
-from .serializer import UserSerializer, MessageSerializer, OrderSerializer, CourseSerializer, Course_pictureSerializer
+from .serializer import UserSerializer, MessageSerializer, OrderSerializer
+from .serializer import CourseSerializer, Course_pictureSerializer
+import datetime
 
 
 @require_http_methods(['POST'])
@@ -166,3 +168,97 @@ def refund(request):
 #                     pictures_by_course['course.id'].append(real_picture.data)
 #             real_course = CourseSerializer(course)
 #             real_courses.append(real_course.data)
+
+
+@require_http_methods(['POST'])
+def add_course(request):
+    title = json.loads(request.body)['title']
+    brief_intro = json.loads(request.body)['brief_intro']
+    course = Course(title=title, brief_introduction=brief_intro)
+    course.save()
+    course = CourseSerializer(course)
+    return JsonResponse(course.data)
+
+
+@require_http_methods(['POST'])
+def add_img(request):
+    course_id = request.POST.get('course_id')
+    course = Course.objects.get(id=course_id)
+    file_obj = request.FILES.get('file')
+    course_picture = Course_picture(course_id=course, course_picture=file_obj)
+    course_picture.save()
+    course_picture = Course_pictureSerializer(course_picture)
+    return JsonResponse(course_picture.data)
+
+
+@require_http_methods(['POST'])
+def add_audi(request):
+    file_obj = request.FILES.get('file')
+    course_id = request.POST.get('course_id')
+    course = Course.objects.get(id=course_id)
+    course.audio = file_obj
+    course.save()
+    course = CourseSerializer(course)
+    return JsonResponse(course.data)
+
+
+@require_http_methods(['POST'])
+def set_start_time(request):
+    start_time = json.loads(request.body)['start_time']
+    pic_id = json.loads(request.body)['pic_id']
+    pic = Course_picture.objects.get(id=pic_id)
+    pic.start_time = start_time
+    pic.save()
+    pic = Course_pictureSerializer(pic)
+    return JsonResponse(pic.data)
+
+
+@require_http_methods(['POST'])
+def set_end_time(request):
+    end_time = json.loads(request.body)['end_time']
+    pic_id = json.loads(request.body)['pic_id']
+    pic = Course_picture.objects.get(id=pic_id)
+    pic.end_time = end_time
+    pic.save()
+    pic = Course_pictureSerializer(pic)
+    return JsonResponse(pic.data)
+
+
+@require_http_methods(['POST'])
+def preview(request):
+    course_id = json.loads(request.body)['course_id']
+    course = Course.objects.get(id=course_id)
+    course_pictures = Course_picture.objects.filter(course_id=course)
+    course = CourseSerializer(course)
+    real_course_pictures = []
+    for course_picture in course_pictures:
+        real_course_picture = Course_pictureSerializer(course_picture)
+        real_course_pictures.append(real_course_picture.data)
+    response = {}
+    response['course'] = course.data
+    response['pictures'] = real_course_pictures
+    return JsonResponse(response)
+
+
+# @require_http_methods(['POST'])
+# def search_comment(request):
+#     phone_number = json.loads(request.body)
+#     response = {}
+#     response['if_user'] = True
+#     response['if_comment'] = True
+#     try:
+#         user = User.objects.get(phone_number=phone_number)
+#         messages = Message.objects.filter(user_phone=user)
+#         if messages.count() == 0:
+#             response['if_comment'] = False
+#             return JsonResponse(response)
+#         else:
+#             real_messages = []
+#             for message in messages:
+#                 real_message = MessageSerializer(message)
+#                 real_messages.append(real_message.data)
+#             response['messages'] = real_messages
+#     except:
+#         response['if_user'] = False
+#         return JsonResponse(response)
+#     return JsonResponse(response)

@@ -22,6 +22,8 @@ import ModifyUserInfo from '@/components/ModifyUserInfo'
 import ReadAndBurn from '@/components/ReadAndBurn'
 import useModify from '@/components/use_modify'
 import NiceMsgBoard from '@/components/NiceMsgBoard'
+import editCourse from '@/components/back/editCourse'
+import addCourse from '@/components/back/addCourse'
 import destroy from '@/components/account_cancellation'
 import AllFreeCourse from '@/components/AllFreeCourse'
 import AllPayCourse from '@/components/AllPayCourse'
@@ -135,6 +137,16 @@ export default new Router({
         path: 'course',
         name: 'course',
         component: course
+      },
+      {
+        path: 'editCourse',
+        name: 'editCourse',
+        component: editCourse
+      },
+      {
+        path: 'addCourse',
+        name: 'addCourse',
+        component: addCourse
       },
       {
         path: 'comment',
