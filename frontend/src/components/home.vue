@@ -91,15 +91,8 @@ export default {
 
 <style scoped>
 .id {
-  font-family:
-    "Helvetica Neue",
-    Helvetica,
-    "PingFang SC",
-    "Hiragino Sans GB",
-    "Microsoft YaHei",
-    "微软雅黑",
-    Arial,
-    sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
 }
 
 .content-text {
@@ -140,17 +133,17 @@ export default {
   float: left;
 }
 .roll_pic {
-    border:#99ccff solid 5px;
-    border-radius: 20px;
+  border: #99ccff solid 5px;
+  border-radius: 20px;
 }
 .myContent {
-    font-size: 63px;
+  font-size: 63px;
 }
 .album {
-    border:#99ccff solid 5px;
-    border-radius: 20px;
+  border: #99ccff solid 5px;
+  border-radius: 20px;
 }
 .album_title {
-    font-size: 20px;
+  font-size: 20px;
 }
 </style>

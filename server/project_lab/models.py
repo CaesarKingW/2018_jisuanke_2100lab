@@ -8,7 +8,7 @@ class User(models.Model):
     phone_number = models.CharField(max_length=11, primary_key=True)
     user_name = models.CharField(blank=True, null=True, max_length=15)
     head_protrait = models.ImageField(
-        upload_to='user_photos/', blank=True, null=True)
+        upload_to='', blank=True, null=True)
     welfare = models.FloatField(default=0.0)
     Can_comment = models.BooleanField(default=True)
     Is_teacher = models.BooleanField(default=False)
@@ -42,7 +42,7 @@ class Operating_history(models.Model):
 
 class Course(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField('标题', max_length=50)
+    title = models.CharField('标题', max_length=50, blank=True, null=True)
     brief_introduction = models.TextField('简介')
     audio = models.FileField(("音频"), upload_to='audio/', blank=True, null=True)
     whole_introduction = models.FileField(
@@ -66,8 +66,8 @@ class Course_picture(models.Model):
     course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
     course_picture = models.ImageField(
         ("课程图片"), upload_to='course_picture', blank=True, null=True)
-    start_time = models.DurationField((""))
-    end_time = models.DurationField((""))
+    start_time = models.FloatField(blank=True, null=True)
+    end_time = models.FloatField(blank=True, null=True)
 
 
 class Takes(models.Model):

@@ -9,7 +9,6 @@ import json
 import requests
 from .serializer import UserSerializer
 
-
 # @require_http_methods(['POST', 'GET'])
 # def user_comment1(request):
 #   info = User.objects.filter(user_name="lisi")
@@ -22,13 +21,12 @@ from .serializer import UserSerializer
 #   return JsonResponse(response, safe=False)
 
 
-
 @require_http_methods(['POST', 'GET'])
 def user_comment(request):
-  phone_number=json.loads(request.body)
-  info = User.objects.get(phone_number=phone_number)
-  info = UserSerializer(info)
-  return JsonResponse(info.data)
+    phone_number = json.loads(request.body)
+    info = User.objects.get(phone_number=phone_number)
+    info = UserSerializer(info)
+    return JsonResponse(info.data)
 
 
 # def user_comment2(request):
