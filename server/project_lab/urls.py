@@ -5,6 +5,7 @@ from . import account_destroy
 
 urlpatterns = [
     path('get_code_post', login_views.get_code_post),
+    path('get_user_code', login_views.get_user_code),
     path('register_new_user', user_register.register_new_user),
     path('show_message', message_views.show_message),
     path('add_message', message_views.add_message),

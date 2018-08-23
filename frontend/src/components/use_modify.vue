@@ -6,7 +6,7 @@
     <input type='button' value='上传头像' v-on:click="click_file">
     </div>
     <div>
-        <form @submit.prevent="modify_nickname">text
+        <form @submit.prevent="modify_nickname">
             <input type="text" v-model="nickname">
             <input type="submit" value="确认修改"/>
         </form>
@@ -45,13 +45,10 @@ export default {
         .post('http://192.168.55.33:8000/app/update_avator', formdate, config)
         .then(response => {
           console.log(response.data)
-          // var resultobj = response.data
-          // this.result = resultobj.msg
         })
 
       //  前端读取图片进行预览
       let _this = this
-      //   _this.imgObj = e.target.files['0']
       let fr = new FileReader()
       fr.onload = function() {
         _this.path = fr.result

@@ -7,7 +7,6 @@ from django.core import serializers
 from django.http import JsonResponse
 import datetime
 import os
-# from PIL import Image
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 a = ''
@@ -20,16 +19,9 @@ def update_avator(request):
         if request.method == 'POST':
             # 获取对象
             b = request.FILES.get('file')
-            # if b:
-            #     img=Image.open(b)
-            #     img.save(BASE_DIR+"/project_lab/static/media/user_photos/"+b.name)
-            # b.name = "user_photos/"+ b.name  
-            # user_phone = request.Post.get('user_phone')
             new = User.objects.get(phone_number=a)
             new.head_protrait=b
             new.save()
-            # old_user=User.objects.get(phone_number=a)
-            # response['msg'] = b.name()
             response['error_num'] = 0
     except Exception as e:
         response['msg'] = str(e)
@@ -46,7 +38,6 @@ def get_user_phone(request):
             req = json.loads(request.body)
             global a
             a = req['user_phone']
-            # User.objects.filter(user_phone=user_phone).update(head_protrait=obj)
             response['msg'] = a
             response['error_num'] = 0
     except Exception as e:
