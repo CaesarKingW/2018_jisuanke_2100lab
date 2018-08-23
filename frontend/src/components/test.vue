@@ -49,8 +49,6 @@ export default {
         .post('http://192.168.55.33:8000/app/add_picture', formdate, config)
         .then(response => {
           console.log(response.data)
-          // var resultobj = response.data
-          // this.result = resultobj.msg
         })
     }
   }

@@ -27,6 +27,9 @@ import AllFreeCourse from '@/components/AllFreeCourse'
 import AllPayCourse from '@/components/AllPayCourse'
 import PersonalCenter from '@/components/PersonalCenter'
 import NiceUserModify from '@/components/NiceUserModify'
+import freeCourse from '@/components/show_free_course'
+import payingCourse from '@/components/show_paying_course'
+import recommendCourse from '@/components/recommend'
 Vue.use(Router)
 
 export default new Router({
@@ -167,13 +170,28 @@ export default new Router({
         path: 'deny',
         name: 'deny',
         component: deny
-      },
-      {
-        path: 'account_destroy',
-        name: 'account_destroy',
-        component: destroy
       }
       ]
+    },
+    {
+      path: '/account_destroy',
+      name: 'account_destroy',
+      component: destroy
+    },
+    {
+      path: '/free_course',
+      name: 'free_course',
+      component: freeCourse
+    },
+    {
+      path: '/paying_course',
+      name: 'paying_course',
+      component: payingCourse
+    },
+    {
+      path: '/recommend_course',
+      name: 'recommend_course',
+      component: recommendCourse
     }
   ]
 })

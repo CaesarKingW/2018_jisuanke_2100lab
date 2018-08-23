@@ -52,6 +52,8 @@ class Course(models.Model):
     audio = models.FileField(("音频"), upload_to='audio/', blank=True, null=True)
     whole_introduction = models.FileField(
         ("详解"), upload_to='word/', blank=True, null=True)
+    Cover_picture = models.ImageField(
+        ("课程图片"), upload_to='course_picture', blank=True, null=True)
     Is_distory = models.BooleanField(("是否阅后即焚"), default=False)
     distory_time = models.DurationField(("可阅时长"), blank=True, null=True)
     Is_free = models.BooleanField(("免费"), default=True)
@@ -61,6 +63,8 @@ class Course(models.Model):
     view_count = models.PositiveIntegerField(("观看量"), default=0)
     share_rate = models.FloatField(("分销比例"), blank=True, null=True)
     can_comment = models.BooleanField(("允许用户留言"), default=True)
+    created_at = models.DateTimeField(
+        default=timezone.now, auto_now=False, auto_now_add=False)
 
     def __str__(self):
         return str(self.id)
@@ -130,11 +134,3 @@ class Praise(models.Model):
     message_id = models.ForeignKey(
         "Message", verbose_name=("留言编号"), on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
-
-
-#课程封面图片表
-class Cover_picture(models.Model):
-    id = models.AutoField(primary_key=True)
-    course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
-    Cover_picture = models.ImageField(
-        ("课程图片"), upload_to='course_picture', blank=True, null=True)
