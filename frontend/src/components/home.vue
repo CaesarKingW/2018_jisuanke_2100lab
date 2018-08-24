@@ -141,37 +141,37 @@ export default {
       yourname: 'vladimir'
     }
   },
-  mounted:function(){
+  mounted: function() {
     this.Judgestatus()
   },
-  methods:{
-    Judgestatus:function(){
+  methods: {
+    Judgestatus: function() {
       this.$http
-      .post('http://192.168.55.33:8000/app/get_status')
-      .then(
-        response =>{
-          this.judge = response.data.is_login
-        }
-      )
+        .post('http://192.168.55.33:8000/app/get_status')
+        .then(
+          response => {
+            this.judge = response.data.is_login
+          }
+        )
     },
     alert_log_out() {
       this.$Message.warning(this.yourname + '已登出')
     },
-    logout:function(){
+    logout: function() {
       this.$http
-      .post('http://192.168.55.33:8000/app/del_status')
-      .then(
-        response =>{
-          this.judge = response.data.is_login
-          if(response.data.username === null){
-            this.yourname = response.data.phonenumber
-          } else {
-            this.yourname = response.data.username
+        .post('http://192.168.55.33:8000/app/del_status')
+        .then(
+          response => {
+            this.judge = response.data.is_login
+            if (response.data.username === null) {
+              this.yourname = response.data.phonenumber
+            } else {
+              this.yourname = response.data.username
+            }
+            location.href = 'http://192.168.55.33:8000/#/UserLogin'
+            this.alert_log_out()
           }
-          location.href = 'http://192.168.55.33:8000/#/UserLogin'
-          this.alert_log_out()
-        }
-      )
+        )
     }
   }
 }

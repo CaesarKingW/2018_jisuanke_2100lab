@@ -8,8 +8,8 @@ test:
     stage: backendtest
     script:
         - cd ./server
-        # - python3 -m coverage run --source="." manage.py test --noinput
-        # - python3 -m coverage report
+        - python3 -m coverage run --source="." manage.py test --noinput
+        - python3 -m coverage report
 
 lint:
     stage: backendlint

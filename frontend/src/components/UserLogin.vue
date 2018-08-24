@@ -32,19 +32,18 @@ export default {
       is_login: false
     }
   },
-  mounted:function(){
+  mounted: function() {
     this.$http
-    .post('http://192.168.55.33:8000/app/get_status')
-    .then(
-      response => {
-        this.is_login = response.data.is_login
-        if(this.is_login){
-          this.alert_wrong_status(),
-          location.href = 'http://192.168.55.33:8000/#/home'
+      .post('http://192.168.55.33:8000/app/get_status')
+      .then(
+        response => {
+          this.is_login = response.data.is_login
+          if (this.is_login) {
+            this.alert_wrong_status()
+            location.href = 'http://192.168.55.33:8000/#/home'
+          }
         }
-      }
-    )
-
+      )
   },
   methods: {
     instance(type) {

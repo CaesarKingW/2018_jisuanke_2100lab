@@ -35,17 +35,17 @@ export default {
       award: 0
     }
   },
-  mounted:function(){
+  mounted: function() {
     this.$http
       .post('http://192.168.55.33:8000/app/get_status')
       .then(
-        response =>{
+        response => {
           this.phone = response.data.phonenumber
           this.nickname = response.data.username
           this.award = response.data.award
         }
       )
-  },
+  }
 }
 </script>
 <style scoped>
