@@ -2,13 +2,13 @@
 <div class="PayCourseIntro">
         <span><img id="test_pic" src="../assets/2.png"></span>
         <span><h1 id="courseTitle">标题：{{ courseTitle }}</h1></span>
-        <Button id="buy" icon="logo-usd" type="primary">购买课程</Button>
+        <Button @click="alipay()" id="buy" icon="logo-usd" type="primary">购买课程</Button>
         <Button @click="modal = true" id="share" icon="ios-card" type="primary">分销课程</Button>
         <Modal
         title="分销课程"
         v-model="modal"
         class-name="vertical-center-modal">
-        <div style="text-align: center;padding:10px;"><span id="thisURL">本页地址：{{ message }}</span>
+        <div style="text-align: center; padding:10px;"><span id="thisURL">本页地址：{{ message }}</span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <button id="copy_button" type="button"
         v-clipboard:copy="message"
@@ -44,7 +44,36 @@ export default {
       split1: 0.49,
       modal: false,
       message: window.location.href,
-      award: 10
+      award: 10,
+      orderid: '',
+      price: 100,
+      courseid: '1',
+      username: '11'
+    }
+  },
+  methods: {
+    alipay() {
+      // location.href='https://openapi.alipaydev.com/gateway.do?app_id=2016091800536766&biz_content=%7B%22subject%22%3A%22%5Cu6d4b%5Cu8bd5%5Cu8ba2%5Cu5355%22%2C%22out_trade_no%22%3A%2220170233021223%22%2C%22total_amount%22%3A100%2C%22product_code%22%3A%22FAST_INSTANT_TRADE_PAY%22%7D&charset=utf-8&method=alipay.trade.page.pay&notify_url=http%3A%2F%2Fprojectsedus.com%2F&return_url=http%3A%2F%2F192.168.55.33%3A8000%2F%23%2FPayCourseIntro&sign_type=RSA2&timestamp=2018-08-23+14%3A42%3A49&version=1.0&sign=vBgAxnq%2BicQ7yn9rEi5fDU7HRelUyLYRjHdOBd8OvWJTkSvNkCR50TTJjf6LNJSPQCbe5eMQw0r7CC8gP6ow%2Bh0NfeBehkkZkK9VrYPRG4n2cWSk%2B4Gu4Rytjm1FwrW0I%2BYV5cVbm9Zqew5ltQRiFfkjp8RBSuNKsLDl3VwYKkYNgPxJkWsI2SKSfdvs76mZNSPxBJd3ZFKkcX6vShn3H0W27BanKGZV0L%2F2T2uTgPsbNnfoeUFmxwSLMYXcmqirK57lfnf9uhOMbCofqfSBkTjVhq%2FDSTmHajph8oSxRwGpkd55cyCwLgzGSiKmL8Unx1RcMR3Tth3u2ILC8YVIdw%3D%3D'
+      var code = ''
+      var codeLength = 16
+      var random = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      for (var i = 0; i < codeLength; i++) {
+        var index = Math.floor(Math.random() * 9)
+        code += random[index]
+      }
+      this.orderid = code
+      var request = {}
+      request.orderid = this.orderid
+      request.courseid = this.courseid
+      request.username = this.username
+      console.log(request)
+      request = JSON.stringify(request)
+      this.$http
+        .post('http://192.168.55.33:8000/app/payment', request)
+        .then(response => {
+          console.log(response.data)
+          location.href = response.data
+        })
     }
   }
 }
@@ -59,74 +88,74 @@ export default {
   padding: 10px;
 }
 #test_pic {
-    border:#99ccff solid 5px;
-    position: absolute;
-    left: 2%;
-    top: 8%;
-    border-radius: 20px;
+  border: #99ccff solid 5px;
+  position: absolute;
+  left: 2%;
+  top: 8%;
+  border-radius: 20px;
 }
 #courseTitle {
-    text-align: center;
-    position: absolute;
-    right: 8%;
-    text-align: center;
-    top: 20%;
-    font-size: 3em;
-    padding: 8px 50px;
-    border: #99cccc dotted 3px;
+  text-align: center;
+  position: absolute;
+  right: 8%;
+  text-align: center;
+  top: 20%;
+  font-size: 3em;
+  padding: 8px 50px;
+  border: #99cccc dotted 3px;
 }
 #buy {
-    width: 170px;
-    height: 60px;
-    text-align: center;
-    position: absolute;
-    right: 20%;
-    top: 40%;
-    font-size: 2em;
+  width: 170px;
+  height: 60px;
+  text-align: center;
+  position: absolute;
+  right: 20%;
+  top: 40%;
+  font-size: 2em;
 }
 #share {
-    width: 170px;
-    height: 60px;
-    text-align: center;
-    position: absolute;
-    right: 20%;
-    top: 58%;
-    font-size: 2em;
+  width: 170px;
+  height: 60px;
+  text-align: center;
+  position: absolute;
+  right: 20%;
+  top: 58%;
+  font-size: 2em;
 }
 #tip {
-    width: auto;
-    height: 40px;
-    text-align: center;
-    position: absolute;
-    right: 14%;
-    top: 75%;
+  width: auto;
+  height: 40px;
+  text-align: center;
+  position: absolute;
+  right: 14%;
+  top: 75%;
 }
-.vertical-center-modal{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.vertical-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.ivu-modal{
-    top: 0;
+.ivu-modal {
+  top: 0;
 }
 #intro {
-    position: absolute;
-    top: 84%;
-    width : 100%;
-    list-style:none;
+  position: absolute;
+  top: 84%;
+  width: 100%;
+  list-style: none;
 }
 #copy_button {
-    width: 50px;
-    height:25px;
-    margin-top:10px;
-    outline:none;
-    border-radius: 4px;
-    border: none;
-    background-color: #2d8cf0;
-    color:#fff;
-    cursor: pointer;
+  width: 50px;
+  height: 25px;
+  margin-top: 10px;
+  outline: none;
+  border-radius: 4px;
+  border: none;
+  background-color: #2d8cf0;
+  color: #fff;
+  cursor: pointer;
 }
 #copy_button:hover {
-    background: #57a3f3;
+  background: #57a3f3;
 }
 </style>

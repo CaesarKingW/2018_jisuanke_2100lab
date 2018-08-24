@@ -1,5 +1,6 @@
 from django.urls import path
-from . import login_views, user_register, message_views, praise_views, wyq_views, pic_views, wq_views
+from . import login_views, user_register, message_views
+from . import praise_views, wyq_views, pic_views, wq_views
 
 urlpatterns = [
     path('get_code_post', login_views.get_code_post),
@@ -7,7 +8,6 @@ urlpatterns = [
     path('show_message', message_views.show_message),
     path('add_message', message_views.add_message),
     path('show_reply', message_views.show_reply),
-    path('user_comment', wyq_views.user_comment),
     path('manager_login', wyq_views.manager_login),
     path('manager_search', wyq_views.manager_search),
     path('manager_change', wyq_views.manager_change),
@@ -20,5 +20,6 @@ urlpatterns = [
     path('search_comment', wq_views.search_comment),
     path('delete_comment', wq_views.delete_comment),
     path('search_order', wq_views.search_order),
-    path('refund', wq_views.refund)
+    path('refund', wq_views.refund),
+    path('payment', wyq_views.payment)
 ]

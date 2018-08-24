@@ -1,32 +1,23 @@
-from .models import Course, Manager, Operating_history, User, Course_picture
+from .models import *
 from django.views.generic.base import View
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.core import serializers
-from django.forms.models import model_to_dict
 import json
 import requests
-from .serializer import UserSerializer, ManagerSerializer, Course_pictureSerializer
-
-# @require_http_methods(['POST', 'GET'])
-# def user_comment1(request):
-#   info = User.objects.filter(user_name="lisi")
-#     #response={}
-#     #response = Manager.objects.get()
-#     #response = json.loads(serializers.serialize('json', User.objects.get(phone_number="11122223333")))
-#     #manager = Manager.objects.get(username=username)
-#     #response['manager'] = json.loads(serializers.serialize('json', manager))
-#   response=json.loads(serializers.serialize('json',info))
-#   return JsonResponse(response, safe=False)
-
-
-@require_http_methods(['POST', 'GET'])
-def user_comment(request):
-    phone_number = json.loads(request.body)
-    info = Course_picture.objects.get(course_id=1)
-    info = Course_pictureSerializer(info)
-    return JsonResponse(info.data)
+from .serializer import UserSerializer, ManagerSerializer
+from .serializer import Course_pictureSerializer
+import os
+from datetime import datetime
+from Crypto.PublicKey import RSA
+from Crypto.Signature import PKCS1_v1_5
+from Crypto.Hash import SHA256
+from base64 import b64encode, b64decode
+from urllib.parse import quote_plus
+from urllib.parse import urlparse, parse_qs
+from urllib.request import urlopen
+from base64 import decodebytes, encodebytes
 
 
 @require_http_methods(['POST', 'GET'])
@@ -38,8 +29,6 @@ def manager_login(request):
             password = json.loads(request.body)['password']
             info = Manager.objects.get(username=username)
             info = info.password
-            #response = json.loads(
-            #    serializers.serialize("json", username))
             if password == info:
                 response['data'] = 'true'
             else:
@@ -89,10 +78,167 @@ def manager_search(request):
     return JsonResponse(response)
 
 
-# def user_comment2(request):
-#   # phonenumber = str(request.POST.get("phone_number"))
-#   # info = User.objects.filter(phone_number=phonenumber)
-#   # response=json.loads(serializers.serialize('json',info))
-#   # return JsonResponse(response, safe=False)
-#   req = json.loads(request.body)
-#   return JsonResponse()
+@require_http_methods(['POST', 'GET'])
+def payment(request):
+    response = {}
+    try:
+        if request.method == 'POST':
+            id = json.loads(request.body)
+            # 订单编号
+            orderid = id['orderid']
+            # 手机号
+            info = User.objects.get(user_name=id['username'])
+            phone_number = info
+            # 课程编号
+            courseid = Course.objects.get(id=id['courseid'])
+            # 支付金额
+            info = Course.objects.get(id=id['courseid'])
+            price = info.price
+            # 支付状态
+            status = "payment"
+            info = Order(
+                Order_number=orderid,
+                user_phone=phone_number,
+                course_id=courseid,
+                amount_of_money=price,
+                status=status)
+            info.save()
+
+            alipay = AliPay(
+                appid="2016091800536766",
+                app_notify_url="http://192.168.55.33:8000/#/CourseShow",
+                app_private_key_path='../../../vagrant/private_2048.txt',
+                alipay_public_key_path='../../../vagrant/alipay_key_2048.txt',
+                debug=True,  # 默认False,
+                return_url="http://192.168.55.33:8000/#/CourseShow")
+            url = alipay.direct_pay(
+                subject="测试订单", out_trade_no=orderid + '', total_amount=100)
+            re_url = "https://openapi.alipaydev.com/gateway.do?{data}".format(
+                data=url)
+            # info = ManagerSerializer(re_url)
+            return JsonResponse(re_url, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
+
+class AliPay(object):
+    """
+    支付宝支付接口
+    """
+
+    def __init__(self,
+                 appid,
+                 app_notify_url,
+                 app_private_key_path,
+                 alipay_public_key_path,
+                 return_url,
+                 debug=False):
+        self.appid = appid
+        self.app_notify_url = app_notify_url
+        self.app_private_key_path = app_private_key_path
+        self.app_private_key = None
+        self.return_url = return_url
+        with open(self.app_private_key_path) as fp:
+            self.app_private_key = RSA.importKey(fp.read())
+
+        self.alipay_public_key_path = alipay_public_key_path
+        with open(self.alipay_public_key_path) as fp:
+            self.alipay_public_key = RSA.import_key(fp.read())
+
+        if debug is True:
+            self.__gateway = "https://openapi.alipaydev.com/gateway.do"
+        else:
+            self.__gateway = "https://openapi.alipay.com/gateway.do"
+
+    def direct_pay(self,
+                   subject,
+                   out_trade_no,
+                   total_amount,
+                   return_url=None,
+                   **kwargs):
+        biz_content = {
+            "subject": subject,
+            "out_trade_no": out_trade_no,
+            "total_amount": total_amount,
+            "product_code": "FAST_INSTANT_TRADE_PAY",
+            # "qr_pay_mode":4
+        }
+
+        biz_content.update(kwargs)
+        data = self.build_body("alipay.trade.page.pay", biz_content,
+                               self.return_url)
+        return self.sign_data(data)
+
+    def build_body(self, method, biz_content, return_url=None):
+        data = {
+            "app_id": self.appid,
+            "method": method,
+            "charset": "utf-8",
+            "sign_type": "RSA2",
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "version": "1.0",
+            "biz_content": biz_content
+        }
+
+        if return_url is not None:
+            data["notify_url"] = self.app_notify_url
+            data["return_url"] = self.return_url
+
+        return data
+
+    def sign_data(self, data):
+        data.pop("sign", None)
+        # 排序后的字符串
+        unsigned_items = self.ordered_data(data)
+        unsigned_string = "&".join(
+            "{0}={1}".format(k, v) for k, v in unsigned_items)
+        sign = self.sign(unsigned_string.encode("utf-8"))
+        ordered_items = self.ordered_data(data)
+        quoted_string = "&".join(
+            "{0}={1}".format(k, quote_plus(v)) for k, v in ordered_items)
+
+        # 获得最终的订单信息字符串
+        signed_string = quoted_string + "&sign=" + quote_plus(sign)
+        return signed_string
+
+    def ordered_data(self, data):
+        complex_keys = []
+        for key, value in data.items():
+            if isinstance(value, dict):
+                complex_keys.append(key)
+
+        # 将字典类型的数据dump出来
+        for key in complex_keys:
+            data[key] = json.dumps(data[key], separators=(',', ':'))
+
+        return sorted([(k, v) for k, v in data.items()])
+
+    def sign(self, unsigned_string):
+        # 开始计算签名
+        key = self.app_private_key
+        signer = PKCS1_v1_5.new(key)
+        signature = signer.sign(SHA256.new(unsigned_string))
+        # base64 编码，转换为unicode表示并移除回车
+        sign = encodebytes(signature).decode("utf8").replace("\n", "")
+        return sign
+
+    def _verify(self, raw_content, signature):
+        # 开始计算签名
+        key = self.alipay_public_key
+        signer = PKCS1_v1_5.new(key)
+        digest = SHA256.new()
+        digest.update(raw_content.encode("utf8"))
+        if signer.verify(digest, decodebytes(signature.encode("utf8"))):
+            return True
+        return False
+
+    def verify(self, data, signature):
+        if "sign_type" in data:
+            sign_type = data.pop("sign_type")
+        # 排序后的字符串
+        unsigned_items = self.ordered_data(data)
+        message = "&".join(u"{}={}".format(k, v) for k, v in unsigned_items)
+        return self._verify(message, signature)
