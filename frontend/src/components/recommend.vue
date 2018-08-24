@@ -20,7 +20,8 @@ export default {
       free_course: [],
       paying_imgs: [],
       paying_course: [],
-      show_number: 3, // 设定主页要显示的图片数量
+      // 设定主页要显示的图片数量
+      show_number: 3,
       path: []
     }
   },
@@ -63,11 +64,8 @@ export default {
             this.paying_imgs[i].fields.Cover_picture = a
           }
           var length = 0
-          if (this.paying_imgs.length > this.show_number) {
-            length = this.show_number
-          } else {
-            length = this.paying_imgs.length
-          }
+          if (this.paying_imgs.length > this.show_number) length = this.show_number
+          else length = this.paying_imgs.length
           this.paying_course = this.paying_imgs.slice(0, length)
           console.log('success')
         },
