@@ -5,6 +5,7 @@ from django.views.decorators.http import require_http_methods
 import json
 from django.core import serializers
 from django.http import JsonResponse
+from .serializer import MessageSerializer, ReplySerializer
 
 
 #最高点赞数留言显示在顶端
@@ -16,7 +17,11 @@ def show_message(request):
         course_id = Course.objects.get(id=req)
         messages = Message.objects.filter(
             course_id=course_id).order_by('-created_at')
-        response['list'] = json.loads(serializers.serialize("json", messages))
+        real_messages = []
+        for message in messages:
+            real_message = MessageSerializer(message)
+            real_messages.append(real_message.data)
+        response['list'] = real_messages
         response['msg'] = 'success'
         response['error_num'] = 0
     except Exception as e:
@@ -57,8 +62,11 @@ def show_reply(request):
             message = Message.objects.get(id=req)
             replies = Reply.objects.filter(
                 message_id=message).order_by('created_at')
-            response['list'] = json.loads(
-                serializers.serialize("json", replies))
+            real_replies = []
+            for reply in replies:
+                real_reply = ReplySerializer(reply)
+                real_replies.append(real_reply.data)
+            response['list'] = real_replies
             response['msg'] = 'success'
             response['error'] = 0
     except Exception as e:
