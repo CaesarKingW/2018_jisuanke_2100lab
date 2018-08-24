@@ -20,7 +20,7 @@ export default {
       free_course: [],
       paying_imgs: [],
       paying_course: [],
-      show_number: 3,// 设定主页要显示的图片数量
+      show_number: 3,
       path: []
     }
   },

@@ -1,4 +1,3 @@
-
 <template>
 <div id="reply">
     <button v-on:click="dispaly_inputfield">回复</button>
