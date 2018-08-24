@@ -1,18 +1,34 @@
 stages:
-    - test
-    - lint
+    - backendtest
+    - backendlint
+    - frontendtest
+    - frontendlint
 
 test:
-    stage: test
-    tags:
-        - shared
+    stage: backendtest
     script:
-        - cd ..
+        - cd ./server
+        - python3 -m coverage run --source="." manage.py test --noinput
+        - python3 -m coverage report
 
 lint:
-    stage: lint
-    tags:
-        - shared
+    stage: backendlint
     script:
-        - cd ..
+        - cd ./server
+        # - pylint --rcfile=.pylintrc ./**/*.py || exit $((35 & $?))
+    allow_failure: false
+
+test2:
+    stage: frontendtest
+    script:
+        - cd ./frontend
+        # - npm install
+        # - npm test
+
+lint2:
+    stage: frontendlint
+    script:
+        - cd ./frontend
+        - npm install
+        - npm run lint
     allow_failure: false

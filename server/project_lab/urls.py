@@ -1,5 +1,5 @@
 from django.urls import path
-from . import login_views, user_register, message_views, praise_views, wyq_views, update_personal_information, wq_views
+from . import login_views, user_register, message_views, praise_views, wyq_views, update_personal_information, wq_views, wchxviews
 from . import  pic_views
 from . import account_destroy
 
@@ -29,5 +29,7 @@ urlpatterns = [
     path('delete_comment', wq_views.delete_comment),
     path('search_order', wq_views.search_order),
     path('refund', wq_views.refund),
-    path('account_destroy', account_destroy.account_destroy)
+    path('account_destroy', account_destroy.account_destroy),
+    path('get_status', wchxviews.get_status),
+    path('del_status', wchxviews.del_status)
 ]
