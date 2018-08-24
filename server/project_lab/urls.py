@@ -1,5 +1,5 @@
 from django.urls import path
-from . import login_views, user_register, message_views, praise_views, wyq_views, update_personal_information, wq_views
+from . import login_views, user_register, message_views, praise_views, wyq_views, update_personal_information, wq_views, wchxviews
 from . import pic_views
 from . import account_destroy
 from . import show_all_course
