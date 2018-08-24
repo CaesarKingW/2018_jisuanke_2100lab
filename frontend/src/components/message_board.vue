@@ -3,11 +3,11 @@
   <h1>评论区</h1>
   <div v-for="(item, index) of messages" :key="item.id">
       <div>
-          <h4>用户：{{item.fields.user_phone}}</h4>
+          <h4>用户：{{item.user_phone}}</h4>
           <h4>
-              {{item.fields.content}}
+              {{item.content}}
           </h4>
-          <button v-on:click="praise(item.pk, index)">👍 :{{item.fields.praise_count}}</button>
+          <button v-on:click="praise(item.pk, index)">👍 :{{item.praise_count}}</button>
           <!-- #v-bind将"  "内内容解释为表达式 -->
           <reply v-bind:title="item.pk" v-bind:user_phone="user_phone"></reply>
       </div>
@@ -83,11 +83,6 @@ export default {
       this.$http.post('http://192.168.55.33:8000/app/praise', formDate).then(
         response => {
           var hasPraise = response.data.has_praise
-          // if (hasPraise) {
-          //   this.messages[index].fields.praise_count--
-          // } else {
-          //   this.messages[index].fields.praise_count++
-          // }
           this.show_message()
           console.log(response.data)
           console.log(hasPraise)
