@@ -10,7 +10,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-
 @require_http_methods(['POST', 'GET'])
 def add_picture(request):
     response = {}
@@ -31,7 +30,7 @@ def add_picture(request):
             course_id = Course.objects.get(id=1)
             new_picture = Course_picture(
                 course_id=course_id,
-                course_picture=obj, 
+                course_picture=obj,
                 start_time=datetime.timedelta(seconds=15),
                 end_time=datetime.timedelta(seconds=18))
             new_picture.save()
@@ -47,16 +46,10 @@ def show_picture(request):
         if request.method == 'GET':
             course = Course_picture.objects.filter(id=1)
             # img = course.course_picture
-            response['img'] = json.loads(
-                serializers.serialize("json", course))
+            response['img'] = json.loads(serializers.serialize("json", course))
             response['msg'] = 'success'
             response['error_num'] = 0
     except Exception as e:
         response['msg'] = str(e)
         response['error_num'] = 1
-<<<<<<< HEAD
     return JsonResponse(response)
-=======
-
-    return JsonResponse(response)
->>>>>>> cd07fe786558079e714175ba2e2ab47433c5995f
