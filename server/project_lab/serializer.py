@@ -42,6 +42,7 @@ class CourseSerializer(serializers.ModelSerializer):
                   'whole_introduction', 'Is_distory', 'distory_time',
                   'Is_free', 'price', 'share_rate', 'can_comment')
 
+
 class Course_pictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course_picture
