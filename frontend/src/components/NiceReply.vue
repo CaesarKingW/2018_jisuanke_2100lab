@@ -30,6 +30,11 @@ export default {
   mounted: function() {
     this.show_reply()
   },
+  watch: {
+    title: function(val, oldval) {
+      this.show_reply()
+    }
+  },
   methods: {
     show_reply: function() {
       this.$http

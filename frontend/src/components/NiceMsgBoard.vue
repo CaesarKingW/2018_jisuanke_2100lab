@@ -75,6 +75,7 @@ export default {
         .then(
           response => {
             this.show_message()
+            this.message = null
             console.log(response.data)
           },
           response => {

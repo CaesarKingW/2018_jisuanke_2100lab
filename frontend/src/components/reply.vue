@@ -3,9 +3,9 @@
 <div id="reply">
     <button v-on:click="dispaly_inputfield">回复</button>
        <form v-show="IsShow" @submit.prevent="commit_reply()">
-      <input type="text" v-model="replyContent">
-      <input type="submit" value="确定"/>
-    </form>
+        <input type="text" v-model="replyContent">
+        <input type="submit" value="确定"/>
+      </form>
     <div v-for="r of replies" :key="r.key">
               <h5>
                  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;{{r.fields.user_phone}}
@@ -26,10 +26,12 @@ export default {
       replies: []
     }
   },
-  mounted: function() {
-    this.show_reply()
+  watch: {
+    title: function(val, oldval) {
+      this.show_reply()
+    }
   },
-  updated: function() {
+  mounted: function() {
     this.show_reply()
   },
   methods: {

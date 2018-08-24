@@ -76,8 +76,8 @@ class Course_picture(models.Model):
     course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
     course_picture = models.ImageField(
         ("课程图片"), upload_to='course_picture', blank=True, null=True)
-    start_time = models.DurationField((""))
-    end_time = models.DurationField((""))
+    start_time = models.FloatField(blank=True, null=True)
+    end_time = models.FloatField(blank=True, null=True)
 
 
 # 用户学习课程记录表
