@@ -1,8 +1,8 @@
 <template>
-<div id="useModify">
-    <img  id="avatar" v-bind:src="path" class="imgDiv" /><img>
-    <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head"/>
-    <div><input id="upload_button" type='button' value='上传头像' v-on:click="click_file"></div>
+<div id="ModifyInfo">
+    <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
+    <div><input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head"/>
+    <input id="upload_button" type='button' value='修改头像' v-on:click="click_file"></div>
 </div>
 </template>
 <script>
@@ -53,21 +53,22 @@ export default {
 }
 </script>
 <style scoped>
-#useModify {
-  text-align: center;
+#ModifyInfo {
+    float:left;
 }
 #avatar {
   border: #666666 solid 1px;
   border-radius: 8px;
-  width: 170px;
-  height: 170px;
+  width: 120px;
+  height: 120px;
   margin: 30px;
+  margin-left: 300px;
 }
 #upload_button {
-  width: 170px;
+  width: 120px;
   height: 40px;
   font-size: 20px;
-  margin-top: 10px;
+  margin-left: 300px;
   outline: none;
   border-radius: 4px;
   border: #666666 solid 1px;

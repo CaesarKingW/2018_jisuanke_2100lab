@@ -1,7 +1,7 @@
 <template>
   <div id="app">
+    <div id="foot">Copyright © 2018 2100实验室-佛组 All Rights Reserved</div>
   <router-view />
-  <div id="foot">Copyright © 2018 2100实验室-佛组 All Rights Reserved</div>
   </div>
 </template>
 <script>

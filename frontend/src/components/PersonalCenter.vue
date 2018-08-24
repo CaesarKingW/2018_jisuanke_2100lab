@@ -44,7 +44,7 @@
 <style scoped>
 #top_area {
   background-color: #022336;
-  width: 100%;
+  width: 1270px;
   height: 90px;
   border: none;
   border-radius: 0px;
@@ -63,7 +63,7 @@
 .blank {
   background-color: #022336;
   width: 200px;
-  height: 220px;
+  height: 600px;
   font-family: 华文中宋;
   padding: 10px;
 }
