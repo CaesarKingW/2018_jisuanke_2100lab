@@ -14,7 +14,7 @@ export default {
       default: Array
     },
     imgNumLimit: {
-      //一次最多可以上传多少张照片
+      // 一次最多可以上传多少张照片
       type: Number,
       default: 4
     }
@@ -25,7 +25,7 @@ export default {
       let fileList = tag.files
       let imgNum = fileList.length
       let _this = this
-      _this.imgArr = [] //图片数据清零
+      _this.imgArr = [] // 图片数据清零
       if (this.imgArr.length + imgNum > this.imgNumLimit) {
         alert('一次最多上传' + this.imgNumLimit + '张图片！')
         return
@@ -66,17 +66,17 @@ export default {
               canvas.height = expectHeight
               ctx.drawImage(this, 0, 0, expectWidth, expectHeight)
               var base64 = null
-              //修复ios上传图片的时候 被旋转的问题
-              if (Orientation != '' && Orientation != 1) {
+              // 修复ios上传图片的时候 被旋转的问题
+              if (Orientation !== '' && Orientation !== 1) {
                 switch (Orientation) {
-                  case 6: //需要顺时针（向左）90度旋转
+                  case 6: // 需要顺时针（向左）90度旋转
                     _this.rotateImg(this, 'left', canvas)
                     break
-                  case 8: //需要逆时针（向右）90度旋转
+                  case 8: // 需要逆时针（向右）90度旋转
                     _this.rotateImg(this, 'right', canvas)
                     break
-                  case 3: //需要180度旋转
-                    _this.rotateImg(this, 'right', canvas) //转两次
+                  case 3: // 需要180度旋转
+                    _this.rotateImg(this, 'right', canvas) // 转两次
                     _this.rotateImg(this, 'right', canvas)
                     break
                 }
@@ -101,7 +101,7 @@ export default {
       let cxt = canvas.getContext('2d')
       img.src = imgUrl
       img.onload = function() {
-        //缩放后图片的宽高
+        // 缩放后图片的宽高
         let width = img.naturalWidth / quality
         let height = img.naturalHeight / quality
         canvas.width = width
@@ -111,22 +111,22 @@ export default {
       }
     },
     rotateImg: function(img, direction, canvas) {
-      //图片旋转
-      var min_step = 0
-      var max_step = 3
+      // 图片旋转
+      var minstep = 0
+      var maxstep = 3
       if (img == null) return
       var height = img.height
       var width = img.width
       var step = 2
       if (step == null) {
-        step = min_step
+        step = minstep
       }
-      if (direction == 'right') {
+      if (direction === 'right') {
         step++
-        step > max_step && (step = min_step)
+        step > maxstep && (step = minstep)
       } else {
         step--
-        step < min_step && (step = max_step)
+        step < minstep && (step = maxstep)
       }
       var degree = step * 90 * Math.PI / 180
       var ctx = canvas.getContext('2d')

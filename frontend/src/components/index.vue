@@ -12,13 +12,12 @@
 </template>
 <style scoped>
 .content-text {
-    margin-left: 10%;
+  margin-left: 10%;
 }
 .more {
-    margin-left: 65%;
+  margin-left: 65%;
 }
 .content {
-    width: 80%；
-    height： 20%;
+  width: 80%； height： 20%;
 }
 </style>

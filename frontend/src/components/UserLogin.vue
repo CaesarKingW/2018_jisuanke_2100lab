@@ -1,20 +1,20 @@
 <template>
 <div id="UserLogin">
-    <router-link to="/home"><button id="lab">2100-lab <Icon type="md-log-in" /></button></router-link>
+    <Button id="lab" ghost><router-link to="/home"><div id="button_text">2100-lab <Icon type="md-log-in" /></div></router-link></Button>
     <br>
     <br>
     <div id="log_column">
     <h1>2100实验室</h1>
     <form method="POST" @submit.prevent="Is_normal_nubmer">
-    <Input type="input" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" style="width: 56%;" name="手机号码" v-model="login.phone_number"/>
+    <Input type="text" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" style="width: 56%;" v-model="phone_number"/>
     <input type="submit" id="getCodeButton" value="获取验证码" />
     </form>
     <form id="log_down" method="POST" @submit.prevent="comparecode">
     <Poptip trigger="focus" title="提示" content="注意区分大小写！">
-    <Input type="input" placeholder="请输入验证码"  style="width: 168%;" size="large" icon="ios-key-outline" v-model="login.usercode" />
+    <Input type="text" placeholder="请输入验证码" size="large" style="width: 366px;" icon="ios-key-outline" v-model="usercode"/>
     </Poptip>
     <br>
-    <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement" />我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
+    <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement"/>我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
     <input type="submit" id="login" value="登录" />
     </form>
     </div>
@@ -24,14 +24,11 @@
 export default {
   data() {
     return {
-      commit_phone: null,
-      login: {
-        checkCode: null,
-        phone_number: null,
-        usercode: null
-      },
+      phone_number: null,
+      usercode: null,
       isDisabled: false,
-      isChecked: false
+      isChecked: false,
+      status: false
     }
   },
   methods: {
@@ -66,6 +63,9 @@ export default {
     alert_wrong_phone() {
       this.$Message.error('请输入正确的电话号码')
     },
+    alert_wrong_user() {
+      this.$Message.error('您的手机号已被注销，请更换手机号')
+    },
     handleDisabled: function() {
       this.isChecked = !this.isChecked
       if (this.isChecked === true) {
@@ -74,61 +74,54 @@ export default {
         this.isDisabled = false
       }
     },
-    createCode() {
-      var code = ''
-      var codeLength = 4 // 验证码的长度
-      var random = [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        'A',
-        'B',
-        'C',
-        'D',
-        'E',
-        'F',
-        'G',
-        'H',
-        'I',
-        'J',
-        'K',
-        'L',
-        'M',
-        'N',
-        'O',
-        'P',
-        'Q',
-        'R',
-        'S',
-        'T',
-        'U',
-        'V',
-        'W',
-        'X',
-        'Y',
-        'Z'
-      ] // 随机数
-      for (var i = 0; i < codeLength; i++) {
-        // 循环操作
-        var index = Math.floor(Math.random() * 36) // 取得随机数的索引（0~35）
-        code += random[index] // 根据索引取得随机数加到code上
-      }
-      this.login.checkCode = code // 把code值赋给验证码
-    },
-
     getcode: function() {
-      this.commit_phone = this.login.phone_number
-      this.createCode()
-      var phonenumber = JSON.stringify(this.login)
+      var phonenumber = JSON.stringify(this.phone_number)
       this.$http
         .post('http://192.168.55.33:8000/app/get_code_post', phonenumber)
+        .then(
+          response => {
+            console.log(response.data)
+            var Isexists = response.data.Is_exists
+            if (Isexists === false) {
+              this.alert_wrong_user()
+              this.phone_number = null
+            }
+          },
+          response => {
+            console.log('error')
+          }
+        )
+    },
+    comparecode: function() {
+      if (
+        !this.phone_number &&
+        typeof this.phone_number !== 'undefined' &&
+        this.phone_number !== 0
+      ) {
+        this.alert_input_phone()
+      } else if (
+        !this.usercode &&
+        typeof this.usercode !== 'undefined' &&
+        this.usercode !== 0
+      ) {
+        this.alert_input_code()
+      } else if (this.isDisabled === false) {
+        this.alert_agreement()
+      } else {
+        this.verify_the_login()
+      }
+    },
+    Is_normal_nubmer: function() {
+      if (!/^1[34578]\d{9}$/.test(this.phone_number)) {
+        this.alert_wrong_phone()
+      } else {
+        this.getcode()
+      }
+    },
+    Register_new_user: function() {
+      var userphone = JSON.stringify(this.phone_number)
+      this.$http
+        .post('http://192.168.55.33:8000/app/register_new_user', userphone)
         .then(
           response => {
             console.log(response.data)
@@ -138,67 +131,63 @@ export default {
           }
         )
     },
-    comparecode: function() {
-      if (
-        !this.login.phone_number &&
-        typeof this.login.phone_number !== 'undefined' &&
-        this.login.phone_number !== 0
-      ) {
-        this.alert_input_phone()
-      } else if (
-        !this.login.usercode &&
-        typeof this.login.usercode !== 'undefined' &&
-        this.login.usercode !== 0
-      ) {
-        this.alert_input_code()
-      } else if (this.isDisabled === false) {
-        this.alert_agreement()
-      } else if (
-        this.login.usercode === this.login.checkCode &&
-        this.commit_phone === this.login.phone_number
-      ) {
-        this.success_login()
-        this.login.phone_number = null
-        this.login.checkCode = null
-        this.login.usercode = null
-        this.commit_phone = null
-      } else this.alert_wrong_code()
-      console.log(this.login.phone_number)
-    },
-    Is_normal_nubmer: function() {
-      if (!/^1[34578]\d{9}$/.test(this.login.phone_number)) {
-        this.alert_wrong_phone()
-      } else {
-        this.getcode()
-      }
+    verify_the_login: function() {
+      this.$http
+        .post(
+          'http://192.168.55.33:8000/app/get_user_code',
+          JSON.stringify({
+            phone_number: this.phone_number,
+            code: this.usercode
+          })
+        )
+        .then(
+          response => {
+            this.status = response.data.status
+            console.log(this.status)
+            if (this.status) {
+              this.success_login()
+              this.Register_new_user()
+              this.phone_number = null
+              this.usercode = null
+              this.commit_phone = null
+              // this.status = false
+              // 用户跳转到主页
+            } else {
+              this.alert_wrong_code()
+              console.log(this.phone_number)
+            }
+          },
+          response => {
+            console.log(response.data)
+          }
+        )
     }
   }
 }
 </script>
 <style scoped>
 #lab {
-  margin-left: 81.5%;
+  margin-left: 1032px;
   font-size: 18px;
-  margin-top: 18px;
+  margin-top: 28px;
   margin-bottom: 18px;
-  width: 120px;
   height: 41px;
-  outline: none;
   border-radius: 4px;
   border: none;
   background-color: #075182;
-  color: #fff;
-  cursor: pointer;
 }
 #lab:hover {
   background: #285f83;
+}
+#button_text {
+  color: #fff;
 }
 #UserLogin {
   background-image: url('../assets/BALL.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 583px;
-  background-attachment: fixed;
+  /* background-attachment: fixed; */
 }
 #log_column {
   width: 400px;

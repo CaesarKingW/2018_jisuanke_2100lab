@@ -1,156 +1,55 @@
 <template>
-<div id="test">
-    <div id="triangle"></div>
-    <h1>2100实验室</h1>
-    <br>
-    <h1>登录</h1>
-    <form method="POST" @submit.prevent="Is_normal_nubmer">
-    手机号码：
-    <input type="input" name="手机号码" v-model="login.phone_number"/>
-    <input type="submit" value="获取验证码"/>
-    </form>
-    <form method="POST" @submit.prevent="comparecode">
-        验证码： <input type="input" v-model="login.usercode"/>
-        <input type="submit" value="登录"/>
-    </form>
-    <template>
-<div id ='(test)add_picture'>
-    <Upload action="http://192.168.55.33:8000/app/add_picture" accept="image">
-       <!-- <img id="avatar" src="../assets/little_avatar.png"> -->
-       <div><Button style="margin: 10px;" size="large" type="primary">上传头像</Button></div>
-    </Upload>
-</div>
+  <body>
+    <!-- <form action="http://192.168.55.33:8000/app/add_picture" method="post" enctype="multipart/form-data">
+        <input type="file" name="fafafa">
+        <input type="submit">
+    </form> -->
+    <div>
+      <input type="file" name="file" id="file_upload"/>
+      <input type="button" value="上传" v-on:click="FileUpload"/>
+    </div>
+    <img v-bind:src= path />
+    <img >
+</body>
 </template>
-</div>
-</template>
-
 <script>
 export default {
   data() {
     return {
-      commit_phone: null,
-      login: {
-        checkCode: null,
-        phone_number: null,
-        usercode: null
-      }
+      img: [],
+      path: ''
     }
   },
+  mounted: function() {
+    this.show_picture()
+  },
   methods: {
-    createCode() {
-      var code = ''
-      var codeLength = 4 // 验证码的长度
-      var random = [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        'A',
-        'B',
-        'C',
-        'D',
-        'E',
-        'F',
-        'G',
-        'H',
-        'I',
-        'J',
-        'K',
-        'L',
-        'M',
-        'N',
-        'O',
-        'P',
-        'Q',
-        'R',
-        'S',
-        'T',
-        'U',
-        'V',
-        'W',
-        'X',
-        'Y',
-        'Z'
-      ] // 随机数
-      for (var i = 0; i < codeLength; i++) {
-        // 循环操作
-        var index = Math.floor(Math.random() * 36) // 取得随机数的索引（0~35）
-        code += random[index] // 根据索引取得随机数加到code上
-      }
-      this.login.checkCode = code // 把code值赋给验证码
+    show_picture: function() {
+      this.$http.get('http://192.168.55.33:8000/app/show_picture').then(
+        response => {
+          this.img = response.data.img
+          this.path =
+            'http://192.168.55.33:8000/media/' +
+            this.img[0].fields.course_picture
+          console.log(this.img)
+          console.log(this.path)
+          console.log('succerr')
+        },
+        response => {
+          console.log('error')
+        }
+      )
     },
-
-    getcode: function() {
-      this.commit_phone = this.login.phone_number
-      this.createCode()
-      var phonenumber = JSON.stringify(this.login)
+    FileUpload: function() {
+      var formdate = new FormData()
+      var fileinfo = document.querySelector('input[type=file]').files[0] // event.targer.files[0];//t.target.file["0"]
+      formdate.append('file', fileinfo)
+      let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
-        .post('http://192.168.55.33:8000/app/get_code_post', phonenumber)
-        .then(
-          response => {
-            console.log(response.data)
-          },
-          response => {
-            console.log('error')
-          }
-        )
-    },
-
-    comparecode: function() {
-      if (
-        !this.login.phone_number &&
-        typeof this.login.phone_number !== 'undefined' &&
-        this.login.phone_number !== 0
-      ) {
-        alert('请输入手机号')
-      } else if (
-        !this.login.usercode &&
-        typeof this.login.usercode !== 'undefined' &&
-        this.login.usercode !== 0
-      ) {
-        alert('请输入验证码')
-      } else if (
-        this.login.usercode === this.login.checkCode &&
-        this.commit_phone === this.login.phone_number
-      ) {
-        alert('登录成功')
-        this.Register_new_user()
-        this.login.phone_number = null
-        this.login.checkCode = null
-        this.login.usercode = null
-        this.commit_phone = null
-      } else {
-        alert('登录失败')
-        console.log(this.login.phone_number)
-      }
-    },
-
-    Is_normal_nubmer: function() {
-      if (!/^1[34578]\d{9}$/.test(this.login.phone_number)) {
-        alert('手机号码有误，请重填')
-      } else {
-        this.getcode()
-      }
-    },
-
-    Register_new_user: function() {
-      var userphone = JSON.stringify(this.login.phone_number)
-      this.$http
-        .post('http://192.168.55.33:8000/app/register_new_user', userphone)
-        .then(
-          response => {
-            console.log(response.data)
-          },
-          response => {
-            console.log('error')
-          }
-        )
+        .post('http://192.168.55.33:8000/app/add_picture', formdate, config)
+        .then(response => {
+          console.log(response.data)
+        })
     }
   }
 }

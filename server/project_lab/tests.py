@@ -1,14 +1,15 @@
+# -*- coding: utf-8 -*-
+import requests
+import json
 from django.test import TestCase
 from django.test import Client
 from .utils.yunpian import YunPian
 
 
+
 # Create your tests here.
 #验证get请求
-class GetTest(TestCase):
-    def test_show_message(self):
-        response = self.client.get('/app/show_message')
-        self.assertEqual(response.status_code, 200)
+# class GetTest(TestCase):
 
 
 #验证post请求
@@ -29,8 +30,12 @@ class PostTest(TestCase):
         response = self.client.post('/app/show_reply')
         self.assertEqual(response.status_code, 200)
 
+    def test_show_message(self):
+        response = self.client.post('/app/show_message')
+        self.assertEqual(response.status_code, 200)
 
-验证短信发送功能
+
+#验证短信发送功能
 class SendMessage(TestCase):
     def test_yunpian(self):
         yun_pian = YunPian("264fb31e3ba88e5c55572dd977b2f372")
