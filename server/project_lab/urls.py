@@ -1,11 +1,6 @@
 from django.urls import path
-<<<<<<< HEAD
-from . import login_views, user_register, message_views, praise_views, wyq_views, update_personal_information, wq_views, wchxviews
-from . import  pic_views
-=======
 from . import login_views, user_register, message_views, praise_views, wyq_views, update_personal_information, wq_views
 from . import pic_views
->>>>>>> f68ec855770ee0e9f74c7f39a376adfa4122f086
 from . import account_destroy
 from . import show_all_course
 
