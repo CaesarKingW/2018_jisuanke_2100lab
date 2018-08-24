@@ -36,13 +36,20 @@ export default {
       NiceReplies: [],
       // 先假定当前课程为1，用户手机号为17602284691
       course_id: 1,
-      user_phone: '17602284691'
+      user_phone: ''
     }
   },
   components: {
     NiceReply
   },
   mounted: function() {
+    console.log()
+    this.$http
+      .post('http://192.168.55.33:8000/app/get_status')
+      .then(response => {
+        this.user_phone = response.data.list[0].pk
+        console.log(this.user_phone)
+      })
     this.show_message()
   },
   methods: {
