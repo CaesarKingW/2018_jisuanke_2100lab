@@ -1,8 +1,8 @@
 <template>
     <div class="PersonalCenter">
-        <Card id="top_area">
+        <Card id="topArea">
             <div>
-                <Divider id="MyCenter">个人中心</Divider>
+                <Divider id="myCenter">个人中心</Divider>
             </div>
         </Card>
         <div id="navigation">
@@ -42,7 +42,7 @@
     </div>
 </template>
 <style scoped>
-#top_area {
+#topArea {
   background-color: #022336;
   width: 1270px;
   height: 90px;
@@ -70,7 +70,7 @@
 #navigation {
   float: left;
 }
-#MyCenter {
+#myCenter {
   text-align: center;
   font-size: 28px;
   font-family: 华文中宋;
