@@ -27,7 +27,6 @@ import addCourse from '@/components/back/addCourse'
 import destroy from '@/components/account_cancellation'
 import AllFreeCourse from '@/components/AllFreeCourse'
 import AllPayCourse from '@/components/AllPayCourse'
-import PersonalCenter from '@/components/PersonalCenter'
 import NiceUserModify from '@/components/NiceUserModify'
 import freeCourse from '@/components/show_free_course'
 import payingCourse from '@/components/show_paying_course'
@@ -107,11 +106,6 @@ export default new Router({
       path: '/AllPayCourse',
       name: 'AllPayCourse',
       component: AllPayCourse
-    },
-    {
-      path: '/PersonalCenter',
-      name: 'PersonalCenter',
-      component: PersonalCenter
     },
     {
       path: '/message_board',

@@ -43,21 +43,6 @@ export default {
     NiceReply
   },
   mounted: function() {
-    // this.$http
-    //   .post(
-    //     'http://192.168.55.33:8000/app/show_message',
-    //     JSON.stringify(this.course_id)
-    //   )
-    //   .then(
-    //     response => {
-    //       this.messages = response.data.list
-    //       console.log(this.messages)
-    //       console.log('success')
-    //     },
-    //     response => {
-    //       console.log('error')
-    //     }
-    //   )
     this.show_message()
   },
   methods: {
