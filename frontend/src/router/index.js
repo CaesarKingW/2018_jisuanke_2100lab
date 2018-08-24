@@ -30,6 +30,7 @@ import AllPayCourse from '@/components/AllPayCourse'
 import NiceUserModify from '@/components/NiceUserModify'
 import freeCourse from '@/components/show_free_course'
 import payingCourse from '@/components/show_paying_course'
+import userInfo from '@/components/userInfo'
 import recommendCourse from '@/components/recommend'
 Vue.use(Router)
 
@@ -198,6 +199,11 @@ export default new Router({
       path: '/recommend_course',
       name: 'recommend_course',
       component: recommendCourse
+    },
+    {
+      path: '/user_info',
+      name: 'userIinfo',
+      component: userInfo
     }
   ]
 })
