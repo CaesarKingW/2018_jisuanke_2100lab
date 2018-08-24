@@ -8,7 +8,7 @@ test:
     stage: backendtest
     script:
         - cd ./server
-        - pip install pycrypto
+        - pip3 install pycrypto
         - python3 -m coverage run --source="." manage.py test --noinput
         - python3 -m coverage report
 
