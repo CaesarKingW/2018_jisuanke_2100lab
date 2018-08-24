@@ -63,6 +63,9 @@ export default {
     alert_wrong_phone() {
       this.$Message.error('请输入正确的电话号码')
     },
+    alert_wrong_user() {
+      this.$Message.error('您的手机号已被注销，请更换手机号')
+    },
     handleDisabled: function() {
       this.isChecked = !this.isChecked
       if (this.isChecked === true) {
@@ -78,6 +81,11 @@ export default {
         .then(
           response => {
             console.log(response.data)
+            var Isexists = response.data.Is_exists
+            if (Isexists === false) {
+              this.alert_wrong_user()
+              this.phone_number = null
+            }
           },
           response => {
             console.log('error')
