@@ -72,7 +72,7 @@ export default {
         .post('http://192.168.55.33:8000/app/payment', request)
         .then(response => {
           console.log(response.data)
-          location.href = response.data
+          window.location.href = response.data
         })
     }
   }

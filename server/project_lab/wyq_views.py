@@ -1,7 +1,7 @@
 from .models import *
 from django.views.generic.base import View
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from django.core import serializers
 import json
@@ -18,6 +18,7 @@ from urllib.parse import quote_plus
 from urllib.parse import urlparse, parse_qs
 from urllib.request import urlopen
 from base64 import decodebytes, encodebytes
+from django.conf import settings
 
 
 @require_http_methods(['POST', 'GET'])
@@ -106,9 +107,9 @@ def payment(request):
 
             alipay = AliPay(
                 appid="2016091800536766",
-                app_notify_url="http://192.168.55.33:8000/#/CourseShow",
-                app_private_key_path='../../../vagrant/private_2048.txt',
-                alipay_public_key_path='../../../vagrant/alipay_key_2048.txt',
+                app_notify_url="http://192.168.55.33:8000/#/app/notify",
+                app_private_key_path=settings.STATIC_ROOT+'/private_2048.txt',
+                alipay_public_key_path=settings.STATIC_ROOT+'/alipay_key_2048.txt',
                 debug=True,  # 默认False,
                 return_url="http://192.168.55.33:8000/#/CourseShow")
             url = alipay.direct_pay(
@@ -122,6 +123,32 @@ def payment(request):
         response['msg'] = str(e)
         response['error_num'] = 1
     return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def alipay_notify(request):
+    # 存放post里面所有的数据
+    processed_dict = {}
+    try:
+        # 取出post里面的数据
+        for key, value in request.POST.items():
+            processed_dict[key] = value
+        # 商户网站唯一订单号
+        orderid = processed_dict.get('out_trade_no', None)
+        # 查询数据库中订单记录
+        info = Order.objects.get(Order_number=orderid)
+        courseid = info.course_id
+        info.status = "completed"
+        info.save()
+        info = Course.objects.get(id=courseid)
+        info.sale_count = info.sale_count + 1
+        info.save()
+        return JsonResponse("success", safe=False)
+    except Exception as e:
+        processed_dict['data'] = 'false'
+        processed_dict['msg'] = str(e)
+        processed_dict['error_num'] = 1
+    return JsonResponse(processed_dict)
 
 
 class AliPay(object):

@@ -21,5 +21,6 @@ urlpatterns = [
     path('delete_comment', wq_views.delete_comment),
     path('search_order', wq_views.search_order),
     path('refund', wq_views.refund),
-    path('payment', wyq_views.payment)
+    path('payment', wyq_views.payment),
+    path('notify', wyq_views.alipay_notify)
 ]
