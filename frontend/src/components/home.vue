@@ -10,7 +10,10 @@
     <Divider type="vertical" />
     <a class="navi" href="#AboutUs">关于我们</a>
     <Divider type="vertical" />
-    <router-link to="/UserLogin"><a class="navi">用户登录</a></router-link>
+    <router-link to="/ShowUserInfo" v-if="judge"><a class="navi">个人中心</a></router-link>
+    <a class="navi" @click="logout" v-if="judge">用户登出</a>
+    <router-link to="/UserLogin" v-else><a class="navi">用户登录</a></router-link>
+
      </div>
      <!-- 走马灯 -->
      <div align="center" id="carousel" class="carousel">
@@ -130,10 +133,45 @@ export default {
   name: 'home',
   data() {
     return {
+      judge: false,
       title1: '季节是怎么形成的',
       title2: '谁住在壳里',
       title3: '夜行性动物住在哪儿',
-      value: 0
+      value: 0,
+      yourname: 'vladimir'
+    }
+  },
+  mounted: function() {
+    this.Judgestatus()
+  },
+  methods: {
+    Judgestatus: function() {
+      this.$http
+        .post('http://192.168.55.33:8000/app/get_status')
+        .then(
+          response => {
+            this.judge = response.data.is_login
+          }
+        )
+    },
+    alert_log_out() {
+      this.$Message.warning(this.yourname + '已登出')
+    },
+    logout: function() {
+      this.$http
+        .post('http://192.168.55.33:8000/app/del_status')
+        .then(
+          response => {
+            this.judge = response.data.is_login
+            if (response.data.username === null) {
+              this.yourname = response.data.phonenumber
+            } else {
+              this.yourname = response.data.username
+            }
+            location.href = 'http://192.168.55.33:8000/#/UserLogin'
+            this.alert_log_out()
+          }
+        )
     }
   }
 }
@@ -214,8 +252,8 @@ export default {
   text-align: center;
 }
 .id {
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
-    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 .more {
   margin-left: 65%;
