@@ -75,17 +75,27 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'root',
-        'PASSWORD': 'vagrant',
-        'NAME': 'project_lab',
-        'OPTIONS': {
-            'read_default_file': os.path.join(BASE_DIR, 'server/database.cnf'),
+
+if 'test' in sys.argv:
+    DATABASES = {
+        'default':{
+             'ENGINE': 'django.db.backends.sqlite3',
+             'HOST': 'localhost'
+        }
+
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'USER': 'root',
+            'PASSWORD': 'vagrant',
+            'NAME': 'project_lab',
+            'OPTIONS': {
+                'read_default_file': os.path.join(BASE_DIR, 'server/database.cnf'),
+            }
         }
     }
-}
 
 
 # Password validation
