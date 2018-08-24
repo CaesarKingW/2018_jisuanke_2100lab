@@ -10,7 +10,7 @@
     <Divider type="vertical" />
     <a class="navi" href="#AboutUs">关于我们</a>
     <Divider type="vertical" />
-    <router-link to="/ShowUserInfo" v-if="judge"><a class="navi">个人中心</a></router-link>
+    <router-link to="/PersonalCenter" v-if="judge"><a class="navi">个人中心</a></router-link>
     <a class="navi" @click="logout" v-if="judge">用户登出</a>
     <router-link to="/UserLogin" v-else><a class="navi">用户登录</a></router-link>
 
@@ -148,11 +148,9 @@ export default {
     Judgestatus: function() {
       this.$http
         .post('http://192.168.55.33:8000/app/get_status')
-        .then(
-          response => {
-            this.judge = response.data.is_login
-          }
-        )
+        .then(response => {
+          this.judge = response.data.is_login
+        })
     },
     alert_log_out() {
       this.$Message.warning(this.yourname + '已登出')
@@ -160,18 +158,16 @@ export default {
     logout: function() {
       this.$http
         .post('http://192.168.55.33:8000/app/del_status')
-        .then(
-          response => {
-            this.judge = response.data.is_login
-            if (response.data.username === null) {
-              this.yourname = response.data.phonenumber
-            } else {
-              this.yourname = response.data.username
-            }
-            location.href = 'http://192.168.55.33:8000/#/UserLogin'
-            this.alert_log_out()
+        .then(response => {
+          this.judge = response.data.is_login
+          if (response.data.username === null) {
+            this.yourname = response.data.phonenumber
+          } else {
+            this.yourname = response.data.username
           }
-        )
+          location.href = 'http://192.168.55.33:8000/#/UserLogin'
+          this.alert_log_out()
+        })
     }
   }
 }
@@ -179,7 +175,7 @@ export default {
 <style scoped>
 .CoverPic {
   text-align: center;
-  border:black solid 2px;
+  border: black solid 2px;
   border-radius: 3px;
 }
 .CoverTitle {
@@ -252,8 +248,8 @@ export default {
   text-align: center;
 }
 .id {
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
 }
 .more {
   margin-left: 65%;

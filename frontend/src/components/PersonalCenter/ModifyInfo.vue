@@ -23,7 +23,7 @@ export default {
       path: '',
       default_avator: require('../../assets/little_avatar.png'),
       // 应为当前登录用户的手机号，现暂时设置为一名已存在的用户的手机号
-      user_phone: '17602284691',
+      user_phone: '',
       nickname: '',
       oldname: '',
       oldpath: ''
@@ -34,23 +34,26 @@ export default {
   },
   methods: {
     get_old_avator: function() {
-      this.$http
-        .post(
-          'http://192.168.55.33:8000/app/get_old_avator',
-          JSON.stringify(this.user_phone)
-        )
-        .then(response => {
-          this.oldpath = response.data.oldpath[0].fields.head_protrait
-          this.oldname = response.data.oldpath[0].fields.user_name
-          console.log(this.oldname)
-          console.log(this.oldpath)
+      this.$http.post('http://192.168.55.33:8000/app/get_status').then(
+        response => {
+          var obj = []
+          obj = response.data.list
+          this.oldpath = obj[0].fields.head_protrait
+          this.user_phone = obj[0].pk
+          console.log(this.user_phone)
+          this.oldname = obj[0].fields.user_name
           if (this.oldpath === '') {
             this.path = this.default_avator
           } else {
             this.path = 'http://192.168.55.33:8000/media/' + this.oldpath
             this.oldpath = ''
           }
-        })
+          console.log('success')
+        },
+        response => {
+          console.log('error')
+        }
+      )
     },
     click_file: function() {
       document.getElementById('head').click()
@@ -96,7 +99,6 @@ export default {
         )
         .then(
           response => {
-            console.log(response.date)
             console.log('success')
             this.get_old_avator()
             this.nickname = ''
