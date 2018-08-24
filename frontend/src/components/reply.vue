@@ -29,6 +29,9 @@ export default {
   mounted: function() {
     this.show_reply()
   },
+  updated: function() {
+    this.show_reply()
+  },
   methods: {
     show_reply: function() {
       this.$http
