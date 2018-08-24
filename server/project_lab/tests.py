@@ -1,12 +1,15 @@
+# -*- coding: utf-8 -*-
+import requests
+import json
 from django.test import TestCase
 from django.test import Client
 from .utils.yunpian import YunPian
 
 
+
 # Create your tests here.
 #验证get请求
 # class GetTest(TestCase):
-
 
 
 #验证post请求

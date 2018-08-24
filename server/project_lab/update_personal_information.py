@@ -9,8 +9,6 @@ import datetime
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-a = ''
-
 
 @require_http_methods(['POST', 'GET'])
 def update_avator(request):
@@ -18,27 +16,12 @@ def update_avator(request):
     try:
         if request.method == 'POST':
             # 获取对象
-            b = request.FILES.get('file')
-            new = User.objects.get(phone_number=a)
-            new.head_protrait=b
+            obj = request.FILES.get('file')
+            phone= request.POST.get('user_phone')
+            new = User.objects.get(phone_number=phone)
+            new.head_protrait = obj
             new.save()
-            response['error_num'] = 0
-    except Exception as e:
-        response['msg'] = str(e)
-        response['error_num'] = 1
-    return JsonResponse(response)
-
-
-@require_http_methods(['POST', 'GET'])
-def get_user_phone(request):
-    response = {}
-    try:
-        if request.method == 'POST':
-            # 获取对象
-            req = json.loads(request.body)
-            global a
-            a = req['user_phone']
-            response['msg'] = a
+            response['msg'] = 'success'
             response['error_num'] = 0
     except Exception as e:
         response['msg'] = str(e)
@@ -60,3 +43,20 @@ def update_nickname(request):
     except Exception as e:
         response['msg'] = str(e)
         response['error_num'] = 1
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+def get_old_avator(request):
+    response = {}
+    try:
+        if request.method == 'POST':
+            req = json.loads(request.body)
+            user = User.objects.filter(phone_number=req)
+            response['oldpath'] = json.loads(serializers.serialize("json",user))
+            response['msg'] = 'success'
+            response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)

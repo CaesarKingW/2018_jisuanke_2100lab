@@ -37,7 +37,9 @@
     </div>
     <div class="gengduo">
         <Poptip trigger="hover" title="免费内容预览" content="点击查看所有免费文章。">
-        <Button id="button" ghost>查看更多<Icon type="md-log-in" /></Button>
+        <Button id="button" ghost><router-link to="/AllFreeCourse">
+        <div class="button_text">查看更多<Icon type="md-log-in" /></div>
+        </router-link></Button>
         </Poptip>
     </div>
     </div>
@@ -78,7 +80,9 @@
     </div>
     <div class="gengduo">
         <Poptip trigger="hover" title="付费内容预览" content="点击查看所有付费文章。">
-        <Button id="button" ghost>查看更多<Icon type="md-log-in" /></Button>
+        <Button id="button" ghost><router-link to="/AllPayCourse">
+        <div class="button_text">查看更多<Icon type="md-log-in" /></div>
+        </router-link></Button>
         </Poptip>
     </div>
     </div>
@@ -173,6 +177,9 @@ export default {
 }
 </script>
 <style scoped>
+.button_text {
+  color:#fff;
+}
 .navibar {
   z-index: 9999;
   background-color: #fff;

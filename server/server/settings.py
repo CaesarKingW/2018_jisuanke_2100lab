@@ -136,6 +136,6 @@ STATICFILES_DIRS = [
 #设置静态文件的本地绝对路径
 STATIC_ROOT = os.path.join(BASE_DIR, 'project_lab', 'static')
 #设置动态文件的本地绝对路径
-MEDIA_URL = '/static/media/'
-MEDIA_ROOT = os.path.join(STATIC_ROOT, "media").replace('\\','/')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(STATIC_ROOT, "media").replace('\\', '/')
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

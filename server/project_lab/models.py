@@ -7,7 +7,8 @@ from django.contrib.auth.models import AbstractUser
 # 用户表
 class User(models.Model):
     phone_number = models.CharField(max_length=11, primary_key=True)
-    user_name = models.CharField(blank=True, null=True, max_length=15)
+    user_name = models.CharField(
+        max_length=15, blank=False, default="2100实验室用户")
     head_protrait = models.ImageField(
         upload_to='user_photos', blank=True, null=True)
     welfare = models.FloatField(default=0.0)
@@ -34,7 +35,6 @@ class Manager(AbstractUser):
         return self.username
 
 
-
 # 操作历史表
 class Operating_history(models.Model):
     id = models.AutoField(primary_key=True)
@@ -53,7 +53,9 @@ class Course(models.Model):
     audio = models.FileField(("音频"), upload_to='audio/', blank=True, null=True)
     whole_introduction = models.FileField(
         ("详解"), upload_to='word/', blank=True, null=True)
-    Is_distory = models.BooleanField(("是否阅后即焚"), default=False)
+    Cover_picture = models.ImageField(
+        ("课程图片"), upload_to='course_picture', blank=True, null=True)
+    Is_destroy = models.BooleanField(("是否阅后即焚"), default=False)
     distory_time = models.DurationField(("可阅时长"), blank=True, null=True)
     Is_free = models.BooleanField(("免费"), default=True)
     price = models.FloatField(("价格"), blank=True, null=True, default=0.0)
@@ -62,6 +64,8 @@ class Course(models.Model):
     view_count = models.PositiveIntegerField(("观看量"), default=0)
     share_rate = models.FloatField(("分销比例"), blank=True, null=True)
     can_comment = models.BooleanField(("允许用户留言"), default=True)
+    created_at = models.DateTimeField(
+        default=timezone.now, auto_now=False, auto_now_add=False)
 
     def __str__(self):
         return str(self.id)
@@ -73,8 +77,8 @@ class Course_picture(models.Model):
     course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
     course_picture = models.ImageField(
         ("课程图片"), upload_to='course_picture', blank=True, null=True)
-    start_time = models.DurationField((""))
-    end_time = models.DurationField((""))
+    start_time = models.FloatField(blank=True, null=True)
+    end_time = models.FloatField(blank=True, null=True)
 
 
 # 用户学习课程记录表
@@ -91,7 +95,7 @@ class Order(models.Model):
     Order_number = models.CharField(("订单号"), max_length=30, primary_key=True)
     user_phone = models.ForeignKey("User", on_delete=models.CASCADE)
     course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
-    amount_of_money = models.FloatField(("支付金额"))
+    amount_of_money = models.FloatField(("支付金额"), default=0.0)
     status = models.CharField('订单状态', max_length=10)
     create_at = models.DateTimeField(auto_now_add=True)
 
@@ -131,12 +135,3 @@ class Praise(models.Model):
     message_id = models.ForeignKey(
         "Message", verbose_name=("留言编号"), on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
-
-
-#课程封面图片表
-class Cover_picture(models.Model):
-    id = models.AutoField(primary_key=True)
-    course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
-    Cover_picture = models.ImageField(
-        ("课程图片"), upload_to='course_picture', blank=True, null=True)
-        

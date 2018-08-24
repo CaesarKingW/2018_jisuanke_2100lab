@@ -40,6 +40,15 @@ def get_code_post(request):
             createCode()
             req = json.loads(request.body)
             user_phone = req
+            try:
+                user = User.objects.get(phone_number=user_phone)
+                if user.exists == True:
+                    response['Is_exists'] = True
+                else:
+                    response['Is_exists'] = False
+                    return JsonResponse(response) 
+            except Exception as e:
+                response['Is_exists'] = True
             yun_pian = YunPian("264fb31e3ba88e5c55572dd977b2f372")
             yun_pian.send_sms(code, req)
             response['msg'] = 'success'
@@ -57,7 +66,7 @@ def get_user_code(request):
         if request.method == 'POST':
             global code
             global user_phone
-            #获取用户输入的验证码
+            # 获取用户输入的验证码
             req = json.loads(request.body)
             userPhone = req['phone_number']
             userCode = req['code']
