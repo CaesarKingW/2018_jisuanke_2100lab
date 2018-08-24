@@ -6,6 +6,7 @@
     <input type='button' value='上传头像' v-on:click="click_file">
     </div>
     <div>
+      昵称：{{oldname}}
         <form @submit.prevent="modify_nickname">
             <input type="text" v-model="nickname">
             <input type="submit" value="确认修改"/>
@@ -23,6 +24,7 @@ export default {
       // 应为当前登录用户的手机号，现暂时设置为一名已存在的用户的手机号
       user_phone: '17602284691',
       nickname: '',
+      oldname: '',
       oldpath: ''
     }
   },
@@ -38,14 +40,14 @@ export default {
         )
         .then(response => {
           this.oldpath = response.data.oldpath[0].fields.head_protrait
+          this.oldname = response.data.oldpath[0].fields.user_name
+          console.log(this.oldname)
           console.log(this.oldpath)
           if (this.oldpath === '') {
             this.path = this.default_avator
-            console.log('null')
           } else {
             this.path = 'http://192.168.55.33:8000/media/' + this.oldpath
             this.oldpath = ''
-            console.log('full')
           }
         })
     },
@@ -75,6 +77,14 @@ export default {
       fr.readAsDataURL(fileinfo)
     },
     modify_nickname: function() {
+      // 判断输入的昵称是否符合规范
+      var nickname = this.nickname
+      if (!nickname.match(/^[(\u4e00-\u9fa5)|(0-9)|(A-Z|(a-z))]+$/)) {
+        alert('只能含有汉字字母和数字')
+        return 0
+      } else {
+        alert('昵称符合规范')
+      }
       this.$http
         .post(
           'http://192.168.55.33:8000/app/update_nickname',
@@ -87,6 +97,7 @@ export default {
           response => {
             console.log(response.date)
             console.log('success')
+            this.get_old_avator()
           },
           response => {
             console.log('error')

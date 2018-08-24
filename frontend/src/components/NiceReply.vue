@@ -8,10 +8,10 @@
     <div v-for="r of replies" :key="r.key">
       <Card id="reply_card">
         <div id="reply_user">
-        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<Icon id="reply_icon" type="md-chatboxes" /> 用户:{{r.fields.user_phone}}
+        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<Icon id="reply_icon" type="md-chatboxes" /> 用户:{{r.user_name}}
         </div>
         <div id="reply_content">
-        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;{{r.fields.content}}
+        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;{{r.content}}
         </div>
       </Card>
     </div>

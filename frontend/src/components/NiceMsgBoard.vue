@@ -14,12 +14,12 @@
     <Divider />
     <Card class="one_comment_card">
       <div class="one_comment_div">
-          <div id="user_name"><Icon id="comment_icon" type="md-person" /> 用户：{{item.fields.user_phone}}</div>
+          <div id="user_name"><Icon id="comment_icon" type="md-person" /> 用户：{{item.user_name}}</div>
           <div class="one_content_div">
-              {{item.fields.content}}
+              {{item.content}}
           </div>
-          <button id="like_button" v-on:click="praise(item.pk, index)"><span style="color: red">❤</span> ：{{item.fields.praise_count}}</button>
-          <NiceReply v-bind:title="item.pk" v-bind:user_phone="user_phone"></NiceReply>
+          <button id="like_button" v-on:click="praise(item.id, index)"><span style="color: red">❤</span> ：{{item.praise_count}}</button>
+          <NiceReply v-bind:title="item.id" v-bind:user_phone="user_phone"></NiceReply>
       </div>
     </Card>
   </div>
@@ -91,11 +91,6 @@ export default {
       this.$http.post('http://192.168.55.33:8000/app/praise', formDate).then(
         response => {
           var hasPraise = response.data.has_praise
-          // if (hasPraise) {
-          //   this.messages[index].fields.praise_count--
-          // } else {
-          //   this.messages[index].fields.praise_count++
-          // }
           this.show_message()
           console.log(response.data)
           console.log(hasPraise)

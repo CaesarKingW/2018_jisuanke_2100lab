@@ -7,7 +7,8 @@ from django.contrib.auth.models import AbstractUser
 # 用户表
 class User(models.Model):
     phone_number = models.CharField(max_length=11, primary_key=True)
-    user_name = models.CharField(blank=True, null=True, max_length=15)
+    user_name = models.CharField(
+        max_length=15, blank=False, default="2100实验室用户")
     head_protrait = models.ImageField(
         upload_to='user_photos', blank=True, null=True)
     welfare = models.FloatField(default=0.0)
@@ -54,7 +55,7 @@ class Course(models.Model):
         ("详解"), upload_to='word/', blank=True, null=True)
     Cover_picture = models.ImageField(
         ("课程图片"), upload_to='course_picture', blank=True, null=True)
-    Is_distory = models.BooleanField(("是否阅后即焚"), default=False)
+    Is_destroy = models.BooleanField(("是否阅后即焚"), default=False)
     distory_time = models.DurationField(("可阅时长"), blank=True, null=True)
     Is_free = models.BooleanField(("免费"), default=True)
     price = models.FloatField(("价格"), blank=True, null=True, default=0.0)
