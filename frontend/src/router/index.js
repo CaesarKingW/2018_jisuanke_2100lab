@@ -44,6 +44,11 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: '/',
+      name: 'Login',
+      component: UserLogin
+    },
+    {
       path: '/UserLogin',
       name: 'UserLogin',
       component: UserLogin

@@ -12,31 +12,34 @@ export default {
   data() {
     return {
       path: '',
+      default_avator: require('../../assets/little_avatar.png'),
       nickname: '',
       amount_of_money: 0,
-      user_phone: '17602284691'
+      user_phone: '',
+      old_path: ''
     }
   },
   mounted: function() {
-    this.$http
-      .post(
-        'http://192.168.55.33:8000/app/get_user_information',
-        JSON.stringify(this.user_phone)
-      )
-      .then(
-        response => {
-          var obj = []
-          obj = response.data.list
-          this.path =
-            'http://192.168.55.33:8000/media/' + obj[0].fields.head_protrait
-          this.nickname = obj[0].fields.user_name
-          this.amount_of_money = obj[0].fields.welfare
-          console.log('success')
-        },
-        response => {
-          console.log('error')
+    this.$http.post('http://192.168.55.33:8000/app/get_status').then(
+      response => {
+        var obj = []
+        obj = response.data.list
+        this.old_path = obj[0].fields.head_protrait
+        this.user_phone = obj[0].fields.phone_number
+        if (this.old_path === '') {
+          this.path = this.default_avator
+        } else {
+          this.path = 'http://192.168.55.33:8000/media/' + this.old_path
+          this.old_path = ''
         }
-      )
+        this.nickname = obj[0].fields.user_name
+        this.amount_of_money = obj[0].fields.welfare
+        console.log('success')
+      },
+      response => {
+        console.log('error')
+      }
+    )
   },
   method: {}
 }
