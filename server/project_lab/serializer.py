@@ -38,12 +38,13 @@ class OrderSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ('title', 'brief_introduction', 'audio', 'whole_introduction',
-                  'Is_distory', 'distory_time', 'Is_free', 'price',
-                  'share_rate', 'can_comment')
+        fields = ('id', 'title', 'brief_introduction', 'audio',
+                  'whole_introduction', 'Is_distory', 'distory_time',
+                  'Is_free', 'price', 'share_rate', 'can_comment')
 
 
 class Course_pictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course_picture
-        fields = ('course_id', 'course_picture', 'start_time', 'end_time')
+        fields = ('id', 'course_id', 'course_picture', 'start_time',
+                  'end_time')

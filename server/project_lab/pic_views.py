@@ -17,20 +17,10 @@ def add_picture(request):
         if request.method == 'POST':
             # 获取对象
             obj = request.FILES.get('file')
-            # response['object'] = obj
-            # response['objec'] = 1
-            # 上传文件的文件名
-            # print(obj.name)
-            # f = open(
-            #     os.path.join(BASE_DIR, 'project_lab', 'static', 'media',
-            #                  'course_picture', obj.name), 'wb')
-            # for chunk in obj.chunks():
-            #     f.write(chunk)
-            #     f.close()
             course_id = Course.objects.get(id=1)
             new_picture = Course_picture(
                 course_id=course_id,
-                course_picture=obj, 
+                course_picture=obj,
                 start_time=datetime.timedelta(seconds=15),
                 end_time=datetime.timedelta(seconds=18))
             new_picture.save()
@@ -45,13 +35,10 @@ def show_picture(request):
     try:
         if request.method == 'GET':
             course = Course_picture.objects.filter(id=1)
-            # img = course.course_picture
-            response['img'] = json.loads(
-                serializers.serialize("json", course))
+            response['img'] = json.loads(serializers.serialize("json", course))
             response['msg'] = 'success'
             response['error_num'] = 0
     except Exception as e:
         response['msg'] = str(e)
         response['error_num'] = 1
-
     return JsonResponse(response)

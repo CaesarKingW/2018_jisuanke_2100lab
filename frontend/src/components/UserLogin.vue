@@ -6,12 +6,12 @@
     <div id="log_column">
     <h1>2100实验室</h1>
     <form method="POST" @submit.prevent="Is_normal_nubmer">
-    <Input type="input" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" style="width: 56%;" v-model="login.phone_number"/>
+    <Input type="text" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" style="width: 56%;" v-model="phone_number"/>
     <input type="submit" id="getCodeButton" value="获取验证码" />
     </form>
     <form id="log_down" method="POST" @submit.prevent="comparecode">
     <Poptip trigger="focus" title="提示" content="注意区分大小写！">
-    <Input type="input" placeholder="请输入验证码" size="large" style="width: 366px;" icon="ios-key-outline" v-model="login.usercode"/>
+    <Input type="text" placeholder="请输入验证码" size="large" style="width: 366px;" icon="ios-key-outline" v-model="usercode"/>
     </Poptip>
     <br>
     <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement"/>我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>

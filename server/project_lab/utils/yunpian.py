@@ -23,6 +23,6 @@ class YunPian(object):
         self.send_state = re_dict['msg']
         print(re_dict)
     
-# if __name__=="__main__":
-#       yun_pian = YunPian("264fb31e3ba88e5c55572dd977b2f372")
-#       yun_pian.send_sms("2222", "17602284691")
+if __name__=="__main__":
+      yun_pian = YunPian("264fb31e3ba88e5c55572dd977b2f372")
+      yun_pian.send_sms("2222", "15971181570")
