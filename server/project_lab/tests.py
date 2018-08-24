@@ -34,7 +34,6 @@ class PostTest(TestCase):
         response = self.client.post('/app/show_message')
         self.assertEqual(response.status_code, 200)
 
-
 #验证短信发送功能
 class SendMessage(TestCase):
     def test_yunpian(self):

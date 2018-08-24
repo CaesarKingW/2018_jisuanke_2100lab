@@ -17,7 +17,14 @@ def register_new_user(request):
             req = json.loads(request.body)
             # yun_pian = YunPian("264fb31e3ba88e5c55572dd977b2f372")
             # yun_pian.send_sms(req['checkCode'], req['phone_number'])
-            User.objects.create(phone_number=req)
+            request.session['is_login'] = True
+            try:
+                user = User.objects.get(phone_number=req)
+            except:
+                User.objects.create(phone_number=req)
+                user = User.objects.get(phone_number=req)
+            request.session['user'] = user
+            response['is_login'] = request.session['is_login']
             response['num'] = req
             response['msg'] = 'success'
             response['error_num'] = 0

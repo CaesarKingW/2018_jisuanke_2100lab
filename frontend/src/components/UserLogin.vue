@@ -28,8 +28,22 @@ export default {
       usercode: null,
       isDisabled: false,
       isChecked: false,
-      status: false
+      status: false,
+      is_login: false
     }
+  },
+  mounted: function() {
+    this.$http
+      .post('http://192.168.55.33:8000/app/get_status')
+      .then(
+        response => {
+          this.is_login = response.data.is_login
+          if (this.is_login) {
+            this.alert_wrong_status()
+            location.href = 'http://192.168.55.33:8000/#/home'
+          }
+        }
+      )
   },
   methods: {
     instance(type) {
@@ -62,6 +76,9 @@ export default {
     },
     alert_wrong_phone() {
       this.$Message.error('请输入正确的电话号码')
+    },
+    alert_wrong_status() {
+      this.$Message.error('您已经登录了')
     },
     alert_wrong_user() {
       this.$Message.error('您的手机号已被注销，请更换手机号')
@@ -152,6 +169,7 @@ export default {
               this.commit_phone = null
               // this.status = false
               // 用户跳转到主页
+              location.href = 'http://192.168.55.33:8000/#/home'
             } else {
               this.alert_wrong_code()
               console.log(this.phone_number)
