@@ -60,4 +60,22 @@ def get_old_avator(request):
     except Exception as e:
         response['msg'] = str(e)
         response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+def get_user_information(request):
+    response = {}
+    try:
+        if request.method == 'POST':
+            req = json.loads(request.body)
+            user = User.objects.filter(phone_number=req)
+            response['list'] = json.loads(serializers.serialize("json", user))
+            response['msg'] = 'success'
+            response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
     return JsonResponse(response)

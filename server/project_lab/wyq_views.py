@@ -88,7 +88,7 @@ def payment(request):
             # 订单编号
             orderid = id['orderid']
             # 手机号
-            info = User.objects.get(user_name=id['username'])
+            info = User.objects.get(phone_number=id['userphone'])
             phone_number = info
             # 课程编号
             courseid = Course.objects.get(id=id['courseid'])
@@ -115,8 +115,7 @@ def payment(request):
                 debug=True,  # 默认False,
                 return_url="http://192.168.55.33:8000/#/CourseShow")
             url = alipay.direct_pay(
-                subject="测试订单",
-                out_trade_no=orderid + '', total_amount=100)
+                subject="测试订单", out_trade_no=orderid + '', total_amount=price)
             re_url = "https://openapi.alipaydev.com/gateway.do?{data}".format(
                 data=url)
             # info = ManagerSerializer(re_url)

@@ -30,11 +30,24 @@ import AllPayCourse from '@/components/AllPayCourse'
 import NiceUserModify from '@/components/NiceUserModify'
 import freeCourse from '@/components/show_free_course'
 import payingCourse from '@/components/show_paying_course'
+import userInfo from '@/components/userInfo'
 import recommendCourse from '@/components/recommend'
+import PersonalCenter from '@/components/PersonalCenter'
+import UserInfo from '@/components/PersonalCenter/UserInfo'
+import ModifyInfo from '@/components/PersonalCenter/ModifyInfo'
+import LearntCourse from '@/components/PersonalCenter/LearntCourse'
+import BoughtCourse from '@/components/PersonalCenter/BoughtCourse'
+import AccountCancel from '@/components/PersonalCenter/AccountCancel'
+
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/',
+      name: 'Login',
+      component: UserLogin
+    },
     {
       path: '/UserLogin',
       name: 'UserLogin',
@@ -123,6 +136,37 @@ export default new Router({
       component: backlogin
     },
     {
+      path: '/PersonalCenter',
+      name: 'PersonalCenter',
+      component: PersonalCenter,
+      children: [{
+        path: 'UserInfo',
+        name: 'UserInfo',
+        component: UserInfo
+      },
+      {
+        path: 'ModifyInfo',
+        name: 'ModifyInfo',
+        component: ModifyInfo
+      },
+      {
+        path: 'LearntCourse',
+        name: 'LearntCourse',
+        component: LearntCourse
+      },
+      {
+        path: 'BoughtCourse',
+        name: 'BoughtCourse',
+        component: BoughtCourse
+      },
+      {
+        path: 'AccountCancel',
+        name: 'AccountCancel',
+        component: AccountCancel
+      }
+      ]
+    },
+    {
       // path: '/backstage/:user',
       path: '/backstage',
       name: 'backstage',
@@ -198,6 +242,11 @@ export default new Router({
       path: '/recommend_course',
       name: 'recommend_course',
       component: recommendCourse
+    },
+    {
+      path: '/user_info',
+      name: 'userIinfo',
+      component: userInfo
     }
   ]
 })

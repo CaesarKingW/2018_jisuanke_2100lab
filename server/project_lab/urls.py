@@ -21,6 +21,8 @@ urlpatterns = [
     path('update_avator', update_personal_information.update_avator),
     path('update_nickname', update_personal_information.update_nickname),
     path('get_old_avator', update_personal_information.get_old_avator),
+    path('get_user_information',
+         update_personal_information.get_user_information),
     path('search_user', wq_views.search_user),
     path('authenticate', wq_views.authenticate),
     path('forbid_comment', wq_views.forbid_comment),
@@ -40,5 +42,6 @@ urlpatterns = [
     path('preview', wq_views.preview),
     path('account_destroy', account_destroy.account_destroy),
     path('show_free_course', show_all_course.show_free_course),
-    path('show_paying_course', show_all_course.show_paying_course)
+    path('show_paying_course', show_all_course.show_paying_course),
+    path('get_specified_course', show_all_course.get_specified_course)
 ]
