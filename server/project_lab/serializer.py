@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import User, Message, Course, Order, Course_picture, Manager
 from .models import Reply
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -37,7 +38,8 @@ class ReplySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reply
-        fields = ('id', 'message_id', 'user_phone',  'user_name', 'content', 'created_at')
+        fields = ('id', 'message_id', 'user_phone', 'user_name', 'content',
+                  'created_at')
 
     def get_user_name(self, obj):
         return obj.user_phone.user_name

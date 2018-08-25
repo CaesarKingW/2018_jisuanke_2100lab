@@ -34,7 +34,8 @@ def get_status(request):
     response = {}
     try:
         if request.method == 'POST':
-            user = User.objects.get(phone_number=request.session['user'].phone_number)
+            phone_number = request.session['user'].phone_number
+            user = User.objects.get(phone_number=phone_number)
             request.session['user'] = user
             response['phonenumber'] = request.session['user'].phone_number
             response['username'] = request.session['user'].user_name

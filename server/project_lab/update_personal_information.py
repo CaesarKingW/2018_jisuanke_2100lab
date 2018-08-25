@@ -17,7 +17,7 @@ def update_avator(request):
         if request.method == 'POST':
             # 获取对象
             obj = request.FILES.get('file')
-            phone= request.POST.get('user_phone')
+            phone = request.POST.get('user_phone')
             new = User.objects.get(phone_number=phone)
             new.head_protrait = obj
             new.save()
@@ -53,7 +53,8 @@ def get_old_avator(request):
         if request.method == 'POST':
             req = json.loads(request.body)
             user = User.objects.filter(phone_number=req)
-            response['oldpath'] = json.loads(serializers.serialize("json",user))
+            response['oldpath'] = json.loads(
+                serializers.serialize("json", user))
             response['msg'] = 'success'
             response['error_num'] = 0
     except Exception as e:

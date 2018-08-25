@@ -108,12 +108,15 @@ def payment(request):
             alipay = AliPay(
                 appid="2016091800536766",
                 app_notify_url="http://192.168.55.33:8000/#/app/notify",
-                app_private_key_path=settings.STATIC_ROOT+'/private_2048.txt',
-                alipay_public_key_path=settings.STATIC_ROOT+'/alipay_key_2048.txt',
+                app_private_key_path=settings.STATIC_ROOT+
+                '/private_2048.txt',
+                alipay_public_key_path=settings.STATIC_ROOT+
+                '/alipay_key_2048.txt',
                 debug=True,  # 默认False,
                 return_url="http://192.168.55.33:8000/#/CourseShow")
             url = alipay.direct_pay(
-                subject="测试订单", out_trade_no=orderid + '', total_amount=100)
+                subject="测试订单",
+                out_trade_no=orderid + '', total_amount=100)
             re_url = "https://openapi.alipaydev.com/gateway.do?{data}".format(
                 data=url)
             # info = ManagerSerializer(re_url)
