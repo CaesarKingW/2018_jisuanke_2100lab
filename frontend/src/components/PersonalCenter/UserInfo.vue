@@ -1,10 +1,10 @@
 <template>
 <div id="UserInfo">
     <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
-     <!-- <div id="info">
+     <div id="info">
        <div id="nickname">昵称：{{nickname}}</div>
         <div id="money">奖励金：{{amount_of_money}}</div>
-     </div> -->
+     </div>
 </div>
 </template>
 <script>
