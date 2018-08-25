@@ -88,7 +88,7 @@ def payment(request):
             # 订单编号
             orderid = id['orderid']
             # 手机号
-            info = User.objects.get(user_name=id['username'])
+            info = User.objects.get(phone_number=id['userphone'])
             phone_number = info
             # 课程编号
             courseid = Course.objects.get(id=id['courseid'])

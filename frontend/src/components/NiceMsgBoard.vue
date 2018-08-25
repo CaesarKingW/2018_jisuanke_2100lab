@@ -43,7 +43,6 @@ export default {
     NiceReply
   },
   mounted: function() {
-    console.log()
     this.$http
       .post('http://192.168.55.33:8000/app/get_status')
       .then(response => {

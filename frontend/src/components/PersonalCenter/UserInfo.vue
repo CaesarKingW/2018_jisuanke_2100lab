@@ -2,8 +2,8 @@
 <div id="UserInfo">
     <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
     <div>
-        <h1 id="nick">昵称：{{nickname}}</h1>
-        <h1 id="nick">奖励金：{{amount_of_money}}</h1>
+        <p id="nick">昵称：{{nickname}}</p>
+        <p id="money">奖励金：{{amount_of_money}}</p>
     </div>
 </div>
 </template>
@@ -46,7 +46,7 @@ export default {
 </script>
 <style scoped>
 #UserInfo {
-  float: left;
+  float: center;
 }
 #avatar {
   border: #666666 solid 1px;
@@ -57,7 +57,13 @@ export default {
   margin-left: 300px;
 }
 #nick {
-  width: 120px;
+  width: 200px;
+  height: 40px;
+  margin: 30px;
+  margin-left: 300px;
+}
+#money {
+  width: 200px;
   height: 40px;
   margin: 30px;
   margin-left: 300px;

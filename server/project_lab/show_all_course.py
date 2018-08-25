@@ -39,3 +39,21 @@ def show_paying_course(request):
         response['error_num'] = 1
 
     return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def get_specified_course(request):
+    response = {}
+    try:
+        if request.method == 'POST':
+            req = json.loads(request.body)
+            course = Course.objects.filter(id = req)
+            response['list'] = json.loads(
+                serializers.serialize("json", course))
+            response['msg'] = 'success'
+            response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
