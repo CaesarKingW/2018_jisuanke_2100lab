@@ -1,9 +1,14 @@
 <template>
 <div class="FreeCourseIntro">
-        <span><img id="test_pic" src="../assets/1.png"></span>
-        <span><h1 id="courseTitle">标题：{{ courseTitle }}</h1></span>
-        <router-link to="/CourseShow"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link>
-        <Button @click="modal = true" id="share" icon="md-share" type="primary">分享课程</Button>
+    <div class="flexDiv">
+        <div class="introPic"><img id="test_pic" src="../assets/1.png"></div>
+        <div class="courseInfoText">
+        <div class="courseTitle">标题：{{ courseTitle }}</div>
+        <div class="enterCourse"><router-link to="/CourseShow"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link></div>
+        <div class="shareCourse">
+            <Button @click="modal = true" id="share" icon="md-share" type="primary">分享课程</Button>
+        </div>
+        </div>
         <Modal
         title="分享课程"
         v-model="modal"
@@ -16,12 +21,16 @@
         v-clipboard:error="onError">复制</button>
         </div>
     </Modal>
+    <div class="alertColumn">
         <Alert id="tip" show-icon>
         <Icon type="ios-bulb-outline" slot="icon"></Icon>
         <template slot="desc">如果你喜欢本课程，就把它分享给朋友吧！ </template>
     </Alert>
-    <div id="intro"><Collapse v-model="value">
-        <Panel id="intro" name="1" style="font-size: 25px;">
+    </div>
+    </div>
+    <!-- <div class="introText">
+        <Collapse v-model="value">
+        <Panel id="introText" name="1" style="font-size: 25px;">
             课程简介
             <p slot="content">
                 <ul style="font-size: 18px; list-style:none;">
@@ -31,7 +40,8 @@
                 </ul>
                 </p>
         </Panel>
-    </Collapse></div>
+    </Collapse>
+    </div> -->
     <br>
 </div>
 </template>
@@ -41,7 +51,6 @@ export default {
   data() {
     return {
       courseTitle: '实验室制取CO2',
-      split1: 0.49,
       modal: false,
       message: window.location.href
     }
@@ -52,10 +61,19 @@ export default {
 .FreeCourseIntro {
   height: 480px;
   border: 1px solid #dcdee2;
-  background-color: #c4e1ff;
+  /* background-color: #c4e1ff; */
 }
 .demo-split-pane {
   padding: 10px;
+}
+.flexDiv {
+    display:flex;
+}
+.introPic {
+    flex-grow: 3;
+}
+.courseIntroText {
+    flex-grow: 1;
 }
 #test_pic {
     border:#99ccff solid 5px;

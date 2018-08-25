@@ -2,11 +2,9 @@
     <div id="AllPayCourse">
     <!-- 导航栏 -->
     <div class="navibar">
-    <router-link to="/home"><a class="navi">网站首页</a></router-link>
+    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
-    <a class="navi" href="#payCol">付费内容</a>
-    <Divider type="vertical" />
-    <router-link to="/PersonalCenter"><a class="navi">个人中心</a></router-link>
+    <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
     <!-- 底板卡片 -->
     <Card id="payCol"></Card>
@@ -85,6 +83,7 @@ export default {
 }
 .CourseInfo {
   display: flex;
+  color:#022336;
 }
 /* .CourseCoverDiv {
   float: left;
@@ -92,11 +91,13 @@ export default {
 .CourseText {
   float: left;
   margin-left: 50px;
+  color:#022336;
 }
 .CoursePrice {
   font-family: 华文中宋;
   font-size: 28px;
   padding: 5px;
+  color:#022336;
 }
 .coursePriceContent {
   font-family: 华文细黑;
@@ -105,16 +106,19 @@ export default {
   font-family: 华文中宋;
   font-size: 28px;
   padding: 5px;
+  color:#022336;
 }
 .CourseIntro {
   font-family: 华文中宋;
   font-size: 28px;
   padding: 5px;
+  color:#022336;
 }
 .courseIntroContent {
   font-family: 华文楷体;
   font-size: 20px;
   padding: 3px;
+  color:#022336;
 }
 .courseCover {
   width: 300px;
@@ -126,7 +130,6 @@ export default {
   z-index: 9999;
   background-color: #fff;
   position: fixed;
-  text-align: center;
   width: 100%;
   opacity: 0.9;
   padding: 25px;
