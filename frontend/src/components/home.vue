@@ -3,7 +3,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
      <!-- 导航栏 -->
     <div class="NaviBar">
-    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
+    <router-link to="/home"><a class="navi"><Icon type="md-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
     <router-link to="/AllFreeCourse"><a class="navi"><Icon type="md-bookmarks" /> 免费课程</a></router-link>
     <Divider type="vertical" />
