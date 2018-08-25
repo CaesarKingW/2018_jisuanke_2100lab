@@ -3,7 +3,8 @@
     <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
      <div id="info">
        <div id="nickname">昵称：{{nickname}}</div>
-        <div id="money">奖励金：{{amount_of_money}}</div>
+       <div id="phone">手机号码：{{user_phone}}</div>
+       <div id="money">奖励金：{{amount_of_money}}</div>
      </div>
 </div>
 </template>
@@ -25,7 +26,7 @@ export default {
         var obj = []
         obj = response.data.list
         this.old_path = obj[0].fields.head_protrait
-        this.user_phone = obj[0].fields.phone_number
+        this.user_phone = obj[0].pk
         if (this.old_path === '') {
           this.path = this.default_avator
         } else {
@@ -63,6 +64,12 @@ export default {
   margin-top: 5px;
 }
 #money {
+  font-size: 20px;
+  font-family: 华文中宋;
+  margin-left: 200px;
+  margin-top: 5px;
+}
+#phone {
   font-size: 20px;
   font-family: 华文中宋;
   margin-left: 200px;
