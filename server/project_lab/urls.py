@@ -42,5 +42,6 @@ urlpatterns = [
     path('preview', wq_views.preview),
     path('account_destroy', account_destroy.account_destroy),
     path('show_free_course', show_all_course.show_free_course),
-    path('show_paying_course', show_all_course.show_paying_course)
+    path('show_paying_course', show_all_course.show_paying_course),
+    path('get_specified_course', show_all_course.get_specified_course)
 ]

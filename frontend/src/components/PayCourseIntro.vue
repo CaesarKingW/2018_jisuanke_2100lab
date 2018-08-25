@@ -1,6 +1,6 @@
 <template>
 <div class="PayCourseIntro">
-        <span><img id="test_pic" src="../assets/2.png"></span>
+        <span><img id="test_pic" v-bind:src="path"></span>
         <span><h1 id="courseTitle">标题：{{ courseTitle }}</h1></span>
         <Button @click="alipay()" id="buy" icon="logo-usd" type="primary">购买课程</Button>
         <Button @click="modal = true" id="share" icon="ios-card" type="primary">分销课程</Button>
@@ -25,9 +25,10 @@
             课程简介
             <p slot="content">
                 <ul style="font-size: 18px; list-style:none;">
-                    <li>1.实验室制取二氧化碳，用大理石或石灰石与稀盐酸反应，它们的主要成分为碳酸钙，生成物有氯化钙、水和二氧化碳，方程式为：CaCO3+2HCl═CaCl2+H2O+CO2↑。</li>
+                    <!-- <li>1.实验室制取二氧化碳，用大理石或石灰石与稀盐酸反应，它们的主要成分为碳酸钙，生成物有氯化钙、水和二氧化碳，方程式为：CaCO3+2HCl═CaCl2+H2O+CO2↑。</li>
                     <li>2.二氧化碳能溶于水，与水反应生成碳酸，不能用排水法收集，由于密度比空气大，可用向上排空气法收集。</li>
-                    <li>3.检验二氧化碳时，利用二氧化碳与氢氧化钙反应生成碳酸钙沉淀的性质，方法是把制取的气体通入澄清的石灰水，如石灰水变浑，则气体是二氧化碳。</li>
+                    <li>3.检验二氧化碳时，利用二氧化碳与氢氧化钙反应生成碳酸钙沉淀的性质，方法是把制取的气体通入澄清的石灰水，如石灰水变浑，则气体是二氧化碳。</li> -->
+                    {{content}}
                 </ul>
                 </p>
         </Panel>
@@ -40,16 +41,45 @@ export default {
   name: 'PayCourseInfo',
   data() {
     return {
-      courseTitle: '实验室制取CO2',
+      path: '',
+      courseTitle: '',
+      content: '',
       split1: 0.49,
       modal: false,
       message: window.location.href,
-      award: 10,
+      award: 0,
       orderid: '',
       price: 100,
-      courseid: '1',
-      username: '11'
+      courseid: 1,
+      userphone: ''
     }
+  },
+  created: function() {
+    this.courseid = this.$route.query.id
+    console.log(this.courseid)
+  },
+  mounted: function() {
+     this.$http
+      .post('http://192.168.55.33:8000/app/get_status')
+      .then(response => {
+        this.userphone = response.data.list[0].pk
+        console.log(this.user_phone)
+      })
+    this.$http
+      .post(
+        'http://192.168.55.33:8000/app/get_specified_course',
+        JSON.stringify(this.courseid)
+      )
+      .then(response => {
+        var course = []
+        course = response.data.list
+        this.courseTitle = course[0].fields.title
+        this.path =
+          'http://192.168.55.33:8000/media/' + course[0].fields.Cover_picture
+        this.content = course[0].fields.brief_introduction
+        this.price = course[0].fields.price
+        this.award = course[0].fields.share_rate * this.price
+      })
   },
   methods: {
     alipay() {
@@ -65,7 +95,7 @@ export default {
       var request = {}
       request.orderid = this.orderid
       request.courseid = this.courseid
-      request.username = this.username
+      request.userphone = this.userphone
       console.log(request)
       request = JSON.stringify(request)
       this.$http
@@ -157,5 +187,9 @@ export default {
 }
 #copy_button:hover {
   background: #57a3f3;
+}
+#test_pic{
+  width:600px;
+  height:400px
 }
 </style>

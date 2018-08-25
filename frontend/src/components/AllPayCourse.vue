@@ -20,6 +20,7 @@
     </Card>
     <!-- 所有课程 -->
     <div v-for="item of imgs" :key="item.id">
+      <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
       <Card class="courseCard">
         <div class="CourseInfo">
             <div class="CourseCoverDiv"><img class="courseCover" v-bind:src= 'item.fields.Cover_picture'/></div>
@@ -37,6 +38,7 @@
             </div>
             </div>
       </Card>
+      </router-link>
         </div>
     </div>
 </template>
