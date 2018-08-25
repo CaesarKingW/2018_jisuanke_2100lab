@@ -59,7 +59,7 @@ export default {
     console.log(this.courseid)
   },
   mounted: function() {
-     this.$http
+    this.$http
       .post('http://192.168.55.33:8000/app/get_status')
       .then(response => {
         this.userphone = response.data.list[0].pk
@@ -188,8 +188,8 @@ export default {
 #copy_button:hover {
   background: #57a3f3;
 }
-#test_pic{
-  width:600px;
-  height:400px
+#test_pic {
+  width: 600px;
+  height: 400px;
 }
 </style>
