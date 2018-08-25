@@ -16,7 +16,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 }
 #foot {
-  opacity: 0.5;
+  opacity: 1;
   text-align: center;
   font-size: 14px;
   position:fixed;

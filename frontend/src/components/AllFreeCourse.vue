@@ -4,8 +4,6 @@
     <div class="navibar">
     <router-link to="/home"><a class="navi">网站首页</a></router-link>
     <Divider type="vertical" />
-    <a class="navi" href="#freeCol">免费内容</a>
-    <Divider type="vertical" />
     <router-link to="/PersonalCenter"><a class="navi">个人中心</a></router-link>
     </div>
     <!-- 底板卡片 -->
@@ -24,12 +22,18 @@
         <div class="CourseInfo">
             <div class="CourseCoverDiv"><img class="courseCover" v-bind:src= 'item.fields.Cover_picture'/></div>
             <div class="CourseText">
-            <div class="CourseTitle">课程标题：<span class="courseTitleContent">{{item.fields.title}}</span></div>
-            <div class="CourseIntro">课程简介：<div class="courseIntroContent">{{item.fields.brief_introduction}}</div></div>
+            <div class="CourseTitle">
+              <Icon type="ios-bookmarks" /> 课程标题：
+              <span class="courseTitleContent">{{item.fields.title}}</span></div>
+            <div class="CourseIntro">
+              <Icon type="ios-text" /> 课程简介：
+              <div class="courseIntroContent">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {{item.fields.brief_introduction}}</div></div>
             </div>
             <!-- 在免费课程不显示价格属性，在付费课程显示价格属性 -->
             <!-- 课程价格：{{item.fields.price}} -->
-            </div>
+        </div>
       </Card>
         </div>
     </div>
@@ -111,7 +115,6 @@ export default {
   z-index: 9999;
   background-color: #fff;
   position: fixed;
-  text-align: center;
   width: 100%;
   opacity: 0.9;
   padding: 25px;

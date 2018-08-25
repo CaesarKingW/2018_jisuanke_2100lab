@@ -4,8 +4,6 @@
     <div class="navibar">
     <router-link to="/home"><a class="navi">网站首页</a></router-link>
     <Divider type="vertical" />
-    <a class="navi" href="#payCol">付费内容</a>
-    <Divider type="vertical" />
     <router-link to="/PersonalCenter"><a class="navi">个人中心</a></router-link>
     </div>
     <!-- 底板卡片 -->
@@ -124,7 +122,6 @@ export default {
   z-index: 9999;
   background-color: #fff;
   position: fixed;
-  text-align: center;
   width: 100%;
   opacity: 0.9;
   padding: 25px;
