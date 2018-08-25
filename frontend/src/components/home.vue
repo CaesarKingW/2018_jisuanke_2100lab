@@ -9,7 +9,10 @@
     <Divider type="vertical" />
     <router-link to="/AllPayCourse"><a class="navi"><Icon type="logo-usd" /> 付费课程</a></router-link>
     <Divider type="vertical" />
-    <router-link to="/UserLogin"><a class="navi"><Icon type="logo-steam" /> 用户登录</a></router-link>
+    <router-link to="/PersonalCenter" v-if="judge"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
+    <a class="navi" @click="logout" v-if="judge"><Icon type="md-log-out" /> 退出登录</a>
+    <router-link to="/UserLogin" v-else><a class="navi"><Icon type="md-log-in" /> 用户登录</a></router-link>
+
      </div>
      <!-- 走马灯 -->
      <div align="center" id="carousel" class="carousel">
@@ -70,12 +73,12 @@
     <!-- 付费内容预览 -->
     <div class="container">
     <div class="item" v-for="item of paying_course" :key="item.id">
-      <a href="/">
+     <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
       <Card>
          <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
             <p><img class="CoverPic" v-bind:src= 'item.fields.Cover_picture'/></p>
       </Card>
-      </a>
+     </router-link>
         </div>
 
     </div>
@@ -104,12 +107,15 @@ export default {
       paying_imgs: [],
       paying_course: [],
       show_number: 3,
-      path: []
+      path: [],
+      judge: false,
+      yourname: ''
     }
   },
   mounted: function() {
     this.show_free_course()
     this.show_paying_course()
+    this.Judgestatus()
   },
   methods: {
     show_free_course: function() {
@@ -156,6 +162,30 @@ export default {
           console.log('error')
         }
       )
+    },
+    Judgestatus: function() {
+      this.$http
+        .post('http://192.168.55.33:8000/app/get_status')
+        .then(response => {
+          this.judge = response.data.is_login
+        })
+    },
+    alert_log_out() {
+      this.$Message.warning(this.yourname + '已登出')
+    },
+    logout: function() {
+      this.$http
+        .post('http://192.168.55.33:8000/app/del_status')
+        .then(response => {
+          this.judge = response.data.is_login
+          if (response.data.username === null) {
+            this.yourname = response.data.phonenumber
+          } else {
+            this.yourname = response.data.username
+          }
+          location.href = 'http://192.168.55.33:8000/#/UserLogin'
+          this.alert_log_out()
+        })
     }
   }
 }
@@ -164,7 +194,8 @@ export default {
 .CoverPic {
   text-align: center;
   margin-left: 12%;
-  border: black solid 2px;
+  border: black solid
+    2px;
   border-radius: 3px;
   width: 300px;
   height: 200px;

@@ -2,9 +2,9 @@
     <div id="AllPayCourse">
     <!-- 导航栏 -->
     <div class="navibar">
-    <router-link to="/home"><a class="navi">网站首页</a></router-link>
+    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
-    <router-link to="/PersonalCenter"><a class="navi">个人中心</a></router-link>
+    <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
     <!-- 底板卡片 -->
     <Card id="payCol"></Card>
@@ -18,6 +18,7 @@
     </Card>
     <!-- 所有课程 -->
     <div v-for="item of imgs" :key="item.id">
+      <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
       <Card class="courseCard">
         <div class="CourseInfo">
             <div class="CourseCoverDiv"><img class="courseCover" v-bind:src= 'item.fields.Cover_picture'/></div>
@@ -35,6 +36,7 @@
             </div>
             </div>
       </Card>
+      </router-link>
         </div>
     </div>
 </template>
@@ -81,6 +83,7 @@ export default {
 }
 .CourseInfo {
   display: flex;
+  color:#022336;
 }
 /* .CourseCoverDiv {
   float: left;
@@ -88,11 +91,13 @@ export default {
 .CourseText {
   float: left;
   margin-left: 50px;
+  color:#022336;
 }
 .CoursePrice {
   font-family: 华文中宋;
   font-size: 28px;
   padding: 5px;
+  color:#022336;
 }
 .coursePriceContent {
   font-family: 华文细黑;
@@ -101,16 +106,19 @@ export default {
   font-family: 华文中宋;
   font-size: 28px;
   padding: 5px;
+  color:#022336;
 }
 .CourseIntro {
   font-family: 华文中宋;
   font-size: 28px;
   padding: 5px;
+  color:#022336;
 }
 .courseIntroContent {
   font-family: 华文楷体;
   font-size: 20px;
   padding: 3px;
+  color:#022336;
 }
 .courseCover {
   width: 300px;

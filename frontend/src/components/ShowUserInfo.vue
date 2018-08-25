@@ -30,10 +30,21 @@ export default {
   name: 'ShowUserInfo',
   data() {
     return {
-      phone: '15009253698',
-      nickname: '2100实验室用户',
-      award: 10
+      phone: '',
+      nickname: '',
+      award: 0
     }
+  },
+  mounted: function() {
+    this.$http
+      .post('http://192.168.55.33:8000/app/get_status')
+      .then(
+        response => {
+          this.phone = response.data.phonenumber
+          this.nickname = response.data.username
+          this.award = response.data.award
+        }
+      )
   }
 }
 </script>

@@ -2,9 +2,9 @@
     <div id="AllFreeCourse">
     <!-- 导航栏 -->
     <div class="navibar">
-    <router-link to="/home"><a class="navi">网站首页</a></router-link>
+    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
-    <router-link to="/PersonalCenter"><a class="navi">个人中心</a></router-link>
+    <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
     <!-- 底板卡片 -->
     <Card id="freeCol"></Card>

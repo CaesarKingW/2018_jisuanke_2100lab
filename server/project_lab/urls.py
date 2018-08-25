@@ -1,5 +1,5 @@
 from django.urls import path
-from . import login_views, user_register, message_views, praise_views, wyq_views, update_personal_information, wq_views
+from . import login_views, user_register, message_views, praise_views, wyq_views, update_personal_information, wq_views, wchxviews
 from . import pic_views
 from . import account_destroy
 from . import show_all_course
@@ -21,6 +21,8 @@ urlpatterns = [
     path('update_avator', update_personal_information.update_avator),
     path('update_nickname', update_personal_information.update_nickname),
     path('get_old_avator', update_personal_information.get_old_avator),
+    path('get_user_information',
+         update_personal_information.get_user_information),
     path('search_user', wq_views.search_user),
     path('authenticate', wq_views.authenticate),
     path('forbid_comment', wq_views.forbid_comment),
@@ -28,6 +30,8 @@ urlpatterns = [
     path('delete_comment', wq_views.delete_comment),
     path('search_order', wq_views.search_order),
     path('refund', wq_views.refund),
+    path('get_status', wchxviews.get_status),
+    path('del_status', wchxviews.del_status),
     path('payment', wyq_views.payment),
     path('notify', wyq_views.alipay_notify),
     path('add_img', wq_views.add_img),
@@ -38,6 +42,6 @@ urlpatterns = [
     path('preview', wq_views.preview),
     path('account_destroy', account_destroy.account_destroy),
     path('show_free_course', show_all_course.show_free_course),
-    path('show_paying_course', show_all_course.show_paying_course)
-
+    path('show_paying_course', show_all_course.show_paying_course),
+    path('get_specified_course', show_all_course.get_specified_course)
 ]
