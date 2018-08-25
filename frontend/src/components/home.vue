@@ -1,16 +1,16 @@
 <template>
  <div id="home">
      <!-- 导航栏 -->
-    <div class="navibar">
+    <div class="NaviBar">
     <a class="navi" href="#carousel">内容展示</a>
     <Divider type="vertical" />
-    <a class="navi" href="#free_col">免费内容</a>
+    <a class="navi" href="#FreeCol">免费内容</a>
     <Divider type="vertical" />
-    <a class="navi" href="#pay_col">付费内容</a>
+    <a class="navi" href="#PayCol">付费内容</a>
     <Divider type="vertical" />
-    <a class="navi" href="#aboutus">关于我们</a>
+    <a class="navi" href="#AboutUs">关于我们</a>
     <Divider type="vertical" />
-    <router-link to="/ShowUserInfo" v-if="judge"><a class="navi">个人中心</a></router-link>
+    <router-link to="/PersonalCenter" v-if="judge"><a class="navi">个人中心</a></router-link>
     <a class="navi" @click="logout" v-if="judge">用户登出</a>
     <router-link to="/UserLogin" v-else><a class="navi">用户登录</a></router-link>
 
@@ -19,26 +19,26 @@
      <div align="center" id="carousel" class="carousel">
      <Carousel autoplay v-model="value" loop>
         <CarouselItem>
-            <div class="demo-carousel"><Card>
-            <p style="text-align:center;"><img class="roll_pic" src="../assets/home_1.png"></p>
+            <div class="DemoCarousel"><Card>
+            <div id="RollPicTag"><img class="RollPic" src="../assets/home_1.png"></div>
         </Card>
         </div>
         </CarouselItem>
         <CarouselItem>
-            <div class="demo-carousel"><img class="roll_pic" src="../assets/home_2.png"></div>
+            <div class="DemoCarousel"><img class="RollPic" src="../assets/home_2.png"></div>
         </CarouselItem>
     </Carousel>
     </div>
     <!-- 免费内容导航框 -->
-    <Card id="free_col">
-    <div class="all_col">
-    <div class="myContent">
+    <Card id="FreeCol">
+    <div class="AllCol">
+    <div class="MyContent">
         <h4><Icon type="md-bookmarks" />&nbsp;免费内容</h4>
     </div>
     <div class="gengduo">
         <Poptip trigger="hover" title="免费内容预览" content="点击查看所有免费文章。">
         <Button id="button" ghost><router-link to="/AllFreeCourse">
-        <div class="button_text">查看更多<Icon type="md-log-in" /></div>
+        <div class="ButtonText">查看更多<Icon type="md-log-in" /></div>
         </router-link></Button>
         </Poptip>
     </div>
@@ -49,39 +49,39 @@
     <div class="item">
         <a href="/">
         <Card>
-            <p style="text-align:center;" slot="title">{{ title1 }}</p>
-            <p style="text-align:center;"><img src="../assets/album_1.png"></p>
+            <p class="CoverTitle" slot="title">{{ title1 }}</p>
+            <p class="CoverPic"><img src="../assets/album_1.png"></p>
         </Card>
         </a>
     </div>
     <div class="item">
         <a href="/">
         <Card>
-            <p style="text-align:center;" slot="title">{{ title2 }}</p>
-            <p style="text-align:center;"><img src="../assets/album_2.png"></p>
+            <p class="CoverTitle" slot="title">{{ title2 }}</p>
+            <p class="CoverPic"><img src="../assets/album_2.png"></p>
         </Card>
         </a>
     </div>
     <div class="item">
         <a href="/">
         <Card>
-            <p style="text-align:center;" slot="title">{{ title3 }}</p>
-            <p style="text-align:center;"><img src="../assets/album_3.png"></p>
+            <p class="CoverTitle" slot="title">{{ title3 }}</p>
+            <p class="CoverPic"><img src="../assets/album_3.png"></p>
         </Card>
         </a>
     </div>
     </div>
     <br>
     <!-- 付费内容导航框 -->
-    <Card id="pay_col">
-    <div class="all_col">
-    <div class="myContent">
+    <Card id="PayCol">
+    <div class="AllCol">
+    <div class="MyContent">
         <h4><Icon type="md-bookmarks" />&nbsp;付费内容</h4>
     </div>
-    <div class="gengduo">
+    <div class="SeeMore">
         <Poptip trigger="hover" title="付费内容预览" content="点击查看所有付费文章。">
         <Button id="button" ghost><router-link to="/AllPayCourse">
-        <div class="button_text">查看更多<Icon type="md-log-in" /></div>
+        <div class="ButtonText">查看更多<Icon type="md-log-in" /></div>
         </router-link></Button>
         </Poptip>
     </div>
@@ -92,24 +92,24 @@
     <div class="item">
         <a href="/">
         <Card>
-            <p style="text-align:center;" slot="title">{{ title1 }}</p>
-            <p style="text-align:center;"><img src="../assets/album_1.png"></p>
+            <p class="CoverTitle" slot="title">{{ title1 }}</p>
+            <p class="CoverPic"><img src="../assets/album_1.png"></p>
         </Card>
         </a>
     </div>
     <div class="item">
         <a href="/">
         <Card>
-            <p style="text-align:center;" slot="title">{{ title2 }}</p>
-            <p style="text-align:center;"><img src="../assets/album_2.png"></p>
+            <p class="CoverTitle" slot="title">{{ title2 }}</p>
+            <p class="CoverPic"><img src="../assets/album_2.png"></p>
         </Card>
         </a>
     </div>
     <div class="item">
         <a href="/">
         <Card>
-            <p style="text-align:center;" slot="title">{{ title3 }}</p>
-            <p style="text-align:center;"><img src="../assets/album_3.png"></p>
+            <p class="CoverTitle" slot="title">{{ title3 }}</p>
+            <p class="CoverPic"><img src="../assets/album_3.png"></p>
         </Card>
         </a>
     </div>
@@ -119,7 +119,7 @@
         <div class="top">返回顶端</div>
     </BackTop>
     <!-- 关于我们卡片 -->
-    <Card id="aboutus">
+    <Card id="AboutUs">
     <div class="wrapper">
     <div class="left"><div><Icon size=150 type="ios-people-outline" /></div><div>团队成员</div><div>南开大学软件学院</div><div>佛组</div></div>
     <div class="middle"><div><Icon size=150 type="ios-school-outline" /></div><div>关于我们</div><div>2100实验室</div><div>专注为3~12岁儿童提供更好的科学启蒙教育</div></div>
@@ -148,11 +148,9 @@ export default {
     Judgestatus: function() {
       this.$http
         .post('http://192.168.55.33:8000/app/get_status')
-        .then(
-          response => {
-            this.judge = response.data.is_login
-          }
-        )
+        .then(response => {
+          this.judge = response.data.is_login
+        })
     },
     alert_log_out() {
       this.$Message.warning(this.yourname + '已登出')
@@ -160,27 +158,34 @@ export default {
     logout: function() {
       this.$http
         .post('http://192.168.55.33:8000/app/del_status')
-        .then(
-          response => {
-            this.judge = response.data.is_login
-            if (response.data.username === null) {
-              this.yourname = response.data.phonenumber
-            } else {
-              this.yourname = response.data.username
-            }
-            location.href = 'http://192.168.55.33:8000/#/UserLogin'
-            this.alert_log_out()
+        .then(response => {
+          this.judge = response.data.is_login
+          if (response.data.username === null) {
+            this.yourname = response.data.phonenumber
+          } else {
+            this.yourname = response.data.username
           }
-        )
+          location.href = 'http://192.168.55.33:8000/#/UserLogin'
+          this.alert_log_out()
+        })
     }
   }
 }
 </script>
 <style scoped>
-.button_text {
-  color:#fff;
+.CoverPic {
+  text-align: center;
+  border: black solid 2px;
+  border-radius: 3px;
 }
-.navibar {
+.CoverTitle {
+  text-align: center;
+  font-size: 18px;
+}
+.ButtonText {
+  color: #fff;
+}
+.NaviBar {
   z-index: 9999;
   background-color: #fff;
   position: fixed;
@@ -219,16 +224,16 @@ export default {
 .right {
   flex-grow: 1;
 }
-#aboutus {
+#AboutUs {
   background-color: #022336;
   height: 300px;
 }
-#free_col,
-#pay_col {
+#FreeCol,
+#PayCol {
   background-color: #022336;
   height: 90px;
 }
-.all_col {
+.AllCol {
   display: flex;
   display: -webkit-flex;
   display: -moz-flex;
@@ -238,13 +243,13 @@ export default {
   color: #fff;
   text-align: center;
 }
-.gengduo {
+.SeeMore {
   flex-grow: 1;
   text-align: center;
 }
 .id {
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
 }
 .more {
   margin-left: 65%;
@@ -254,21 +259,16 @@ export default {
   color: #fff;
   margin-top: 6px;
 }
-#lab {
-  margin-left: 15%;
-  font-size: 18px;
-  float: left;
-}
 .item {
   flex-grow: 1;
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.roll_pic {
+.RollPic {
   width: 100%;
   height: 450px;
 }
-.myContent {
+.MyContent {
   font-size: 40px;
   flex-grow: 3;
   text-align: center;

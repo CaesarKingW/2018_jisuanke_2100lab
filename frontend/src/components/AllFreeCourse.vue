@@ -1,0 +1,154 @@
+<template>
+    <div id="AllFreeCourse">
+    <!-- 导航栏 -->
+    <div class="navibar">
+    <router-link to="/home"><a class="navi">网站首页</a></router-link>
+    <Divider type="vertical" />
+    <a class="navi" href="#freeCol">免费内容</a>
+    <Divider type="vertical" />
+    <router-link to="/PersonalCenter"><a class="navi">个人中心</a></router-link>
+    </div>
+    <!-- 底板卡片 -->
+    <Card id="freeCol"></Card>
+    <!-- 标题 -->
+    <Card id="freeCol">
+    <div class="allCol">
+    <div class="myContent">
+        <h4><Icon type="md-bookmarks" />&nbsp;所有免费内容</h4>
+    </div>
+    </div>
+    </Card>
+    <!-- 所有课程 -->
+    <div v-for="item of imgs" :key="item.id">
+      <Card class="courseCard">
+        <div class="CourseInfo">
+            <div class="CourseCoverDiv"><img class="courseCover" v-bind:src= 'item.fields.Cover_picture'/></div>
+            <div class="CourseText">
+            <div class="CourseTitle">课程标题：<span class="courseTitleContent">{{item.fields.title}}</span></div>
+            <div class="CourseIntro">课程简介：<div class="courseIntroContent">{{item.fields.brief_introduction}}</div></div>
+            </div>
+            <!-- 在免费课程不显示价格属性，在付费课程显示价格属性 -->
+            <!-- 课程价格：{{item.fields.price}} -->
+            </div>
+      </Card>
+        </div>
+    </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      imgs: [],
+      path: []
+    }
+  },
+  mounted: function() {
+    this.show_all_course()
+  },
+  methods: {
+    show_all_course: function() {
+      this.$http.get('http://192.168.55.33:8000/app/show_free_course').then(
+        response => {
+          this.imgs = response.data.list
+          console.log('success')
+          for (var i = 0; i < this.imgs.length; i = i + 1) {
+            var a =
+              'http://192.168.55.33:8000/media/' +
+              this.imgs[i].fields.Cover_picture
+            this.imgs[i].fields.Cover_picture = a
+          }
+          console.log('success')
+        },
+        response => {
+          console.log('error')
+        }
+      )
+    }
+  }
+}
+</script>
+
+<style scoped>
+.courseCard {
+  width: 1000px;
+  margin-left: 150px;
+}
+.courseTitleContent {
+  font-family: 华文细黑;
+}
+.CourseInfo {
+  display: flex;
+}
+/* .CourseCoverDiv {
+  float: left;
+}*/
+.CourseText {
+  float: left;
+  margin-left: 50px;
+}
+.CourseTitle {
+  font-family: 华文中宋;
+  font-size: 28px;
+  padding: 5px;
+}
+.CourseIntro {
+  font-family: 华文中宋;
+  font-size: 28px;
+  padding: 5px;
+}
+.courseIntroContent {
+  font-family: 华文楷体;
+  font-size: 20px;
+  padding: 3px;
+}
+.courseCover {
+  width: 300px;
+  height: 200px;
+  border: #022336 solid 1px;
+  border-radius: 4px;
+}
+.navibar {
+  z-index: 9999;
+  background-color: #fff;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  opacity: 0.9;
+  padding: 25px;
+}
+.navi {
+  font-size: 23px;
+  color: #022336;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+#button {
+  font-size: 20px;
+  color: #fff;
+  margin-top: 6px;
+}
+.buttonText {
+  color: #fff;
+}
+#freeCol {
+  background-color: #022336;
+  height: 90px;
+  border: none;
+  border-radius: 0px;
+}
+.myContent {
+  font-size: 40px;
+  flex-grow: 3;
+  text-align: center;
+}
+.allCol {
+  display: flex;
+  display: -webkit-flex;
+  display: -moz-flex;
+  flex-direction: row;
+  height: 90px;
+  margin: 0 auto;
+  color: #fff;
+  text-align: center;
+}
+</style>

@@ -34,12 +34,13 @@ def get_status(request):
     response = {}
     try:
         if request.method == 'POST':
-            user = User.objects.get(phone_number=request.session['user'].phone_number)
+            user = User.objects.get(
+                phone_number=request.session['user'].phone_number)
             request.session['user'] = user
-            response['phonenumber'] = request.session['user'].phone_number
-            response['username'] = request.session['user'].user_name
+            the_user = User.objects.filter(
+                phone_number=request.session['user'].phone_number)
             response['is_login'] = request.session['is_login']
-            response['award'] = request.session['user'].welfare
+            response['list'] = json.loads(serializers.serialize("json", the_user))
     except:
         response['msg'] = 'fail'
     return JsonResponse(response)
