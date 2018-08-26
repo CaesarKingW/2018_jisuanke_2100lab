@@ -1,11 +1,11 @@
 <template>
 <div class="PayCourseIntro">
   <!-- 导航栏 -->
-    <!-- <div class="navibar">
+    <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
     <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
-    </div> -->
+    </div>
     <!-- 课程信息 -->
   <div class="myPanel"></div>
         <div class="coverDiv">
