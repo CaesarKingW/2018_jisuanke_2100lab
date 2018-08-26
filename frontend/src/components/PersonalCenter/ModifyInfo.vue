@@ -3,14 +3,13 @@
     <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
     <div>
       <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head"/>
-      <input id="upload_button" type='button' value='修改头像' v-on:click="click_file">
+      <input id="avatar_upload_button" type='button' value='修改头像' v-on:click="click_file">
     </div>
     <div>
-      <h1 id="nickname">昵称：{{oldname}}</h1>
+      <div id="nickname">当前昵称：<br>{{oldname}}</div>
         <form @submit.prevent="modify_nickname">
-            <input id="upload_button" type="text" v-model="nickname">
-            <br>
-            <input id="upload_button" type="submit" value="确认修改"/>
+            <div><Input id="name_upload_text" type="text" v-model="nickname" /></div>
+            <div><input id="name_upload_button" type="submit" value="确认修改"/></div>
         </form>
     </div>
 </div>
@@ -85,10 +84,12 @@ export default {
       var nickname = this.nickname
       if (!nickname.match(/^[(\u4e00-\u9fa5)|(0-9)|(A-Z|(a-z))]+$/)) {
         // alert('只能含有汉字字母和数字')
-        this.$Message.warning('只能含有汉字字母和数字,请重新输入')
+        this.$Message.warning(
+          '昵称修改失败！注意:昵称只能使用汉字、字母和数字哦！'
+        )
         return 0
       } else {
-        this.$Message.success('昵称符合规范,修改成功！')
+        this.$Message.success('恭喜您，昵称修改成功！')
       }
       this.$http
         .post(
@@ -114,14 +115,18 @@ export default {
 </script>
 
 <style scoped>
+#name_upload_text {
+  width: 120px;
+  margin-left: 100px;
+}
 #ModifyInfo {
   float: left;
 }
 #nickname {
-  width: 120px;
-  height: 40px;
-  margin: 30px;
-  margin-left: 300px;
+  font-size: 20px;
+  font-family: 华文中宋;
+  margin-left: 100px;
+  margin-top: 5px;
 }
 #avatar {
   border: #666666 solid 1px;
@@ -129,13 +134,13 @@ export default {
   width: 120px;
   height: 120px;
   margin: 30px;
-  margin-left: 300px;
+  margin-left: 100px;
 }
-#upload_button {
+#avatar_upload_button {
   width: 120px;
   height: 40px;
   font-size: 20px;
-  margin-left: 300px;
+  margin-left: 100px;
   outline: none;
   border-radius: 4px;
   border: #666666 solid 1px;
@@ -143,7 +148,24 @@ export default {
   cursor: pointer;
   text-align: center;
 }
-#upload_button:hover {
+#avatar_upload_button:hover {
+  background: rgb(245, 242, 242);
+  cursor: pointer;
+}
+#name_upload_button {
+  width: 120px;
+  height: 40px;
+  font-size: 20px;
+  margin-left: 100px;
+  margin-top: 30px;
+  outline: none;
+  border-radius: 4px;
+  border: #666666 solid 1px;
+  background-color: #fff;
+  cursor: pointer;
+  text-align: center;
+}
+#name_upload_button:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
 }
