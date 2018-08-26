@@ -47,5 +47,6 @@ urlpatterns = [
     path('back_log_out', wyq_views.back_logout),
     path('user_amount', wyq_views.user_amount),
     path('order_amount', wyq_views.order_amount),
-    path('money_amount', wyq_views.money_amount)
+    path('money_amount', wyq_views.money_amount),
+    path('free_watch', wyq_views.free_watch),
 ]
