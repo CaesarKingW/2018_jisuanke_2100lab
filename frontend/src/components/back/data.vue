@@ -16,8 +16,6 @@
     </Dropdown>
     <p class='choose'>注册的用户总数为{{user_amount}}.</p>
     <br>
-    <br>
-    <br>
     <Dropdown>
         <a href="javascript:void(0)">
             <p class='choose'>{{droptext_order}}</p>
@@ -33,6 +31,22 @@
         </DropdownMenu>
     </Dropdown>
     <p class='choose'>的订单总数为{{order_amount}}.</p>
+    <br>
+    <Dropdown>
+        <a href="javascript:void(0)">
+            <p class='choose'>{{droptext_money}}</p>
+            <Icon type="ios-arrow-down"></Icon>
+        </a>
+        <DropdownMenu slot="list">
+            <DropdownItem><p @click='money_to_now("week")'>本周</p></DropdownItem>
+            <DropdownItem><p @click='money_to_now("month")'>本月</p></DropdownItem>
+            <DropdownItem><p @click='money_to_now("season")'>季度</p></DropdownItem>
+            <DropdownItem><p @click='money_to_now("semi_year")'>半年</p></DropdownItem>
+            <DropdownItem><p @click='money_to_now("year")'>全年</p></DropdownItem>
+            <DropdownItem><p @click='money_to_now("all")'>全部</p></DropdownItem>
+        </DropdownMenu>
+    </Dropdown>
+    <p class='choose'>的订单总金额为{{money_amount}}.</p>
     <div id="main"  class="chart"></div>
   </section>
 </template>
@@ -57,6 +71,16 @@ export default {
       droptext_order: '选择时间范围',
       order_amount: '',
       order_time: {
+        week: Number,
+        month: Number,
+        season: Number,
+        semi_year: Number,
+        year: Number,
+        all: Number
+      },
+      droptext_money: '选择时间范围',
+      money_amount: '',
+      money_time: {
         week: Number,
         month: Number,
         season: Number,
@@ -145,23 +169,61 @@ export default {
           break
       }
     },
+    money_to_now(_time) {
+      switch (_time) {
+        case 'week':
+          this.droptext_money = '本周'
+          this.money_amount = this.money_time.week
+          break
+        case 'month':
+          this.droptext_money = '本月'
+          this.money_amount = this.money_time.month
+          break
+        case 'season':
+          this.droptext_money = '季度'
+          this.money_amount = this.money_time.season
+          break
+        case 'semi_year':
+          this.droptext_money = '半年'
+          this.money_amount = this.money_time.semi_year
+          break
+        case 'year':
+          this.droptext_money = '全年'
+          this.money_amount = this.money_time.year
+          break
+        case 'all':
+          this.droptext_money = '全部'
+          this.money_amount = this.money_time.all
+          break
+      }
+    },
     get_user_amount() {
       this.$http.post('http://192.168.55.33:8000/app/user_amount')
         .then(response => {
-          console.log(response.data)
           this.user_time.all = response.data
         })
     },
     get_order_amount() {
       this.$http.post('http://192.168.55.33:8000/app/order_amount')
         .then(response => {
-          console.log(response.bodyText)
           this.order_time.week = response.body['week'] + ''
           this.order_time.month = response.body['month'] + ''
           this.order_time.season = response.body['season'] + ''
           this.order_time.semi_year = response.body['semi_year'] + ''
           this.order_time.year = response.body['year'] + ''
           this.order_time.all = response.body['all'] + ''
+        })
+    },
+    get_money_amount() {
+      this.$http.post('http://192.168.55.33:8000/app/money_amount')
+        .then(response => {
+          console.log(response.bodyText)
+          this.money_time.week = response.body['week']
+          this.money_time.month = response.body['month']
+          this.money_time.season = response.body['season']
+          this.money_time.semi_year = response.body['semi_year']
+          this.money_time.year = response.body['year']
+          this.money_time.all = response.body['all']
         })
     },
     drawPie(id) {
@@ -210,6 +272,7 @@ export default {
       this.drawPie('main')
       this.get_user_amount()
       this.get_order_amount()
+      this.get_money_amount()
     })
   }
 }

@@ -21,6 +21,7 @@ from base64 import decodebytes, encodebytes
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime,timedelta
+from django.db.models import Sum, Count
 
 
 @require_http_methods(['POST', 'GET'])
@@ -210,6 +211,38 @@ def order_amount(request):
         response['msg'] = str(e)
         response['error_num'] = 1
     return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def money_amount(request):
+    # 存放post里面所有的数据
+    response = {}
+    try:
+        dt_s = datetime.now()
+        dt_e = (dt_s - timedelta(7))
+        response['week'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['week'] = response['week']['amount_of_money__sum']
+        dt_e = (dt_s - timedelta(30))
+        response['month'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['month'] = response['month']['amount_of_money__sum']
+        dt_e = (dt_s - timedelta(91))
+        response['season'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['season'] = response['season']['amount_of_money__sum']
+        dt_e = (dt_s - timedelta(182))
+        response['semi_year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['semi_year'] = response['semi_year']['amount_of_money__sum']
+        dt_e = (dt_s - timedelta(365))
+        response['year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['year'] = response['year']['amount_of_money__sum']
+        response['all'] = Order.objects.aggregate(Sum('amount_of_money'))
+        response['all'] = response['all']['amount_of_money__sum']
+        return JsonResponse(response, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
 
 
 class AliPay(object):
