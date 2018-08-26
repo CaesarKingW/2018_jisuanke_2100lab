@@ -1,18 +1,17 @@
 <template>
  <div id="home">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
      <!-- 导航栏 -->
     <div class="NaviBar">
-    <a class="navi" href="#carousel">内容展示</a>
+    <router-link to="/home"><a class="navi"><Icon type="md-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
-    <a class="navi" href="#FreeCol">免费内容</a>
+    <router-link to="/AllFreeCourse"><a class="navi"><Icon type="md-bookmarks" /> 免费课程</a></router-link>
     <Divider type="vertical" />
-    <a class="navi" href="#PayCol">付费内容</a>
+    <router-link to="/AllPayCourse"><a class="navi"><Icon type="logo-usd" /> 付费课程</a></router-link>
     <Divider type="vertical" />
-    <a class="navi" href="#AboutUs">关于我们</a>
-    <Divider type="vertical" />
-    <router-link to="/PersonalCenter" v-if="judge"><a class="navi">个人中心</a></router-link>
-    <a class="navi" @click="logout" v-if="judge">用户登出</a>
-    <router-link to="/UserLogin" v-else><a class="navi">用户登录</a></router-link>
+    <router-link to="/PersonalCenter" v-if="judge"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
+    <a class="navi" @click="logout" v-if="judge"><Icon type="md-log-out" /> 退出登录</a>
+    <router-link to="/UserLogin" v-else><a class="navi"><Icon type="md-log-in" /> 用户登录</a></router-link>
 
      </div>
      <!-- 走马灯 -->
@@ -35,7 +34,7 @@
     <div class="MyContent">
         <h4><Icon type="md-bookmarks" />&nbsp;免费内容</h4>
     </div>
-    <div class="gengduo">
+    <div class="SeeMore">
         <Poptip trigger="hover" title="免费内容预览" content="点击查看所有免费文章。">
         <Button id="button" ghost><router-link to="/AllFreeCourse">
         <div class="ButtonText">查看更多<Icon type="md-log-in" /></div>
@@ -46,30 +45,14 @@
     </Card>
     <!-- 免费内容预览 -->
     <div class="container">
-    <div class="item">
-        <a href="/">
-        <Card>
-            <p class="CoverTitle" slot="title">{{ title1 }}</p>
-            <p class="CoverPic"><img src="../assets/album_1.png"></p>
-        </Card>
-        </a>
-    </div>
-    <div class="item">
-        <a href="/">
-        <Card>
-            <p class="CoverTitle" slot="title">{{ title2 }}</p>
-            <p class="CoverPic"><img src="../assets/album_2.png"></p>
-        </Card>
-        </a>
-    </div>
-    <div class="item">
-        <a href="/">
-        <Card>
-            <p class="CoverTitle" slot="title">{{ title3 }}</p>
-            <p class="CoverPic"><img src="../assets/album_3.png"></p>
-        </Card>
-        </a>
-    </div>
+    <div class="item" v-for="item of free_course" :key="item.id">
+      <a href="/">
+      <Card>
+         <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
+            <p><img class="CoverPic" v-bind:src= 'item.fields.Cover_picture'/></p>
+      </Card>
+      </a>
+        </div>
     </div>
     <br>
     <!-- 付费内容导航框 -->
@@ -89,30 +72,15 @@
     </Card>
     <!-- 付费内容预览 -->
     <div class="container">
-    <div class="item">
-        <a href="/">
-        <Card>
-            <p class="CoverTitle" slot="title">{{ title1 }}</p>
-            <p class="CoverPic"><img src="../assets/album_1.png"></p>
-        </Card>
-        </a>
-    </div>
-    <div class="item">
-        <a href="/">
-        <Card>
-            <p class="CoverTitle" slot="title">{{ title2 }}</p>
-            <p class="CoverPic"><img src="../assets/album_2.png"></p>
-        </Card>
-        </a>
-    </div>
-    <div class="item">
-        <a href="/">
-        <Card>
-            <p class="CoverTitle" slot="title">{{ title3 }}</p>
-            <p class="CoverPic"><img src="../assets/album_3.png"></p>
-        </Card>
-        </a>
-    </div>
+    <div class="item" v-for="item of paying_course" :key="item.id">
+     <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
+      <Card>
+         <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
+            <p><img class="CoverPic" v-bind:src= 'item.fields.Cover_picture'/></p>
+      </Card>
+     </router-link>
+        </div>
+
     </div>
     <!-- 返回顶部 -->
     <BackTop>
@@ -133,18 +101,68 @@ export default {
   name: 'home',
   data() {
     return {
-      judge: false,
-      title1: '季节是怎么形成的',
-      title2: '谁住在壳里',
-      title3: '夜行性动物住在哪儿',
       value: 0,
+      imgs: [],
+      free_course: [],
+      paying_imgs: [],
+      paying_course: [],
+      show_number: 3,
+      path: [],
+      judge: false,
       yourname: ''
     }
   },
   mounted: function() {
+    this.show_free_course()
+    this.show_paying_course()
     this.Judgestatus()
   },
   methods: {
+    show_free_course: function() {
+      this.$http.get('http://192.168.55.33:8000/app/show_free_course').then(
+        response => {
+          this.imgs = response.data.list
+          console.log('success')
+          for (var i = 0; i < this.imgs.length; i = i + 1) {
+            var a =
+              'http://192.168.55.33:8000/media/' +
+              this.imgs[i].fields.Cover_picture
+            this.imgs[i].fields.Cover_picture = a
+          }
+          var length = 0
+          if (this.imgs.length > this.show_number) length = this.show_number
+          else length = this.imgs.length
+          this.free_course = this.imgs.slice(0, length)
+          console.log('success')
+        },
+        response => {
+          console.log('error')
+        }
+      )
+    },
+    show_paying_course: function() {
+      this.$http.get('http://192.168.55.33:8000/app/show_paying_course').then(
+        response => {
+          this.paying_imgs = response.data.list
+          console.log('success')
+          for (var i = 0; i < this.paying_imgs.length; i = i + 1) {
+            var a =
+              'http://192.168.55.33:8000/media/' +
+              this.paying_imgs[i].fields.Cover_picture
+            this.paying_imgs[i].fields.Cover_picture = a
+          }
+          var length = 0
+          if (this.paying_imgs.length > this.show_number) {
+            length = this.show_number
+          } else length = this.paying_imgs.length
+          this.paying_course = this.paying_imgs.slice(0, length)
+          console.log('success')
+        },
+        response => {
+          console.log('error')
+        }
+      )
+    },
     Judgestatus: function() {
       this.$http
         .post('http://192.168.55.33:8000/app/get_status')
@@ -175,8 +193,12 @@ export default {
 <style scoped>
 .CoverPic {
   text-align: center;
-  border: black solid 2px;
+  margin-left: 12%;
+  border: black solid
+    2px;
   border-radius: 3px;
+  width: 300px;
+  height: 200px;
 }
 .CoverTitle {
   text-align: center;
@@ -189,7 +211,6 @@ export default {
   z-index: 9999;
   background-color: #fff;
   position: fixed;
-  text-align: center;
   width: 100%;
   opacity: 0.9;
   padding: 25px;

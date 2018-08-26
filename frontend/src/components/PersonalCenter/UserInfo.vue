@@ -1,10 +1,11 @@
 <template>
 <div id="UserInfo">
     <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
-    <div>
-        <p id="nick">昵称：{{nickname}}</p>
-        <p id="money">奖励金：{{amount_of_money}}</p>
-    </div>
+     <div id="info">
+       <div id="nickname">昵称：{{nickname}}</div>
+       <div id="phone">手机号码：{{user_phone}}</div>
+       <div id="money">奖励金：{{amount_of_money}}</div>
+     </div>
 </div>
 </template>
 <script>
@@ -53,19 +54,28 @@ export default {
   border-radius: 8px;
   width: 120px;
   height: 120px;
-  margin: 30px;
-  margin-left: 300px;
+  margin-top: 30px;
+  margin-left: 100px;
 }
-#nick {
-  width: 200px;
-  height: 40px;
-  margin: 30px;
-  margin-left: 300px;
+#nickname {
+  font-size: 20px;
+  font-family: 华文中宋;
+  margin-left: 200px;
+  margin-top: 5px;
 }
 #money {
-  width: 200px;
-  height: 40px;
-  margin: 30px;
-  margin-left: 300px;
+  font-size: 20px;
+  font-family: 华文中宋;
+  margin-left: 200px;
+  margin-top: 5px;
+}
+#phone {
+  font-size: 20px;
+  font-family: 华文中宋;
+  margin-left: 200px;
+  margin-top: 5px;
+}
+#info {
+    margin-left: 100px;
 }
 </style>

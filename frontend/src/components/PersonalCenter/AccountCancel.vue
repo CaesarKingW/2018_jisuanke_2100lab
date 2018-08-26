@@ -7,7 +7,7 @@
         并且本手机号码此后将无法再次用于进行注册或登录。
         进行本操作前请慎重！
     </Card>
-    <div><button id="cancelButton" v-on:click="userDestroy">确认注销</button></div>
+    <div id="buttonCard"><button id="cancelButton" v-on:click="userDestroy">确认注销</button></div>
     </div>
 </div>
 </template>
@@ -30,7 +30,7 @@ export default {
           response => {
             console.log(response.date)
             this.getSuccessCancel()
-            // 跳转到登录页面
+            this.$router.push({name: 'UserLogin'})
           },
           response => {
             console.log('error')
