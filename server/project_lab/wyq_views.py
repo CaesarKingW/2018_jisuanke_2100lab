@@ -19,7 +19,7 @@ from urllib.parse import urlparse, parse_qs
 from urllib.request import urlopen
 from base64 import decodebytes, encodebytes
 from django.conf import settings
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 
 
 @require_http_methods(['POST', 'GET'])
@@ -32,6 +32,7 @@ def manager_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
+                    login(request, user)
                     response['data'] = 'true'
                 else:
                     response['data'] = 'not_active'
@@ -48,6 +49,18 @@ def manager_login(request):
         response['msg'] = str(e)
         response['error_num'] = 1
     return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def back_logout(request):
+    response = {}
+    try:
+        logout(request)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse('success', safe=False)
 
 
 @require_http_methods(['POST', 'GET'])
