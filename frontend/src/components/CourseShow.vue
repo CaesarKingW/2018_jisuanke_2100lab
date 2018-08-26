@@ -33,6 +33,16 @@ export default {
       title: '科学实验：实验室制取CO2',
       times: '9999'
     }
+  },
+  mounted: function() {
+    var orderId = this.$route.query.out_trade_no
+    if (typeof (orderId) !== 'undefined') {
+      var request = JSON.stringify(orderId)
+      this.$http.post('http://192.168.55.33:8000/app/return_url', request)
+        .then(response => {
+          console.log(response.data)
+        })
+    }
   }
 }
 </script>

@@ -128,23 +128,20 @@ def payment(request):
 
 
 @require_http_methods(['POST', 'GET'])
-def alipay_notify(request):
+def alipay_get(request):
     # 存放post里面所有的数据
     processed_dict = {}
     try:
-        # 取出post里面的数据
-        for key, value in request.POST.items():
-            processed_dict[key] = value
-        # 商户网站唯一订单号
-        orderid = processed_dict.get('out_trade_no', None)
+        orderid = json.loads(request.body)
         # 查询数据库中订单记录
         info = Order.objects.get(Order_number=orderid)
-        courseid = info.course_id
-        info.status = "completed"
-        info.save()
-        info = Course.objects.get(id=courseid)
-        info.sale_count = info.sale_count + 1
-        info.save()
+        courseid = info.course_id.id
+        if info.status == 'payment':
+            info.status = "completed"
+            info.save()
+            info = Course.objects.get(id=courseid)
+            info.sale_count = info.sale_count + 1
+            info.save()
         return JsonResponse("success", safe=False)
     except Exception as e:
         processed_dict['data'] = 'false'
