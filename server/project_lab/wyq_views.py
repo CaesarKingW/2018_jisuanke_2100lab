@@ -19,6 +19,7 @@ from urllib.parse import urlparse, parse_qs
 from urllib.request import urlopen
 from base64 import decodebytes, encodebytes
 from django.conf import settings
+from django.contrib.auth import authenticate, login, logout
 
 
 @require_http_methods(['POST', 'GET'])
@@ -27,18 +28,39 @@ def manager_login(request):
     try:
         if request.method == 'POST':
             username = json.loads(request.body)['user']
-            password = json.loads(request.body)['password']
-            info = Manager.objects.get(username=username)
-            info = info.password
-            if password == info:
-                response['data'] = 'true'
+            password = json.loads(request.body)['password'] + ''
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    response['data'] = 'true'
+                else:
+                    response['data'] = 'not_active'
             else:
-                response['data'] = 'false'
+                response['data'] = 'not_exit'
+            # info = Manager.objects.get(username=username)
+            # info = info.password + ''
+            # if password == info:
+            #     response['data'] = 'true'
+            # else:
+            #     response['data'] = 'false'
     except Exception as e:
         response['data'] = 'false'
         response['msg'] = str(e)
         response['error_num'] = 1
     return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def back_logout(request):
+    response = {}
+    try:
+        logout(request)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse('success', safe=False)
 
 
 @require_http_methods(['POST', 'GET'])
@@ -128,23 +150,20 @@ def payment(request):
 
 
 @require_http_methods(['POST', 'GET'])
-def alipay_notify(request):
+def alipay_get(request):
     # 存放post里面所有的数据
     processed_dict = {}
     try:
-        # 取出post里面的数据
-        for key, value in request.POST.items():
-            processed_dict[key] = value
-        # 商户网站唯一订单号
-        orderid = processed_dict.get('out_trade_no', None)
+        orderid = json.loads(request.body)
         # 查询数据库中订单记录
         info = Order.objects.get(Order_number=orderid)
-        courseid = info.course_id
-        info.status = "completed"
-        info.save()
-        info = Course.objects.get(id=courseid)
-        info.sale_count = info.sale_count + 1
-        info.save()
+        courseid = info.course_id.id
+        if info.status == 'payment':
+            info.status = "completed"
+            info.save()
+            info = Course.objects.get(id=courseid)
+            info.sale_count = info.sale_count + 1
+            info.save()
         return JsonResponse("success", safe=False)
     except Exception as e:
         processed_dict['data'] = 'false'

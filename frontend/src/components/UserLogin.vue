@@ -37,7 +37,7 @@ export default {
         this.is_login = response.data.is_login
         if (this.is_login) {
           this.alert_wrong_status()
-          location.href = 'http://192.168.55.33:8000/#/home'
+          location.href = '/#/home'
         }
       })
   },
@@ -165,7 +165,7 @@ export default {
               this.commit_phone = null
               // this.status = false
               // 用户跳转到主页
-              location.href = 'http://192.168.55.33:8000/#/home'
+              location.href = '/#/home'
             } else {
               this.alert_wrong_code()
               console.log(this.phone_number)
@@ -234,7 +234,7 @@ export default {
   border-top-right-radius: 8px;
 }
 form {
-  background: #FFF;
+  background: #fff;
   padding: 2% 4%;
 }
 #log_down {

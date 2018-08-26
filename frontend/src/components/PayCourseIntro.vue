@@ -1,11 +1,11 @@
 <template>
 <div class="PayCourseIntro">
   <!-- 导航栏 -->
-    <div class="navibar">
+    <!-- <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
     <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
-    </div>
+    </div> -->
     <!-- 课程信息 -->
   <div class="myPanel"></div>
         <div class="coverDiv">
@@ -79,7 +79,7 @@ export default {
       .post('http://192.168.55.33:8000/app/get_status')
       .then(response => {
         this.userphone = response.data.list[0].pk
-        console.log(this.user_phone)
+        console.log(this.userphone)
       })
     this.$http
       .post(
@@ -94,7 +94,7 @@ export default {
           'http://192.168.55.33:8000/media/' + course[0].fields.Cover_picture
         this.content = course[0].fields.brief_introduction
         this.price = course[0].fields.price
-        this.award = course[0].fields.share_rate * this.price
+        this.award = Math.floor(course[0].fields.share_rate * this.price)
       })
   },
   methods: {

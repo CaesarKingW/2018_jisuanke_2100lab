@@ -33,7 +33,7 @@ urlpatterns = [
     path('get_status', wchxviews.get_status),
     path('del_status', wchxviews.del_status),
     path('payment', wyq_views.payment),
-    path('notify', wyq_views.alipay_notify),
+    path('notify', wyq_views.alipay_get),
     path('add_img', wq_views.add_img),
     path('add_audi', wq_views.add_audi),
     path('set_start_time', wq_views.set_start_time),
@@ -43,5 +43,6 @@ urlpatterns = [
     path('account_destroy', account_destroy.account_destroy),
     path('show_free_course', show_all_course.show_free_course),
     path('show_paying_course', show_all_course.show_paying_course),
-    path('get_specified_course', show_all_course.get_specified_course)
+    path('get_specified_course', show_all_course.get_specified_course),
+    path('back_log_out', wyq_views.back_logout)
 ]
