@@ -138,7 +138,7 @@ export default {
       title2: '谁住在壳里',
       title3: '夜行性动物住在哪儿',
       value: 0,
-      yourname: 'vladimir'
+      yourname: ''
     }
   },
   mounted: function() {

@@ -25,7 +25,7 @@ export default {
         var obj = []
         obj = response.data.list
         this.old_path = obj[0].fields.head_protrait
-        this.user_phone = obj[0].fields.phone_number
+        this.user_phone = obj[0].pk
         if (this.old_path === '') {
           this.path = this.default_avator
         } else {
