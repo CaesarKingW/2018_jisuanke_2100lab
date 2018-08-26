@@ -41,6 +41,10 @@ class PostTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_manager_search(self):
+        response = self.client.post('/app/back_log_out')
+        self.assertEqual(response.status_code, 200)
+
+    def test_manager_search(self):
         response = self.client.post('/app/manager_search')
         self.assertEqual(response.status_code, 200)
 

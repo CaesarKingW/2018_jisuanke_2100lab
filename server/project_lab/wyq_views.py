@@ -19,6 +19,7 @@ from urllib.parse import urlparse, parse_qs
 from urllib.request import urlopen
 from base64 import decodebytes, encodebytes
 from django.conf import settings
+from django.contrib.auth import authenticate, login, logout
 
 
 @require_http_methods(['POST', 'GET'])
@@ -27,18 +28,39 @@ def manager_login(request):
     try:
         if request.method == 'POST':
             username = json.loads(request.body)['user']
-            password = json.loads(request.body)['password']
-            info = Manager.objects.get(username=username)
-            info = info.password
-            if password == info:
-                response['data'] = 'true'
+            password = json.loads(request.body)['password'] + ''
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    response['data'] = 'true'
+                else:
+                    response['data'] = 'not_active'
             else:
-                response['data'] = 'false'
+                response['data'] = 'not_exit'
+            # info = Manager.objects.get(username=username)
+            # info = info.password + ''
+            # if password == info:
+            #     response['data'] = 'true'
+            # else:
+            #     response['data'] = 'false'
     except Exception as e:
         response['data'] = 'false'
         response['msg'] = str(e)
         response['error_num'] = 1
     return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def back_logout(request):
+    response = {}
+    try:
+        logout(request)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse('success', safe=False)
 
 
 @require_http_methods(['POST', 'GET'])
