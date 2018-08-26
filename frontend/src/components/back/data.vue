@@ -158,7 +158,7 @@ export default {
           console.log(response.bodyText)
           this.order_time.week = response.body['week'] + ''
           this.order_time.month = response.body['month'] + ''
-          this.order_time.season = response.body['season']+''
+          this.order_time.season = response.body['season'] + ''
           this.order_time.semi_year = response.body['semi_year'] + ''
           this.order_time.year = response.body['year'] + ''
           this.order_time.all = response.body['all'] + ''
