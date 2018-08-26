@@ -20,7 +20,7 @@ export default {
     }
   },
   mounted: function() {
-    //获取登录用户手机号
+    // 获取登录用户手机号
   },
   methods: {
     userDestroy: function() {
