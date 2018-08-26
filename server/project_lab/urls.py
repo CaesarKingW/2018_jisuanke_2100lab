@@ -33,7 +33,7 @@ urlpatterns = [
     path('get_status', wchxviews.get_status),
     path('del_status', wchxviews.del_status),
     path('payment', wyq_views.payment),
-    path('return_url', wyq_views.alipay_get),
+    path('notify', wyq_views.alipay_get),
     path('add_img', wq_views.add_img),
     path('add_audi', wq_views.add_audi),
     path('set_start_time', wq_views.set_start_time),

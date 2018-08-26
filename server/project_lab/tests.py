@@ -112,8 +112,8 @@ class PostTest(TestCase):
         response = self.client.post('/app/payment')
         self.assertEqual(response.status_code, 200)
 
-    def test_alipay_get(self):
-        response = self.client.post('/app/alipay_get')
+    def test_notify(self):
+        response = self.client.post('/app/notify')
         self.assertEqual(response.status_code, 200)
 
     # def test_add_img(self):
