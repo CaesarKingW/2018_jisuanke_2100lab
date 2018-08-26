@@ -46,12 +46,12 @@
     <!-- 免费内容预览 -->
     <div class="container">
     <div class="item" v-for="item of free_course" :key="item.id">
-      <a href="/">
+      <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
       <Card>
          <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
             <p><img class="CoverPic" v-bind:src= 'item.fields.Cover_picture'/></p>
       </Card>
-      </a>
+      </router-link>
         </div>
     </div>
     <br>

@@ -28,7 +28,7 @@
     </Alert>
     </div>
     </div>
-    <!-- <div class="introText">
+    <div class="introText">
         <Collapse v-model="value">
         <Panel id="introText" name="1" style="font-size: 25px;">
             课程简介
@@ -39,7 +39,7 @@
                 </p>
         </Panel>
     </Collapse>
-    </div> -->
+    </div>
     <br>
 </div>
 </template>
@@ -67,7 +67,6 @@ export default {
       .post('http://192.168.55.33:8000/app/get_status')
       .then(response => {
         this.userphone = response.data.list[0].pk
-        console.log(this.userphone)
       })
     this.$http
       .post(
@@ -80,7 +79,6 @@ export default {
         this.courseTitle = course[0].fields.title
         this.path =
           'http://192.168.55.33:8000/media/' + course[0].fields.Cover_picture
-        console.log(this.path)
         this.content = course[0].fields.brief_introduction
       })
   }

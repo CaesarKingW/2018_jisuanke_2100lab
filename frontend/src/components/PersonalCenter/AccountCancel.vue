@@ -19,6 +19,9 @@ export default {
       userPhone: '17602284691'
     }
   },
+  mounted: function() {
+    //获取登录用户手机号
+  },
   methods: {
     userDestroy: function() {
       this.$http
@@ -30,7 +33,7 @@ export default {
           response => {
             console.log(response.date)
             this.getSuccessCancel()
-            this.$router.push({name: 'UserLogin'})
+            this.$router.push({ name: 'UserLogin' })
           },
           response => {
             console.log('error')
