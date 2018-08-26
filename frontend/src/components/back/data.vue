@@ -48,6 +48,7 @@
     </Dropdown>
     <p class='choose'>的订单总金额为{{money_amount}}.</p>
     <div id="main"  class="chart"></div>
+    <div id="">
   </section>
 </template>
 
@@ -217,13 +218,18 @@ export default {
     get_money_amount() {
       this.$http.post('http://192.168.55.33:8000/app/money_amount')
         .then(response => {
-          console.log(response.bodyText)
           this.money_time.week = response.body['week']
           this.money_time.month = response.body['month']
           this.money_time.season = response.body['season']
           this.money_time.semi_year = response.body['semi_year']
           this.money_time.year = response.body['year']
           this.money_time.all = response.body['all']
+        })
+    },
+    get_free_watch() {
+      this.$http.post('http://192.168.55.33:8000/app/free_watch')
+        .then(response => {
+          console.log(response.body)
         })
     },
     drawPie(id) {
@@ -273,6 +279,9 @@ export default {
       this.get_user_amount()
       this.get_order_amount()
       this.get_money_amount()
+      this.get_free_watch()
+      // this.get_paid_watch()
+      // this.get_paid_amount()
     })
   }
 }

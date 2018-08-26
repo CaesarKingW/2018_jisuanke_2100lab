@@ -244,6 +244,20 @@ def money_amount(request):
     return JsonResponse(response)
 
 
+@require_http_methods(['POST', 'GET'])
+def free_watch(request):
+    response = {}
+    try:
+        info = Course.objects.filter(price=0.0).order_by('-view_count').only('title', 'sale_count')[:10]
+        info = serializers.serialize('json', info)
+        return JsonResponse(info, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
+
 
 class AliPay(object):
     """
