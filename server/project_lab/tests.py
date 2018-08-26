@@ -84,21 +84,21 @@ class PostTest(TestCase):
     #     response = self.client.post('/app/authenticate')
     #     self.assertEqual(response.status_code, 200)
 
-        def test_forbid_comment(self):
-            response = self.client.post('/app/forbid_comment')
-        self.assertEqual(response.status_code, 200)
+    # def test_forbid_comment(self):
+    #     response = self.client.post('/app/forbid_comment')
+    #     self.assertEqual(response.status_code, 200)
 
-        def test_search_comment(self):
-            response = self.client.post('/app/search_comment')
-        self.assertEqual(response.status_code, 200)
+    # def test_search_comment(self):
+    #     response = self.client.post('/app/search_comment')
+    #     self.assertEqual(response.status_code, 200)
 
-        def test_delete_comment(self):
-            response = self.client.post('/app/delete_comment')
-        self.assertEqual(response.status_code, 200)
+    # def test_delete_comment(self):
+    #     response = self.client.post('/app/delete_comment')
+    #     self.assertEqual(response.status_code, 200)
 
-        def test_search_order(self):
-            response = self.client.post('/app/search_order')
-        self.assertEqual(response.status_code, 200)
+    # def test_search_order(self):
+    #     response = self.client.post('/app/search_order')
+    #     self.assertEqual(response.status_code, 200)
 
     # def test_refund(self):
     #     response = self.client.post('/app/refund')
@@ -157,8 +157,8 @@ class PostTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
 #验证短信发送功能
-class SendMessage(TestCase):
-    def test_yunpian(self):
-        yun_pian = YunPian("264fb31e3ba88e5c55572dd977b2f372")
-        yun_pian.send_sms("6666", "15971181570")
-        self.assertEqual(yun_pian.send_state, '发送成功')
+# class SendMessage(TestCase):
+#     def test_yunpian(self):
+#         yun_pian = YunPian("264fb31e3ba88e5c55572dd977b2f372")
+#         yun_pian.send_sms("6666", "15971181570")
+#         self.assertEqual(yun_pian.send_state, '发送成功')
