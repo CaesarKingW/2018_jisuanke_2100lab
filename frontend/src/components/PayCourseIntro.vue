@@ -63,7 +63,7 @@ export default {
       .post('http://192.168.55.33:8000/app/get_status')
       .then(response => {
         this.userphone = response.data.list[0].pk
-        console.log(this.user_phone)
+        console.log(this.userphone)
       })
     this.$http
       .post(
@@ -78,7 +78,7 @@ export default {
           'http://192.168.55.33:8000/media/' + course[0].fields.Cover_picture
         this.content = course[0].fields.brief_introduction
         this.price = course[0].fields.price
-        this.award = course[0].fields.share_rate * this.price
+        this.award = Math.floor(course[0].fields.share_rate * this.price)
       })
   },
   methods: {
