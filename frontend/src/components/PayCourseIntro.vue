@@ -23,7 +23,7 @@
         <div class="alertButtonDiv">
           <Alert class="alertButton" show-icon>
         <Icon type="ios-trophy-outline" slot="icon"></Icon>
-        <template class="alertText1" slot="desc">分销本课程，还可额外获得 {{ award }} 枚奖励币哦！</template>
+        <template class="alertText" slot="desc">分销本课程，还可额外获得 {{ award }} 枚奖励币哦！</template>
           </Alert>
         </div>
         <div class="introDiv">
@@ -145,6 +145,14 @@ export default {
   border: none;
   border-radius: 0px;
 }
+.vertical-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ivu-modal {
+  top: 0;
+}
 .alertText {
   text-align: center;
   color: #fff;
@@ -195,9 +203,6 @@ export default {
 #copyButton:hover {
   background: #57a3f3;
 }
-.alertButtonDiv {
-  margin-top: 10px;
-}
 #testPic {
   width: 360px;
   height: 250px;
@@ -205,11 +210,12 @@ export default {
   border-radius: 8px;
   margin: 0 auto;
 }
-.alertButton {
+.alertButtonDiv {
   margin: 0 auto;
   text-align: center;
   width: 60%;
   height: 5%;
+  margin-top: 10px;
 }
 .introDiv {
   width: 60%;
@@ -227,7 +233,7 @@ export default {
   position: static;
 }
 #courseTitle {
-  color: #fff;
+  color: #000;
   font-family: 华文中宋;
   font-size: 28px;
   border: none;
@@ -236,7 +242,7 @@ export default {
   text-align: center;
   position: static;
 }
-#courseTitleDiv {
+.courseTitleDiv {
   margin: 0 auto;
 }
 </style>
