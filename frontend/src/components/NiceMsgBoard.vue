@@ -1,6 +1,6 @@
 <template>
-<div id="NiceMsgBoard">
-  <div id="comment_alert">
+<div class="NiceMsgBoard">
+  <div id="commentAlert">
   <Alert show-icon>
         <div id="comment_title">留言区</div>
         <Icon id="text_icon" type="md-text" slot="icon"></Icon>
@@ -8,7 +8,7 @@
   </div>
   <form method="POST" @submit.prevent="commit_message">
     <div id="post_font"><Input v-model="message" type="textarea" :rows="4" id="post_column" placeholder="请在此畅所欲言……" /></div>
-    <div id="post_button_area"><input id="post_button" type="submit" value="发送留言 (ゝ∀･)"/></div>
+    <div id="post_button_area"><input id="post_button" type="submit" value="发送留言" /></div>
     </form>
   <div v-for="(item, index) of messages" :key="item.id">
     <Divider />
@@ -110,6 +110,9 @@ export default {
 }
 </script>
 <style scoped>
+.NiceMsgBoard {
+  margin: 0 auto;
+}
 #user_name {
   font-size: 18px;
   font-family: 微软雅黑;
@@ -120,7 +123,7 @@ export default {
 #post_font {
   font-size: 25px;
 }
-#comment_alert {
+#commentAlert {
   text-align: center;
   padding: 20px;
   width: 940px;
@@ -152,17 +155,18 @@ export default {
   margin-left: 200px;
   margin-bottom: 30px;
 }
-#post_button_area {
-  text-align: center;
+/* #post_button_area {
   margin-bottom: 30px;
-}
+  margin: 0 auto;
+} */
 #post_button {
-  width: 15%;
+  width: 18%;
   height: 40px;
-  margin-left: -100px;
   font-size: 20px;
   margin-top: 10px;
-  outline: none;
+  margin: 0 auto;
+  text-align: center;
+  margin-left: 575px;
   border-radius: 4px;
   border: solid 1px;
   background-color: #fff;
