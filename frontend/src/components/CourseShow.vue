@@ -14,7 +14,7 @@
             <div style="color: white;">文字介绍</div>
             </Poptip>
             <div slot="content" style="text-align: left;font-size: 18px;">
-               <div style="overflow: auto;height: 90px;">昨日太行山上,层迭峰石,突兀傲松,却静止于空洞,亿万年轮,看透了鸢飞戾天,看透了鱼翔浅底,看透了烟雨情愁,看透了日月星辰,木雕流金,将感情深深地埋在悬崖绝壁间.所以我开始彷徨,寻不到你的所藏,庆幸的是,我找到了,太行清明,你把泪已千行的岁月蕴藏在那双明镜的眼眸,雨打湿了眼眶,然后微笑的让行人用她辛辛苦苦打上来的山泉洗手,那无声的暗示,那佝偻的优雅,还有那日日的皱痕,年年倚井盼归堂的眷恋,是太行之行带给我的最美的感动.物言无情人有情,无言泪已拆两行.</div>
+               <div style="overflow: auto;height: 90px;">content</div>
             </div>
         </Panel>
     </Collapse>
