@@ -20,6 +20,7 @@ from urllib.request import urlopen
 from base64 import decodebytes, encodebytes
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
+from datetime import datetime,timedelta
 
 
 @require_http_methods(['POST', 'GET'])
@@ -156,7 +157,7 @@ def alipay_get(request):
     try:
         orderid = json.loads(request.body)
         # 查询数据库中订单记录
-        info = Order.objects.get(Order_number=orderid)
+        info = Order.objects.count()
         courseid = info.course_id.id
         if info.status == 'payment':
             info.status = "completed"
@@ -170,6 +171,45 @@ def alipay_get(request):
         processed_dict['msg'] = str(e)
         processed_dict['error_num'] = 1
     return JsonResponse(processed_dict)
+
+
+@require_http_methods(['POST', 'GET'])
+def user_amount(request):
+    # 存放post里面所有的数据
+    response = {}
+    try:
+        total = User.objects.count()
+        return JsonResponse(total, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def order_amount(request):
+    # 存放post里面所有的数据
+    response = {}
+    try:
+        dt_s = datetime.now()
+        dt_e = (dt_s - timedelta(7))
+        response['week'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        dt_e = (dt_s - timedelta(30))
+        response['month'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        dt_e = (dt_s - timedelta(91))
+        response['season'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        dt_e = (dt_s - timedelta(182))
+        response['semi_year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        dt_e = (dt_s - timedelta(365))
+        response['year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        response['all'] = Order.objects.count()
+        return JsonResponse(response, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
 
 
 class AliPay(object):
