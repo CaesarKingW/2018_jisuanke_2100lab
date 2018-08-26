@@ -32,7 +32,12 @@ export default {
   },
   methods: {
     logout() {
-      this.$router.push({path: '/backlogin'})
+      var request = {}
+      this.$http.post('http://192.168.55.33:8000/app/back_log_out', request)
+        .then(response => {
+          console.log(response.data)
+          this.$router.push({path: '/backlogin'})
+        })
     }
   }
 }
