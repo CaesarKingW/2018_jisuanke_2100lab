@@ -1,5 +1,5 @@
 <template>
-<div id="CourseShow" style="background-color: #c4e1ff;">
+<div id="CourseShow">
     <Divider><h1 class="title">{{ title }}</h1></Divider>
     <Divider orientation="right"><p class="read_time" style="font-size: 24px;">浏览量：{{ times }} 次</p></Divider>
     <div class="test_pic"><img id="changePic" src="../assets/2.png"></div>
@@ -14,9 +14,7 @@
             <div style="color: white;">文字介绍</div>
             </Poptip>
             <div slot="content" style="text-align: left;font-size: 18px;">
-                实验室用大理石和稀盐酸来反应制取二氧化碳，可我们知道，能产生二氧化碳的反应有很多，为什么却选此反应呢？
-                该反应最大的优点是反应速度适中，便于实验室收集气体。能否用稀硫酸代替稀盐酸呢？回答是不可以。因为稀硫酸会和大理石中的碳酸钙反应生成微溶于水的硫酸钙，覆盖在大理石表面，使酸与大理石脱离接触，反应自行停止。看到的现象是刚开始有气泡冒出，很快就没有了。
-                那么碳酸钠也能和稀盐酸反应放出二氧化碳，用碳酸钠是否可以代替大理石呢？回答也是不可以，因为碳酸钠是粉末性固体，能与盐酸充分接触，反应速度太快，不便于收集气体。
+               <div style="overflow: auto;height: 90px;">昨日太行山上,层迭峰石,突兀傲松,却静止于空洞,亿万年轮,看透了鸢飞戾天,看透了鱼翔浅底,看透了烟雨情愁,看透了日月星辰,木雕流金,将感情深深地埋在悬崖绝壁间.所以我开始彷徨,寻不到你的所藏,庆幸的是,我找到了,太行清明,你把泪已千行的岁月蕴藏在那双明镜的眼眸,雨打湿了眼眶,然后微笑的让行人用她辛辛苦苦打上来的山泉洗手,那无声的暗示,那佝偻的优雅,还有那日日的皱痕,年年倚井盼归堂的眷恋,是太行之行带给我的最美的感动.物言无情人有情,无言泪已拆两行.</div>
             </div>
         </Panel>
     </Collapse>
@@ -59,7 +57,7 @@ export default {
   border-radius: 2px;
 }
 #changePic {
-    border:#99ccff solid 5px;
+    border:#000 solid 5px;
     border-radius: 20px;
 }
 </style>

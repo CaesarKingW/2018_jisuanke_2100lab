@@ -1,38 +1,53 @@
 <template>
 <div class="PayCourseIntro">
-        <span><img id="test_pic" v-bind:src="path"></span>
-        <span><h1 id="courseTitle">标题：{{ courseTitle }}</h1></span>
-        <Button @click="alipay()" id="buy" icon="logo-usd" type="primary">购买课程</Button>
-        <Button @click="modal = true" id="share" icon="ios-card" type="primary">分销课程</Button>
-        <Modal
+  <!-- 导航栏 -->
+    <!-- <div class="navibar">
+    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
+    <Divider type="vertical" />
+    <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
+    </div> -->
+    <!-- 课程信息 -->
+  <div class="myPanel"></div>
+        <div class="coverDiv">
+          <img id="testPic" v-bind:src="path">
+        </div>
+        <div class="courseTitleDiv"><div id="courseTitle">标题：{{ courseTitle }}</div></div>
+        <div class="buyButtonDiv">
+          <Button @click="alipay()" id="buy" type="primary">
+            <Icon type="logo-usd" /> 购买课程
+            </Button></div>
+        <div class="shareButtonDiv">
+          <Button @click="modal = true" id="share" type="primary">
+            <Icon type="ios-card" /> 分销课程</Button>
+            </div>
+        <div class="alertButtonDiv">
+          <Alert class="alertButton" show-icon>
+        <Icon type="ios-trophy-outline" slot="icon"></Icon>
+        <template class="alertText1" slot="desc">分销本课程，还可额外获得 {{ award }} 枚奖励币哦！</template>
+          </Alert>
+        </div>
+        <div class="introDiv">
+          <Collapse v-model="value">
+            <Panel class="intro">
+            课程简介
+            <p slot="content" class="contentText">
+                  {{content}}
+                </p>
+            </Panel>
+          </Collapse>
+        </div>
+   <Modal
         title="分销课程"
         v-model="modal"
         class-name="vertical-center-modal">
         <div style="text-align: center; padding:10px;"><span id="thisURL">本页地址：{{ message }}</span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button id="copy_button" type="button"
+        <button id="copyButton" type="button"
         v-clipboard:copy="message"
         v-clipboard:success="onCopy"
         v-clipboard:error="onError">复制</button>
         </div>
-    </Modal>
-        <Alert id="tip" show-icon>
-        <Icon type="ios-trophy-outline" slot="icon"></Icon>
-        <template slot="desc">分销本课程，还可额外获得{{ award }}枚奖励币哦！ </template>
-    </Alert>
-    <div id="intro"><Collapse v-model="value">
-        <Panel id="intro" name="1" style="font-size: 25px;">
-            课程简介
-            <p slot="content">
-                <ul style="font-size: 18px; list-style:none;">
-                    <!-- <li>1.实验室制取二氧化碳，用大理石或石灰石与稀盐酸反应，它们的主要成分为碳酸钙，生成物有氯化钙、水和二氧化碳，方程式为：CaCO3+2HCl═CaCl2+H2O+CO2↑。</li>
-                    <li>2.二氧化碳能溶于水，与水反应生成碳酸，不能用排水法收集，由于密度比空气大，可用向上排空气法收集。</li>
-                    <li>3.检验二氧化碳时，利用二氧化碳与氢氧化钙反应生成碳酸钙沉淀的性质，方法是把制取的气体通入澄清的石灰水，如石灰水变浑，则气体是二氧化碳。</li> -->
-                    {{content}}
-                </ul>
-                </p>
-        </Panel>
-    </Collapse></div>
+        </Modal>
     <br>
 </div>
 </template>
@@ -51,7 +66,8 @@ export default {
       orderid: '',
       price: 100,
       courseid: 1,
-      userphone: ''
+      userphone: '',
+      value: '1'
     }
   },
   created: function() {
@@ -108,76 +124,67 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+.navibar {
+  z-index: 9999;
+  background-color: #fff;
+  position: fixed;
+  width: 100%;
+  opacity: 0.9;
+  padding: 25px;
+}
+.navi {
+  font-size: 23px;
+  color: #022336;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.myPanel {
+  margin: 0 auto;
+  height: 90px;
+  border: none;
+  border-radius: 0px;
+}
+.alertText {
+  text-align: center;
+  color: #fff;
+}
 .PayCourseIntro {
-  height: 480px;
-  border: 1px solid #dcdee2;
-  background-color: #c4e1ff;
-}
-.demo-split-pane {
-  padding: 10px;
-}
-#test_pic {
-  border: #99ccff solid 5px;
-  position: absolute;
-  left: 2%;
-  top: 8%;
-  border-radius: 20px;
-}
-#courseTitle {
   text-align: center;
-  position: absolute;
-  right: 8%;
-  text-align: center;
-  top: 20%;
-  font-size: 3em;
-  padding: 8px 50px;
-  border: #99cccc dotted 3px;
+  margin: 0 auto;
 }
-#buy {
-  width: 170px;
-  height: 60px;
-  text-align: center;
-  position: absolute;
-  right: 20%;
-  top: 40%;
-  font-size: 2em;
-}
-#share {
-  width: 170px;
-  height: 60px;
-  text-align: center;
-  position: absolute;
-  right: 20%;
-  top: 58%;
-  font-size: 2em;
-}
-#tip {
-  width: auto;
-  height: 40px;
-  text-align: center;
-  position: absolute;
-  right: 14%;
-  top: 75%;
-}
-.vertical-center-modal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.CoverDiv {
+  margin: 0 auto;
 }
 .ivu-modal {
   top: 0;
 }
-#intro {
-  position: absolute;
-  top: 84%;
-  width: 100%;
-  list-style: none;
+#share,
+#buy {
+  background-color: #fff;
+  color: #000;
+  font-size: 20px;
+  border: #000 solid 1px;
+  border-radius: 8px;
+  width: 130px;
+  height: 45px;
+  /* margin-top: 20px;
+  margin-bottom: 20px; */
+  margin: 0 auto;
+  text-align: center;
+  position: static;
 }
-#copy_button {
+.buyButtonDiv,
+.shareButtonDiv {
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  position: static;
+}
+#copyButton {
   width: 50px;
   height: 25px;
-  margin-top: 10px;
   outline: none;
   border-radius: 4px;
   border: none;
@@ -185,11 +192,51 @@ export default {
   color: #fff;
   cursor: pointer;
 }
-#copy_button:hover {
+#copyButton:hover {
   background: #57a3f3;
 }
-#test_pic {
-  width: 600px;
-  height: 400px;
+.alertButtonDiv {
+  margin-top: 10px;
+}
+#testPic {
+  width: 360px;
+  height: 250px;
+  border: #cccccc solid 2px;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+.alertButton {
+  margin: 0 auto;
+  text-align: center;
+  width: 60%;
+  height: 5%;
+}
+.introDiv {
+  width: 60%;
+  margin: 0 auto;
+  text-align: left;
+  margin-top: 20px;
+}
+.intro {
+  font-size: 19px;
+  font-family: 华文中宋;
+}
+.contentText {
+  font-family: 华文中宋;
+  font-size: 17px;
+  position: static;
+}
+#courseTitle {
+  color: #fff;
+  font-family: 华文中宋;
+  font-size: 28px;
+  border: none;
+  margin-top: 20px;
+  margin: 0 auto;
+  text-align: center;
+  position: static;
+}
+#courseTitleDiv {
+  margin: 0 auto;
 }
 </style>
