@@ -8,7 +8,7 @@
     </div>
     <div v-show='is_show'>
       <router-link :to="{path:'editCourse',params: {course_id:1}}">
-        <img src='http://192.168.55.33:8000/media/user_photos/a4dbd2628535e5ddc122f8007fc6a7efcf1b62f8.jpg' width=50px height=60px>
+        <!-- <img src=this.GLOBAL.serverSrc + 'media/user_photos/a4dbd2628535e5ddc122f8007fc6a7efcf1b62f8.jpg' width=50px height=60px> -->
       </router-link>
     </div>
   </div>

@@ -34,7 +34,7 @@ def update_nickname(request):
     response = {}
     try:
         if request.method == 'POST':
-            req = json.loads(request.body)
+            req = json.loads(request.body.decode('utf-8'))
             user = User.objects.get(phone_number=req['phone_number'])
             user.user_name = req['nickname']
             user.save()
@@ -51,7 +51,7 @@ def get_old_avator(request):
     response = {}
     try:
         if request.method == 'POST':
-            req = json.loads(request.body)
+            req = json.loads(request.body.decode('utf-8'))
             user = User.objects.filter(phone_number=req)
             response['oldpath'] = json.loads(
                 serializers.serialize("json", user))
@@ -69,7 +69,7 @@ def get_user_information(request):
     response = {}
     try:
         if request.method == 'POST':
-            req = json.loads(request.body)
+            req = json.loads(request.body.decode('utf-8'))
             user = User.objects.filter(phone_number=req)
             response['list'] = json.loads(serializers.serialize("json", user))
             response['msg'] = 'success'

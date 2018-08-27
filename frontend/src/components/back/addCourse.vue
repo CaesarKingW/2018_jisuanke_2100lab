@@ -74,7 +74,7 @@ export default {
       console.log(this.brief_intro)
       this.$http
         .post(
-          'http://192.168.55.33:8000/app/add_course',
+          this.GLOBAL.serverSrc + 'app/add_course',
           JSON.stringify({
             title: this.course_title,
             brief_intro: this.brief_intro
@@ -96,11 +96,11 @@ export default {
       formData.append('file', fileInfo)
       formData.append('course_id', this.course_id)
       this.$http
-        .post('http://192.168.55.33:8000/app/add_audi', formData)
+        .post(this.GLOBAL.serverSrc + 'app/add_audi', formData)
         .then(response => {
           var res = response.data
           console.log(res)
-          this.audi = 'http://192.168.55.33:8000' + res.audio
+          this.audi = this.GLOBAL.serverSrc + ':8000' + res.audio
           console.log(this.audi)
           this.is_show1 = true
           this.first_notice = true
@@ -118,11 +118,11 @@ export default {
       formData.append('file', fileInfo)
       formData.append('course_id', this.course_id)
       this.$http
-        .post('http://192.168.55.33:8000/app/add_img', formData)
+        .post(this.GLOBAL.serverSrc + 'app/add_img', formData)
         .then(response => {
           var res = response.data
           console.log(res)
-          this.pic = 'http://192.168.55.33:8000' + res.course_picture
+          this.pic = this.GLOBAL.serverSrc + ':8000' + res.course_picture
           console.log(this.pic)
           this.first_notice = false
           this.show_pic = true
@@ -137,7 +137,7 @@ export default {
           this.pic_id = res.id
           this.$http
             .post(
-              'http://192.168.55.33:8000/app/set_start_time',
+              this.GLOBAL.serverSrc + 'app/set_start_time',
               JSON.stringify({
                 pic_id: this.pic_id,
                 start_time: st
@@ -155,7 +155,7 @@ export default {
       var st = au.currentTime
       this.$http
         .post(
-          'http://192.168.55.33:8000/app/set_start_time',
+          this.GLOBAL.serverSrc + 'app/set_start_time',
           JSON.stringify({
             pic_id: this.pic_id,
             start_time: st
@@ -173,7 +173,7 @@ export default {
       var et = au.currentTime
       this.$http
         .post(
-          'http://192.168.55.33:8000/app/set_end_time',
+          this.GLOBAL.serverSrc + 'app/set_end_time',
           JSON.stringify({
             pic_id: this.pic_id,
             end_time: et
@@ -201,7 +201,7 @@ export default {
       var et = au.currentTime
       this.$http
         .post(
-          'http://192.168.55.33:8000/app/set_end_time',
+          this.GLOBAL.serverSrc + 'app/set_end_time',
           JSON.stringify({
             pic_id: this.pic_id,
             end_time: et
@@ -217,7 +217,7 @@ export default {
     Preview() {
       this.$http
         .post(
-          'http://192.168.55.33:8000/app/preview',
+          this.GLOBAL.serverSrc + 'app/preview',
           JSON.stringify({
             course_id: this.course_id
           })
@@ -238,12 +238,12 @@ export default {
           this.preview = false
           console.log(response.data)
           this.pictures = response.data.pictures
-          this.audio = 'http://192.168.55.33:8000' + response.data.course.audio
+          this.audio = this.GLOBAL.serverSrc + ':8000' + response.data.course.audio
           this.real_preview = true
           this.show_real_pic = true
           this.last_index = 0
           this.pic_to_show =
-            'http://192.168.55.33:8000' + this.pictures[0].course_picture
+            this.GLOBAL.serverSrc + ':8000' + this.pictures[0].course_picture
           console.log(this.pic_to_show)
         })
     },
@@ -251,7 +251,7 @@ export default {
       var vm = this
       console.log(vm)
       vm.pic_to_show =
-        'http://192.168.55.33:8000' + vm.pictures[vm.last_index].course_picture
+        this.GLOBAL.serverSrc + ':8000' + vm.pictures[vm.last_index].course_picture
       var interval = (vm.pictures[vm.last_index].end_time - vm.last_time) * 1000
       vm.st = setTimeout(function() {
         vm.last_index = vm.last_index + 1

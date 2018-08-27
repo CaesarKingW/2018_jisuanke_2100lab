@@ -42,7 +42,7 @@ export default {
     show_message: function() {
       this.$http
         .post(
-          'http://192.168.55.33:8000/app/show_message',
+          this.GLOBAL.serverSrc + 'app/show_message',
           JSON.stringify(this.course_id)
         )
         .then(
@@ -64,7 +64,7 @@ export default {
       })
       console.log(formDate)
       this.$http
-        .post('http://192.168.55.33:8000/app/add_message', formDate)
+        .post(this.GLOBAL.serverSrc + 'app/add_message', formDate)
         .then(
           response => {
             this.show_message()
@@ -80,7 +80,7 @@ export default {
         message_id: messageid,
         user_phone: this.user_phone
       })
-      this.$http.post('http://192.168.55.33:8000/app/praise', formDate).then(
+      this.$http.post(this.GLOBAL.serverSrc + 'app/praise', formDate).then(
         response => {
           var hasPraise = response.data.has_praise
           this.show_message()

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import User, Message, Course, Order, Course_picture, Manager
-from .models import Reply
+from .models import Reply, Takes
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -46,18 +46,23 @@ class ReplySerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    course_title = serializers.SerializerMethodField()
+
     class Meta:
         model = Order
-        fields = ('Order_number', 'user_phone', 'course_id', 'amount_of_money',
-                  'status', 'create_at')
+        fields = ('Order_number', 'user_phone', 'course_id', 'course_title',
+                  'amount_of_money', 'status', 'create_at')
+
+    def get_course_title(self, obj):
+        return obj.course_id.title
 
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ('id', 'title', 'brief_introduction', 'audio',
-                  'whole_introduction', 'Is_distory', 'distory_time',
-                  'Is_free', 'price', 'share_rate', 'can_comment')
+                  'whole_introduction', 'Is_destroy', 'distory_time',
+                  'price', 'share_rate', 'can_comment')
 
 
 class Course_pictureSerializer(serializers.ModelSerializer):
@@ -65,3 +70,20 @@ class Course_pictureSerializer(serializers.ModelSerializer):
         model = Course_picture
         fields = ('id', 'course_id', 'course_picture', 'start_time',
                   'end_time')
+
+
+class TakesSerializer(serializers.ModelSerializer):
+    course_title = serializers.SerializerMethodField()
+    course_duration = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Takes
+        fields = ('id', 'user_phone', 'course_id', 'course_title',
+                  'course_duration', 'start_time', 'last_study_percent',
+                  'max_study_percent')
+
+    def get_course_title(self, obj):
+        return obj.course_id.title
+
+    def get_course_duration(self, obj):
+        return obj.course_id.course_duration

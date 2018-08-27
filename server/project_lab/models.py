@@ -51,10 +51,11 @@ class Course(models.Model):
     title = models.CharField('标题', max_length=50)
     brief_introduction = models.TextField('简介')
     audio = models.FileField(("音频"), upload_to='audio/', blank=True, null=True)
+    course_duration = models.FloatField(("课程时长"), default=0.0)
     whole_introduction = models.FileField(
         ("详解"), upload_to='word/', blank=True, null=True)
     Cover_picture = models.ImageField(
-        ("课程图片"), upload_to='course_picture', blank=True, null=True)
+        ("课程封面"), upload_to='course_picture', blank=True, null=True)
     Is_destroy = models.BooleanField(("是否阅后即焚"), default=False)
     distory_time = models.DurationField(("可阅时长"), blank=True, null=True)
     price = models.FloatField(("价格"), blank=True, null=True, default=0.0)
