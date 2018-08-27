@@ -15,9 +15,12 @@
         <div id="courseTitleDiv">
         <div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="enterButtonDiv">
-            <router-link to="/CourseShow">
+            <!-- <router-link to="/CourseShow">
             <Button id="enter" icon="md-eye" type="primary">进入课程</Button>
-            </router-link>
+            <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
+            </router-link> -->
+        <router-link to="/CourseShow" v-if="judge"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link>
+        <router-link to="/UserLogin" v-else><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link>
             </div>
         <div class="shareButtonDiv">
             <Button @click="modal = true" id="share" icon="md-share" type="primary">分享课程</Button>
@@ -63,8 +66,9 @@ export default {
       split1: 0.49,
       modal: false,
       message: window.location.href,
-      courseid: 1,
-      userphone: ''
+      courseid: 0,
+      userphone: '',
+      judge: false
     }
   },
   created: function() {
@@ -72,11 +76,16 @@ export default {
     console.log(this.courseid)
   },
   mounted: function() {
-    this.$http
-      .post(this.GLOBAL.serverSrc + 'app/get_status')
-      .then(response => {
-        this.userphone = response.data.list[0].pk
-      })
+    this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(response => {
+      this.judge = response.data.is_login
+      console.log(this.judge)
+      if (!this.judge) {
+        this.$Message.warning('请您先登录')
+      }
+    })
+    this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(response => {
+      this.userphone = response.data.list[0].pk
+    })
     this.$http
       .post(
         this.GLOBAL.serverSrc + 'app/get_specified_course',
@@ -90,6 +99,19 @@ export default {
           this.GLOBAL.serverSrc + 'media/' + course[0].fields.Cover_picture
         this.content = course[0].fields.brief_introduction
       })
+  },
+  method: {
+    Judgestatus: function() {
+      this.$http
+        .post(this.GLOBAL.serverSrc + 'app/get_status')
+        .then(response => {
+          this.judge = response.data.is_login
+          console.log(this.judge)
+          if (!this.judge) {
+            this.$Message.warning('请您先登录')
+          }
+        })
+    }
   }
 }
 </script>
