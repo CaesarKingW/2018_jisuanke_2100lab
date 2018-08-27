@@ -38,6 +38,6 @@ export default {
         }
       )
   },
-  method: {}
+  methods: {}
 }
 </script>

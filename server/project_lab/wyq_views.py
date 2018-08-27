@@ -131,13 +131,13 @@ def payment(request):
 
             alipay = AliPay(
                 appid="2016091800536766",
-                app_notify_url="http://192.168.55.33#/app/notify",
+                app_notify_url="http://192.168.55.33:8000/#/app/notify",
                 app_private_key_path=settings.STATIC_ROOT+
                 '/private_2048.txt',
                 alipay_public_key_path=settings.STATIC_ROOT+
                 '/alipay_key_2048.txt',
                 debug=True,  # 默认False,
-                return_url="http://192.168.55.33#/CourseShow")
+                return_url="http://192.168.55.33:8000/#/CourseShow")
             url = alipay.direct_pay(
                 subject="测试订单", out_trade_no=orderid + '', total_amount=price)
             re_url = "https://openapi.alipaydev.com/gateway.do?{data}".format(
@@ -158,7 +158,7 @@ def alipay_get(request):
     try:
         orderid = json.loads(request.body.decode('utf-8'))
         # 查询数据库中订单记录
-        info = Order.objects.count()
+        info = Order.objects.get(Order_number=orderid)
         courseid = info.course_id.id
         if info.status == 'payment':
             info.status = "completed"
