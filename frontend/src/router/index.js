@@ -24,7 +24,6 @@ import useModify from '@/components/use_modify'
 import NiceMsgBoard from '@/components/NiceMsgBoard'
 import editCourse from '@/components/back/editCourse'
 import addCourse from '@/components/back/addCourse'
-import destroy from '@/components/account_cancellation'
 import AllFreeCourse from '@/components/AllFreeCourse'
 import AllPayCourse from '@/components/AllPayCourse'
 import NiceUserModify from '@/components/NiceUserModify'
@@ -140,6 +139,11 @@ export default new Router({
       name: 'PersonalCenter',
       component: PersonalCenter,
       children: [{
+        path: '/',
+        name: 'UserInfo',
+        component: UserInfo
+      },
+      {
         path: 'UserInfo',
         name: 'UserInfo',
         component: UserInfo
@@ -224,11 +228,6 @@ export default new Router({
       ]
     },
     {
-      path: '/account_destroy',
-      name: 'account_destroy',
-      component: destroy
-    },
-    {
       path: '/free_course',
       name: 'free_course',
       component: freeCourse
@@ -245,7 +244,7 @@ export default new Router({
     },
     {
       path: '/user_info',
-      name: 'userIinfo',
+      name: 'userInfo',
       component: userInfo
     }
   ]

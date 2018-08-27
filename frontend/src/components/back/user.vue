@@ -43,7 +43,7 @@ export default {
       console.log(this.phone_number)
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
-        .post('http://192.168.55.33:8000/app/search_user', phoneNumber)
+        .post(this.GLOBAL.serverSrc + 'app/search_user', phoneNumber)
         .then(response => {
           var res = response.data
           console.log(res)
@@ -51,7 +51,7 @@ export default {
           if (this.is_null === false) {
             this.username = res.user_info.user_name
             this.welfare = res.user_info.welfare
-            this.head_protrait = 'http://192.168.55.33:8000' + res.user_info.head_protrait
+            this.head_protrait = this.GLOBAL.serverSrc + ':8000' + res.user_info.head_protrait
             if (res.user_info.Is_teacher === true) {
               this.is_teacher = '是'
               this.authenticate_button = '取消大V身份'
@@ -82,7 +82,7 @@ export default {
       }
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
-        .post('http://192.168.55.33:8000/app/authenticate', phoneNumber)
+        .post(this.GLOBAL.serverSrc + 'app/authenticate', phoneNumber)
         .then(response => {})
     },
     forbid_comment() {
@@ -97,7 +97,7 @@ export default {
       }
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
-        .post('http://192.168.55.33:8000/app/forbid_comment', phoneNumber)
+        .post(this.GLOBAL.serverSrc + 'app/forbid_comment', phoneNumber)
         .then(response => {})
     }
   }

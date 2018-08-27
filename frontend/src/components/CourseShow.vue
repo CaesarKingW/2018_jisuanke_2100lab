@@ -40,7 +40,7 @@ export default {
     var orderId = this.$route.query.out_trade_no
     if (typeof (orderId) !== 'undefined') {
       var request = JSON.stringify(orderId)
-      this.$http.post('http://192.168.55.33:8000/app/notify', request)
+      this.$http.post(this.GLOBAL.serverSrc + 'app/notify', request)
         .then(response => {
           console.log(response.data)
         })

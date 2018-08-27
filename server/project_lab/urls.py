@@ -3,6 +3,7 @@ from . import login_views, user_register, message_views, praise_views, wyq_views
 from . import pic_views
 from . import account_destroy
 from . import show_all_course
+from . import takes_views, orders_views
 
 urlpatterns = [
     path('get_code_post', login_views.get_code_post),
@@ -23,6 +24,8 @@ urlpatterns = [
     path('get_old_avator', update_personal_information.get_old_avator),
     path('get_user_information',
          update_personal_information.get_user_information),
+    path('show_takes', takes_views.show_takes),
+    path('show_orders',orders_views.show_orders),
     path('search_user', wq_views.search_user),
     path('authenticate', wq_views.authenticate),
     path('forbid_comment', wq_views.forbid_comment),

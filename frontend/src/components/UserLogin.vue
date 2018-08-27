@@ -32,14 +32,16 @@ export default {
   },
   mounted: function() {
     this.$http
-      .post('http://192.168.55.33:8000/app/get_status')
-      .then(response => {
-        this.is_login = response.data.is_login
-        if (this.is_login) {
-          this.alert_wrong_status()
-          location.href = '/#/home'
+      .post(this.GLOBAL.serverSrc + 'app/get_status')
+      .then(
+        response => {
+          this.is_login = response.data.is_login
+          if (this.is_login) {
+            this.alert_wrong_status()
+            location.href = '/#/home'
+          }
         }
-      })
+      )
   },
   methods: {
     instance(type) {
@@ -90,7 +92,7 @@ export default {
     getcode: function() {
       var phonenumber = JSON.stringify(this.phone_number)
       this.$http
-        .post('http://192.168.55.33:8000/app/get_code_post', phonenumber)
+        .post(this.GLOBAL.serverSrc + 'app/get_code_post', phonenumber)
         .then(
           response => {
             console.log(response.data)
@@ -134,7 +136,7 @@ export default {
     Register_new_user: function() {
       var userphone = JSON.stringify(this.phone_number)
       this.$http
-        .post('http://192.168.55.33:8000/app/register_new_user', userphone)
+        .post(this.GLOBAL.serverSrc + 'app/register_new_user', userphone)
         .then(
           response => {
             console.log(response.data)
@@ -147,7 +149,7 @@ export default {
     verify_the_login: function() {
       this.$http
         .post(
-          'http://192.168.55.33:8000/app/get_user_code',
+          this.GLOBAL.serverSrc + 'app/get_user_code',
           JSON.stringify({
             phone_number: this.phone_number,
             code: this.usercode

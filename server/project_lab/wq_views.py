@@ -14,7 +14,7 @@ import datetime
 @require_http_methods(['POST'])
 def search_user(request):
 
-    phone_number = json.loads(request.body)
+    phone_number = json.loads(request.body.decode('utf-8'))
     res = {}
     try:
         user = User.objects.get(phone_number=phone_number)
@@ -29,7 +29,7 @@ def search_user(request):
 
 @require_http_methods(['POST'])
 def authenticate(request):
-    phone_number = json.loads(request.body)
+    phone_number = json.loads(request.body.decode('utf-8'))
     user = User.objects.get(phone_number=phone_number)
     if (user.Is_teacher is False):
         user.Is_teacher = True
@@ -45,7 +45,7 @@ def authenticate(request):
 
 @require_http_methods(['POST'])
 def forbid_comment(request):
-    phone_number = json.loads(request.body)
+    phone_number = json.loads(request.body.decode('utf-8'))
     user = User.objects.get(phone_number=phone_number)
     if (user.Can_comment is False):
         user.Can_comment = True
@@ -62,7 +62,7 @@ def forbid_comment(request):
 def close_account(request):
     response = {}
     try:
-        phone_number = request.body
+        phone_number = request.body.decode('utf-8')
         User.objects.get(phone_number=phone_number)
     except Exception as e:
         response['msg'] = str(e)
@@ -72,7 +72,7 @@ def close_account(request):
 
 @require_http_methods(['POST'])
 def search_comment(request):
-    phone_number = json.loads(request.body)
+    phone_number = json.loads(request.body.decode('utf-8'))
     response = {}
     response['if_user'] = True
     response['if_comment'] = True
@@ -96,8 +96,8 @@ def search_comment(request):
 
 @require_http_methods(['POST'])
 def delete_comment(request):
-    phone_number = json.loads(request.body)['phone_number']
-    message_id = json.loads(request.body)['message_id']
+    phone_number = json.loads(request.body.decode('utf-8'))['phone_number']
+    message_id = json.loads(request.body.decode('utf-8'))['message_id']
     response = {}
     response['if_user'] = True
     m = Message.objects.get(id=message_id)
@@ -118,7 +118,7 @@ def delete_comment(request):
 
 @require_http_methods(['POST'])
 def search_order(request):
-    order_number = json.loads(request.body)
+    order_number = json.loads(request.body.decode('utf-8'))
     response = {}
     response['if_order'] = True
     try:
@@ -133,7 +133,7 @@ def search_order(request):
 
 @require_http_methods(['POST'])
 def refund(request):
-    order_number = json.loads(request.body)
+    order_number = json.loads(request.body.decode('utf-8'))
     order = Order.objects.get(Order_number=order_number)
     phone_number = order.user_phone
     user = User.objects.get(phone_number=phone_number)
@@ -148,7 +148,7 @@ def refund(request):
 
 # @require_http_methods(['POST'])
 # def search_course(request):
-#     course_title = json.loads(request.body)
+#     course_title = json.loads(request.body.decode('utf-8'))
 #     response={}
 #     courses = Course.objects.filter(title=course_title)
 #     if courses.count() == 0:
@@ -172,8 +172,8 @@ def refund(request):
 
 @require_http_methods(['POST'])
 def add_course(request):
-    title = json.loads(request.body)['title']
-    brief_intro = json.loads(request.body)['brief_intro']
+    title = json.loads(request.body.decode('utf-8'))['title']
+    brief_intro = json.loads(request.body.decode('utf-8'))['brief_intro']
     course = Course(title=title, brief_introduction=brief_intro)
     course.save()
     course = CourseSerializer(course)
@@ -204,8 +204,8 @@ def add_audi(request):
 
 @require_http_methods(['POST'])
 def set_start_time(request):
-    start_time = json.loads(request.body)['start_time']
-    pic_id = json.loads(request.body)['pic_id']
+    start_time = json.loads(request.body.decode('utf-8'))['start_time']
+    pic_id = json.loads(request.body.decode('utf-8'))['pic_id']
     pic = Course_picture.objects.get(id=pic_id)
     pic.start_time = start_time
     pic.save()
@@ -215,8 +215,8 @@ def set_start_time(request):
 
 @require_http_methods(['POST'])
 def set_end_time(request):
-    end_time = json.loads(request.body)['end_time']
-    pic_id = json.loads(request.body)['pic_id']
+    end_time = json.loads(request.body.decode('utf-8'))['end_time']
+    pic_id = json.loads(request.body.decode('utf-8'))['pic_id']
     pic = Course_picture.objects.get(id=pic_id)
     pic.end_time = end_time
     pic.save()
@@ -226,7 +226,7 @@ def set_end_time(request):
 
 @require_http_methods(['POST'])
 def preview(request):
-    course_id = json.loads(request.body)['course_id']
+    course_id = json.loads(request.body.decode('utf-8'))['course_id']
     course = Course.objects.get(id=course_id)
     course_pictures = Course_picture.objects.filter(course_id=course)
     course = CourseSerializer(course)
@@ -242,7 +242,7 @@ def preview(request):
 
 # @require_http_methods(['POST'])
 # def search_comment(request):
-#     phone_number = json.loads(request.body)
+#     phone_number = json.loads(request.body.decode('utf-8'))
 #     response = {}
 #     response['if_user'] = True
 #     response['if_comment'] = True

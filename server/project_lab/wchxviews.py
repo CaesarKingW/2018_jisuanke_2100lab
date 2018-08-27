@@ -9,7 +9,7 @@ import requests
 
 def search_managename(request):
     response = {}
-    username = request.body
+    username = request.body.decode('utf-8')
     manager = Manager.objects.get(username=username)
     response['manager'] = json.loads(serializers.serialize('json', manager))
     return JsonResponse(response)
@@ -17,7 +17,7 @@ def search_managename(request):
 
 def search_course(request):
     response = {}
-    title = request.body
+    title = request.body.decode('utf-8')
     course = Course.objects.get(title=title)
     response['course'] = json.loads(serializers.serialize('json', course))
     return JsonResponse(response)
