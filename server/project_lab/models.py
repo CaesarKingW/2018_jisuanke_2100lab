@@ -51,6 +51,7 @@ class Course(models.Model):
     title = models.CharField('标题', max_length=50)
     brief_introduction = models.TextField('简介')
     audio = models.FileField(("音频"), upload_to='audio/', blank=True, null=True)
+    course_duration = models.FloatField(("课程时长"), default=0.0)
     whole_introduction = models.FileField(
         ("详解"), upload_to='word/', blank=True, null=True)
     Cover_picture = models.ImageField(

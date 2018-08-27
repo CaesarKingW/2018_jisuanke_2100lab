@@ -60,14 +60,14 @@ export default {
   },
   mounted: function() {
     this.$http
-      .post('http://192.168.55.33:8000/app/get_status')
+      .post(this.GLOBAL.serverSrc + 'app/get_status')
       .then(response => {
         this.userphone = response.data.list[0].pk
         console.log(this.userphone)
       })
     this.$http
       .post(
-        'http://192.168.55.33:8000/app/get_specified_course',
+        this.GLOBAL.serverSrc + 'app/get_specified_course',
         JSON.stringify(this.courseid)
       )
       .then(response => {
@@ -75,7 +75,7 @@ export default {
         course = response.data.list
         this.courseTitle = course[0].fields.title
         this.path =
-          'http://192.168.55.33:8000/media/' + course[0].fields.Cover_picture
+          this.GLOBAL.serverSrc + 'media/' + course[0].fields.Cover_picture
         this.content = course[0].fields.brief_introduction
         this.price = course[0].fields.price
         this.award = Math.floor(course[0].fields.share_rate * this.price)
@@ -99,7 +99,7 @@ export default {
       console.log(request)
       request = JSON.stringify(request)
       this.$http
-        .post('http://192.168.55.33:8000/app/payment', request)
+        .post(this.GLOBAL.serverSrc + 'app/payment', request)
         .then(response => {
           console.log(response.data)
           window.location.href = response.data

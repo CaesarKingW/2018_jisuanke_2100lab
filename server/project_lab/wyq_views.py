@@ -27,8 +27,8 @@ def manager_login(request):
     response = {}
     try:
         if request.method == 'POST':
-            username = json.loads(request.body)['user']
-            password = json.loads(request.body)['password'] + ''
+            username = json.loads(request.body.decode('utf-8'))['user']
+            password = json.loads(request.body.decode('utf-8'))['password'] + ''
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
@@ -68,7 +68,7 @@ def manager_change(request):
     response = {}
     try:
         if request.method == 'POST':
-            manager = json.loads(request.body)
+            manager = json.loads(request.body.decode('utf-8'))
             info = Manager.objects.get(username=manager['managername'])
             info.Supermanager = manager['super']
             info.Manage_course = manager['course']
@@ -90,7 +90,7 @@ def manager_search(request):
     response = {}
     try:
         if request.method == 'POST':
-            managername = json.loads(request.body)
+            managername = json.loads(request.body.decode('utf-8'))
             info = Manager.objects.get(username=managername)
             info = ManagerSerializer(info)
             return JsonResponse(info.data)
@@ -106,7 +106,7 @@ def payment(request):
     response = {}
     try:
         if request.method == 'POST':
-            id = json.loads(request.body)
+            id = json.loads(request.body.decode('utf-8'))
             # 订单编号
             orderid = id['orderid']
             # 手机号
@@ -129,13 +129,13 @@ def payment(request):
 
             alipay = AliPay(
                 appid="2016091800536766",
-                app_notify_url="http://192.168.55.33:8000/#/app/notify",
+                app_notify_url="http://192.168.55.33#/app/notify",
                 app_private_key_path=settings.STATIC_ROOT+
                 '/private_2048.txt',
                 alipay_public_key_path=settings.STATIC_ROOT+
                 '/alipay_key_2048.txt',
                 debug=True,  # 默认False,
-                return_url="http://192.168.55.33:8000/#/CourseShow")
+                return_url="http://192.168.55.33#/CourseShow")
             url = alipay.direct_pay(
                 subject="测试订单", out_trade_no=orderid + '', total_amount=price)
             re_url = "https://openapi.alipaydev.com/gateway.do?{data}".format(
@@ -154,7 +154,7 @@ def alipay_get(request):
     # 存放post里面所有的数据
     processed_dict = {}
     try:
-        orderid = json.loads(request.body)
+        orderid = json.loads(request.body.decode('utf-8'))
         # 查询数据库中订单记录
         info = Order.objects.get(Order_number=orderid)
         courseid = info.course_id.id

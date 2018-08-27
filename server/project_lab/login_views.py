@@ -38,7 +38,7 @@ def get_code_post(request):
             global code
             global user_phone
             createCode()
-            req = json.loads(request.body)
+            req = json.loads(request.body.decode('utf-8'))
             user_phone = req
             try:
                 user = User.objects.get(phone_number=user_phone)
@@ -67,7 +67,7 @@ def get_user_code(request):
             global code
             global user_phone
             # 获取用户输入的验证码
-            req = json.loads(request.body)
+            req = json.loads(request.body.decode('utf-8'))
             userPhone = req['phone_number']
             userCode = req['code']
             if userPhone == user_phone and userCode == code:
