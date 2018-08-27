@@ -18,6 +18,7 @@
     </Card>
     <!-- 所有课程 -->
     <div v-for="item of imgs" :key="item.id">
+      <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
       <Card class="courseCard">
         <div class="CourseInfo">
             <div class="CourseCoverDiv"><img class="courseCover" v-bind:src= 'item.fields.Cover_picture'/></div>
@@ -35,7 +36,8 @@
             <!-- 课程价格：{{item.fields.price}} -->
         </div>
       </Card>
-        </div>
+      </router-link>
+    </div>
     </div>
 </template>
 <script>
@@ -51,13 +53,13 @@ export default {
   },
   methods: {
     show_all_course: function() {
-      this.$http.get('http://192.168.55.33:8000/app/show_free_course').then(
+      this.$http.get(this.GLOBAL.serverSrc + 'app/show_free_course').then(
         response => {
           this.imgs = response.data.list
           console.log('success')
           for (var i = 0; i < this.imgs.length; i = i + 1) {
             var a =
-              'http://192.168.55.33:8000/media/' +
+              this.GLOBAL.serverSrc + 'media/' +
               this.imgs[i].fields.Cover_picture
             this.imgs[i].fields.Cover_picture = a
           }
@@ -74,36 +76,41 @@ export default {
 
 <style scoped>
 .courseCard {
-  width: 1000px;
-  margin-left: 150px;
+  width: 650px;
+  margin: 0 auto;
 }
 .courseTitleContent {
   font-family: 华文细黑;
 }
 .CourseInfo {
   display: flex;
+  color: #022336;
 }
 /* .CourseCoverDiv {
   float: left;
 }*/
 .CourseText {
   float: left;
-  margin-left: 50px;
+  margin-left: 5%;
+  color: #022336;
 }
 .CourseTitle {
   font-family: 华文中宋;
   font-size: 28px;
   padding: 5px;
+  color: #022336;
 }
 .CourseIntro {
   font-family: 华文中宋;
   font-size: 28px;
   padding: 5px;
+  color: #022336;
 }
 .courseIntroContent {
   font-family: 华文楷体;
   font-size: 20px;
   padding: 3px;
+  color: #022336;
 }
 .courseCover {
   width: 300px;
@@ -116,7 +123,7 @@ export default {
   background-color: #fff;
   position: fixed;
   width: 100%;
-  opacity: 0.9;
+  opacity: 0.4;
   padding: 25px;
 }
 .navi {
@@ -135,9 +142,13 @@ export default {
 }
 #freeCol {
   background-color: #022336;
-  height: 90px;
+  height: 80px;
+  width: 100%;
   border: none;
   border-radius: 0px;
+  position: fixed;
+  z-index: 9998;
+  opacity: 0.7;
 }
 .myContent {
   font-size: 40px;

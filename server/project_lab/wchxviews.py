@@ -11,7 +11,7 @@ import requests
 
 def search_managename(request):
     response = {}
-    username = request.body
+    username = request.body.decode('utf-8')
     manager = Manager.objects.get(username=username)
     response['manager'] = json.loads(serializers.serialize('json', manager))
     return JsonResponse(response)
@@ -19,7 +19,7 @@ def search_managename(request):
 
 def search_course(request):
     response = {}
-    title = request.body
+    title = request.body.decode('utf-8')
     course = Course.objects.get(title=title)
     response['course'] = json.loads(serializers.serialize('json', course))
     return JsonResponse(response)
@@ -42,7 +42,8 @@ def get_status(request):
             the_user = User.objects.filter(
                 phone_number=request.session['user'].phone_number)
             response['is_login'] = request.session['is_login']
-            response['list'] = json.loads(serializers.serialize("json", the_user))
+            response['list'] = json.loads(
+                serializers.serialize("json", the_user))
     except:
         response['msg'] = 'fail'
     return JsonResponse(response)
@@ -65,8 +66,6 @@ def del_status(request):
 
 def get_course_info(request):
     response = {}
-    id = json.loads(request.body)
-    course = Course.objects.get(id = id)
     try:
         if request.method == 'POST':
             id = json.loads(request.body)

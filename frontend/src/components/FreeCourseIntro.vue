@@ -1,48 +1,55 @@
 <template>
 <div class="FreeCourseIntro">
-    <div class="flexDiv">
-        <div class="introPic"><img id="test_pic" src="../assets/1.png"></div>
-        <div class="courseInfoText">
-        <div class="courseTitle">标题：{{ courseTitle }}</div>
-        <div class="enterCourse"><router-link to="/CourseShow"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link></div>
-        <div class="shareCourse">
+    <!-- 导航栏 -->
+    <div class="navibar">
+    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
+    <Divider type="vertical" />
+    <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
+    </div>
+    <!-- 底板 -->
+    <div class="myPanel"></div>
+    <!-- 课程信息 -->
+    <div class="CoverDiv">
+            <img id="testPic" v-bind:src="path">
+            </div>
+        <div id="courseTitleDiv">
+        <div id="courseTitle">标题：{{ courseTitle }}</div></div>
+        <div class="enterButtonDiv">
+            <router-link to="/CourseShow">
+            <Button id="enter" icon="md-eye" type="primary">进入课程</Button>
+            </router-link>
+            </div>
+        <div class="shareButtonDiv">
             <Button @click="modal = true" id="share" icon="md-share" type="primary">分享课程</Button>
-        </div>
         </div>
         <Modal
         title="分享课程"
         v-model="modal"
         class-name="vertical-center-modal">
-        <div style="text-align: center;padding:10px;"><span id="thisURL">本页地址：{{ message }}</span>
+        <div class="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button id="copy_button" type="button"
+        <button id="copyButton" type="button"
         v-clipboard:copy="message"
         v-clipboard:success="onCopy"
         v-clipboard:error="onError">复制</button>
         </div>
     </Modal>
-    <div class="alertColumn">
-        <Alert id="tip" show-icon>
+    <div class="alertButtonDiv">
+        <Alert show-icon>
         <Icon type="ios-bulb-outline" slot="icon"></Icon>
-        <template slot="desc">如果你喜欢本课程，就把它分享给朋友吧！ </template>
+        <template class="alertText" slot="desc">如果你喜欢本课程，就把它分享给朋友吧！ </template>
     </Alert>
     </div>
-    </div>
-    <!-- <div class="introText">
+    <div class="introDiv">
         <Collapse v-model="value">
-        <Panel id="introText" name="1" style="font-size: 25px;">
+        <Panel class="intro">
             课程简介
-            <p slot="content">
-                <ul style="font-size: 18px; list-style:none;">
-                    <li>1.实验室制取二氧化碳，用大理石或石灰石与稀盐酸反应，它们的主要成分为碳酸钙，生成物有氯化钙、水和二氧化碳，方程式为：CaCO3+2HCl═CaCl2+H2O+CO2↑。</li>
-                    <li>2.二氧化碳能溶于水，与水反应生成碳酸，不能用排水法收集，由于密度比空气大，可用向上排空气法收集。</li>
-                    <li>3.检验二氧化碳时，利用二氧化碳与氢氧化钙反应生成碳酸钙沉淀的性质，方法是把制取的气体通入澄清的石灰水，如石灰水变浑，则气体是二氧化碳。</li>
-                </ul>
-                </p>
+            <p slot="content" class="contentText">
+                    {{content}}
+            </p>
         </Panel>
     </Collapse>
-    </div> -->
-    <br>
+    </div>
 </div>
 </template>
 <script>
@@ -50,100 +57,165 @@ export default {
   name: 'FreeCourseIntro',
   data() {
     return {
-      courseTitle: '实验室制取CO2',
+      path: '',
+      courseTitle: '',
+      content: '',
+      split1: 0.49,
       modal: false,
-      message: window.location.href
+      message: window.location.href,
+      courseid: 1,
+      userphone: ''
     }
+  },
+  created: function() {
+    this.courseid = this.$route.query.id
+    console.log(this.courseid)
+  },
+  mounted: function() {
+    this.$http
+      .post(this.GLOBAL.serverSrc + 'app/get_status')
+      .then(response => {
+        this.userphone = response.data.list[0].pk
+      })
+    this.$http
+      .post(
+        this.GLOBAL.serverSrc + 'app/get_specified_course',
+        JSON.stringify(this.courseid)
+      )
+      .then(response => {
+        var course = []
+        course = response.data.list
+        this.courseTitle = course[0].fields.title
+        this.path =
+          this.GLOBAL.serverSrc + 'media/' + course[0].fields.Cover_picture
+        this.content = course[0].fields.brief_introduction
+      })
   }
 }
 </script>
 <style>
-.FreeCourseIntro {
-  height: 480px;
-  border: 1px solid #dcdee2;
-  /* background-color: #c4e1ff; */
+.navibar {
+  z-index: 9999;
+  background-color: #fff;
+  position: fixed;
+  width: 100%;
+  opacity: 0.9;
+  padding: 25px;
 }
-.demo-split-pane {
+.navi {
+  font-size: 23px;
+  color: #022336;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.myPanel {
+  margin: 0 auto;
+  height: 90px;
+  border: none;
+  border-radius: 0px;
+}
+.alertText {
+  text-align: center;
+  color: #fff;
+}
+.FreeCourseIntro {
+  text-align: center;
+  margin: 0 auto;
+}
+.CoverDiv {
+  margin: 0 auto;
+}
+.ivu-modal {
+  top: 0;
+}
+.urlDiv {
+  text-align: center;
   padding: 10px;
 }
-.flexDiv {
-    display:flex;
+#share,
+#enter {
+  background-color: #fff;
+  color: #000;
+  font-size: 20px;
+  border: #000 solid 1px;
+  border-radius: 8px;
+  width: 130px;
+  height: 45px;
+  /* margin-top: 20px;
+  margin-bottom: 20px; */
+  margin: 0 auto;
+  text-align: center;
+  position: static;
 }
-.introPic {
-    flex-grow: 3;
+.vertical-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.courseIntroText {
-    flex-grow: 1;
+.ivu-modal {
+  top: 0;
 }
-#test_pic {
-    border:#99ccff solid 5px;
-    position: absolute;
-    left: 2%;
-    top: 8%;
-    border-radius: 20px;
+.enterButtonDiv,
+.shareButtonDiv {
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  position: static;
+}
+#copyButton {
+  width: 50px;
+  height: 25px;
+  outline: none;
+  border-radius: 4px;
+  border: none;
+  background-color: #2d8cf0;
+  color: #fff;
+  cursor: pointer;
+}
+#copyButton:hover {
+  background: #57a3f3;
+}
+#testPic {
+  width: 360px;
+  height: 250px;
+  border: #cccccc solid 2px;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+.alertButtonDiv {
+  margin: 0 auto;
+  text-align: center;
+  width: 60%;
+  height: 5%;
+  margin-top: 10px;
+}
+.introDiv {
+  width: 60%;
+  margin: 0 auto;
+  text-align: left;
+  margin-top: 20px;
+}
+.intro {
+  font-size: 19px;
+  font-family: 华文中宋;
+}
+.contentText {
+  font-family: 华文中宋;
+  font-size: 17px;
+  position: static;
 }
 #courseTitle {
-    text-align: center;
-    position: absolute;
-    right: 8%;
-    text-align: center;
-    top: 20%;
-    font-size: 3em;
-    padding: 8px 50px;
-    border: #99cccc dotted 3px;
+  color: #000;
+  font-family: 华文中宋;
+  font-size: 28px;
+  border: none;
+  margin-top: 20px;
+  margin: 0 auto;
+  text-align: center;
+  position: static;
 }
-#enter {
-    width: 170px;
-    height: 60px;
-    text-align: center;
-    position: absolute;
-    right: 20%;
-    top: 40%;
-    font-size: 2em;
-}
-#share {
-    width: 170px;
-    height: 60px;
-    text-align: center;
-    position: absolute;
-    right: 20%;
-    top: 58%;
-    font-size: 2em;
-}
-#tip {
-    width: auto;
-    height: 40px;
-    text-align: center;
-    position: absolute;
-    right: 14%;
-    top: 75%;
-}
-.vertical-center-modal{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.ivu-modal{
-    top: 0;
-}
-#intro {
-    position: absolute;
-    top: 84%;
-    width : 100%;
-    list-style:none;
-}
-#copy_button {
-    width: 50px;
-    height:25px;
-    margin-top:10px;
-    outline:none;
-    border-radius: 4px;
-    border: none;
-    background-color: #2d8cf0;
-    color:#fff;
-    cursor: pointer;
-}
-#copy_button:hover {
-    background: #57a3f3;
+#courseTitleDiv {
+  margin: 0 auto;
 }
 </style>

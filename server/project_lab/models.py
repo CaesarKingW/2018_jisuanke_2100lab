@@ -51,13 +51,13 @@ class Course(models.Model):
     title = models.CharField('标题', max_length=50)
     brief_introduction = models.TextField('简介')
     audio = models.FileField(("音频"), upload_to='audio/', blank=True, null=True)
+    course_duration = models.FloatField(("课程时长"), default=0.0)
     whole_introduction = models.FileField(
         ("详解"), upload_to='word/', blank=True, null=True)
     Cover_picture = models.ImageField(
         ("课程图片"), upload_to='course_picture', blank=True, null=True)
     Is_destroy = models.BooleanField(("是否阅后即焚"), default=False)
     distory_time = models.DurationField(("可阅时长"), blank=True, null=True)
-    Is_free = models.BooleanField(("免费"), default=True)
     price = models.FloatField(("价格"), blank=True, null=True, default=0.0)
     sale_count = models.PositiveIntegerField(
         ("销量"), blank=True, null=True, default=0)
@@ -87,7 +87,8 @@ class Takes(models.Model):
     user_phone = models.ForeignKey("User", on_delete=models.CASCADE)
     course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
     start_time = models.DateTimeField(("开始学习时间"), auto_now_add=True)
-    last_study_percent = models.DurationField(("上次学习进度条"), default=0)
+    last_study_percent = models.FloatField(("上次学习进度"), default=0.0)
+    max_study_percent = models.FloatField(("最大学习进度"), default=0.0)
 
 
 # 订单表

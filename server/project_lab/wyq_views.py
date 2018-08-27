@@ -19,6 +19,9 @@ from urllib.parse import urlparse, parse_qs
 from urllib.request import urlopen
 from base64 import decodebytes, encodebytes
 from django.conf import settings
+from django.contrib.auth import authenticate, login, logout
+from datetime import datetime,timedelta
+from django.db.models import Sum, Count
 
 
 @require_http_methods(['POST', 'GET'])
@@ -26,14 +29,23 @@ def manager_login(request):
     response = {}
     try:
         if request.method == 'POST':
-            username = json.loads(request.body)['user']
-            password = json.loads(request.body)['password']
-            info = Manager.objects.get(username=username)
-            info = info.password
-            if password == info:
-                response['data'] = 'true'
+            username = json.loads(request.body.decode('utf-8'))['user']
+            password = json.loads(request.body.decode('utf-8'))['password'] + ''
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    response['data'] = 'true'
+                else:
+                    response['data'] = 'not_active'
             else:
-                response['data'] = 'false'
+                response['data'] = 'not_exit'
+            # info = Manager.objects.get(username=username)
+            # info = info.password + ''
+            # if password == info:
+            #     response['data'] = 'true'
+            # else:
+            #     response['data'] = 'false'
     except Exception as e:
         response['data'] = 'false'
         response['msg'] = str(e)
@@ -42,11 +54,23 @@ def manager_login(request):
 
 
 @require_http_methods(['POST', 'GET'])
+def back_logout(request):
+    response = {}
+    try:
+        logout(request)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse('success', safe=False)
+
+
+@require_http_methods(['POST', 'GET'])
 def manager_change(request):
     response = {}
     try:
         if request.method == 'POST':
-            manager = json.loads(request.body)
+            manager = json.loads(request.body.decode('utf-8'))
             info = Manager.objects.get(username=manager['managername'])
             info.Supermanager = manager['super']
             info.Manage_course = manager['course']
@@ -68,7 +92,7 @@ def manager_search(request):
     response = {}
     try:
         if request.method == 'POST':
-            managername = json.loads(request.body)
+            managername = json.loads(request.body.decode('utf-8'))
             info = Manager.objects.get(username=managername)
             info = ManagerSerializer(info)
             return JsonResponse(info.data)
@@ -84,7 +108,7 @@ def payment(request):
     response = {}
     try:
         if request.method == 'POST':
-            id = json.loads(request.body)
+            id = json.loads(request.body.decode('utf-8'))
             # 订单编号
             orderid = id['orderid']
             # 手机号
@@ -107,13 +131,13 @@ def payment(request):
 
             alipay = AliPay(
                 appid="2016091800536766",
-                app_notify_url="http://192.168.55.33:8000/#/app/notify",
+                app_notify_url="http://192.168.55.33#/app/notify",
                 app_private_key_path=settings.STATIC_ROOT+
                 '/private_2048.txt',
                 alipay_public_key_path=settings.STATIC_ROOT+
                 '/alipay_key_2048.txt',
                 debug=True,  # 默认False,
-                return_url="http://192.168.55.33:8000/#/CourseShow")
+                return_url="http://192.168.55.33#/CourseShow")
             url = alipay.direct_pay(
                 subject="测试订单", out_trade_no=orderid + '', total_amount=price)
             re_url = "https://openapi.alipaydev.com/gateway.do?{data}".format(
@@ -128,29 +152,111 @@ def payment(request):
 
 
 @require_http_methods(['POST', 'GET'])
-def alipay_notify(request):
+def alipay_get(request):
     # 存放post里面所有的数据
     processed_dict = {}
     try:
-        # 取出post里面的数据
-        for key, value in request.POST.items():
-            processed_dict[key] = value
-        # 商户网站唯一订单号
-        orderid = processed_dict.get('out_trade_no', None)
+        orderid = json.loads(request.body.decode('utf-8'))
         # 查询数据库中订单记录
-        info = Order.objects.get(Order_number=orderid)
-        courseid = info.course_id
-        info.status = "completed"
-        info.save()
-        info = Course.objects.get(id=courseid)
-        info.sale_count = info.sale_count + 1
-        info.save()
+        info = Order.objects.count()
+        courseid = info.course_id.id
+        if info.status == 'payment':
+            info.status = "completed"
+            info.save()
+            info = Course.objects.get(id=courseid)
+            info.sale_count = info.sale_count + 1
+            info.save()
         return JsonResponse("success", safe=False)
     except Exception as e:
         processed_dict['data'] = 'false'
         processed_dict['msg'] = str(e)
         processed_dict['error_num'] = 1
     return JsonResponse(processed_dict)
+
+
+@require_http_methods(['POST', 'GET'])
+def user_amount(request):
+    # 存放post里面所有的数据
+    response = {}
+    try:
+        total = User.objects.count()
+        return JsonResponse(total, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def order_amount(request):
+    # 存放post里面所有的数据
+    response = {}
+    try:
+        dt_s = datetime.now()
+        dt_e = (dt_s - timedelta(7))
+        response['week'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        dt_e = (dt_s - timedelta(30))
+        response['month'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        dt_e = (dt_s - timedelta(91))
+        response['season'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        dt_e = (dt_s - timedelta(182))
+        response['semi_year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        dt_e = (dt_s - timedelta(365))
+        response['year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        response['all'] = Order.objects.count()
+        return JsonResponse(response, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def money_amount(request):
+    # 存放post里面所有的数据
+    response = {}
+    try:
+        dt_s = datetime.now()
+        dt_e = (dt_s - timedelta(7))
+        response['week'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['week'] = response['week']['amount_of_money__sum']
+        dt_e = (dt_s - timedelta(30))
+        response['month'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['month'] = response['month']['amount_of_money__sum']
+        dt_e = (dt_s - timedelta(91))
+        response['season'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['season'] = response['season']['amount_of_money__sum']
+        dt_e = (dt_s - timedelta(182))
+        response['semi_year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['semi_year'] = response['semi_year']['amount_of_money__sum']
+        dt_e = (dt_s - timedelta(365))
+        response['year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['year'] = response['year']['amount_of_money__sum']
+        response['all'] = Order.objects.aggregate(Sum('amount_of_money'))
+        response['all'] = response['all']['amount_of_money__sum']
+        return JsonResponse(response, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def free_watch(request):
+    response = {}
+    try:
+        info = Course.objects.filter(price=0.0).order_by('-view_count').only('title', 'sale_count')[:10]
+        info = serializers.serialize('json', info)
+        return JsonResponse(info, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
 
 
 class AliPay(object):

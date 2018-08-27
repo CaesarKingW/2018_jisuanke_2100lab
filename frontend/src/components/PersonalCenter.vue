@@ -39,7 +39,7 @@
         </li>
         </router-link>
         <router-link to ="/UserLogin" exact>
-          <li  @click="logout" v-if="judge" class="line">
+          <li  @click="logout"  class="line">
               <Icon type="ios-log-out" /> 退出登录
         </li>
         </router-link>
@@ -56,73 +56,24 @@ export default {
   name: 'home',
   data() {
     return {
-      value: 0,
-      imgs: [],
-      free_course: [],
-      paying_imgs: [],
-      paying_course: [],
-      show_number: 3,
-      path: [],
-      judge: false,
       yourname: ''
     }
   },
-  mounted: function() {
-    this.show_free_course()
-    this.show_paying_course()
+  created: function() {
     this.Judgestatus()
   },
+  mounted: function() {},
   methods: {
-    show_free_course: function() {
-      this.$http.get('http://192.168.55.33:8000/app/show_free_course').then(
-        response => {
-          this.imgs = response.data.list
-          console.log('success')
-          for (var i = 0; i < this.imgs.length; i = i + 1) {
-            var a =
-              'http://192.168.55.33:8000/media/' +
-              this.imgs[i].fields.Cover_picture
-            this.imgs[i].fields.Cover_picture = a
-          }
-          var length = 0
-          if (this.imgs.length > this.show_number) length = this.show_number
-          else length = this.imgs.length
-          this.free_course = this.imgs.slice(0, length)
-          console.log('success')
-        },
-        response => {
-          console.log('error')
-        }
-      )
-    },
-    show_paying_course: function() {
-      this.$http.get('http://192.168.55.33:8000/app/show_paying_course').then(
-        response => {
-          this.paying_imgs = response.data.list
-          console.log('success')
-          for (var i = 0; i < this.paying_imgs.length; i = i + 1) {
-            var a =
-              'http://192.168.55.33:8000/media/' +
-              this.paying_imgs[i].fields.Cover_picture
-            this.paying_imgs[i].fields.Cover_picture = a
-          }
-          var length = 0
-          if (this.paying_imgs.length > this.show_number) {
-            length = this.show_number
-          } else length = this.paying_imgs.length
-          this.paying_course = this.paying_imgs.slice(0, length)
-          console.log('success')
-        },
-        response => {
-          console.log('error')
-        }
-      )
-    },
     Judgestatus: function() {
       this.$http
-        .post('http://192.168.55.33:8000/app/get_status')
+        .post(this.GLOBAL.serverSrc + 'app/get_status')
         .then(response => {
-          this.judge = response.data.is_login
+          var judge = response.data.is_login
+          // 用户未登录状态下强制访问，跳出404 not found页面
+          // 这里暂时先直接跳入登录页面
+          if (!judge) {
+            this.$router.push({ name: 'UserLogin' })
+          }
         })
     },
     alert_log_out() {
@@ -130,7 +81,7 @@ export default {
     },
     logout: function() {
       this.$http
-        .post('http://192.168.55.33:8000/app/del_status')
+        .post(this.GLOBAL.serverSrc + 'app/del_status')
         .then(response => {
           this.judge = response.data.is_login
           if (response.data.username === null) {
@@ -138,7 +89,7 @@ export default {
           } else {
             this.yourname = response.data.username
           }
-          location.href = 'http://192.168.55.33:8000/#/UserLogin'
+          location.href = this.GLOBAL.serverSrc + '#/UserLogin'
           this.alert_log_out()
         })
     }

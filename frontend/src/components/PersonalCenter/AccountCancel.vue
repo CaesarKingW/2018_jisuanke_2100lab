@@ -16,21 +16,31 @@ export default {
   data() {
     return {
       // 当前登录用户手机号，现暂存为下
-      userPhone: '17602284691'
+      userPhone: ''
     }
+  },
+  mounted: function() {
+    // 获取登录用户手机号
+    this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(response => {
+      this.userPhone = response.data.list[0].pk
+    })
   },
   methods: {
     userDestroy: function() {
       this.$http
         .post(
-          'http://192.168.55.33:8000/app/account_destroy',
+          this.GLOBAL.serverSrc + 'app/account_destroy',
           JSON.stringify(this.userPhone)
         )
         .then(
           response => {
-            console.log(response.date)
             this.getSuccessCancel()
-            this.$router.push({name: 'UserLogin'})
+            this.$http
+              .post(this.GLOBAL.serverSrc + 'app/del_status')
+              .then(response => {
+                console.log('success')
+                this.$router.push({ name: 'UserLogin' })
+              })
           },
           response => {
             console.log('error')

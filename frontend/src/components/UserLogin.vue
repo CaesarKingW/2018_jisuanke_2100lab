@@ -3,17 +3,15 @@
     <Button id="lab" ghost><router-link to="/home"><div id="button_text">2100-lab <Icon type="md-log-in" /></div></router-link></Button>
     <br>
     <br>
-    <div id="log_column">
+    <div class="log_column">
     <h1>2100实验室</h1>
     <form method="POST" @submit.prevent="Is_normal_nubmer">
-    <Input type="text" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" style="width: 56%;" v-model="phone_number"/>
+    <Input type="text" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" v-model="phone_number"/>
     <input type="submit" id="getCodeButton" value="获取验证码" />
     </form>
     <form id="log_down" method="POST" @submit.prevent="comparecode">
-    <Poptip trigger="focus" title="提示" content="注意区分大小写！">
-    <Input type="text" placeholder="请输入验证码" size="large" style="width: 366px;" icon="ios-key-outline" v-model="usercode"/>
-    </Poptip>
-    <br>
+    <div class="caseSensitive"><Icon type="ios-alert" />&nbsp;&nbsp;请注意区分验证码大小写！</div>
+    <Input type="text" placeholder="请输入验证码" size="large" icon="ios-key-outline" v-model="usercode"/>
     <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement"/>我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
     <input type="submit" id="login" value="登录" />
     </form>
@@ -34,7 +32,7 @@ export default {
   },
   mounted: function() {
     this.$http
-      .post('http://192.168.55.33:8000/app/get_status')
+      .post(this.GLOBAL.serverSrc + 'app/get_status')
       .then(
         response => {
           this.is_login = response.data.is_login
@@ -94,7 +92,7 @@ export default {
     getcode: function() {
       var phonenumber = JSON.stringify(this.phone_number)
       this.$http
-        .post('http://192.168.55.33:8000/app/get_code_post', phonenumber)
+        .post(this.GLOBAL.serverSrc + 'app/get_code_post', phonenumber)
         .then(
           response => {
             console.log(response.data)
@@ -138,7 +136,7 @@ export default {
     Register_new_user: function() {
       var userphone = JSON.stringify(this.phone_number)
       this.$http
-        .post('http://192.168.55.33:8000/app/register_new_user', userphone)
+        .post(this.GLOBAL.serverSrc + 'app/register_new_user', userphone)
         .then(
           response => {
             console.log(response.data)
@@ -151,7 +149,7 @@ export default {
     verify_the_login: function() {
       this.$http
         .post(
-          'http://192.168.55.33:8000/app/get_user_code',
+          this.GLOBAL.serverSrc + 'app/get_user_code',
           JSON.stringify({
             phone_number: this.phone_number,
             code: this.usercode
@@ -184,8 +182,16 @@ export default {
 }
 </script>
 <style scoped>
+.caseSensitive {
+  font-size: 14px;
+  font-family: 斜体;
+  margin-bottom: 5px;
+}
+#codeInput {
+  width: 160%;
+}
 #lab {
-  margin-left: 1032px;
+  margin-left: 52%;
   font-size: 18px;
   margin-top: 28px;
   margin-bottom: 18px;
@@ -201,21 +207,25 @@ export default {
   color: #fff;
 }
 #UserLogin {
+  margin: 0 auto;
   background-image: url('../assets/BALL.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  width: 100%;
   height: 583px;
+  /* height: 583px; */
+  /* overflow: hidden; */
   /* background-attachment: fixed; */
 }
-#log_column {
-  width: 400px;
-  margin-left: 60%;
-  margin-top: 3%;
+.log_column {
+  width: 45%;
+  margin-left: 52%;
+  margin-top: 1%;
   transition: opacity 1s;
   -webkit-transition: opacity 1s;
   background-size: 100% 100%;
 }
-#log_column h1 {
+.log_column h1 {
   background: #075182;
   padding: 20px 0;
   font-size: 160%;
@@ -226,22 +236,31 @@ export default {
   border-top-right-radius: 8px;
 }
 form {
-  background: #f0f0f0;
-  padding: 4% 4%;
+  background: #fff;
+  padding: 2% 4%;
 }
 #log_down {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
 #getCodeButton {
-  width: 43%;
+  width: 100%;
   height: 33px;
+  margin-top: 10px;
   outline: none;
   border-radius: 4px;
   border: none;
   background-color: #075182;
   color: #fff;
   cursor: pointer;
+  /* width: 43%; */
+  /* height: 33px;
+  outline: none;
+  border-radius: 4px;
+  border: none;
+  background-color: #075182;
+  color: #fff;
+  cursor: pointer; */
 }
 #getCodeButton:hover {
   background: #285f83;

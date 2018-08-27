@@ -11,7 +11,7 @@ from django.http import JsonResponse
 def praise_record(request):
     response = {}
     try:
-        req = json.loads(request.body)
+        req = json.loads(request.body.decode('utf-8'))
         message_id = req['message_id']
         user_phone = req['user_phone']
         user = User.objects.get(phone_number=user_phone)

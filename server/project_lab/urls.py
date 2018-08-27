@@ -3,6 +3,7 @@ from . import login_views, user_register, message_views, praise_views, wyq_views
 from . import pic_views
 from . import account_destroy
 from . import show_all_course
+from . import takes_views, orders_views
 
 urlpatterns = [
     path('get_code_post', login_views.get_code_post),
@@ -23,6 +24,8 @@ urlpatterns = [
     path('get_old_avator', update_personal_information.get_old_avator),
     path('get_user_information',
          update_personal_information.get_user_information),
+    path('show_takes', takes_views.show_takes),
+    path('show_orders',orders_views.show_orders),
     path('search_user', wq_views.search_user),
     path('authenticate', wq_views.authenticate),
     path('forbid_comment', wq_views.forbid_comment),
@@ -33,7 +36,7 @@ urlpatterns = [
     path('get_status', wchxviews.get_status),
     path('del_status', wchxviews.del_status),
     path('payment', wyq_views.payment),
-    path('notify', wyq_views.alipay_notify),
+    path('notify', wyq_views.alipay_get),
     path('add_img', wq_views.add_img),
     path('add_audi', wq_views.add_audi),
     path('set_start_time', wq_views.set_start_time),
@@ -44,5 +47,10 @@ urlpatterns = [
     path('show_free_course', show_all_course.show_free_course),
     path('show_paying_course', show_all_course.show_paying_course),
     path('get_specified_course', show_all_course.get_specified_course),
-    path('get_course_info', wchxviews.get_course_info)
+    path('get_course_info', wchxviews.get_course_info),
+    path('back_log_out', wyq_views.back_logout),
+    path('user_amount', wyq_views.user_amount),
+    path('order_amount', wyq_views.order_amount),
+    path('money_amount', wyq_views.money_amount),
+    path('free_watch', wyq_views.free_watch),
 ]

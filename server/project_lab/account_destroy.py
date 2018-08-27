@@ -11,7 +11,7 @@ def account_destroy(request):
     response = {}
     try:
         if request.method == 'POST':
-            req = json.loads(request.body)
+            req = json.loads(request.body.decode('utf-8'))
             current_user = User.objects.get(phone_number=req)
             current_user.exists = False
             current_user.save()

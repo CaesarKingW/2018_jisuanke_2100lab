@@ -1,5 +1,6 @@
 <template>
-<div id="CourseShow" style="background-color: #c4e1ff;">
+<body>
+<div id="CourseShow">
     <Divider><h1 class="title">{{ title }}</h1></Divider>
     <Divider orientation="right"><p class="read_time" style="font-size: 24px;">浏览量：{{ times }} 次</p></Divider>
     <div class="test_pic"><img id="changePic" v-bind:src="picpath" width=500px height=350px></div>
@@ -14,17 +15,22 @@
             <Poptip trigger="hover" style="font-size: 24px;" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
             <div style="color: white;">文字介绍</div>
             </Poptip>
-            <div slot="content" style="text-align: left;font-size: 18px;">{{content}}</div>
+            <div slot="content" style="text-align: left;font-size: 18px;">
+               <div style="overflow: auto;height: 90px;">content</div>
+            </div>
         </Panel>
     </Collapse>
-    <BackTop>
+        <BackTop>
         <div>返回顶端</div>
     </BackTop>
+    <NiceMsgBoard/>
 </div>
+</body>
 </template>
 <script>
+import NiceMsgBoard from './NiceMsgBoard'
 export default {
-  name: 'ourseShow',
+  name: 'CourseShow',
   data() {
     return {
       aupath: '',
@@ -36,15 +42,13 @@ export default {
       last_index: 0,
       last_time: 0,
       st: '',
-      id: 7
+      id: 1
     }
   },
   mounted: function() {
-    // get_id(),
     this.get_info()
   },
   methods: {
-    get_id: function() {},
     get_info: function() {
       this.$http
         .post(
@@ -54,12 +58,12 @@ export default {
         .then(response => {
           var res = response.data
           console.log(res)
-          this.title = response.data.course[0].title
-          this.aupath = 'http://192.168.55.33:8000' + response.data.course[0].audio
+          this.title = res.course[0].title
+          this.aupath = 'http://192.168.55.33:8000' + res.course[0].audio
           console.log(this.aupath)
-          this.times = response.data.course[0].view_count
-          this.content = response.data.course[0].context
-          this.pictures = response.data.pictures
+          this.times = res.course[0].view_count
+          this.content = res.course[0].context
+          this.pictures = res.pictures
           this.picpath =
             'http://192.168.55.33:8000' + this.pictures[0].course_picture
         })
@@ -108,8 +112,10 @@ export default {
       }
       this.last_time = current
       this.last_index = picindex
-      this.Play()
     }
+  },
+  components: {
+    NiceMsgBoard
   }
 }
 </script>
@@ -136,7 +142,7 @@ export default {
   border-radius: 2px;
 }
 #changePic {
-  border: #99ccff solid 5px;
-  border-radius: 20px;
+    border:#000 solid 5px;
+    border-radius: 20px;
 }
 </style>

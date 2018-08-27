@@ -46,12 +46,12 @@
     <!-- 免费内容预览 -->
     <div class="container">
     <div class="item" v-for="item of free_course" :key="item.id">
-      <a href="/">
+      <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
       <Card>
          <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
             <p><img class="CoverPic" v-bind:src= 'item.fields.Cover_picture'/></p>
       </Card>
-      </a>
+      </router-link>
         </div>
     </div>
     <br>
@@ -119,13 +119,13 @@ export default {
   },
   methods: {
     show_free_course: function() {
-      this.$http.get('http://192.168.55.33:8000/app/show_free_course').then(
+      this.$http.get(this.GLOBAL.serverSrc + 'app/show_free_course').then(
         response => {
           this.imgs = response.data.list
           console.log('success')
           for (var i = 0; i < this.imgs.length; i = i + 1) {
             var a =
-              'http://192.168.55.33:8000/media/' +
+              this.GLOBAL.serverSrc + 'media/' +
               this.imgs[i].fields.Cover_picture
             this.imgs[i].fields.Cover_picture = a
           }
@@ -141,13 +141,13 @@ export default {
       )
     },
     show_paying_course: function() {
-      this.$http.get('http://192.168.55.33:8000/app/show_paying_course').then(
+      this.$http.get(this.GLOBAL.serverSrc + 'app/show_paying_course').then(
         response => {
           this.paying_imgs = response.data.list
           console.log('success')
           for (var i = 0; i < this.paying_imgs.length; i = i + 1) {
             var a =
-              'http://192.168.55.33:8000/media/' +
+              this.GLOBAL.serverSrc + 'media/' +
               this.paying_imgs[i].fields.Cover_picture
             this.paying_imgs[i].fields.Cover_picture = a
           }
@@ -165,7 +165,7 @@ export default {
     },
     Judgestatus: function() {
       this.$http
-        .post('http://192.168.55.33:8000/app/get_status')
+        .post(this.GLOBAL.serverSrc + 'app/get_status')
         .then(response => {
           this.judge = response.data.is_login
         })
@@ -175,7 +175,7 @@ export default {
     },
     logout: function() {
       this.$http
-        .post('http://192.168.55.33:8000/app/del_status')
+        .post(this.GLOBAL.serverSrc + 'app/del_status')
         .then(response => {
           this.judge = response.data.is_login
           if (response.data.username === null) {
@@ -183,7 +183,7 @@ export default {
           } else {
             this.yourname = response.data.username
           }
-          location.href = 'http://192.168.55.33:8000/#/UserLogin'
+          location.href = this.GLOBAL.serverSrc + '#/UserLogin'
           this.alert_log_out()
         })
     }
@@ -194,10 +194,9 @@ export default {
 .CoverPic {
   text-align: center;
   margin-left: 12%;
-  border: black solid
-    2px;
+  border: black solid 2px;
   border-radius: 3px;
-  width: 300px;
+  width: 270px;
   height: 200px;
 }
 .CoverTitle {
@@ -222,6 +221,7 @@ export default {
   margin-right: 15px;
 }
 .container {
+  width: 100%;
   display: flex;
   display: -webkit-flex;
   display: -moz-flex;
@@ -282,6 +282,7 @@ export default {
 }
 .item {
   flex-grow: 1;
+  flex-shrink: 1;
   margin-top: 20px;
   margin-bottom: 20px;
 }
