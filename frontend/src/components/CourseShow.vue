@@ -2,9 +2,10 @@
 <div id="CourseShow" style="background-color: #c4e1ff;">
     <Divider><h1 class="title">{{ title }}</h1></Divider>
     <Divider orientation="right"><p class="read_time" style="font-size: 24px;">浏览量：{{ times }} 次</p></Divider>
-    <div class="test_pic"><img id="changePic" src="../assets/2.png"></div>
+    <div class="test_pic"><img id="changePic" v-bind:src="picpath" width=500px height=350px></div>
     <Divider />
-    <Progress :percent="45" status="active" />
+    <!-- <Progress :percent="45" status="active" /> -->
+    <audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio>
     <Divider />
     <Button type="primary" shape="circle" icon="ios-play"></Button>
     <Divider />
@@ -13,11 +14,7 @@
             <Poptip trigger="hover" style="font-size: 24px;" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
             <div style="color: white;">文字介绍</div>
             </Poptip>
-            <div slot="content" style="text-align: left;font-size: 18px;">
-                实验室用大理石和稀盐酸来反应制取二氧化碳，可我们知道，能产生二氧化碳的反应有很多，为什么却选此反应呢？
-                该反应最大的优点是反应速度适中，便于实验室收集气体。能否用稀硫酸代替稀盐酸呢？回答是不可以。因为稀硫酸会和大理石中的碳酸钙反应生成微溶于水的硫酸钙，覆盖在大理石表面，使酸与大理石脱离接触，反应自行停止。看到的现象是刚开始有气泡冒出，很快就没有了。
-                那么碳酸钠也能和稀盐酸反应放出二氧化碳，用碳酸钠是否可以代替大理石呢？回答也是不可以，因为碳酸钠是粉末性固体，能与盐酸充分接触，反应速度太快，不便于收集气体。
-            </div>
+            <div slot="content" style="text-align: left;font-size: 18px;">{{content}}</div>
         </Panel>
     </Collapse>
     <BackTop>
@@ -27,18 +24,98 @@
 </template>
 <script>
 export default {
-  name: 'CourseShow',
+  name: 'ourseShow',
   data() {
     return {
-      title: '科学实验：实验室制取CO2',
-      times: '9999'
+      aupath: '',
+      picpath: '',
+      pictures: [],
+      content: '',
+      title: '',
+      times: 0,
+      last_index: 0,
+      last_time: 0,
+      st: '',
+      id: 7
+    }
+  },
+  mounted: function() {
+    // get_id(),
+    this.get_info()
+  },
+  methods: {
+    get_id: function() {},
+    get_info: function() {
+      this.$http
+        .post(
+          'http://192.168.55.33:8000/app/get_course_info',
+          JSON.stringify(this.id)
+        )
+        .then(response => {
+          var res = response.data
+          console.log(res)
+          this.title = response.data.course[0].title
+          this.aupath = 'http://192.168.55.33:8000' + response.data.course[0].audio
+          console.log(this.aupath)
+          this.times = response.data.course[0].view_count
+          this.content = response.data.course[0].context
+          this.pictures = response.data.pictures
+          this.picpath =
+            'http://192.168.55.33:8000' + this.pictures[0].course_picture
+        })
+    },
+    Play: function() {
+      console.log(this.last_time)
+      console.log(this.last_index)
+      var vm = this
+      vm.picpath =
+        'http://192.168.55.33:8000' +
+        vm.pictures[vm.last_index].course_picture
+      var interval = (
+        vm.pictures[vm.last_index].end_time - vm.last_time) * 1000
+      vm.st = setTimeout(function() {
+        vm.last_index = vm.last_index + 1
+        if (vm.last_index >= vm.pictures.length) {
+          vm.last_index = 0
+          vm.last_time = 0
+          return
+        }
+        vm.last_time = vm.pictures[vm.last_index].start_time
+        vm.Play()
+      }, interval)
+    },
+    Pause: function() {
+      clearTimeout(this.st)
+      this.last_time = document.getElementById('audio').currentTime
+      if (
+        document.getElementById('audio').currentTime ===
+        document.getElementById('audio').duration
+      ) {
+        this.last_time = 0
+        this.last_index = 0
+      }
+    },
+    Dragged: function() {
+      var current = document.getElementById('audio').currentTime
+      var picindex
+      for (let index = 0; index < this.pictures.length; index++) {
+        if (this.pictures[index].start_time <= current && this.pictures[index].end_time > current) {
+          picindex = index
+          break
+        } else {
+          picindex = 0
+        }
+      }
+      this.last_time = current
+      this.last_index = picindex
+      this.Play()
     }
   }
 }
 </script>
 <style>
 #CourseShow {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -59,7 +136,7 @@ export default {
   border-radius: 2px;
 }
 #changePic {
-    border:#99ccff solid 5px;
-    border-radius: 20px;
+  border: #99ccff solid 5px;
+  border-radius: 20px;
 }
 </style>

@@ -1,0 +1,35 @@
+https://ke.qq.com/course/324128?saleToken=78222
+https://ke.qq.com/course/324128?saleToken=78227
+https://ke.qq.com/course/318675?saleToken=78232
+
+
+courseid对应唯一的课程
+saleToken=点击次数
+该次数对应着唯一的用户
+相同用户点击相同课程，次数以首次为准，即如果表中有数据则不改表
+用户表中应该记录点击的id
+
+
+不同账号不同浏览器相同课程实验：
+3476726644 chrome：
+https://ke.qq.com/course/324128?saleToken=78234
+1826354361 傲游：
+https://ke.qq.com/course/324128?saleToken=78235
+
+
+点击分销链接后进入课程购买界面
+购买成功后将课程价格按分销比加入用户奖励金
+GP6437944982723645440
+GP6437944982723645440
+GP6437948418911391744
+
+
+
+sessionid: chp6kt0pt4mlz91a59ovi59fhh3xo4cu
+sessionid: chp6kt0pt4mlz91a59ovi59fhh3xo4cu
+
+
+
+实现登录认证
+单元测试
+自动化文档
