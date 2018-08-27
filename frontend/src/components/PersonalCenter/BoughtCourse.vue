@@ -47,7 +47,7 @@ export default {
     }
   },
   mounted: function() {
-    this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(response => {
+    this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(response => {
       this.userPhone = response.data.list[0].pk
       this.show_orders()
     })
@@ -56,7 +56,7 @@ export default {
     show_orders: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/show_orders',
+          this.GLOBAL.serverSrc + '/app/show_orders',
           JSON.stringify(this.userPhone)
         )
         .then(

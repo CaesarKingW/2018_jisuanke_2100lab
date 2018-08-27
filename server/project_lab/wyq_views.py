@@ -130,7 +130,7 @@ def payment(request):
 
             alipay = AliPay(
                 appid="2016091800536766",
-                app_notify_url="http://192.168.55.33:8000/#/app/notify",
+                app_notify_url="http://192.168.55.33:8000/app/notify",
                 app_private_key_path=settings.STATIC_ROOT +
                 '/private_2048.txt',
                 alipay_public_key_path=settings.STATIC_ROOT +

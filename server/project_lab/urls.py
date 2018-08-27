@@ -26,6 +26,7 @@ urlpatterns = [
          update_personal_information.get_user_information),
     path('show_takes', takes_views.show_takes),
     path('show_orders',orders_views.show_orders),
+    path('get_order_payment',orders_views.get_order_payment),
     path('search_user', wq_views.search_user),
     path('authenticate', wq_views.authenticate),
     path('forbid_comment', wq_views.forbid_comment),

@@ -22,7 +22,7 @@ export default {
     Upload_head: function(e) {
       // 上传当前手机号到后端
       this.$http.post(
-        this.GLOBAL.serverSrc + 'app/get_user_phone',
+        this.GLOBAL.serverSrc + '/app/get_user_phone',
         JSON.stringify({ user_phone: this.user_phone })
       )
 
@@ -33,7 +33,7 @@ export default {
       formdate.append('file', fileinfo)
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/update_avator', formdate, config)
+        .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
         .then(response => {
           console.log(response.data)
           // var resultobj = response.data

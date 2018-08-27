@@ -46,7 +46,7 @@ export default {
       // eslint-disable-next-line
       var managerlogin = JSON.stringify(this.formInline)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/manager_login', managerlogin)
+        .post(this.GLOBAL.serverSrc + '/app/manager_login', managerlogin)
         .then(response => {
           console.log(response.data.data)
           if (response.data.data === 'true') {

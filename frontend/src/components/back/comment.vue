@@ -33,7 +33,7 @@ export default {
     search() {
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/search_comment', phoneNumber)
+        .post(this.GLOBAL.serverSrc + '/app/search_comment', phoneNumber)
         .then(response => {
           var res = response.data
           console.log(res)
@@ -58,7 +58,7 @@ export default {
       console.log(messageId)
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/delete_comment',
+          this.GLOBAL.serverSrc + '/app/delete_comment',
           JSON.stringify({
             message_id: messageId,
             phone_number: this.phone_number

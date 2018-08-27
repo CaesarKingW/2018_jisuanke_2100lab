@@ -1,6 +1,6 @@
 <template>
   <body>
-    <!-- <form action="http://192.168.55.33app/add_picture" method="post" enctype="multipart/form-data">
+    <!-- <form action="http://192.168.55.33/app/add_picture" method="post" enctype="multipart/form-data">
         <input type="file" name="fafafa">
         <input type="submit">
     </form> -->
@@ -25,11 +25,11 @@ export default {
   },
   methods: {
     show_picture: function() {
-      this.$http.get(this.GLOBAL.serverSrc + 'app/show_picture').then(
+      this.$http.get(this.GLOBAL.serverSrc + '/app/show_picture').then(
         response => {
           this.img = response.data.img
           this.path =
-            this.GLOBAL.serverSrc + 'media/' +
+            this.GLOBAL.serverSrc + '/media/' +
             this.img[0].fields.course_picture
           console.log(this.img)
           console.log(this.path)
@@ -46,7 +46,7 @@ export default {
       formdate.append('file', fileinfo)
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/add_picture', formdate, config)
+        .post(this.GLOBAL.serverSrc + '/app/add_picture', formdate, config)
         .then(response => {
           console.log(response.data)
         })

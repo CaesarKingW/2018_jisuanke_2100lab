@@ -33,6 +33,10 @@ export default {
   name: 'CourseShow',
   data() {
     return {
+      courseid: 0,
+      IsFree: true,
+      userphone: '',
+      IsPaid: false,
       aupath: '',
       picpath: '',
       pictures: [],
@@ -41,31 +45,47 @@ export default {
       times: 0,
       last_index: 0,
       last_time: 0,
-      st: '',
-      id: 1
+      st: ''
     }
   },
+  created: function() {
+    // 从路由中获取课程id
+    this.courseid = this.$route.query.id
+    // 判断用户是否登录，未登录则直接跳转到登录页面
+    this.Judgestatus()
+    // 判断此门课程是否存在，不存在则直接调回home页面，
+    // 是否为免费，并获取课程标题
+    this.JudgePrice()
+  },
   mounted: function() {
+    var orderId = this.$route.query.out_trade_no
+    if (typeof orderId !== 'undefined') {
+      var request = JSON.stringify(orderId)
+      this.$http.post(this.GLOBAL.serverSrc + '/app/notify', request)
+    }
     this.get_info()
+  },
+  components: {
+    NiceMsgBoard
   },
   methods: {
     get_info: function() {
       this.$http
         .post(
-          'http://192.168.55.33:8000/app/get_course_info',
-          JSON.stringify(this.id)
+          this.GLOBAL.serverSrc + '/app/get_course_info',
+          JSON.stringify(this.courseid)
         )
         .then(response => {
           var res = response.data
           console.log(res)
           this.title = res.course[0].title
-          this.aupath = 'http://192.168.55.33:8000' + res.course[0].audio
+          this.aupath = this.GLOBAL.serverSrc + res.course[0].audio
           console.log(this.aupath)
           this.times = res.course[0].view_count
           this.content = res.course[0].context
           this.pictures = res.pictures
           this.picpath =
-            'http://192.168.55.33:8000' + this.pictures[0].course_picture
+            this.GLOBAL.serverSrc + this.pictures[0].course_picture
         })
     },
     Play: function() {
@@ -73,10 +93,8 @@ export default {
       console.log(this.last_index)
       var vm = this
       vm.picpath =
-        'http://192.168.55.33:8000' +
-        vm.pictures[vm.last_index].course_picture
-      var interval = (
-        vm.pictures[vm.last_index].end_time - vm.last_time) * 1000
+        this.GLOBAL.serverSrc + vm.pictures[vm.last_index].course_picture
+      var interval = (vm.pictures[vm.last_index].end_time - vm.last_time) * 1000
       vm.st = setTimeout(function() {
         vm.last_index = vm.last_index + 1
         if (vm.last_index >= vm.pictures.length) {
@@ -103,7 +121,10 @@ export default {
       var current = document.getElementById('audio').currentTime
       var picindex
       for (let index = 0; index < this.pictures.length; index++) {
-        if (this.pictures[index].start_time <= current && this.pictures[index].end_time > current) {
+        if (
+          this.pictures[index].start_time <= current &&
+          this.pictures[index].end_time > current
+        ) {
           picindex = index
           break
         } else {
@@ -112,10 +133,67 @@ export default {
       }
       this.last_time = current
       this.last_index = picindex
+    },
+    Judgestatus: function() {
+      this.$http
+        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .then(response => {
+          var judge = response.data.is_login
+          // 用户未登录状态下强制访问，跳出404 not found页面
+          // 这里暂时先直接跳入登录页面
+          if (!judge) {
+            this.$router.push({ name: 'UserLogin' })
+          }
+        })
+    },
+    // 获取课程标题和是否免费属性
+    JudgePrice: function() {
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/get_specified_course',
+          JSON.stringify(this.courseid)
+        )
+        .then(response => {
+          var exist = response.data.exist
+          if (exist) {
+            var course = []
+            course = response.data.list
+            this.title = course[0].fields.title
+            var price = course[0].fields.price
+            if (price === 0) {
+              this.IsFree = true
+            } else {
+              this.IsFree = false
+            }
+            // 若是付费课程判断用户是否支付完成，未支付完成则直接跳转到主页
+            if (!this.IsFree) {
+              this.JudgePayment()
+            }
+          } else {
+            // alert('您无权访问此网址')
+            this.$router.push({ name: 'home' })
+          }
+        })
+    },
+    // 将用户手机号和课程id传给后端查找是否有关联两者的订单
+    JudgePayment: function() {
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/get_order_payment',
+          JSON.stringify({
+            phone_number: this.userphone,
+            course_id: this.courseid
+          })
+        )
+        .then(response => {
+          this.IsPaid = response.data.order_status
+          // 如果是付费课程且未支付则直接跳转到Home页面
+          if (!this.IsPaid) {
+            // alert('您必须先购买才能访问此页面')
+            this.$router.push({ name: 'home' })
+          }
+        })
     }
-  },
-  components: {
-    NiceMsgBoard
   }
 }
 </script>
@@ -142,7 +220,7 @@ export default {
   border-radius: 2px;
 }
 #changePic {
-    border:#000 solid 5px;
-    border-radius: 20px;
+  border: #000 solid 5px;
+  border-radius: 20px;
 }
 </style>

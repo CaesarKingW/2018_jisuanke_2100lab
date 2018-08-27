@@ -21,7 +21,7 @@ export default {
   },
   mounted: function() {
     // 获取登录用户手机号
-    this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(response => {
+    this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(response => {
       this.userPhone = response.data.list[0].pk
     })
   },
@@ -29,14 +29,14 @@ export default {
     userDestroy: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/account_destroy',
+          this.GLOBAL.serverSrc + '/app/account_destroy',
           JSON.stringify(this.userPhone)
         )
         .then(
           response => {
             this.getSuccessCancel()
             this.$http
-              .post(this.GLOBAL.serverSrc + 'app/del_status')
+              .post(this.GLOBAL.serverSrc + '/app/del_status')
               .then(response => {
                 console.log('success')
                 this.$router.push({ name: 'UserLogin' })

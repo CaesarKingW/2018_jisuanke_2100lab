@@ -66,7 +66,7 @@ export default {
       // eslint-disable-next-line
       var managername = JSON.stringify(this.managername)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/manager_search', managername)
+        .post(this.GLOBAL.serverSrc + '/app/manager_search', managername)
         .then(response => {
           console.log(response.data)
           if (response.data['data'] !== 'false') {
@@ -85,7 +85,7 @@ export default {
     change_manager() {
       var managerprops = JSON.stringify(this.arrtibute)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/manager_change', managerprops)
+        .post(this.GLOBAL.serverSrc + '/app/manager_change', managerprops)
         .then(response => {
           console.log(response.data)
         })

@@ -33,7 +33,7 @@ export default {
   methods: {
     logout() {
       var request = {}
-      this.$http.post(this.GLOBAL.serverSrc + 'app/back_log_out', request)
+      this.$http.post(this.GLOBAL.serverSrc + '/app/back_log_out', request)
         .then(response => {
           console.log(response.data)
           this.$router.push({path: '/backlogin'})

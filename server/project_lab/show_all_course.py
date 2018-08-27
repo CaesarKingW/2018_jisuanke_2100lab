@@ -47,9 +47,14 @@ def get_specified_course(request):
     try:
         if request.method == 'POST':
             req = json.loads(request.body.decode('utf-8'))
-            course = Course.objects.filter(id = req)
-            response['list'] = json.loads(
-                serializers.serialize("json", course))
+            try:
+                temp = Course.objects.get(id = req)
+                course = Course.objects.filter(id = req)
+                response['list'] = json.loads(
+                    serializers.serialize("json", course))
+                response['exist'] = True
+            except:
+                response['exist'] = False
             response['msg'] = 'success'
             response['error_num'] = 0
     except Exception as e:

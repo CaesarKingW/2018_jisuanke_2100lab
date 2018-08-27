@@ -41,7 +41,7 @@ export default {
       console.log(this.order_number)
       var orderNumber = JSON.stringify(this.order_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/search_order', orderNumber)
+        .post(this.GLOBAL.serverSrc + '/app/search_order', orderNumber)
         .then(response => {
           var res = response.data
           console.log(res)
@@ -66,7 +66,7 @@ export default {
     refund() {
       var orderNumber = JSON.stringify(this.order_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/refund', orderNumber)
+        .post(this.GLOBAL.serverSrc + '/app/refund', orderNumber)
         .then(response => {
           var res = response.data
           console.log(res)

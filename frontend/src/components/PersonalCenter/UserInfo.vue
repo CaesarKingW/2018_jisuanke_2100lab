@@ -21,7 +21,7 @@ export default {
     }
   },
   mounted: function() {
-    this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(
+    this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(
       response => {
         var obj = []
         obj = response.data.list
@@ -30,7 +30,7 @@ export default {
         if (this.old_path === '') {
           this.path = this.default_avator
         } else {
-          this.path = this.GLOBAL.serverSrc + 'media/' + this.old_path
+          this.path = this.GLOBAL.serverSrc + '/media/' + this.old_path
           this.old_path = ''
         }
         this.nickname = obj[0].fields.user_name
