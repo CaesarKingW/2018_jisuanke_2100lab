@@ -27,14 +27,10 @@
           </Alert>
         </div>
         <div class="introDiv">
-          <Collapse v-model="value">
-            <Panel class="intro">
-            课程简介
-            <p slot="content" class="contentText">
-                  {{content}}
-                </p>
-            </Panel>
-          </Collapse>
+          <Card>
+            <p class="intro" slot="title">课程简介</p>
+            <p class="introContent">{{content}}</p>
+        </Card>
         </div>
    <Modal
         title="分销课程"
@@ -134,7 +130,7 @@ export default {
   padding: 25px;
 }
 .navi {
-  font-size: 23px;
+  font-size: 18px;
   color: #022336;
   margin-left: 15px;
   margin-right: 15px;
@@ -227,10 +223,11 @@ export default {
   font-size: 19px;
   font-family: 华文中宋;
 }
-.contentText {
-  font-family: 华文中宋;
+.introContent {
+  font-size: 17px;
   font-size: 17px;
   position: static;
+  font-family: 华文中宋;
 }
 #courseTitle {
   color: #000;

@@ -41,14 +41,10 @@
     </Alert>
     </div>
     <div class="introDiv">
-        <Collapse v-model="value">
-        <Panel class="intro">
-            课程简介
-            <p slot="content" class="contentText">
-                    {{content}}
-            </p>
-        </Panel>
-    </Collapse>
+         <Card class="intro">
+            <p id="title" slot="title">课程简介</p>
+            <p class="introContent">{{content}}</p>
+        </Card>
     </div>
 </div>
 </template>
@@ -103,10 +99,22 @@ export default {
   padding: 25px;
 }
 .navi {
-  font-size: 23px;
+  font-size: 18px;
   color: #022336;
   margin-left: 15px;
   margin-right: 15px;
+}
+.navi:hover {
+  color: #022336;
+}
+.intro {
+  font-size: 19px;
+  font-family: 华文中宋;
+}
+.introContent {
+  font-size: 17px;
+  position: static;
+  font-family: 华文中宋;
 }
 .myPanel {
   margin: 0 auto;
@@ -169,12 +177,11 @@ export default {
   outline: none;
   border-radius: 4px;
   border: none;
-  background-color: #2d8cf0;
   color: #fff;
   cursor: pointer;
 }
-#copyButton:hover {
-  background: #57a3f3;
+#title {
+  font-size: 19px;
 }
 #testPic {
   width: 360px;
@@ -195,10 +202,6 @@ export default {
   margin: 0 auto;
   text-align: left;
   margin-top: 20px;
-}
-.intro {
-  font-size: 19px;
-  font-family: 华文中宋;
 }
 .contentText {
   font-family: 华文中宋;

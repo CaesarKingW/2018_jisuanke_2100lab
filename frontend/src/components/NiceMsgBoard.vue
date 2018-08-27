@@ -7,7 +7,7 @@
   </Alert>
   </div>
   <form method="POST" @submit.prevent="commit_message">
-    <div id="post_font"><Input v-model="message" type="textarea" :rows="4" id="post_column" placeholder="请在此畅所欲言……" /></div>
+    <div id="post_font"><Input v-model="message" type="textarea" :rows="4"  align = center id="post_column" placeholder="请在此畅所欲言……" /></div>
     <div id="post_button_area"><input id="post_button" type="submit" value="发送留言" /></div>
     </form>
   <div v-for="(item, index) of messages" :key="item.id">
@@ -110,9 +110,6 @@ export default {
 }
 </script>
 <style scoped>
-.NiceMsgBoard {
-  margin: 0 auto;
-}
 #user_name {
   font-size: 18px;
   font-family: 微软雅黑;
@@ -122,6 +119,7 @@ export default {
 }
 #post_font {
   font-size: 25px;
+  margin: 0 auto;
 }
 #commentAlert {
   text-align: center;
@@ -155,18 +153,14 @@ export default {
   margin-left: 200px;
   margin-bottom: 30px;
 }
-/* #post_button_area {
-  margin-bottom: 30px;
-  margin: 0 auto;
-} */
 #post_button {
-  width: 18%;
+  width: 22%;
   height: 40px;
   font-size: 20px;
   margin-top: 10px;
   margin: 0 auto;
+  margin-left: 520px;
   text-align: center;
-  margin-left: 575px;
   border-radius: 4px;
   border: solid 1px;
   background-color: #fff;

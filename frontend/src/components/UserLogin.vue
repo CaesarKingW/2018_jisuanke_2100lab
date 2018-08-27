@@ -1,18 +1,18 @@
 <template>
 <div id="UserLogin">
-    <Button id="lab" ghost><router-link to="/home"><div id="button_text">2100-lab <Icon type="md-log-in" /></div></router-link></Button>
+    <Button id="lab" ghost><router-link to="/home"><div id="button_text">首页 <Icon type="md-log-in" /></div></router-link></Button>
     <br>
     <br>
     <div class="log_column">
     <h1>2100实验室</h1>
     <form method="POST" @submit.prevent="Is_normal_nubmer">
-    <Input type="text" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" v-model="phone_number"/>
+    <Input id="inputPhone" type="text" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" v-model="phone_number"/>
     <input type="submit" id="getCodeButton" value="获取验证码" />
     </form>
     <form id="log_down" method="POST" @submit.prevent="comparecode">
     <div class="caseSensitive"><Icon type="ios-alert" />&nbsp;&nbsp;请注意区分验证码大小写！</div>
     <Input type="text" placeholder="请输入验证码" size="large" icon="ios-key-outline" v-model="usercode"/>
-    <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement"/>我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
+    <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement"/> 我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
     <input type="submit" id="login" value="登录" />
     </form>
     </div>
@@ -180,45 +180,46 @@ export default {
 }
 </script>
 <style scoped>
+#inputPhone {
+  width: 60%;
+}
 .caseSensitive {
-  font-size: 14px;
-  font-family: 斜体;
+  font-size: 13px;
   margin-bottom: 5px;
 }
 #codeInput {
   width: 160%;
 }
 #lab {
-  margin-left: 52%;
+  margin-left: 25%;
   font-size: 18px;
-  margin-top: 28px;
+  margin-top: 18.5%;
   margin-bottom: 18px;
   height: 41px;
+  position: fixed;
   border-radius: 4px;
-  border: none;
-  background-color: #075182;
-}
-#lab:hover {
-  background: #285f83;
+  /* background-color: #075182; */
 }
 #button_text {
-  color: #fff;
+  color: #000;
 }
 #UserLogin {
   margin: 0 auto;
   background-image: url('../assets/BALL.jpg');
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size:cover;
+  /* background-size: 100% 100%; */
   width: 100%;
-  height: 583px;
-  /* height: 583px; */
+  height: 100%;
+  height: 585px;
+  background-size: cover;
   /* overflow: hidden; */
   /* background-attachment: fixed; */
 }
 .log_column {
   width: 45%;
   margin-left: 52%;
-  margin-top: 1%;
+  margin-top: 6%;
   transition: opacity 1s;
   -webkit-transition: opacity 1s;
   background-size: 100% 100%;
@@ -235,14 +236,14 @@ export default {
 }
 form {
   background: #fff;
-  padding: 2% 4%;
+  padding: 2% 3%;
 }
 #log_down {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
 #getCodeButton {
-  width: 100%;
+  width: 39%;
   height: 33px;
   margin-top: 10px;
   outline: none;
@@ -251,14 +252,6 @@ form {
   background-color: #075182;
   color: #fff;
   cursor: pointer;
-  /* width: 43%; */
-  /* height: 33px;
-  outline: none;
-  border-radius: 4px;
-  border: none;
-  background-color: #075182;
-  color: #fff;
-  cursor: pointer; */
 }
 #getCodeButton:hover {
   background: #285f83;
@@ -278,7 +271,8 @@ form {
   background: #285f83;
 }
 #readAgreement {
-  margin: 6px;
+  margin-top: 8px;
+  margin-bottom: 6px;
 }
 #agreement {
   text-decoration: underline;
