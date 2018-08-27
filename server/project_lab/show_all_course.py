@@ -46,7 +46,7 @@ def get_specified_course(request):
     response = {}
     try:
         if request.method == 'POST':
-            req = json.loads(request.body)
+            req = json.loads(request.body.decode('utf-8'))
             course = Course.objects.filter(id = req)
             response['list'] = json.loads(
                 serializers.serialize("json", course))

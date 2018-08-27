@@ -17,6 +17,7 @@
     "echarts": "^4.1.0",
     "stylelint-order": "^1.0.0",
     "vue": "^2.5.2",
+    "vue-aplayer": "^1.6.1",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1"
   },

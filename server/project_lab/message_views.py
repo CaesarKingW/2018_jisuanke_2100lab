@@ -8,12 +8,12 @@ from django.http import JsonResponse
 from .serializer import MessageSerializer, ReplySerializer
 
 
-#最高点赞数留言显示在顶端
+# 最高点赞数留言显示在顶端
 @require_http_methods(["POST"])
 def show_message(request):
     response = {}
     try:
-        req = json.loads(request.body)
+        req = json.loads(request.body.decode('utf-8'))
         course_id = Course.objects.get(id=req)
         messages = Message.objects.filter(
             course_id=course_id).order_by('-created_at')
@@ -36,7 +36,7 @@ def add_message(request):
     response = {}
     try:
         if request.method == 'POST':
-            req = json.loads(request.body)
+            req = json.loads(request.body.decode('utf-8'))
             user_phone = User.objects.get(phone_number=req['user_phone'])
             course_id = Course.objects.get(id=req['course_id'])
             Message.objects.create(
@@ -58,7 +58,7 @@ def show_reply(request):
     response = {}
     try:
         if request.method == 'POST':
-            req = json.loads(request.body)
+            req = json.loads(request.body.decode('utf-8'))
             message = Message.objects.get(id=req)
             replies = Reply.objects.filter(
                 message_id=message).order_by('created_at')
@@ -81,7 +81,7 @@ def add_reply(request):
     response = {}
     try:
         if request.method == 'POST':
-            req = json.loads(request.body)
+            req = json.loads(request.body.decode('utf-8'))
             user_phone = User.objects.get(phone_number=req['user_phone'])
             message_id = Message.objects.get(id=req['message_id'])
             Reply.objects.create(

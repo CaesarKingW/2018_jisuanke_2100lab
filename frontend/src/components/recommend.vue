@@ -30,13 +30,13 @@ export default {
   },
   methods: {
     show_free_course: function() {
-      this.$http.get('http://192.168.55.33:8000/app/show_free_course').then(
+      this.$http.get(this.GLOBAL.serverSrc + 'app/show_free_course').then(
         response => {
           this.imgs = response.data.list
           console.log('success')
           for (var i = 0; i < this.imgs.length; i = i + 1) {
             var a =
-              'http://192.168.55.33:8000/media/' +
+              this.GLOBAL.serverSrc + 'media/' +
               this.imgs[i].fields.Cover_picture
             this.imgs[i].fields.Cover_picture = a
           }
@@ -52,13 +52,13 @@ export default {
       )
     },
     show_paying_course: function() {
-      this.$http.get('http://192.168.55.33:8000/app/show_paying_course').then(
+      this.$http.get(this.GLOBAL.serverSrc + 'app/show_paying_course').then(
         response => {
           this.paying_imgs = response.data.list
           console.log('success')
           for (var i = 0; i < this.paying_imgs.length; i = i + 1) {
             var a =
-              'http://192.168.55.33:8000/media/' +
+              this.GLOBAL.serverSrc + 'media/' +
               this.paying_imgs[i].fields.Cover_picture
             this.paying_imgs[i].fields.Cover_picture = a
           }

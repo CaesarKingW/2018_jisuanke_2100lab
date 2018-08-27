@@ -28,8 +28,8 @@ def manager_login(request):
     response = {}
     try:
         if request.method == 'POST':
-            username = json.loads(request.body)['user']
-            password = json.loads(request.body)['password'] + ''
+            username = json.loads(request.body.decode('utf-8'))['user']
+            password = json.loads(request.body.decode('utf-8'))['password'] + ''
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
@@ -69,7 +69,7 @@ def manager_change(request):
     response = {}
     try:
         if request.method == 'POST':
-            manager = json.loads(request.body)
+            manager = json.loads(request.body.decode('utf-8'))
             info = Manager.objects.get(username=manager['managername'])
             info.Supermanager = manager['super']
             info.Manage_course = manager['course']
@@ -91,7 +91,7 @@ def manager_search(request):
     response = {}
     try:
         if request.method == 'POST':
-            managername = json.loads(request.body)
+            managername = json.loads(request.body.decode('utf-8'))
             info = Manager.objects.get(username=managername)
             info = ManagerSerializer(info)
             return JsonResponse(info.data)
@@ -107,7 +107,7 @@ def payment(request):
     response = {}
     try:
         if request.method == 'POST':
-            id = json.loads(request.body)
+            id = json.loads(request.body.decode('utf-8'))
             # 订单编号
             orderid = id['orderid']
             # 手机号
@@ -155,7 +155,7 @@ def alipay_get(request):
     # 存放post里面所有的数据
     processed_dict = {}
     try:
-        orderid = json.loads(request.body)
+        orderid = json.loads(request.body.decode('utf-8'))
         # 查询数据库中订单记录
         info = Order.objects.get(Order_number=orderid)
         courseid = info.course_id.id
@@ -263,8 +263,8 @@ def free_watch(request):
         for course in courses:
             title.append(course.title)
             count.append(course.view_count)
-        response['title']=title
-        response['count']=count
+        response['title'] = title
+        response['count'] = count
         # response['title'] = courses.title
         # response['count'] = courses.view_count
         return JsonResponse(response, safe=False)
@@ -273,6 +273,51 @@ def free_watch(request):
         response['msg'] = str(e)
         response['error_num'] = 1
     return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def pay_watch(request):
+    response = {}
+    try:
+        courses = Course.objects.filter(price__gt=0.0).order_by('-view_count')[:10]
+        title = []
+        count = []
+        for course in courses:
+            title.append(course.title)
+            count.append(course.view_count)
+        response['title'] = title
+        response['count'] = count
+        # response['title'] = courses.title
+        # response['count'] = courses.view_count
+        return JsonResponse(response, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def pay_sale(request):
+    response = {}
+    try:
+        courses = Course.objects.filter(price__gt=0.0).order_by('-sale_count')[:10]
+        title = []
+        count = []
+        for course in courses:
+            title.append(course.title)
+            count.append(course.sale_count)
+        response['title'] = title
+        response['count'] = count
+        # response['title'] = courses.title
+        # response['count'] = courses.view_count
+        return JsonResponse(response, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
 
 
 class AliPay(object):
