@@ -53,4 +53,7 @@ urlpatterns = [
     path('order_amount', wyq_views.order_amount),
     path('money_amount', wyq_views.money_amount),
     path('free_watch', wyq_views.free_watch),
+    path('pay_watch', wyq_views.pay_watch),
+    path('pay_sale', wyq_views.pay_sale)
 ]
+

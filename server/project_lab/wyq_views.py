@@ -6,8 +6,7 @@ from django.views.decorators.http import require_http_methods
 from django.core import serializers
 import json
 import requests
-from .serializer import UserSerializer, ManagerSerializer
-from .serializer import Course_pictureSerializer
+from .serializer import *
 import os
 from datetime import datetime
 from Crypto.PublicKey import RSA
@@ -20,7 +19,7 @@ from urllib.request import urlopen
 from base64 import decodebytes, encodebytes
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta
 from django.db.models import Sum, Count
 
 
@@ -120,7 +119,7 @@ def payment(request):
             info = Course.objects.get(id=id['courseid'])
             price = info.price
             # 支付状态
-            status = "payment"
+            status = "未完成"
             info = Order(
                 Order_number=orderid,
                 user_phone=phone_number,
@@ -132,9 +131,9 @@ def payment(request):
             alipay = AliPay(
                 appid="2016091800536766",
                 app_notify_url="http://192.168.55.33:8000/#/app/notify",
-                app_private_key_path=settings.STATIC_ROOT+
+                app_private_key_path=settings.STATIC_ROOT +
                 '/private_2048.txt',
-                alipay_public_key_path=settings.STATIC_ROOT+
+                alipay_public_key_path=settings.STATIC_ROOT +
                 '/alipay_key_2048.txt',
                 debug=True,  # 默认False,
                 return_url="http://192.168.55.33:8000/#/CourseShow")
@@ -160,8 +159,8 @@ def alipay_get(request):
         # 查询数据库中订单记录
         info = Order.objects.get(Order_number=orderid)
         courseid = info.course_id.id
-        if info.status == 'payment':
-            info.status = "completed"
+        if info.status == '未完成':
+            info.status = "已支付"
             info.save()
             info = Course.objects.get(id=courseid)
             info.sale_count = info.sale_count + 1
@@ -195,17 +194,22 @@ def order_amount(request):
     try:
         dt_s = datetime.now()
         dt_e = (dt_s - timedelta(7))
-        response['week'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        response['week'] = Order.objects.filter(
+            create_at__range=[dt_e, dt_s]).count()
         dt_e = (dt_s - timedelta(30))
-        response['month'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        response['month'] = Order.objects.filter(
+            create_at__range=[dt_e, dt_s]).count()
         dt_e = (dt_s - timedelta(91))
-        response['season'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        response['season'] = Order.objects.filter(
+            create_at__range=[dt_e, dt_s]).count()
         dt_e = (dt_s - timedelta(182))
-        response['semi_year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        response['semi_year'] = Order.objects.filter(
+            create_at__range=[dt_e, dt_s]).count()
         dt_e = (dt_s - timedelta(365))
-        response['year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        response['year'] = Order.objects.filter(
+            create_at__range=[dt_e, dt_s]).count()
         response['all'] = Order.objects.count()
-        return JsonResponse(response, safe=False)
+        return render(response, safe=False)
     except Exception as e:
         response['data'] = 'false'
         response['msg'] = str(e)
@@ -220,19 +224,24 @@ def money_amount(request):
     try:
         dt_s = datetime.now()
         dt_e = (dt_s - timedelta(7))
-        response['week'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['week'] = Order.objects.filter(
+            create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
         response['week'] = response['week']['amount_of_money__sum']
         dt_e = (dt_s - timedelta(30))
-        response['month'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['month'] = Order.objects.filter(
+            create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
         response['month'] = response['month']['amount_of_money__sum']
         dt_e = (dt_s - timedelta(91))
-        response['season'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['season'] = Order.objects.filter(
+            create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
         response['season'] = response['season']['amount_of_money__sum']
         dt_e = (dt_s - timedelta(182))
-        response['semi_year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['semi_year'] = Order.objects.filter(
+            create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
         response['semi_year'] = response['semi_year']['amount_of_money__sum']
         dt_e = (dt_s - timedelta(365))
-        response['year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['year'] = Order.objects.filter(
+            create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
         response['year'] = response['year']['amount_of_money__sum']
         response['all'] = Order.objects.aggregate(Sum('amount_of_money'))
         response['all'] = response['all']['amount_of_money__sum']
@@ -248,9 +257,61 @@ def money_amount(request):
 def free_watch(request):
     response = {}
     try:
-        info = Course.objects.filter(price=0.0).order_by('-view_count').only('title', 'sale_count')[:10]
-        info = serializers.serialize('json', info)
-        return JsonResponse(info, safe=False)
+        courses = Course.objects.filter(price=0.0).order_by('-view_count')[:10]
+        title = []
+        count = []
+        for course in courses:
+            title.append(course.title)
+            count.append(course.view_count)
+        response['title'] = title
+        response['count'] = count
+        # response['title'] = courses.title
+        # response['count'] = courses.view_count
+        return JsonResponse(response, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def pay_watch(request):
+    response = {}
+    try:
+        courses = Course.objects.filter(price__gt=0.0).order_by('-view_count')[:10]
+        title = []
+        count = []
+        for course in courses:
+            title.append(course.title)
+            count.append(course.view_count)
+        response['title'] = title
+        response['count'] = count
+        # response['title'] = courses.title
+        # response['count'] = courses.view_count
+        return JsonResponse(response, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def pay_sale(request):
+    response = {}
+    try:
+        courses = Course.objects.filter(price__gt=0.0).order_by('-sale_count')[:10]
+        title = []
+        count = []
+        for course in courses:
+            title.append(course.title)
+            count.append(course.sale_count)
+        response['title'] = title
+        response['count'] = count
+        # response['title'] = courses.title
+        # response['count'] = courses.view_count
+        return JsonResponse(response, safe=False)
     except Exception as e:
         response['data'] = 'false'
         response['msg'] = str(e)
