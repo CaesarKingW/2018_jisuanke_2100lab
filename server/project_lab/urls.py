@@ -47,6 +47,7 @@ urlpatterns = [
     path('show_free_course', show_all_course.show_free_course),
     path('show_paying_course', show_all_course.show_paying_course),
     path('get_specified_course', show_all_course.get_specified_course),
+    path('get_course_info', wchxviews.get_course_info),
     path('back_log_out', wyq_views.back_logout),
     path('user_amount', wyq_views.user_amount),
     path('order_amount', wyq_views.order_amount),

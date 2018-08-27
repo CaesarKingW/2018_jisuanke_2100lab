@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.core import serializers
+from .serializer import *
+import textwrap
 import json
 import requests
 
@@ -40,7 +42,8 @@ def get_status(request):
             the_user = User.objects.filter(
                 phone_number=request.session['user'].phone_number)
             response['is_login'] = request.session['is_login']
-            response['list'] = json.loads(serializers.serialize("json", the_user))
+            response['list'] = json.loads(
+                serializers.serialize("json", the_user))
     except:
         response['msg'] = 'fail'
     return JsonResponse(response)
@@ -58,4 +61,28 @@ def del_status(request):
             del request.session['user']
     except:
         response['msg'] = 'fail'
+    return JsonResponse(response)
+
+
+def get_course_info(request):
+    response = {}
+    try:
+        if request.method == 'POST':
+            id = json.loads(request.body)
+            course = Course.objects.get(id = id)
+            course_list = []
+            real_course = CourseSerializer(course)
+            course_list.append(real_course.data)
+            course_pics = Course_picture.objects.filter(
+                course_id = course)
+            course_piclist = []
+            for course_pic in course_pics:
+                real_course_pic = Course_pictureSerializer(course_pic)
+                course_piclist.append(real_course_pic.data)
+            response['course'] = course_list
+            response['pictures'] = course_piclist
+            response['error_num'] = 0
+    except:
+        response['msg'] = 'fail'
+        response['erron_num'] = 1
     return JsonResponse(response)
