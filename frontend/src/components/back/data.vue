@@ -48,7 +48,7 @@
     </Dropdown>
     <p class='choose'>的订单总金额为{{money_amount}}.</p>
     <div id="main"  class="chart"></div>
-    <div id="">
+    <div id="free_watch"  class="chart"></div>
   </section>
 </template>
 
@@ -59,6 +59,8 @@ export default {
   name: 'data',
   data() {
     return {
+      courses: [],
+      courses2: [],
       droptext_user: '选择时间范围',
       user_amount: '',
       user_time: {
@@ -89,29 +91,34 @@ export default {
         year: Number,
         all: Number
       },
+      free_watch_legend: [],
+      free_watch_series: [],
       charts: '',
+      free_watch_chart: '',
       opinion: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
-      opinionData: [{
-        value: 335,
-        name: '直接访问'
-      },
-      {
-        value: 310,
-        name: '邮件营销'
-      },
-      {
-        value: 234,
-        name: '联盟广告'
-      },
-      {
-        value: 135,
-        name: '视频广告'
-      },
-      {
-        value: 1548,
-        name: '搜索引擎'
-      }
-      ]}
+      opinionData: [
+        {
+          value: 335,
+          name: '直接访问'
+        },
+        {
+          value: 310,
+          name: '邮件营销'
+        },
+        {
+          value: 234,
+          name: '联盟广告'
+        },
+        {
+          value: 135,
+          name: '视频广告'
+        },
+        {
+          value: 1548,
+          name: '搜索引擎'
+        }
+      ]
+    }
   },
   methods: {
     time_to_now(_time) {
@@ -199,13 +206,15 @@ export default {
       }
     },
     get_user_amount() {
-      this.$http.post('http://192.168.55.33:8000/app/user_amount')
+      this.$http
+        .post('http://192.168.55.33:8000/app/user_amount')
         .then(response => {
           this.user_time.all = response.data
         })
     },
     get_order_amount() {
-      this.$http.post('http://192.168.55.33:8000/app/order_amount')
+      this.$http
+        .post('http://192.168.55.33:8000/app/order_amount')
         .then(response => {
           this.order_time.week = response.body['week'] + ''
           this.order_time.month = response.body['month'] + ''
@@ -216,7 +225,8 @@ export default {
         })
     },
     get_money_amount() {
-      this.$http.post('http://192.168.55.33:8000/app/money_amount')
+      this.$http
+        .post('http://192.168.55.33:8000/app/money_amount')
         .then(response => {
           this.money_time.week = response.body['week']
           this.money_time.month = response.body['month']
@@ -227,9 +237,26 @@ export default {
         })
     },
     get_free_watch() {
-      this.$http.post('http://192.168.55.33:8000/app/free_watch')
+      this.$http
+        .post('http://192.168.55.33:8000/app/free_watch')
         .then(response => {
-          console.log(response.body)
+          console.log(response.data.title)
+          console.log(response.data['title'])
+          // this.courses = response.data['title']
+          // this.courses2 = response.data['count']
+          // var item
+          // for (item in response.data.title){
+          //   this.free_watch_legend.push(item)
+          // }
+          // console.log(this.free_watch_legend)
+          // console.log(this.free_watch_legend.data)
+          // console.log(this.free_watch_legend.body)
+          // var a=['5', '4', '3', '2', '1']
+          // console.log("a")
+          // console.log(a)
+          this.courses = response.data['title']
+          this.courses2 = response.data['count']
+          this.draw_free_watch('free_watch')
         })
     },
     drawPie(id) {
@@ -244,44 +271,69 @@ export default {
           x: 'left',
           data: this.opinion
         },
-        series: [{
-          name: '访问来源',
-          type: 'pie',
-          radius: ['50%', '70%'],
-          avoidLabelOverlap: false,
-          label: {
-            normal: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              show: true,
-              textStyle: {
-                fontSize: '30',
-                fontWeight: 'blod'
+        series: [
+          {
+            name: '访问来源',
+            type: 'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: '30',
+                  fontWeight: 'blod'
+                }
               }
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          data: this.opinionData
-        }]
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data: this.opinionData
+          }
+        ]
+      })
+    },
+    draw_free_watch(id) {
+      this.free_watch_chart = echarts.init(document.getElementById(id))
+      this.free_watch_chart.setOption({
+        title: {
+          text: 'ECharts 入门示例'
+        },
+        tooltip: {},
+        legend: {
+          data: ['销量']
+        },
+        xAxis: {
+          data: this.courses
+        },
+        yAxis: {},
+        series: [
+          {
+            name: '销量',
+            type: 'bar',
+            data: this.courses2
+          }
+        ]
       })
     }
   },
   //  调用
   mounted() {
-    this.$nextTick(function () {
-      this.drawPie('main')
+    this.$nextTick(function() {
+      // this.drawPie('main')
       this.get_user_amount()
       this.get_order_amount()
       this.get_money_amount()
-      this.get_free_watch()
       // this.get_paid_watch()
       // this.get_paid_amount()
+      this.get_free_watch()
     })
   }
 }

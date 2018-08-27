@@ -56,8 +56,8 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ('id', 'title', 'brief_introduction', 'audio',
-                  'whole_introduction', 'Is_distory', 'distory_time',
-                  'Is_free', 'price', 'share_rate', 'can_comment')
+                  'whole_introduction', 'distory_time', 'price',
+                  'sale_count', 'view_count', 'share_rate', 'created_at')
 
 
 class Course_pictureSerializer(serializers.ModelSerializer):
