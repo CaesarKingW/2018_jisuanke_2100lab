@@ -194,10 +194,9 @@ export default {
 .CoverPic {
   text-align: center;
   margin-left: 12%;
-  border: black solid
-    2px;
+  border: black solid 2px;
   border-radius: 3px;
-  width: 300px;
+  width: 270px;
   height: 200px;
 }
 .CoverTitle {
@@ -222,6 +221,7 @@ export default {
   margin-right: 15px;
 }
 .container {
+  width: 100%;
   display: flex;
   display: -webkit-flex;
   display: -moz-flex;
@@ -282,6 +282,7 @@ export default {
 }
 .item {
   flex-grow: 1;
+  flex-shrink: 1;
   margin-top: 20px;
   margin-bottom: 20px;
 }

@@ -1,5 +1,6 @@
 <template>
-<div id="CourseShow" style="background-color: #c4e1ff;">
+<body>
+<div id="CourseShow">
     <Divider><h1 class="title">{{ title }}</h1></Divider>
     <Divider orientation="right"><p class="read_time" style="font-size: 24px;">浏览量：{{ times }} 次</p></Divider>
     <div class="test_pic"><img id="changePic" src="../assets/2.png"></div>
@@ -14,18 +15,19 @@
             <div style="color: white;">文字介绍</div>
             </Poptip>
             <div slot="content" style="text-align: left;font-size: 18px;">
-                实验室用大理石和稀盐酸来反应制取二氧化碳，可我们知道，能产生二氧化碳的反应有很多，为什么却选此反应呢？
-                该反应最大的优点是反应速度适中，便于实验室收集气体。能否用稀硫酸代替稀盐酸呢？回答是不可以。因为稀硫酸会和大理石中的碳酸钙反应生成微溶于水的硫酸钙，覆盖在大理石表面，使酸与大理石脱离接触，反应自行停止。看到的现象是刚开始有气泡冒出，很快就没有了。
-                那么碳酸钠也能和稀盐酸反应放出二氧化碳，用碳酸钠是否可以代替大理石呢？回答也是不可以，因为碳酸钠是粉末性固体，能与盐酸充分接触，反应速度太快，不便于收集气体。
+               <div style="overflow: auto;height: 90px;">content</div>
             </div>
         </Panel>
     </Collapse>
-    <BackTop>
+        <BackTop>
         <div>返回顶端</div>
     </BackTop>
+    <NiceMsgBoard/>
 </div>
+</body>
 </template>
 <script>
+import NiceMsgBoard from './NiceMsgBoard'
 export default {
   name: 'CourseShow',
   data() {
@@ -43,6 +45,9 @@ export default {
           console.log(response.data)
         })
     }
+  },
+  components: {
+    NiceMsgBoard
   }
 }
 </script>
@@ -69,7 +74,7 @@ export default {
   border-radius: 2px;
 }
 #changePic {
-    border:#99ccff solid 5px;
+    border:#000 solid 5px;
     border-radius: 20px;
 }
 </style>

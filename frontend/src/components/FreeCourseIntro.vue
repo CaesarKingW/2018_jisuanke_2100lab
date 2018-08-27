@@ -1,46 +1,55 @@
 <template>
 <div class="FreeCourseIntro">
-    <div class="flexDiv">
-        <div class="introPic"><img id="test_pic" v-bind:src="path"></div>
-        <div class="courseInfoText">
-        <div class="courseTitle">标题：{{ courseTitle }}</div>
-        <div class="enterCourse"><router-link to="/CourseShow"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link></div>
-        <div class="shareCourse">
+    <!-- 导航栏 -->
+    <div class="navibar">
+    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
+    <Divider type="vertical" />
+    <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
+    </div>
+    <!-- 底板 -->
+    <div class="myPanel"></div>
+    <!-- 课程信息 -->
+    <div class="CoverDiv">
+            <img id="testPic" v-bind:src="path">
+            </div>
+        <div id="courseTitleDiv">
+        <div id="courseTitle">标题：{{ courseTitle }}</div></div>
+        <div class="enterButtonDiv">
+            <router-link to="/CourseShow">
+            <Button id="enter" icon="md-eye" type="primary">进入课程</Button>
+            </router-link>
+            </div>
+        <div class="shareButtonDiv">
             <Button @click="modal = true" id="share" icon="md-share" type="primary">分享课程</Button>
-        </div>
         </div>
         <Modal
         title="分享课程"
         v-model="modal"
         class-name="vertical-center-modal">
-        <div style="text-align: center;padding:10px;"><span id="thisURL">本页地址：{{ message }}</span>
+        <div class="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button id="copy_button" type="button"
+        <button id="copyButton" type="button"
         v-clipboard:copy="message"
         v-clipboard:success="onCopy"
         v-clipboard:error="onError">复制</button>
         </div>
     </Modal>
-    <div class="alertColumn">
-        <Alert id="tip" show-icon>
+    <div class="alertButtonDiv">
+        <Alert show-icon>
         <Icon type="ios-bulb-outline" slot="icon"></Icon>
-        <template slot="desc">如果你喜欢本课程，就把它分享给朋友吧！ </template>
+        <template class="alertText" slot="desc">如果你喜欢本课程，就把它分享给朋友吧！ </template>
     </Alert>
     </div>
-    </div>
-    <div class="introText">
+    <div class="introDiv">
         <Collapse v-model="value">
-        <Panel id="introText" name="1" style="font-size: 25px;">
+        <Panel class="intro">
             课程简介
-            <p slot="content">
-                <ul style="font-size: 18px; list-style:none;">
+            <p slot="content" class="contentText">
                     {{content}}
-                </ul>
-                </p>
+            </p>
         </Panel>
     </Collapse>
     </div>
-    <br>
 </div>
 </template>
 <script>
@@ -85,65 +94,58 @@ export default {
 }
 </script>
 <style>
-.FreeCourseIntro {
-  height: 480px;
-  border: 1px solid #dcdee2;
-  /* background-color: #c4e1ff; */
+.navibar {
+  z-index: 9999;
+  background-color: #fff;
+  position: fixed;
+  width: 100%;
+  opacity: 0.9;
+  padding: 25px;
 }
-.demo-split-pane {
+.navi {
+  font-size: 23px;
+  color: #022336;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.myPanel {
+  margin: 0 auto;
+  height: 90px;
+  border: none;
+  border-radius: 0px;
+}
+.alertText {
+  text-align: center;
+  color: #fff;
+}
+.FreeCourseIntro {
+  text-align: center;
+  margin: 0 auto;
+}
+.CoverDiv {
+  margin: 0 auto;
+}
+.ivu-modal {
+  top: 0;
+}
+.urlDiv {
+  text-align: center;
   padding: 10px;
 }
-.flexDiv {
-    display:flex;
-}
-.introPic {
-    flex-grow: 3;
-}
-.courseIntroText {
-    flex-grow: 1;
-}
-#test_pic {
-  border: #99ccff solid 5px;
-  position: absolute;
-  left: 2%;
-  top: 8%;
-  border-radius: 20px;
-}
-#courseTitle {
-  text-align: center;
-  position: absolute;
-  right: 8%;
-  text-align: center;
-  top: 20%;
-  font-size: 3em;
-  padding: 8px 50px;
-  border: #99cccc dotted 3px;
-}
+#share,
 #enter {
-  width: 170px;
-  height: 60px;
+  background-color: #fff;
+  color: #000;
+  font-size: 20px;
+  border: #000 solid 1px;
+  border-radius: 8px;
+  width: 130px;
+  height: 45px;
+  /* margin-top: 20px;
+  margin-bottom: 20px; */
+  margin: 0 auto;
   text-align: center;
-  position: absolute;
-  right: 20%;
-  top: 40%;
-  font-size: 2em;
-}
-#share {
-  width: 170px;
-  height: 60px;
-  text-align: center;
-  position: absolute;
-  right: 20%;
-  top: 58%;
-  font-size: 2em;
-}
-#tip {
-  width: auto;
-  height: 40px;
-  text-align: center;
-  position: absolute;
-  right: 14%;
-  top: 75%;
+  position: static;
 }
 .vertical-center-modal {
   display: flex;
@@ -153,16 +155,17 @@ export default {
 .ivu-modal {
   top: 0;
 }
-#intro {
-  position: absolute;
-  top: 84%;
-  width: 100%;
-  list-style: none;
+.enterButtonDiv,
+.shareButtonDiv {
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  position: static;
 }
-#copy_button {
+#copyButton {
   width: 50px;
   height: 25px;
-  margin-top: 10px;
   outline: none;
   border-radius: 4px;
   border: none;
@@ -170,7 +173,49 @@ export default {
   color: #fff;
   cursor: pointer;
 }
-#copy_button:hover {
+#copyButton:hover {
   background: #57a3f3;
+}
+#testPic {
+  width: 360px;
+  height: 250px;
+  border: #cccccc solid 2px;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+.alertButtonDiv {
+  margin: 0 auto;
+  text-align: center;
+  width: 60%;
+  height: 5%;
+  margin-top: 10px;
+}
+.introDiv {
+  width: 60%;
+  margin: 0 auto;
+  text-align: left;
+  margin-top: 20px;
+}
+.intro {
+  font-size: 19px;
+  font-family: 华文中宋;
+}
+.contentText {
+  font-family: 华文中宋;
+  font-size: 17px;
+  position: static;
+}
+#courseTitle {
+  color: #000;
+  font-family: 华文中宋;
+  font-size: 28px;
+  border: none;
+  margin-top: 20px;
+  margin: 0 auto;
+  text-align: center;
+  position: static;
+}
+#courseTitleDiv {
+  margin: 0 auto;
 }
 </style>

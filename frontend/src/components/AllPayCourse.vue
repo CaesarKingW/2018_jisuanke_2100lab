@@ -75,29 +75,31 @@ export default {
 </script>
 <style scoped>
 .courseCard {
-  width: 1000px;
-  margin-left: 150px;
+  width: 650px;
+  /* margin-left: 150px; */
+  margin: 0 auto;
+  /* text-align: center; */
 }
 .courseTitleContent {
   font-family: 华文细黑;
 }
 .CourseInfo {
   display: flex;
-  color:#022336;
+  color: #022336;
 }
 /* .CourseCoverDiv {
   float: left;
 }*/
 .CourseText {
   float: left;
-  margin-left: 50px;
-  color:#022336;
+  margin-left: 5%;
+  color: #022336;
 }
 .CoursePrice {
   font-family: 华文中宋;
   font-size: 28px;
   padding: 5px;
-  color:#022336;
+  color: #022336;
 }
 .coursePriceContent {
   font-family: 华文细黑;
@@ -106,19 +108,19 @@ export default {
   font-family: 华文中宋;
   font-size: 28px;
   padding: 5px;
-  color:#022336;
+  color: #022336;
 }
 .CourseIntro {
   font-family: 华文中宋;
   font-size: 28px;
   padding: 5px;
-  color:#022336;
+  color: #022336;
 }
 .courseIntroContent {
   font-family: 华文楷体;
   font-size: 20px;
   padding: 3px;
-  color:#022336;
+  color: #022336;
 }
 .courseCover {
   width: 300px;
@@ -131,7 +133,8 @@ export default {
   background-color: #fff;
   position: fixed;
   width: 100%;
-  opacity: 0.9;
+  height: 80px;
+  opacity: 0.4;
   padding: 25px;
 }
 .navi {
@@ -150,9 +153,13 @@ export default {
 }
 #payCol {
   background-color: #022336;
-  height: 90px;
+  height:80px;
+  width: 100%;
   border: none;
   border-radius: 0px;
+  position: fixed;
+  z-index: 9998;
+  opacity: 0.7;
 }
 .myContent {
   font-size: 40px;

@@ -20,6 +20,8 @@ from urllib.request import urlopen
 from base64 import decodebytes, encodebytes
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
+from datetime import datetime,timedelta
+from django.db.models import Sum, Count
 
 
 @require_http_methods(['POST', 'GET'])
@@ -156,7 +158,7 @@ def alipay_get(request):
     try:
         orderid = json.loads(request.body.decode('utf-8'))
         # 查询数据库中订单记录
-        info = Order.objects.get(Order_number=orderid)
+        info = Order.objects.count()
         courseid = info.course_id.id
         if info.status == 'payment':
             info.status = "completed"
@@ -170,6 +172,91 @@ def alipay_get(request):
         processed_dict['msg'] = str(e)
         processed_dict['error_num'] = 1
     return JsonResponse(processed_dict)
+
+
+@require_http_methods(['POST', 'GET'])
+def user_amount(request):
+    # 存放post里面所有的数据
+    response = {}
+    try:
+        total = User.objects.count()
+        return JsonResponse(total, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def order_amount(request):
+    # 存放post里面所有的数据
+    response = {}
+    try:
+        dt_s = datetime.now()
+        dt_e = (dt_s - timedelta(7))
+        response['week'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        dt_e = (dt_s - timedelta(30))
+        response['month'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        dt_e = (dt_s - timedelta(91))
+        response['season'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        dt_e = (dt_s - timedelta(182))
+        response['semi_year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        dt_e = (dt_s - timedelta(365))
+        response['year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).count()
+        response['all'] = Order.objects.count()
+        return JsonResponse(response, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def money_amount(request):
+    # 存放post里面所有的数据
+    response = {}
+    try:
+        dt_s = datetime.now()
+        dt_e = (dt_s - timedelta(7))
+        response['week'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['week'] = response['week']['amount_of_money__sum']
+        dt_e = (dt_s - timedelta(30))
+        response['month'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['month'] = response['month']['amount_of_money__sum']
+        dt_e = (dt_s - timedelta(91))
+        response['season'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['season'] = response['season']['amount_of_money__sum']
+        dt_e = (dt_s - timedelta(182))
+        response['semi_year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['semi_year'] = response['semi_year']['amount_of_money__sum']
+        dt_e = (dt_s - timedelta(365))
+        response['year'] = Order.objects.filter(create_at__range=[dt_e, dt_s]).aggregate(Sum('amount_of_money'))
+        response['year'] = response['year']['amount_of_money__sum']
+        response['all'] = Order.objects.aggregate(Sum('amount_of_money'))
+        response['all'] = response['all']['amount_of_money__sum']
+        return JsonResponse(response, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST', 'GET'])
+def free_watch(request):
+    response = {}
+    try:
+        info = Course.objects.filter(price=0.0).order_by('-view_count').only('title', 'sale_count')[:10]
+        info = serializers.serialize('json', info)
+        return JsonResponse(info, safe=False)
+    except Exception as e:
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
+
 
 
 class AliPay(object):
