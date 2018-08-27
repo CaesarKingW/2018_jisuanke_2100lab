@@ -119,7 +119,7 @@ def payment(request):
             info = Course.objects.get(id=id['courseid'])
             price = info.price
             # 支付状态
-            status = "payment"
+            status = "未完成"
             info = Order(
                 Order_number=orderid,
                 user_phone=phone_number,
@@ -159,8 +159,8 @@ def alipay_get(request):
         # 查询数据库中订单记录
         info = Order.objects.get(Order_number=orderid)
         courseid = info.course_id.id
-        if info.status == 'payment':
-            info.status = "completed"
+        if info.status == '未完成':
+            info.status = "已支付"
             info.save()
             info = Course.objects.get(id=courseid)
             info.sale_count = info.sale_count + 1
