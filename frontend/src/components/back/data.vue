@@ -47,8 +47,9 @@
         </DropdownMenu>
     </Dropdown>
     <p class='choose'>的订单总金额为{{money_amount}}.</p>
-    <div id="main"  class="chart"></div>
-    <div id="">
+    <div id="free_watch"  class="chart"></div>
+    <div id="pay_watch"  class="chart"></div>
+    <div id="pay_sale"  class="chart"></div>
   </section>
 </template>
 
@@ -59,6 +60,12 @@ export default {
   name: 'data',
   data() {
     return {
+      free_watch1: [],
+      free_watch2: [],
+      pay_watch1: [],
+      pay_watch2: [],
+      pay_sale1: [],
+      pay_sale2: [],
       droptext_user: '选择时间范围',
       user_amount: '',
       user_time: {
@@ -88,30 +95,8 @@ export default {
         semi_year: Number,
         year: Number,
         all: Number
-      },
-      charts: '',
-      opinion: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
-      opinionData: [{
-        value: 335,
-        name: '直接访问'
-      },
-      {
-        value: 310,
-        name: '邮件营销'
-      },
-      {
-        value: 234,
-        name: '联盟广告'
-      },
-      {
-        value: 135,
-        name: '视频广告'
-      },
-      {
-        value: 1548,
-        name: '搜索引擎'
       }
-      ]}
+    }
   },
   methods: {
     time_to_now(_time) {
@@ -199,13 +184,15 @@ export default {
       }
     },
     get_user_amount() {
-      this.$http.post('http://192.168.55.33:8000/app/user_amount')
+      this.$http
+        .post(this.GLOBAL.serverSrc + '/app/user_amount')
         .then(response => {
           this.user_time.all = response.data
         })
     },
     get_order_amount() {
-      this.$http.post('http://192.168.55.33:8000/app/order_amount')
+      this.$http
+        .post(this.GLOBAL.serverSrc + '/app/order_amount')
         .then(response => {
           this.order_time.week = response.body['week'] + ''
           this.order_time.month = response.body['month'] + ''
@@ -216,7 +203,8 @@ export default {
         })
     },
     get_money_amount() {
-      this.$http.post('http://192.168.55.33:8000/app/money_amount')
+      this.$http
+        .post(this.GLOBAL.serverSrc + '/app/money_amount')
         .then(response => {
           this.money_time.week = response.body['week']
           this.money_time.month = response.body['month']
@@ -227,61 +215,120 @@ export default {
         })
     },
     get_free_watch() {
-      this.$http.post('http://192.168.55.33:8000/app/free_watch')
+      this.$http
+        .post(this.GLOBAL.serverSrc + '/app/free_watch')
         .then(response => {
-          console.log(response.body)
+          console.log(response.data.title)
+          console.log(response.data['title'])
+          this.free_watch1 = response.data['title']
+          this.free_watch2 = response.data['count']
+          this.draw_free_watch('free_watch')
         })
     },
-    drawPie(id) {
-      this.charts = echarts.init(document.getElementById(id))
-      this.charts.setOption({
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a}<br/>{b}:{c} ({d}%)'
+    draw_free_watch(id) {
+      this.free_watch_chart = echarts.init(document.getElementById(id))
+      this.free_watch_chart.setOption({
+        title: {
+          text: '免费课程观看数TOP10'
         },
+        tooltip: {},
         legend: {
-          orient: 'vertical',
-          x: 'left',
-          data: this.opinion
+          data: ['销量']
         },
-        series: [{
-          name: '访问来源',
-          type: 'pie',
-          radius: ['50%', '70%'],
-          avoidLabelOverlap: false,
-          label: {
-            normal: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              show: true,
-              textStyle: {
-                fontSize: '30',
-                fontWeight: 'blod'
-              }
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          data: this.opinionData
-        }]
+        xAxis: {
+          data: this.free_watch1
+        },
+        yAxis: {},
+        series: [
+          {
+            name: '销量',
+            type: 'bar',
+            data: this.free_watch2
+          }
+        ]
+      })
+    },
+    get_pay_watch() {
+      this.$http
+        .post(this.GLOBAL.serverSrc + '/app/pay_watch')
+        .then(response => {
+          console.log(response.data.title)
+          console.log(response.data['title'])
+          this.pay_watch1 = response.data['title']
+          this.pay_watch2 = response.data['count']
+          this.draw_pay_watch('pay_watch')
+        })
+    },
+    draw_pay_watch(id) {
+      this.pay_watch_chart = echarts.init(document.getElementById(id))
+      this.pay_watch_chart.setOption({
+        title: {
+          text: '付费课程观看数TOP10'
+        },
+        tooltip: {},
+        legend: {
+          data: ['销量']
+        },
+        xAxis: {
+          data: this.pay_watch1
+        },
+        yAxis: {},
+        series: [
+          {
+            name: '销量',
+            type: 'bar',
+            data: this.pay_watch2
+          }
+        ]
+      })
+    },
+    get_pay_sale() {
+      this.$http
+        .post(this.GLOBAL.serverSrc + '/app/pay_sale')
+        .then(response => {
+          console.log(response.data.title)
+          console.log(response.data['title'])
+          this.pay_sale1 = response.data['title']
+          this.pay_sale2 = response.data['count']
+          this.draw_pay_sale('pay_sale')
+        })
+    },
+    draw_pay_sale(id) {
+      this.pay_sale_chart = echarts.init(document.getElementById(id))
+      this.pay_sale_chart.setOption({
+        title: {
+          text: '付费课程观看数TOP10'
+        },
+        tooltip: {},
+        legend: {
+          data: ['销量']
+        },
+        xAxis: {
+          data: this.pay_sale1
+        },
+        yAxis: {},
+        series: [
+          {
+            name: '销量',
+            type: 'bar',
+            data: this.pay_sale2
+          }
+        ]
       })
     }
   },
   //  调用
   mounted() {
-    this.$nextTick(function () {
-      this.drawPie('main')
+    this.$nextTick(function() {
+      // this.drawPie('main')
       this.get_user_amount()
       this.get_order_amount()
       this.get_money_amount()
-      this.get_free_watch()
       // this.get_paid_watch()
       // this.get_paid_amount()
+      this.get_free_watch()
+      this.get_pay_watch()
+      this.get_pay_sale()
     })
   }
 }

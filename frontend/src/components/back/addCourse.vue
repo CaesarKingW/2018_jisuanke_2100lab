@@ -74,7 +74,7 @@ export default {
       console.log(this.brief_intro)
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/add_course',
+          this.GLOBAL.serverSrc + '/app/add_course',
           JSON.stringify({
             title: this.course_title,
             brief_intro: this.brief_intro
@@ -96,7 +96,7 @@ export default {
       formData.append('file', fileInfo)
       formData.append('course_id', this.course_id)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/add_audi', formData)
+        .post(this.GLOBAL.serverSrc + '/app/add_audi', formData)
         .then(response => {
           var res = response.data
           console.log(res)
@@ -118,7 +118,7 @@ export default {
       formData.append('file', fileInfo)
       formData.append('course_id', this.course_id)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/add_img', formData)
+        .post(this.GLOBAL.serverSrc + '/app/add_img', formData)
         .then(response => {
           var res = response.data
           console.log(res)
@@ -137,7 +137,7 @@ export default {
           this.pic_id = res.id
           this.$http
             .post(
-              this.GLOBAL.serverSrc + 'app/set_start_time',
+              this.GLOBAL.serverSrc + '/app/set_start_time',
               JSON.stringify({
                 pic_id: this.pic_id,
                 start_time: st
@@ -155,7 +155,7 @@ export default {
       var st = au.currentTime
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/set_start_time',
+          this.GLOBAL.serverSrc + '/app/set_start_time',
           JSON.stringify({
             pic_id: this.pic_id,
             start_time: st
@@ -173,7 +173,7 @@ export default {
       var et = au.currentTime
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/set_end_time',
+          this.GLOBAL.serverSrc + '/app/set_end_time',
           JSON.stringify({
             pic_id: this.pic_id,
             end_time: et
@@ -201,7 +201,7 @@ export default {
       var et = au.currentTime
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/set_end_time',
+          this.GLOBAL.serverSrc + '/app/set_end_time',
           JSON.stringify({
             pic_id: this.pic_id,
             end_time: et
@@ -217,7 +217,7 @@ export default {
     Preview() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/preview',
+          this.GLOBAL.serverSrc + '/app/preview',
           JSON.stringify({
             course_id: this.course_id
           })

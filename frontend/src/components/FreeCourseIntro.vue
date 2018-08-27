@@ -84,7 +84,7 @@ export default {
   methods: {
     Judgestatus: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/get_status')
+        .post(this.GLOBAL.serverSrc + '/app/get_status')
         .then(response => {
           this.judge = response.data.is_login
           console.log(this.judge)
@@ -96,7 +96,7 @@ export default {
     GetSpecifiedCourse: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/get_specified_course',
+          this.GLOBAL.serverSrc + '/app/get_specified_course',
           JSON.stringify(this.courseid)
         )
         .then(response => {
@@ -106,7 +106,7 @@ export default {
             course = response.data.list
             this.courseTitle = course[0].fields.title
             this.path =
-              this.GLOBAL.serverSrc + 'media/' + course[0].fields.Cover_picture
+              this.GLOBAL.serverSrc + '/media/' + course[0].fields.Cover_picture
             this.content = course[0].fields.brief_introduction
           } else {
             this.$router.push({ name: 'home' })
@@ -115,7 +115,7 @@ export default {
     },
     GetUserPhone: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/get_status')
+        .post(this.GLOBAL.serverSrc + '/app/get_status')
         .then(response => {
           this.userphone = response.data.list[0].pk
         })

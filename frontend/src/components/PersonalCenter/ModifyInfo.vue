@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     get_old_avator: function() {
-      this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(
+      this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(
         response => {
           var obj = []
           obj = response.data.list
@@ -44,7 +44,7 @@ export default {
           if (this.oldpath === '') {
             this.path = this.default_avator
           } else {
-            this.path = this.GLOBAL.serverSrc + 'media/' + this.oldpath
+            this.path = this.GLOBAL.serverSrc + '/media/' + this.oldpath
             this.oldpath = ''
           }
           console.log('success')
@@ -66,7 +66,7 @@ export default {
       formdate.append('user_phone', this.user_phone)
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/update_avator', formdate, config)
+        .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
         .then(response => {
           console.log(response.data)
         })
@@ -93,7 +93,7 @@ export default {
       }
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/update_nickname',
+          this.GLOBAL.serverSrc + '/app/update_nickname',
           JSON.stringify({
             phone_number: this.user_phone,
             nickname: this.nickname

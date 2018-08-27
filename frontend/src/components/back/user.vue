@@ -43,7 +43,7 @@ export default {
       console.log(this.phone_number)
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/search_user', phoneNumber)
+        .post(this.GLOBAL.serverSrc + '/app/search_user', phoneNumber)
         .then(response => {
           var res = response.data
           console.log(res)
@@ -82,7 +82,7 @@ export default {
       }
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/authenticate', phoneNumber)
+        .post(this.GLOBAL.serverSrc + '/app/authenticate', phoneNumber)
         .then(response => {})
     },
     forbid_comment() {
@@ -97,7 +97,7 @@ export default {
       }
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/forbid_comment', phoneNumber)
+        .post(this.GLOBAL.serverSrc + '/app/forbid_comment', phoneNumber)
         .then(response => {})
     }
   }

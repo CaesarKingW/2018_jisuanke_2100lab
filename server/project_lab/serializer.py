@@ -60,7 +60,8 @@ class OrderSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ('id', 'title', 'brief_introduction', 'audio', 'Is_free',
+        fields = ('id', 'title', 'brief_introduction', 'audio',
+                  'whole_introduction', 'Is_destroy', 'distory_time',
                   'price', 'share_rate', 'can_comment')
 
 
