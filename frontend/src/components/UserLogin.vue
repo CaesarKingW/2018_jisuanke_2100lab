@@ -27,23 +27,36 @@ export default {
       isDisabled: false,
       isChecked: false,
       status: false,
-      is_login: false
+      is_login: false,
+      count: 60
     }
   },
   mounted: function() {
-    this.$http
-      .post(this.GLOBAL.serverSrc + 'app/get_status')
-      .then(
-        response => {
-          this.is_login = response.data.is_login
-          if (this.is_login) {
-            this.alert_wrong_status()
-            location.href = '/#/home'
-          }
-        }
-      )
+    this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(response => {
+      this.is_login = response.data.is_login
+      if (this.is_login) {
+        this.alert_wrong_status()
+        location.href = '/#/home'
+      }
+    })
   },
   methods: {
+    timedCount: function() {
+      document.getElementById('getCodeButton').disabled = true
+      document.getElementById('getCodeButton').value =
+        this.count + '后重新获取验证码'
+      this.count = this.count - 1
+      if (this.count !== 0) {
+        let _this = this
+        setTimeout(() => {
+          _this.timedCount()
+        }, 1000)
+      } else {
+        this.count = 60
+        document.getElementById('getCodeButton').disabled = false
+        document.getElementById('getCodeButton').value = '获取验证码'
+      }
+    },
     instance(type) {
       const title = '2100实验室用户协议'
       const content =
@@ -131,6 +144,7 @@ export default {
         this.alert_wrong_phone()
       } else {
         this.getcode()
+        this.timedCount()
       }
     },
     Register_new_user: function() {

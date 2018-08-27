@@ -42,7 +42,7 @@ export default {
       }
     )
   },
-  method: {}
+  methods: {}
 }
 </script>
 <style scoped>
