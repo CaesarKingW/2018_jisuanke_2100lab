@@ -99,7 +99,6 @@ export default {
   },
   methods: {
     alipay() {
-      // location.href='https://openapi.alipaydev.com/gateway.do?app_id=2016091800536766&biz_content=%7B%22subject%22%3A%22%5Cu6d4b%5Cu8bd5%5Cu8ba2%5Cu5355%22%2C%22out_trade_no%22%3A%2220170233021223%22%2C%22total_amount%22%3A100%2C%22product_code%22%3A%22FAST_INSTANT_TRADE_PAY%22%7D&charset=utf-8&method=alipay.trade.page.pay&notify_url=http%3A%2F%2Fprojectsedus.com%2F&return_url=http%3A%2F%2F192.168.55.33%3A8000%2F%23%2FPayCourseIntro&sign_type=RSA2&timestamp=2018-08-23+14%3A42%3A49&version=1.0&sign=vBgAxnq%2BicQ7yn9rEi5fDU7HRelUyLYRjHdOBd8OvWJTkSvNkCR50TTJjf6LNJSPQCbe5eMQw0r7CC8gP6ow%2Bh0NfeBehkkZkK9VrYPRG4n2cWSk%2B4Gu4Rytjm1FwrW0I%2BYV5cVbm9Zqew5ltQRiFfkjp8RBSuNKsLDl3VwYKkYNgPxJkWsI2SKSfdvs76mZNSPxBJd3ZFKkcX6vShn3H0W27BanKGZV0L%2F2T2uTgPsbNnfoeUFmxwSLMYXcmqirK57lfnf9uhOMbCofqfSBkTjVhq%2FDSTmHajph8oSxRwGpkd55cyCwLgzGSiKmL8Unx1RcMR3Tth3u2ILC8YVIdw%3D%3D'
       var code = ''
       var codeLength = 16
       var random = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
