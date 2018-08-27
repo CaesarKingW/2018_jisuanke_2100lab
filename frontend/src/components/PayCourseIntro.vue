@@ -75,26 +75,29 @@ export default {
     console.log(this.courseid)
   },
   mounted: function() {
-    this.$http
-      .post(this.GLOBAL.serverSrc + 'app/get_status')
-      .then(response => {
-        this.userphone = response.data.list[0].pk
-        console.log(this.userphone)
-      })
+    this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(response => {
+      this.userphone = response.data.list[0].pk
+      console.log(this.userphone)
+    })
     this.$http
       .post(
         this.GLOBAL.serverSrc + 'app/get_specified_course',
         JSON.stringify(this.courseid)
       )
       .then(response => {
-        var course = []
-        course = response.data.list
-        this.courseTitle = course[0].fields.title
-        this.path =
-          this.GLOBAL.serverSrc + 'media/' + course[0].fields.Cover_picture
-        this.content = course[0].fields.brief_introduction
-        this.price = course[0].fields.price
-        this.award = Math.floor(course[0].fields.share_rate * this.price)
+        var exist = response.data.exist
+        if (exist) {
+          var course = []
+          course = response.data.list
+          this.courseTitle = course[0].fields.title
+          this.path =
+            this.GLOBAL.serverSrc + 'media/' + course[0].fields.Cover_picture
+          this.content = course[0].fields.brief_introduction
+          this.price = course[0].fields.price
+          this.award = Math.floor(course[0].fields.share_rate * this.price)
+        } else {
+          this.$router.push({ name: 'home' })
+        }
       })
   },
   methods: {

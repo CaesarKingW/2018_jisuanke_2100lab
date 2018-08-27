@@ -17,7 +17,6 @@
         <div class="enterButtonDiv">
         <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="judge"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link>
         <div v-else><Button id="enter" icon="md-eye" type="primary" v-on:click="modall = true">进入课程</Button></div>
-        <!-- <router-link to="/UserLogin" v-else><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link> -->
             <Modal v-model="modall" title="温馨提示" @on-ok="ok"
         @on-cancel="cancel">
               <p>您必须先登录才能学习课程</p>
@@ -101,12 +100,17 @@ export default {
           JSON.stringify(this.courseid)
         )
         .then(response => {
-          var course = []
-          course = response.data.list
-          this.courseTitle = course[0].fields.title
-          this.path =
-            this.GLOBAL.serverSrc + 'media/' + course[0].fields.Cover_picture
-          this.content = course[0].fields.brief_introduction
+          var exist = response.data.exist
+          if (exist) {
+            var course = []
+            course = response.data.list
+            this.courseTitle = course[0].fields.title
+            this.path =
+              this.GLOBAL.serverSrc + 'media/' + course[0].fields.Cover_picture
+            this.content = course[0].fields.brief_introduction
+          } else {
+            this.$router.push({ name: 'home' })
+          }
         })
     },
     GetUserPhone: function() {
