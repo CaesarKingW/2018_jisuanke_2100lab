@@ -15,11 +15,7 @@
         <div id="courseTitleDiv">
         <div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="enterButtonDiv">
-            <!-- <router-link to="/CourseShow">
-            <Button id="enter" icon="md-eye" type="primary">进入课程</Button>
-            <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
-            </router-link> -->
-        <router-link :to="{path:'CourseShow', query:{id: item.pk}}" v-if="judge"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link>
+        <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="judge"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link>
         <div v-else><Button id="enter" icon="md-eye" type="primary" v-on:click="modall = true">进入课程</Button></div>
         <!-- <router-link to="/UserLogin" v-else><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link> -->
             <Modal v-model="modall" title="温馨提示" @on-ok="ok"
