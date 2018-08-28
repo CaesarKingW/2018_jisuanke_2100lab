@@ -25,7 +25,6 @@ import ModifyInfo from '@/components/PersonalCenter/ModifyInfo'
 import LearntCourse from '@/components/PersonalCenter/LearntCourse'
 import BoughtCourse from '@/components/PersonalCenter/BoughtCourse'
 import AccountCancel from '@/components/PersonalCenter/AccountCancel'
-
 import backstage from '@/components/back/backstage'
 import backstageRegister from '@/components/back/backstageRegister'
 import backstageLogin from '@/components/back/backstageLogin'

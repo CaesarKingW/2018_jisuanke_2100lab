@@ -46,7 +46,7 @@
                             <Icon type="ios-keypad"></Icon>
                                 订单处理
                         </MenuItem>
-                        <MenuItem name="5" to="backstage/data">
+                        <MenuItem name="5" to="/backstage/data">
                             <Icon type="md-analytics"/>
                                 数据统计
                         </MenuItem>
@@ -96,7 +96,8 @@ export default {
           this.course = res.manager.Manage_course
           this.user = res.manager.Manage_user
           this.order = res.manager.Manage_order
-          this.message = res.manager.Manager_message
+          this.message = res.manager.Manage_message
+          console.log(this.message)
           this.authority = res.manager.Supermanager
         }
       })

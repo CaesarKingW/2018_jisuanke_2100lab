@@ -257,7 +257,7 @@ def supplement_course_information(request):
     course.price = float(request.POST.get('price'))
     course.can_comment = buer(request.POST.get('can_comment'))
     if buer(request.POST.get('Is_destroy')) is True:
-        course.distroy_time = float(request.POST.get('distroy_time'))
+        course.distory_time = float(request.POST.get('distroy_time'))
     if float(request.POST.get('price')) > 0:
         course.share_rate = float(request.POST.get('share_rate')) / 100
     course.save()
@@ -268,7 +268,8 @@ def supplement_course_information(request):
     operating_history.save()
     course = CourseSerializer(course)
     response['course'] = course.data
-    return JsonResponse(course.data)
+    response['msg'] = request.POST.get('distroy_time')
+    return JsonResponse(response)
 
 
 @require_http_methods(['POST'])
@@ -287,7 +288,7 @@ def search_manager(request):
 
 
 @require_http_methods(['POST'])
-def Modify(request):
+def modify(request):
     username = json.loads(request.body)['username']
     Manage_course = json.loads(request.body)['Manage_course']
     Manage_user = json.loads(request.body)['Manage_user']
@@ -455,8 +456,9 @@ def editCourse(request):
     course.Is_destroy = buer(request.POST.get('Is_destroy'))
     course.price = float(request.POST.get('price'))
     course.can_comment = buer(request.POST.get('can_comment'))
-    if buer(request.POST.get('Is_destroy')) is True:
-        course.distroy_time = float(request.POST.get('distroy_time'))
+    course.distory_time = float(request.POST.get('distroy_time'))
+    # if buer(request.POST.get('Is_destroy')):
+    #     course.distroy_time = float(request.POST.get('distroy_time'))
     if float(request.POST.get('price')) > 0:
         course.share_rate = float(request.POST.get('share_rate')) / 100
     course.save()

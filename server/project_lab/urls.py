@@ -25,8 +25,8 @@ urlpatterns = [
     path('get_user_information',
          update_personal_information.get_user_information),
     path('show_takes', takes_views.show_takes),
-    path('show_orders',orders_views.show_orders),
-    path('get_order_payment',orders_views.get_order_payment),
+    path('show_orders', orders_views.show_orders),
+    path('get_order_payment', orders_views.get_order_payment),
     path('get_status', wchxviews.get_status),
     path('del_status', wchxviews.del_status),
     path('payment', wyq_views.payment),
@@ -43,7 +43,6 @@ urlpatterns = [
     path('free_watch', wyq_views.free_watch),
     path('pay_watch', wyq_views.pay_watch),
     path('pay_sale', wyq_views.pay_sale),
-
     path('search_user', wq_views.search_user),
     path('authenticate', wq_views.authenticate),
     path('forbid_comment', wq_views.forbid_comment),
@@ -57,9 +56,10 @@ urlpatterns = [
     path('set_start_time', wq_views.set_start_time),
     path('set_end_time', wq_views.set_end_time),
     path('preview', wq_views.preview),
-    path('supplement_course_information', wq_views.supplement_course_information),
+    path('supplement_course_information',
+         wq_views.supplement_course_information),
     path('search_manager', wq_views.search_manager),
-    path('Modify', wq_views.Modify),
+    path('modify', wq_views.modify),
     path('backstage_login', wq_views.backstage_login),
     path('backstage_register', wq_views.backstage_register),
     path('check', wq_views.check),
@@ -71,4 +71,3 @@ urlpatterns = [
     path('test', wq_views.test),
     path('editCourse', wq_views.editCourse),
 ]
-

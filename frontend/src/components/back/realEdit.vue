@@ -55,7 +55,7 @@ export default {
         this.formItem.oldWI =
           'http://192.168.55.33:8000' + res.course['whole_introduction']
         this.formItem.Is_destroy = res.course['Is_destroy']
-        this.formItem.distroy_time = res.course['distroy_time']
+        this.formItem.distroy_time = res.course['distory_time']
         this.formItem.price = res.course['price']
         this.formItem.share_rate = res.course['share_rate']*100
         this.formItem.can_comment = res.course['can_comment']
@@ -76,7 +76,7 @@ export default {
         document.getElementById('newCP').files[0]
       )
       formData.append('Is_destroy', this.formItem.Is_destroy)
-      if (this.formItem.Is_destroy == true) {
+      if (this.formItem.Is_destroy === true) {
         formData.append('distroy_time', this.formItem.distroy_time)
       }
       formData.append('price', this.formItem.price)

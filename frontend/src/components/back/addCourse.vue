@@ -5,12 +5,10 @@ import datetime
 <div v-if="upload_audi"><p class="formitem">上传音频</p>
 <p class="formitem"><input type="file" name="audi_upload" >
 <Button @click="AudiUpload()">上传</BUtton></p></div>
-<audio controls="controls" v-if="is_show1"  @ended='audioEnded()' id="aud" class="formitem">
-  <source v-bind:src="audi" type="audio/mpeg">
-</audio>
+<audio controls="controls" v-if="is_show1" id="aud" class="formitem" v-bind:src="audi" @ended="audioEnded()" preload="auto"></audio>
 <div><p v-if="first_notice" class="formitem">开始播放音频前，请上传课程的第一张图片</p>
 <p v-if="contin" class="formitem">继续上传课程的剩下图片</p>
-<p v-if="upload_pic" class="formitem"><input type="file" name="pic_upload"><button @click="PicUpload()">上传</button></p>
+<p v-if="upload_pic" class="formitem"><input type="file" name="pic_upload" ><button @click="PicUpload()">上传</button></p>
 <div v-if="show_pic" class="formitem"><img v-bind:src="pic" id="sp"/></div>
 <p class="formitem"><Button v-if="set_start_time" @click="setStartTime()">将音频当前播放点设为图片开始时间</Button><span v-if="start_time">图片开始时间当前被设置为：{{startTime}}</span></p>
 <p v-if="set_end_time"><button @click="setEndTime()">将音频当前播放点设为图片结束时间</button><span v-if="end_time">图片结束时间当前被设置为：{{endTime}}</span></p>
@@ -22,8 +20,7 @@ import datetime
   <div v-if="show_real_pic" class="formitem">
     <img v-bind:src="pic_to_show" id="pts"/>
   </div>
-  <div class="formitem"><audio controls="controls" id="audio" @play="Play()" @pause="Pause()" >
-  <source v-bind:src="audio" type="audio/mpeg">
+  <div class="formitem"><audio controls="controls" id="audio" v-bind:src="audi" @play="Play()" @pause="Pause()" preload="auto">
   </audio></div>
   <Button class="formitem" :size="buttonSize" type="primary" @click="goToRest()">
                 下一步
@@ -36,7 +33,7 @@ import datetime
   <p class="formitem"><Icon type="md-document" />详解：<input type="file" name="whole_introduction"></p>
   <p class="formitem"><Icon type="md-easel" />课程封面：<input type="file" name="course_cover"></p>
   <p class="formitem"><Icon type="md-flame" />是否阅后即焚：<i-switch v-model="Is_destroy"/></p>
-  <p class="formitem" v-if="Is_destroy">可阅时长：<InputNumber v-model="distroy_time"/>小时</p>
+  <p class="formitem" v-if="Is_destroy">可阅时长：<InputNumber v-model="destroy_time"/>小时</p>
   <p class="formitem"><Icon type="md-pricetag"/>价格：<InputNumber :min="0.00" :step="0.01" v-model="price"></InputNumber>元</p>
   <p class="formitem" v-if="price>0"><Icon type="md-share-alt" />分销比例：<InputNumber :max="100" v-model="share_rate" :formatter="value => `${value}%`" :parser="value => value.replace('%', '')"></InputNumber></p>
   <p class="formitem"><Icon type="ios-chatbubbles" />是否允许用户留言：<i-switch v-model="can_comment"/></p>
@@ -113,10 +110,10 @@ export default {
         .then(response => {
           var res = response.data
           console.log(res)
-          if (res['msg'] == false) {
+          if (res['msg'] === false) {
             alert('标题和课程简介不能为空！')
           }
-          if (res['msg'] == true) {
+          if (res['msg'] === true) {
             this.course_id = res.course.id
             alert('新建课程成功！去上传课程音频！')
             this.upload_audi = true
@@ -136,7 +133,7 @@ export default {
         .then(response => {
           var res = response.data
           console.log(res)
-          this.audi = 'http://192.168.55.33:8000' + res.audio
+          this.audi = res.audio
           console.log(this.audi)
           this.is_show1 = true
           this.first_notice = true
@@ -332,7 +329,8 @@ export default {
       formData.append('id', this.course_id)
       formData.append('whole_introduction', wholeIntroduction)
       formData.append('Cover_picture', courseCover)
-      formData.append('Is_destroy', this.is_destroy)
+      formData.append('Is_destroy', this.Is_destroy)
+      console.log(this.destroy_time)
       formData.append('distroy_time', this.destroy_time)
       formData.append('price', this.price)
       formData.append('share_rate', this.share_rate)
