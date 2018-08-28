@@ -44,11 +44,13 @@ export default {
       pictures: [],
       content: '',
       title: '',
-      times: 0,
+      times: null,
       last_index: 0,
       last_time: 0,
       st: '',
-      CanComment: true
+      CanComment: true,
+      // 学习进度时间点
+      studyPoint: 0
     }
   },
   created: function() {
@@ -74,7 +76,6 @@ export default {
           this.title = res.course[0].title
           this.aupath = this.GLOBAL.serverSrc + res.course[0].audio
           console.log(this.aupath)
-          this.times = res.course[0].view_count
           this.content = res.course[0].context
           this.pictures = res.pictures
           this.picpath = this.GLOBAL.serverSrc + this.pictures[0].course_picture
@@ -101,6 +102,7 @@ export default {
     Pause: function() {
       clearTimeout(this.st)
       this.last_time = document.getElementById('audio').currentTime
+      this.studyPoint = this.last_time
       if (
         document.getElementById('audio').currentTime ===
         document.getElementById('audio').duration
@@ -154,6 +156,7 @@ export default {
             console.log(this.courseid)
             this.get_info()
             this.JudgePrice()
+            this.createTakes()
           })
       } else {
         // 从路由中获取课程id
@@ -161,6 +164,7 @@ export default {
         console.log(this.courseid)
         this.get_info()
         this.JudgePrice()
+        this.createTakes()
       }
       // 判断此门课程是否存在，不存在则直接调回home页面，
       // 是否为免费，并获取课程标题
@@ -182,6 +186,7 @@ export default {
             this.title = course[0].fields.title
             var price = course[0].fields.price
             this.CanComment = course[0].fields.can_comment
+            this.times = course[0].fields.view_count
             if (price === 0) {
               this.IsFree = true
             } else {
@@ -213,7 +218,44 @@ export default {
             this.$router.push({ name: 'home' })
           }
         })
+    },
+    createTakes: function() {
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/add_new_take',
+          JSON.stringify({
+            userphone: this.userphone,
+            courseid: this.courseid
+          })
+        )
+        .then(
+          response => {
+            console.log('success')
+          },
+          response => {
+            console.log('error')
+          }
+        )
     }
+  },
+  beforeDestroy() {
+    this.$http
+      .post(
+        this.GLOBAL.serverSrc + '/app/add_or_update_takes',
+        JSON.stringify({
+          userphone: this.userphone,
+          courseid: this.courseid,
+          studyPoint: this.studyPoint
+        })
+      )
+      .then(
+        response => {
+          console.log('success')
+        },
+        response => {
+          console.log('error')
+        }
+      )
   }
 }
 </script>

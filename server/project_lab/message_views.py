@@ -16,7 +16,7 @@ def show_message(request):
         req = json.loads(request.body.decode('utf-8'))
         course_id = Course.objects.get(id=req)
         messages = Message.objects.filter(
-            course_id=course_id).order_by('-created_at')
+            course_id=course_id, exists=True).order_by('-created_at')
         real_messages = []
         for message in messages:
             real_message = MessageSerializer(message)
