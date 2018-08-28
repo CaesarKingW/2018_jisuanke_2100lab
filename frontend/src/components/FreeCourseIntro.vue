@@ -1,14 +1,11 @@
 <template>
 <div class="FreeCourseIntro">
-    <!-- 导航栏 -->
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
     <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
-    <!-- 底板 -->
     <div class="myPanel"></div>
-    <!-- 课程信息 -->
     <div class="CoverDiv">
             <img id="testPic" v-bind:src="path">
             </div>
@@ -37,21 +34,23 @@
         v-clipboard:error="onError">复制</button>
         </div>
     </Modal>
-    <div class="alertButtonDiv">
-        <Alert show-icon>
+    <div class="burnDiv">
+        <Alert type="error" show-icon>
         <Icon type="ios-bulb-outline" slot="icon"></Icon>
+        <template class="burnText" slot="desc">本文为阅后即焚类文章，在初次阅读后{{ burnTime }}小时无法再查看，请注意及时阅读哦！</template>
+        </Alert>
+    </div>
+    <div v-if="isBurn" class="alertButtonDiv">
+        <Alert show-icon>
+        <Icon type="ios-alert" slot="icon"></Icon>
         <template class="alertText" slot="desc">如果你喜欢本课程，就把它分享给朋友吧！ </template>
     </Alert>
     </div>
     <div class="introDiv">
-        <Collapse v-model="value">
-        <Panel class="intro">
-            课程简介
-            <p slot="content" class="contentText">
-                    {{content}}
-            </p>
-        </Panel>
-    </Collapse>
+         <Card class="intro">
+            <p id="title" slot="title">课程简介</p>
+            <p class="introContent">{{content}}</p>
+        </Card>
     </div>
 </div>
 </template>
@@ -69,7 +68,9 @@ export default {
       courseid: 0,
       userphone: '',
       judge: false,
-      modall: false
+      modall: false,
+      burnTime: '5',
+      isBurn: true
     }
   },
   created: function() {
@@ -135,10 +136,22 @@ export default {
   padding: 25px;
 }
 .navi {
-  font-size: 23px;
+  font-size: 18px;
   color: #022336;
   margin-left: 15px;
   margin-right: 15px;
+}
+.navi:hover {
+  color: #022336;
+}
+.intro {
+  font-size: 19px;
+  font-family: 华文中宋;
+}
+.introContent {
+  font-size: 17px;
+  position: static;
+  font-family: 华文中宋;
 }
 .myPanel {
   margin: 0 auto;
@@ -146,16 +159,13 @@ export default {
   border: none;
   border-radius: 0px;
 }
-.alertText {
+.alertText,.burnText {
   text-align: center;
   color: #fff;
 }
-.FreeCourseIntro {
-  text-align: center;
-  margin: 0 auto;
-}
 .CoverDiv {
   margin: 0 auto;
+  text-align: center;
 }
 .ivu-modal {
   top: 0;
@@ -173,8 +183,6 @@ export default {
   border-radius: 8px;
   width: 130px;
   height: 45px;
-  /* margin-top: 20px;
-  margin-bottom: 20px; */
   margin: 0 auto;
   text-align: center;
   position: static;
@@ -201,12 +209,11 @@ export default {
   outline: none;
   border-radius: 4px;
   border: none;
-  background-color: #2d8cf0;
   color: #fff;
   cursor: pointer;
 }
-#copyButton:hover {
-  background: #57a3f3;
+#title {
+  font-size: 19px;
 }
 #testPic {
   width: 360px;
@@ -215,7 +222,7 @@ export default {
   border-radius: 8px;
   margin: 0 auto;
 }
-.alertButtonDiv {
+.alertButtonDiv,.burnDiv {
   margin: 0 auto;
   text-align: center;
   width: 60%;
@@ -227,10 +234,6 @@ export default {
   margin: 0 auto;
   text-align: left;
   margin-top: 20px;
-}
-.intro {
-  font-size: 19px;
-  font-family: 华文中宋;
 }
 .contentText {
   font-family: 华文中宋;

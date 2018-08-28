@@ -15,16 +15,16 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       modal: false
     }
   },
   methods: {
-    ok () {
+    ok() {
       this.$Message.info('Clicked ok')
     },
-    cancel () {
+    cancel() {
       this.$Message.info('Clicked cancel')
     }
   }
@@ -32,19 +32,19 @@ export default {
 </script>
 <style scoped>
 .ModifyUserInfo {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
 #avatar {
-    border:#99ccff solid 5px;
-    border-radius: 20px;
-    margin: 10px;
+  border: #99ccff solid 5px;
+  border-radius: 20px;
+  margin: 10px;
 }
 #nickname {
-    font-size: 20px;
-    margin: 30px;
+  font-size: 20px;
+  margin: 30px;
 }
 </style>

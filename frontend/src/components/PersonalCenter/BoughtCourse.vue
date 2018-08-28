@@ -1,7 +1,7 @@
 <template>
 <div id="BoughtCourse">
     <div>
-        <table >
+        <table class="courseTable">
             <tr>
                 <th>序号</th>
                 <th>订单编号</th>
@@ -71,3 +71,24 @@ export default {
   }
 }
 </script>
+<style scoped>s
+.courseTable {
+  margin-left: 140px;
+  font-size: 15px;
+  margin-top: 20px;
+}
+table,
+td,
+th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 10px;
+}
+th {
+  color: #022336;
+  font-size: 15px;
+ }
+</style>

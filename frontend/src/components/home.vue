@@ -1,20 +1,30 @@
 <template>
  <div id="home">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-     <!-- 导航栏 -->
+   <meta name="viewport"
+   content="width=device-width, initial-scale=1.0,
+   maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <div class="NaviBar">
-    <router-link to="/home"><a class="navi"><Icon type="md-home" /> 网站首页</a></router-link>
+    <router-link to="/home"><a class="navi">
+      <Icon type="md-home" /> 网站首页
+      </a></router-link>
     <Divider type="vertical" />
-    <router-link to="/AllFreeCourse"><a class="navi"><Icon type="md-bookmarks" /> 免费课程</a></router-link>
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
     <Divider type="vertical" />
-    <router-link to="/AllPayCourse"><a class="navi"><Icon type="logo-usd" /> 付费课程</a></router-link>
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
     <Divider type="vertical" />
-    <router-link to="/PersonalCenter" v-if="judge"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
-    <a class="navi" @click="logout" v-if="judge"><Icon type="md-log-out" /> 退出登录</a>
-    <router-link to="/UserLogin" v-else><a class="navi"><Icon type="md-log-in" /> 用户登录</a></router-link>
-
+    <router-link to="/PersonalCenter" v-if="judge">
+    <a class="navi"><Icon type="ios-contact" /> 个人中心</a>
+    </router-link>
+    <a class="navi" @click="logout" v-if="judge">
+      <Icon type="md-log-out" /> 退出登录</a>
+    <router-link to="/UserLogin" v-else>
+    <a class="navi"><Icon type="md-log-in" /> 用户登录</a>
+    </router-link>
      </div>
-     <!-- 走马灯 -->
      <div align="center" id="carousel" class="carousel">
      <Carousel autoplay v-model="value" loop>
         <CarouselItem>
@@ -28,26 +38,22 @@
         </CarouselItem>
     </Carousel>
     </div>
-    <!-- 免费内容导航框 -->
-    <Card id="FreeCol">
+     <Card id="FreeCol">
     <div class="AllCol">
     <div class="MyContent">
-        <h4><Icon type="md-bookmarks" />&nbsp;免费内容</h4>
+        <div><Icon type="md-bookmarks" />&nbsp;免费内容</div>
     </div>
     <div class="SeeMore">
-        <Poptip trigger="hover" title="免费内容预览" content="点击查看所有免费文章。">
         <Button id="button" ghost><router-link to="/AllFreeCourse">
-        <div class="ButtonText">查看更多<Icon type="md-log-in" /></div>
+        <span class="ButtonText">查看更多<Icon type="md-log-in" /></span>
         </router-link></Button>
-        </Poptip>
     </div>
     </div>
-    </Card>
-    <!-- 免费内容预览 -->
+     </Card>
     <div class="container">
     <div class="item" v-for="item of free_course" :key="item.id">
       <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
-      <Card>
+      <Card class="courseCard">
          <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
             <p><img class="CoverPic" v-bind:src= 'item.fields.Cover_picture'/></p>
       </Card>
@@ -55,43 +61,45 @@
         </div>
     </div>
     <br>
-    <!-- 付费内容导航框 -->
     <Card id="PayCol">
     <div class="AllCol">
     <div class="MyContent">
-        <h4><Icon type="md-bookmarks" />&nbsp;付费内容</h4>
+        <div><Icon type="md-bookmarks" />&nbsp;付费内容</div>
     </div>
     <div class="SeeMore">
-        <Poptip trigger="hover" title="付费内容预览" content="点击查看所有付费文章。">
         <Button id="button" ghost><router-link to="/AllPayCourse">
-        <div class="ButtonText">查看更多<Icon type="md-log-in" /></div>
+        <span class="ButtonText">查看更多<Icon type="md-log-in" /></span>
         </router-link></Button>
-        </Poptip>
     </div>
     </div>
     </Card>
-    <!-- 付费内容预览 -->
     <div class="container">
     <div class="item" v-for="item of paying_course" :key="item.id">
      <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
-      <Card>
+      <Card class="courseCard">
          <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
             <p><img class="CoverPic" v-bind:src= 'item.fields.Cover_picture'/></p>
       </Card>
      </router-link>
         </div>
-
     </div>
-    <!-- 返回顶部 -->
     <BackTop>
         <div class="top">返回顶端</div>
     </BackTop>
-    <!-- 关于我们卡片 -->
     <Card id="AboutUs">
     <div class="wrapper">
-    <div class="left"><div><Icon size=150 type="ios-people-outline" /></div><div>团队成员</div><div>南开大学软件学院</div><div>佛组</div></div>
-    <div class="middle"><div><Icon size=150 type="ios-school-outline" /></div><div>关于我们</div><div>2100实验室</div><div>专注为3~12岁儿童提供更好的科学启蒙教育</div></div>
-    <div class="right"><div><Icon size=150 type="ios-eye-outline" /></div><div>联系我们</div><div>南开大学泰达学院</div><div>客服电话：15009253698</div></div>
+    <div class="left"><div>
+      <Icon size=100 type="ios-people-outline" /></div>
+      <div>团队成员</div><div>南开大学软件学院</div><div>佛组</div>
+      </div>
+    <div class="middle"><div>
+      <Icon size=100 type="ios-school-outline" /></div><div>关于我们</div><div>2100实验室</div>
+      <div>专注为3~12岁儿童提供更好的科学启蒙教育</div>
+      </div>
+    <div class="right"><div>
+      <Icon size=100 type="ios-eye-outline" /></div><div>联系我们</div><div>南开大学泰达学院</div>
+      <div>客服电话：15009253698</div>
+      </div>
     </div>
     </Card>
  </div>
@@ -185,13 +193,16 @@ export default {
 }
 </script>
 <style scoped>
+.home {
+  margin: 0 auto;
+}
 .CoverPic {
   text-align: center;
-  margin-left: 12%;
   border: black solid 2px;
   border-radius: 3px;
   width: 270px;
   height: 200px;
+  margin: auto;
 }
 .CoverTitle {
   text-align: center;
@@ -199,6 +210,7 @@ export default {
 }
 .ButtonText {
   color: #fff;
+  float: right;
 }
 .NaviBar {
   z-index: 9999;
@@ -209,84 +221,102 @@ export default {
   padding: 25px;
 }
 .navi {
-  font-size: 23px;
+  font-size: 18px;
   color: #022336;
   margin-left: 15px;
   margin-right: 15px;
 }
 .container {
-  width: 100%;
+  width: 85%;
   display: flex;
   display: -webkit-flex;
   display: -moz-flex;
+  margin: 0 auto;
+  justify-content: space-around;
 }
 .wrapper {
   display: flex;
   display: -webkit-flex;
   display: -moz-flex;
   flex-direction: row;
-  height: 270px;
+  height: 200px;
   margin: 0 auto;
   color: #fff;
-  text-align: center;
 }
 .middle {
   flex-grow: 1;
+  flex-shrink: 1;
+  margin: 0 auto;
 }
 .left {
   flex-grow: 1;
+  flex-shrink: 1;
+  margin: 0 auto;
+  text-align: center;
 }
 .right {
   flex-grow: 1;
+  flex-shrink: 1;
+  margin: 0 auto;
+  text-align: center;
 }
 #AboutUs {
   background-color: #022336;
-  height: 300px;
+  height: 220px;
+  width: 85%;
+  margin: 0 auto;
+  text-align: center;
 }
 #FreeCol,
 #PayCol {
   background-color: #022336;
-  height: 90px;
+  height: 60px;
+  width: 85%;
+  text-align: center;
+  margin: 0 auto;
 }
 .AllCol {
   display: flex;
   display: -webkit-flex;
   display: -moz-flex;
   flex-direction: row;
-  height: 90px;
+  height: 40px;
   margin: 0 auto;
   color: #fff;
   text-align: center;
 }
 .SeeMore {
-  flex-grow: 1;
-  text-align: center;
+  position: static;
 }
 .id {
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
     'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
 }
-.more {
-  margin-left: 65%;
-}
 #button {
-  font-size: 20px;
+  position: static;
+  font-size: 15px;
+  margin-left: 797px;
   color: #fff;
-  margin-top: 6px;
+  border: none;
 }
 .item {
   flex-grow: 1;
   flex-shrink: 1;
   margin-top: 20px;
   margin-bottom: 20px;
+  text-align: center;
 }
 .RollPic {
   width: 100%;
   height: 450px;
 }
+.carousel {
+  width: 85%;
+  margin: 0 auto;
+}
 .MyContent {
-  font-size: 40px;
-  flex-grow: 3;
+  font-size: 18px;
+  margin-left: 27px;
   text-align: center;
 }
 .top {

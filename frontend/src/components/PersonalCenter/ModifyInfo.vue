@@ -3,13 +3,13 @@
     <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
     <div>
       <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head"/>
-      <input id="avatar_upload_button" type='button' value='修改头像' v-on:click="click_file">
+      <input id="avatarUploadButton" type='button' value='修改头像' v-on:click="click_file">
     </div>
     <div>
       <div id="nickname">当前昵称：<br>{{oldname}}</div>
         <form @submit.prevent="modify_nickname">
-            <div><Input id="name_upload_text" type="text" v-model="nickname" /></div>
-            <div><input id="name_upload_button" type="submit" value="确认修改"/></div>
+            <div><Input id="nameUploadText" type="text" v-model="nickname" /></div>
+            <div><input id="nameUploadButton" type="submit" value="确认修改"/></div>
         </form>
     </div>
 </div>
@@ -106,7 +106,7 @@ export default {
 </script>
 
 <style scoped>
-#name_upload_text {
+#nameUploadText {
   width: 120px;
   margin-left: 100px;
 }
@@ -127,7 +127,7 @@ export default {
   margin: 30px;
   margin-left: 100px;
 }
-#avatar_upload_button {
+#avatarUploadButton {
   width: 120px;
   height: 40px;
   font-size: 20px;
@@ -139,11 +139,11 @@ export default {
   cursor: pointer;
   text-align: center;
 }
-#avatar_upload_button:hover {
+#avatarUploadButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
 }
-#name_upload_button {
+#nameUploadButton {
   width: 120px;
   height: 40px;
   font-size: 20px;
@@ -156,7 +156,7 @@ export default {
   cursor: pointer;
   text-align: center;
 }
-#name_upload_button:hover {
+#nameUploadButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
 }
