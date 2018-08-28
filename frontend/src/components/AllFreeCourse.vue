@@ -79,27 +79,29 @@ export default {
   width: 650px;
   margin: 0 auto;
 }
+
 .courseTitleContent {
   font-family: 华文细黑;
 }
+
 .CourseInfo {
   display: flex;
   color: #022336;
 }
-/* .CourseCoverDiv {
-  float: left;
-}*/
+
 .CourseText {
   float: left;
   margin-left: 5%;
   color: #022336;
 }
+
 .CourseTitle {
+  padding: 5px;
   font-family: 华文中宋;
   font-size: 28px;
-  padding: 5px;
   color: #022336;
 }
+
 .CourseIntro {
   font-family: 华文中宋;
   font-size: 28px;
