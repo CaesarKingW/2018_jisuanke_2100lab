@@ -29,3 +29,60 @@ def show_takes(request):
         response['error_num'] = 1
 
     return JsonResponse(response)
+
+
+@require_http_methods(["POST"])
+def add_or_update_takes(request):
+    response = {}
+    try:
+        req = json.loads(request.body.decode('utf-8'))
+        userphone = req['userphone']
+        course_id = req['courseid']
+        last_study_percent = req['studyPoint']
+        user = User.objects.get(phone_number=userphone)
+        course = Course.objects.get(id=course_id)
+        try:
+            take = Takes.objects.get(user_phone=user, course_id=course)
+            take.last_study_percent = last_study_percent
+            if take.last_study_percent > take.max_study_percent:
+                take.max_study_percent = take.last_study_percent
+            take.save()
+        except:
+            take = Takes.objects.create(user_phone=user, course_id=course)
+            course.view_count = course.view_count + 1
+            course.save()
+            take.last_study_percent = last_study_percent
+            if take.last_study_percent > take.max_study_percent:
+                take.max_study_percent = take.last_study_percent
+            take.save()
+        response['msg'] = 'success'
+        response['errornum'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['errornum'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["POST"])
+def add_new_take(request):
+    response = {}
+    try:
+        req = json.loads(request.body.decode('utf-8'))
+        userphone = req['userphone']
+        course_id = req['courseid']
+        user = User.objects.get(phone_number=userphone)
+        course = Course.objects.get(id=course_id)
+        try:
+            Takes.objects.get(user_phone=user, course_id=course)
+        except:
+            Takes.objects.create(user_phone=user, course_id=course)
+            course.view_count = course.view_count + 1
+            course.save()
+        response['msg'] = 'success'
+        response['errornum'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['errornum'] = 1
+
+    return JsonResponse(response)
