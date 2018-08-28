@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import User, Message, Course, Order, Course_picture, Manager
-from .models import Reply, Takes
+from .models import Reply, Takes, Operating_history
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -61,8 +61,9 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ('id', 'title', 'brief_introduction', 'audio',
-                  'whole_introduction', 'Is_destroy', 'distory_time',
-                  'price', 'share_rate', 'can_comment')
+                  'course_duration', 'whole_introduction', 'Cover_picture',
+                  'Is_destory', 'distory_time', 'price', 'share_rate',
+                  'can_comment', 'created_at')
 
 
 class Course_pictureSerializer(serializers.ModelSerializer):
@@ -87,3 +88,9 @@ class TakesSerializer(serializers.ModelSerializer):
 
     def get_course_duration(self, obj):
         return obj.course_id.course_duration
+
+
+class Operating_historySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Operating_history
+        fields = ('id', 'manager_username', 'operate_type', 'object_type', 'created_at')
