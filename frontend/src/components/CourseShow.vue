@@ -1,27 +1,19 @@
 <template>
 <body>
 <div id="CourseShow">
-    <Divider><h1 class="title">{{ title }}</h1></Divider>
-    <Divider orientation="right"><p class="read_time" style="font-size: 24px;">浏览量：{{ times }} 次</p></Divider>
-    <div class="test_pic"><img id="changePic" v-bind:src="picpath" width=500px height=350px></div>
-    <Divider />
-    <!-- <Progress :percent="45" status="active" /> -->
-    <audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio>
-    <Divider />
-    <Button type="primary" shape="circle" icon="ios-play"></Button>
-    <Divider />
-    <Collapse accordion v-model="value">
-        <Panel style="background-color:#2d8cf0;">
+    <div class="title">{{ title }}</div>
+    <p class="read_time">浏览量：{{ times }} 次</p>
+    <div class="test_pic"><img id="changePic" v-bind:src="picpath"></div>
+    <div class="playRoll"><audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio></div>
+    <Collapse cLass="collapse" accordion v-model="value">
+        <Panel>
             <Poptip trigger="hover" style="font-size: 24px;" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
             <div>文字介绍</div>
             </Poptip>
             <div slot="content" style="text-align: left;font-size: 18px;">
-               <div id="scrollBar">
-                 除了间接是受疾病影响，疼痛不舒适时情绪就会容易变得烦躁不安。
-                 主要还是老人家年纪大了，心理你缺少陪伴安全感，你应该比较少关注老人，
-                 更多时间是在工作、交友、孩子和自己另一半等上面。建议你多分一些
-                 注意力给老人家除了间接是受疾病影响，疼痛不舒适时情绪就会容易变得烦躁不安。
-                 主要还是老人家年纪大了，心理你缺少陪伴安全感，你应该比较少关注老人，更多时间是在工作、交友、孩子和自己另一半等上面。建议你多分一些注意力给老人家除了间接是受疾病影响，疼痛不舒适时情绪就会容易变得烦躁不安。主要还是老人家年纪大了，心理你缺少陪伴安全感，你应该比较少关注老人，更多时间是在工作、交友、孩子和自己另一半等上面。建议你多分一些注意力给老人家</div>
+              <div id="scrollBar">
+                 {{ content }}
+              </div>
             </div>
         </Panel>
     </Collapse>
@@ -78,10 +70,8 @@ export default {
       console.log(this.last_index)
       var vm = this
       vm.picpath =
-        'http://192.168.55.33:8000' +
-        vm.pictures[vm.last_index].course_picture
-      var interval = (
-        vm.pictures[vm.last_index].end_time - vm.last_time) * 1000
+        'http://192.168.55.33:8000' + vm.pictures[vm.last_index].course_picture
+      var interval = (vm.pictures[vm.last_index].end_time - vm.last_time) * 1000
       vm.st = setTimeout(function() {
         vm.last_index = vm.last_index + 1
         if (vm.last_index >= vm.pictures.length) {
@@ -108,7 +98,10 @@ export default {
       var current = document.getElementById('audio').currentTime
       var picindex
       for (let index = 0; index < this.pictures.length; index++) {
-        if (this.pictures[index].start_time <= current && this.pictures[index].end_time > current) {
+        if (
+          this.pictures[index].start_time <= current &&
+          this.pictures[index].end_time > current
+        ) {
           picindex = index
           break
         } else {
@@ -125,6 +118,10 @@ export default {
 }
 </script>
 <style>
+.playRoll {
+  margin: 0 auto;
+  text-align: center;
+}
 #scrollBar {
   overflow-y: auto;
   overflow-x: hidden;
@@ -135,17 +132,6 @@ export default {
   text-align: center;
   margin: 0 auto;
   margin-top: 20px;
-}
-#pauseButtonDiv {
-  text-align: center;
-  margin: 20px;
-}
-#pauseButton {
-  background-color: #fff;
-  color: #000;
-  border: #000 solid 2px;
-  text-align: center;
-  font-size: 20px;
 }
 .collapse {
   text-align: center;
