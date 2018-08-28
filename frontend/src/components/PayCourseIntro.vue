@@ -47,6 +47,12 @@
           <Button @click="modal = true" id="share" type="primary">
             <Icon type="ios-card" /> 分享课程</Button>
             </div>
+            <div v-if="isBurn" class="burnDiv">
+        <Alert type="warning" show-icon>
+        <Icon type="ios-alert" slot="icon"></Icon>
+        <template class="burnText" slot="desc">本文为阅后即焚类文章，在初次阅读后{{ burnTime }}小时无法再查看，请注意及时阅读哦！</template>
+        </Alert>
+    </div>
         <div class="alertButtonDiv">
           <Alert class="alertButton" show-icon>
         <Icon type="ios-trophy-outline" slot="icon"></Icon>
@@ -96,7 +102,9 @@ export default {
       // 判断用户是否登录
       judge: false,
       // 判断用户是否支付成功
-      IsPaid: false
+      IsPaid: false,
+      burnTime: '',
+      isBurn: true
     }
   },
   created: function() {
@@ -238,7 +246,8 @@ export default {
 .ivu-modal {
   top: 0;
 }
-.alertText {
+.alertText,
+.burnText {
   text-align: center;
   color: #fff;
 }
@@ -291,7 +300,7 @@ export default {
   margin: 0 auto;
   text-align: center;
 }
-.alertButtonDiv {
+.alertButtonDiv,.burnDiv {
   margin: 0 auto;
   text-align: center;
   width: 60%;

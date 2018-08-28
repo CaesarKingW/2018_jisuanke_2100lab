@@ -34,9 +34,15 @@
         v-clipboard:error="onError">复制</button>
         </div>
     </Modal>
-    <div class="alertButtonDiv">
-        <Alert show-icon>
+    <div class="burnDiv">
+        <Alert type="error" show-icon>
         <Icon type="ios-bulb-outline" slot="icon"></Icon>
+        <template class="burnText" slot="desc">本文为阅后即焚类文章，在初次阅读后{{ burnTime }}小时无法再查看，请注意及时阅读哦！</template>
+        </Alert>
+    </div>
+    <div v-if="isBurn" class="alertButtonDiv">
+        <Alert show-icon>
+        <Icon type="ios-alert" slot="icon"></Icon>
         <template class="alertText" slot="desc">如果你喜欢本课程，就把它分享给朋友吧！ </template>
     </Alert>
     </div>
@@ -62,7 +68,9 @@ export default {
       courseid: 0,
       userphone: '',
       judge: false,
-      modall: false
+      modall: false,
+      burnTime: '5',
+      isBurn: true
     }
   },
   created: function() {
@@ -153,14 +161,10 @@ export default {
   border: none;
   border-radius: 0px;
 }
-.alertText {
+.alertText,.burnText {
   text-align: center;
   color: #fff;
 }
-/* .FreeCourseIntro {
-  text-align: center;
-  margin: 0 auto;
-} */
 .CoverDiv {
   margin: 0 auto;
   text-align: center;
@@ -220,7 +224,7 @@ export default {
   border-radius: 8px;
   margin: 0 auto;
 }
-.alertButtonDiv {
+.alertButtonDiv,.burnDiv {
   margin: 0 auto;
   text-align: center;
   width: 60%;
