@@ -64,7 +64,6 @@ export default {
           })
         )
         .then(response => {
-          var res = response.data
           alert('修改管理员' + this.username + '权限成功！')
           this.if_show = false
           this.username = ''
