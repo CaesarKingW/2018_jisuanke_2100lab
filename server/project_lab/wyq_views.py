@@ -153,7 +153,7 @@ def payment(request):
 @require_http_methods(['POST', 'GET'])
 def alipay_get(request):
     # 存放post里面所有的数据
-    processed_dict = {}
+    response = {}
     try:
         orderid = json.loads(request.body.decode('utf-8'))
         # 查询数据库中订单记录
@@ -165,12 +165,14 @@ def alipay_get(request):
             info = Course.objects.get(id=courseid)
             info.sale_count = info.sale_count + 1
             info.save()
-        return JsonResponse("success", safe=False)
+            response['course_id'] = courseid
+            response['msg'] = 'success'
+        return JsonResponse(response, safe=False)
     except Exception as e:
-        processed_dict['data'] = 'false'
-        processed_dict['msg'] = str(e)
-        processed_dict['error_num'] = 1
-    return JsonResponse(processed_dict)
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
 
 
 @require_http_methods(['POST', 'GET'])

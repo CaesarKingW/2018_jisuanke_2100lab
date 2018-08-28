@@ -43,11 +43,12 @@ def get_order_payment(request):
         user = User.objects.get(phone_number=phone_number)
         course = Course.objects.get(id=course_id)
         try:
-            order = Order.objects.get(user_phone=user, course_id = course)
-            if order.status == "已完成":
-                response['order_status'] = True
-            else:
-                response['order_status'] = False
+            orders = Order.objects.filter(user_phone=user, course_id=course)
+            for order in orders:    
+                if order.status == "已支付":
+                    response['order_status'] = True
+                    return JsonResponse(response)
+            response['order_status'] = False
         except:
             response['order_status'] = False
         response['msg'] = 'success'

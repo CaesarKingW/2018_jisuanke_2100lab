@@ -3,11 +3,13 @@ from .models import *
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.core import serializers
 from .serializer import *
 import textwrap
 import json
 import requests
 from django.core import serializers
+
 
 def search_managename(request):
     response = {}
@@ -69,7 +71,7 @@ def get_course_info(request):
     try:
         if request.method == 'POST':
             id = json.loads(request.body)
-            course = Course.objects.get(id=id)
+            course = Course.objects.get(id=1)
             course_list = []
             real_course = CourseSerializer(course)
             course_list.append(real_course.data)
