@@ -28,14 +28,13 @@
 <script>
 import NiceReply from './NiceReply.vue'
 export default {
+  props: ['course_id'],
   data() {
     return {
       message: null,
       messages: [],
       NiceReply: [],
       NiceReplies: [],
-      // 先假定当前课程为1，用户手机号为17602284691
-      course_id: 1,
       user_phone: ''
     }
   },
@@ -50,6 +49,11 @@ export default {
         console.log(this.user_phone)
       })
     this.show_message()
+  },
+  watch: {
+    course_id: function(val, oldval) {
+      this.show_message()
+    }
   },
   methods: {
     show_message: function() {

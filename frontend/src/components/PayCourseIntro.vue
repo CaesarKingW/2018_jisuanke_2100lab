@@ -13,9 +13,22 @@
         </div>
         <div class="courseTitleDiv"><div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="buyButtonDiv">
-          <Button @click="alipay()" id="buy" type="primary">
+          <!-- <Button @click="alipay()" id="buy" type="primary">
             <Icon type="logo-usd" /> 购买课程
-            </Button></div>
+            </Button></div> -->
+            <div v-if="judge">
+              <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="IsPaid"><Button  id="buy" type="primary">
+                <Icon type="logo-usd" /> 进入课程</Button></router-link>
+              <div v-else><Button  id="buy" type="primary" v-on:click="alipay()">
+                <Icon type="logo-usd" /> 购买课程</Button></div>
+            </div>
+            <div v-else><Button  id="buy" type="primary" v-on:click="modall = true">
+            <Icon type="logo-usd" /> 购买课程</Button></div>
+            <Modal v-model="modall" title="温馨提示" @on-ok="ok"
+            @on-cancel="cancel">
+              <p>您必须先登录才能学习课程</p>
+            </Modal>
+            </div>
         <div class="shareButtonDiv">
           <Button @click="modal = true" id="share" type="primary">
             <Icon type="ios-card" /> 分销课程</Button>
@@ -61,46 +74,76 @@ export default {
       content: '',
       split1: 0.49,
       modal: false,
+      modall: false,
       message: window.location.href,
       award: 0,
       orderid: '',
       price: 100,
       courseid: 1,
       userphone: '',
-      value: '1'
+      value: '1',
+      // 判断用户是否登录
+      judge: false,
+      // 判断用户是否支付成功
+      IsPaid: false
     }
   },
   created: function() {
+    // 从路由获取课程id
     this.courseid = this.$route.query.id
     console.log(this.courseid)
+    // 判断是否登录
+    this.Judgestatus()
+    // 获取用户手机号并判断是否已经支付完成
+    this.GetUserPhone()
   },
   mounted: function() {
-    this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(response => {
-      this.userphone = response.data.list[0].pk
-      console.log(this.userphone)
-    })
-    this.$http
-      .post(
-        this.GLOBAL.serverSrc + '/app/get_specified_course',
-        JSON.stringify(this.courseid)
-      )
-      .then(response => {
-        var exist = response.data.exist
-        if (exist) {
-          var course = []
-          course = response.data.list
-          this.courseTitle = course[0].fields.title
-          this.path =
-            this.GLOBAL.serverSrc + '/media/' + course[0].fields.Cover_picture
-          this.content = course[0].fields.brief_introduction
-          this.price = course[0].fields.price
-          this.award = Math.floor(course[0].fields.share_rate * this.price)
-        } else {
-          this.$router.push({ name: 'home' })
-        }
-      })
+    this.get_specified_course()
   },
   methods: {
+    Judgestatus: function() {
+      this.$http
+        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .then(response => {
+          this.judge = response.data.is_login
+          console.log(this.judge)
+          if (this.judge !== true) {
+            this.$Message.warning('请您先登录')
+          }
+        })
+    },
+    get_specified_course: function() {
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/get_specified_course',
+          JSON.stringify(this.courseid)
+        )
+        .then(response => {
+          var exist = response.data.exist
+          if (exist) {
+            var course = []
+            course = response.data.list
+            this.courseTitle = course[0].fields.title
+            this.path =
+              this.GLOBAL.serverSrc + '/media/' + course[0].fields.Cover_picture
+            this.content = course[0].fields.brief_introduction
+            this.price = course[0].fields.price
+            this.award = Math.floor(course[0].fields.share_rate * this.price)
+          } else {
+            this.$router.push({ name: 'home' })
+          }
+        })
+    },
+    GetUserPhone: function() {
+      this.$http
+        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .then(response => {
+          this.userphone = response.data.list[0].pk
+          console.log(this.userphone)
+          // 判断支付状态
+          this.JudgePayment()
+        })
+    },
     alipay() {
       var code = ''
       var codeLength = 16
@@ -121,6 +164,24 @@ export default {
         .then(response => {
           console.log(response.data)
           window.location.href = response.data
+        })
+    },
+    ok: function() {
+      this.$router.push({ name: 'UserLogin' })
+    },
+    cancel: function() {},
+    JudgePayment: function() {
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/get_order_payment',
+          JSON.stringify({
+            phone_number: this.userphone,
+            course_id: this.courseid
+          })
+        )
+        .then(response => {
+          this.IsPaid = response.data.order_status
+          console.log(this.IsPaid)
         })
     }
   }

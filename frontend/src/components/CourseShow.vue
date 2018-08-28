@@ -23,7 +23,9 @@
         <BackTop>
         <div>返回顶端</div>
     </BackTop>
-    <NiceMsgBoard/>
+    <div v-if="CanComment">
+      <NiceMsgBoard v-bind:course_id = "courseid"></NiceMsgBoard>
+    </div>
 </div>
 </body>
 </template>
@@ -45,25 +47,16 @@ export default {
       times: 0,
       last_index: 0,
       last_time: 0,
-      st: ''
+      st: '',
+      CanComment: true
     }
   },
   created: function() {
-    // 从路由中获取课程id
-    this.courseid = this.$route.query.id
-    // 判断用户是否登录，未登录则直接跳转到登录页面
     this.Judgestatus()
-    // 判断此门课程是否存在，不存在则直接调回home页面，
-    // 是否为免费，并获取课程标题
-    this.JudgePrice()
   },
   mounted: function() {
-    var orderId = this.$route.query.out_trade_no
-    if (typeof orderId !== 'undefined') {
-      var request = JSON.stringify(orderId)
-      this.$http.post(this.GLOBAL.serverSrc + '/app/notify', request)
-    }
-    this.get_info()
+    // 判断用户是否登录，未登录则直接跳转到登录页面
+    // 登录则获取课程id
   },
   components: {
     NiceMsgBoard
@@ -84,8 +77,7 @@ export default {
           this.times = res.course[0].view_count
           this.content = res.course[0].context
           this.pictures = res.pictures
-          this.picpath =
-            this.GLOBAL.serverSrc + this.pictures[0].course_picture
+          this.picpath = this.GLOBAL.serverSrc + this.pictures[0].course_picture
         })
     },
     Play: function() {
@@ -143,8 +135,37 @@ export default {
           // 这里暂时先直接跳入登录页面
           if (!judge) {
             this.$router.push({ name: 'UserLogin' })
+          } else {
+            this.userphone = response.data.list[0].pk
+            // 获取课程id
+            this.GetCourseId()
           }
         })
+    },
+    GetCourseId: function() {
+      var orderId = this.$route.query.out_trade_no
+      if (typeof orderId !== 'undefined') {
+        // 修改订单状态并获取courseid
+        var request = JSON.stringify(orderId)
+        this.$http
+          .post(this.GLOBAL.serverSrc + '/app/notify', request)
+          .then(response => {
+            this.courseid = response.data.course_id
+            console.log(this.courseid)
+            this.get_info()
+            this.JudgePrice()
+          })
+      } else {
+        // 从路由中获取课程id
+        this.courseid = this.$route.query.id
+        console.log(this.courseid)
+        this.get_info()
+        this.JudgePrice()
+      }
+      // 判断此门课程是否存在，不存在则直接调回home页面，
+      // 是否为免费，并获取课程标题
+      // 若为付费则判断订单状态
+      // this.JudgePrice()
     },
     // 获取课程标题和是否免费属性
     JudgePrice: function() {
@@ -160,6 +181,7 @@ export default {
             course = response.data.list
             this.title = course[0].fields.title
             var price = course[0].fields.price
+            this.CanComment = course[0].fields.can_comment
             if (price === 0) {
               this.IsFree = true
             } else {
@@ -170,7 +192,6 @@ export default {
               this.JudgePayment()
             }
           } else {
-            // alert('您无权访问此网址')
             this.$router.push({ name: 'home' })
           }
         })
@@ -189,7 +210,6 @@ export default {
           this.IsPaid = response.data.order_status
           // 如果是付费课程且未支付则直接跳转到Home页面
           if (!this.IsPaid) {
-            // alert('您必须先购买才能访问此页面')
             this.$router.push({ name: 'home' })
           }
         })
