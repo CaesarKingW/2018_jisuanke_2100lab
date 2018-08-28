@@ -38,13 +38,11 @@ export default {
   },
   methods: {
     search() {
-      console.log(this.order_number)
       var orderNumber = JSON.stringify(this.order_number)
       this.$http
         .post('http://192.168.55.33:8000/app/search_order', orderNumber)
         .then(response => {
           var res = response.data
-          console.log(res)
           this.if_order = res.if_order
           if (this.if_order === true) {
             this.course_title = res.order_info.course_title
@@ -56,7 +54,6 @@ export default {
             } else {
               this.if_refund = true
             }
-            console.log(this.if_refund)
             this.created_at = res.order_info.create_at
             this.phone_number = res.order_info.user_phone
           }
@@ -69,7 +66,6 @@ export default {
         .post('http://192.168.55.33:8000/app/refund', orderNumber)
         .then(response => {
           var res = response.data
-          console.log(res)
           alert('退款成功！')
           this.status = '已退款'
           this.if_refund = false

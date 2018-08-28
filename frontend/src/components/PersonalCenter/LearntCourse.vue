@@ -39,10 +39,12 @@ export default {
     }
   },
   mounted: function() {
-    this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(response => {
-      this.userPhone = response.data.list[0].pk
-      this.show_takes()
-    })
+    this.$http
+      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .then(response => {
+        this.userPhone = response.data.list[0].pk
+        this.show_takes()
+      })
   },
   methods: {
     show_takes: function() {
@@ -54,11 +56,8 @@ export default {
         .then(
           response => {
             this.takes = response.data.list
-            console.log('success')
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     }
   }

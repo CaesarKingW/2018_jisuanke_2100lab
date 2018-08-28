@@ -21,9 +21,6 @@ export default {
   },
   methods: {
     aa() {
-      console.log('this.username')
-      console.log(this.username)
-      console.log('this.username')
     },
     mounted(request) {
       this.username = this.$route.params.user

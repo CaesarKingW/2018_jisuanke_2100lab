@@ -87,7 +87,6 @@ export default {
       .post('http://192.168.55.33:8000/app/get_mstatus')
       .then(response => {
         var res = response.data
-        console.log(res)
         this.mis_login = res.mis_login
         if (!this.mis_login) {
           location.href = '/#/backstageLogin'
@@ -97,7 +96,6 @@ export default {
           this.user = res.manager.Manage_user
           this.order = res.manager.Manage_order
           this.message = res.manager.Manage_message
-          console.log(this.message)
           this.authority = res.manager.Supermanager
         }
       })

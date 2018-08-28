@@ -32,13 +32,15 @@ export default {
     }
   },
   mounted: function() {
-    this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(response => {
-      this.is_login = response.data.is_login
-      if (this.is_login) {
-        this.alert_wrong_status()
-        location.href = '/#/home'
-      }
-    })
+    this.$http
+      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .then(response => {
+        this.is_login = response.data.is_login
+        if (this.is_login) {
+          this.alert_wrong_status()
+          location.href = '/#/home'
+        }
+      })
   },
   methods: {
     timedCount: function() {
@@ -108,16 +110,13 @@ export default {
         .post(this.GLOBAL.serverSrc + '/app/get_code_post', phonenumber)
         .then(
           response => {
-            console.log(response.data)
             var Isexists = response.data.Is_exists
             if (Isexists === false) {
               this.alert_wrong_user()
               this.phone_number = null
             }
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     },
     comparecode: function() {
@@ -151,14 +150,7 @@ export default {
       var userphone = JSON.stringify(this.phone_number)
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/register_new_user', userphone)
-        .then(
-          response => {
-            console.log(response.data)
-          },
-          response => {
-            console.log('error')
-          }
-        )
+        .then(response => {}, response => {})
     },
     verify_the_login: function() {
       this.$http
@@ -172,24 +164,19 @@ export default {
         .then(
           response => {
             this.status = response.data.status
-            console.log(this.status)
             if (this.status) {
               this.success_login()
               this.Register_new_user()
               this.phone_number = null
               this.usercode = null
               this.commit_phone = null
-              // this.status = false
               // 用户跳转到主页
               location.href = '/#/home'
             } else {
               this.alert_wrong_code()
-              console.log(this.phone_number)
             }
           },
-          response => {
-            console.log(response.data)
-          }
+          response => {}
         )
     }
   }

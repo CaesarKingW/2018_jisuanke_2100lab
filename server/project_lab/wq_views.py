@@ -370,9 +370,6 @@ def get_mstatus(request):
             response['manager'] = manager.data
         except:
             response['test'] = False
-        # if request.session['mis_login'] is True:
-        #     manager = Manager.objects.get(username=request.session['user'])
-        #     response['manager'] = manager
     except:
         response['msg'] = 'fail'
     return JsonResponse(response)
@@ -457,8 +454,6 @@ def editCourse(request):
     course.price = float(request.POST.get('price'))
     course.can_comment = buer(request.POST.get('can_comment'))
     course.distory_time = float(request.POST.get('distroy_time'))
-    # if buer(request.POST.get('Is_destroy')):
-    #     course.distroy_time = float(request.POST.get('distroy_time'))
     if float(request.POST.get('price')) > 0:
         course.share_rate = float(request.POST.get('share_rate')) / 100
     course.save()

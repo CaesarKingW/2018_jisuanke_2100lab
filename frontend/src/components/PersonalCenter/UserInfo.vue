@@ -35,11 +35,8 @@ export default {
         }
         this.nickname = obj[0].fields.user_name
         this.amount_of_money = obj[0].fields.welfare
-        console.log('success')
       },
-      response => {
-        console.log('error')
-      }
+      response => {}
     )
   },
   methods: {}
@@ -76,6 +73,6 @@ export default {
   margin-top: 5px;
 }
 #info {
-    margin-left: 100px;
+  margin-left: 100px;
 }
 </style>

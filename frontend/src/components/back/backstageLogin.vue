@@ -60,8 +60,7 @@ export default {
       this.blank2 = true
     },
     login() {
-      console.log(this.if_blank1)
-      console.log(this.if_blank2)
+
       if (this.if_blank1 === false && this.if_blank2 === false) {
         this.$http
           .post(
@@ -73,7 +72,6 @@ export default {
           )
           .then(response => {
             var res = response.data
-            console.log(res)
             alert('登录成功！')
             this.$router.push({ name: 'backstage' })
           })

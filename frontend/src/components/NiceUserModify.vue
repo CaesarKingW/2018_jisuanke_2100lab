@@ -29,20 +29,14 @@ export default {
       // 上传图片到后端
       var formdate = new FormData()
       var fileinfo = document.querySelector('input[type=file]').files[0]
-      // event.targer.files[0];//t.target.file["0"]
       formdate.append('file', fileinfo)
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
-        .then(response => {
-          console.log(response.data)
-          // var resultobj = response.data
-          // this.result = resultobj.msg
-        })
+        .then(response => {})
 
       //  前端读取图片进行预览
       let _this = this
-      //   _this.imgObj = e.target.files['0']
       let fr = new FileReader()
       fr.onload = function() {
         _this.path = fr.result

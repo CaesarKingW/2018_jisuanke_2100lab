@@ -13,9 +13,6 @@
         </div>
         <div class="courseTitleDiv"><div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="buyButtonDiv">
-          <!-- <Button @click="alipay()" id="buy" type="primary">
-            <Icon type="logo-usd" /> 购买课程
-            </Button></div> -->
             <div v-if="judge">
               <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="IsPaid"><Button  id="buy" type="primary">
                 <Icon type="logo-usd" /> 进入课程</Button></router-link>
@@ -91,7 +88,6 @@ export default {
   created: function() {
     // 从路由获取课程id
     this.courseid = this.$route.query.id
-    console.log(this.courseid)
     // 判断是否登录
     this.Judgestatus()
     // 获取用户手机号并判断是否已经支付完成
@@ -106,7 +102,6 @@ export default {
         .post(this.GLOBAL.serverSrc + '/app/get_status')
         .then(response => {
           this.judge = response.data.is_login
-          console.log(this.judge)
           if (this.judge !== true) {
             this.$Message.warning('请您先登录')
           }
@@ -139,7 +134,6 @@ export default {
         .post(this.GLOBAL.serverSrc + '/app/get_status')
         .then(response => {
           this.userphone = response.data.list[0].pk
-          console.log(this.userphone)
           // 判断支付状态
           this.JudgePayment()
         })
@@ -157,12 +151,10 @@ export default {
       request.orderid = this.orderid
       request.courseid = this.courseid
       request.userphone = this.userphone
-      console.log(request)
       request = JSON.stringify(request)
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/payment', request)
         .then(response => {
-          console.log(response.data)
           window.location.href = response.data
         })
     },
@@ -181,7 +173,6 @@ export default {
         )
         .then(response => {
           this.IsPaid = response.data.order_status
-          console.log(this.IsPaid)
         })
     }
   }
@@ -239,8 +230,6 @@ export default {
   border-radius: 8px;
   width: 130px;
   height: 45px;
-  /* margin-top: 20px;
-  margin-bottom: 20px; */
   margin: 0 auto;
   text-align: center;
   position: static;

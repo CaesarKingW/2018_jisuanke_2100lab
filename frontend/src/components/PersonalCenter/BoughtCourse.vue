@@ -47,10 +47,12 @@ export default {
     }
   },
   mounted: function() {
-    this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(response => {
-      this.userPhone = response.data.list[0].pk
-      this.show_orders()
-    })
+    this.$http
+      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .then(response => {
+        this.userPhone = response.data.list[0].pk
+        this.show_orders()
+      })
   },
   methods: {
     show_orders: function() {
@@ -62,11 +64,8 @@ export default {
         .then(
           response => {
             this.orders = response.data.list
-            console.log('success')
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     }
   }

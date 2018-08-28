@@ -39,7 +39,6 @@ export default {
           obj = response.data.list
           this.oldpath = obj[0].fields.head_protrait
           this.user_phone = obj[0].pk
-          console.log(this.user_phone)
           this.oldname = obj[0].fields.user_name
           if (this.oldpath === '') {
             this.path = this.default_avator
@@ -47,11 +46,8 @@ export default {
             this.path = this.GLOBAL.serverSrc + '/media/' + this.oldpath
             this.oldpath = ''
           }
-          console.log('success')
         },
-        response => {
-          console.log('error')
-        }
+        response => {}
       )
     },
     click_file: function() {
@@ -67,9 +63,7 @@ export default {
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
-        .then(response => {
-          console.log(response.data)
-        })
+        .then(response => {})
 
       //  前端读取图片进行预览
       let _this = this
@@ -101,13 +95,10 @@ export default {
         )
         .then(
           response => {
-            console.log('success')
             this.get_old_avator()
             this.nickname = ''
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     }
   }

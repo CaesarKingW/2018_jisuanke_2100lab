@@ -56,18 +56,15 @@ export default {
       this.$http.get(this.GLOBAL.serverSrc + '/app/show_free_course').then(
         response => {
           this.imgs = response.data.list
-          console.log('success')
           for (var i = 0; i < this.imgs.length; i = i + 1) {
             var a =
-              this.GLOBAL.serverSrc + '/media/' +
+              this.GLOBAL.serverSrc +
+              '/media/' +
               this.imgs[i].fields.Cover_picture
             this.imgs[i].fields.Cover_picture = a
           }
-          console.log('success')
         },
-        response => {
-          console.log('error')
-        }
+        response => {}
       )
     }
   }

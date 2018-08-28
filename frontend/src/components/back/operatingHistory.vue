@@ -30,9 +30,7 @@ export default {
       .post('http://192.168.55.33:8000/app/search_history')
       .then(response => {
         var resp = response.data
-        console.log(resp)
         this.data1 = resp.history
-        console.log(this.data1)
       })
   }
 }
