@@ -37,7 +37,6 @@ export default {
         .post('http://192.168.55.33:8000/app/search_comment', phoneNumber)
         .then(response => {
           var res = response.data
-          console.log(res)
           if (res.if_user === false) {
             this.if_user = false
           } else {
@@ -47,7 +46,6 @@ export default {
               this.if_user = true
               this.if_comment = true
               this.messages = res.messages
-              console.log(this.messages)
             }
           }
         })
@@ -55,8 +53,6 @@ export default {
     },
     delete_comment(messageId) {
       alert('删除成功！')
-      console.log(this.phone_number)
-      console.log(messageId)
       this.$http
         .post(
           'http://192.168.55.33:8000/app/delete_comment',
@@ -67,7 +63,6 @@ export default {
         )
         .then(response => {
           var res = response.data
-          console.log(res)
           if (res.if_user === false) {
             this.if_user = false
           } else {
@@ -77,7 +72,6 @@ export default {
               this.if_user = true
               this.if_comment = true
               this.messages = res.messages
-              console.log(this.messages)
             }
           }
         })

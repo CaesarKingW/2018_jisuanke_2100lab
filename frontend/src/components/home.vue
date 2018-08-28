@@ -130,7 +130,6 @@ export default {
       this.$http.get(this.GLOBAL.serverSrc + '/app/show_free_course').then(
         response => {
           this.imgs = response.data.list
-          console.log('success')
           for (var i = 0; i < this.imgs.length; i = i + 1) {
             var a =
               this.GLOBAL.serverSrc +
@@ -142,18 +141,14 @@ export default {
           if (this.imgs.length > this.show_number) length = this.show_number
           else length = this.imgs.length
           this.free_course = this.imgs.slice(0, length)
-          console.log('success')
         },
-        response => {
-          console.log('error')
-        }
+        response => {}
       )
     },
     show_paying_course: function() {
       this.$http.get(this.GLOBAL.serverSrc + '/app/show_paying_course').then(
         response => {
           this.paying_imgs = response.data.list
-          console.log('success')
           for (var i = 0; i < this.paying_imgs.length; i = i + 1) {
             var a =
               this.GLOBAL.serverSrc +
@@ -166,11 +161,8 @@ export default {
             length = this.show_number
           } else length = this.paying_imgs.length
           this.paying_course = this.paying_imgs.slice(0, length)
-          console.log('success')
         },
-        response => {
-          console.log('error')
-        }
+        response => {}
       )
     },
     Judgestatus: function() {

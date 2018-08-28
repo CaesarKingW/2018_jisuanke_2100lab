@@ -29,26 +29,21 @@ export default {
         response => {
           this.img = response.data.img
           this.path =
-            this.GLOBAL.serverSrc + '/media/' +
+            this.GLOBAL.serverSrc +
+            '/media/' +
             this.img[0].fields.course_picture
-          console.log(this.img)
-          console.log(this.path)
-          console.log('succerr')
         },
-        response => {
-          console.log('error')
-        }
+        response => {}
       )
     },
     FileUpload: function() {
       var formdate = new FormData()
-      var fileinfo = document.querySelector('input[type=file]').files[0] // event.targer.files[0];//t.target.file["0"]
+      var fileinfo = document.querySelector('input[type=file]').files[0]
       formdate.append('file', fileinfo)
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/add_picture', formdate, config)
         .then(response => {
-          console.log(response.data)
         })
     }
   }

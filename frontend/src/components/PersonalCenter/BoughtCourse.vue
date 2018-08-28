@@ -64,11 +64,8 @@ export default {
         .then(
           response => {
             this.orders = response.data.list
-            console.log('success')
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     }
   }

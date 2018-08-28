@@ -97,8 +97,6 @@ export default {
   },
   methods: {
     addCourse() {
-      console.log(this.course_title)
-      console.log(this.brief_intro)
       this.$http
         .post(
           'http://192.168.55.33:8000/app/add_course',
@@ -109,7 +107,6 @@ export default {
         )
         .then(response => {
           var res = response.data
-          console.log(res)
           if (res['msg'] === false) {
             alert('标题和课程简介不能为空！')
           }
@@ -127,14 +124,11 @@ export default {
         .files[0]
       formData.append('file', fileInfo)
       formData.append('course_id', this.course_id)
-      console.log(formData)
       this.$http
         .post('http://192.168.55.33:8000/app/add_audi', formData)
         .then(response => {
           var res = response.data
-          console.log(res)
           this.audi = res.audio
-          console.log(this.audi)
           this.is_show1 = true
           this.first_notice = true
           this.upload_pic = true
@@ -154,14 +148,11 @@ export default {
       formData.append('file', fileInfo)
       formData.append('course_id', this.course_id)
       formData.append('duration', duration)
-      console.log(formData)
       this.$http
         .post('http://192.168.55.33:8000/app/add_img', formData)
         .then(response => {
           var res = response.data
-          console.log(res)
           this.pic = 'http://192.168.55.33:8000' + res.course_picture
-          console.log(this.pic)
           this.first_notice = false
           this.show_pic = true
           this.upload_pic = false
@@ -188,7 +179,6 @@ export default {
     },
     setStartTime() {
       var au = document.getElementById('aud')
-      console.log(au.currentTime)
       var st = au.currentTime
       this.$http
         .post(
@@ -199,14 +189,12 @@ export default {
           })
         )
         .then(response => {
-          console.log(response.data)
           this.start_time = true
           this.startTime = response.data.start_time
         })
     },
     setEndTime() {
       var au = document.getElementById('aud')
-      console.log(au.currentTime)
       var et = au.currentTime
       this.$http
         .post(
@@ -217,7 +205,6 @@ export default {
           })
         )
         .then(response => {
-          console.log(response.data)
           this.end_time = true
           this.endTime = response.data.end_time
         })
@@ -234,7 +221,6 @@ export default {
     audioEnded() {
       alert('音频已播放完，当前图片的结束时间自动被设置为音频的结束时间!')
       var au = document.getElementById('aud')
-      console.log(au.currentTime)
       var et = au.currentTime
       this.$http
         .post(
@@ -245,7 +231,6 @@ export default {
           })
         )
         .then(response => {
-          console.log(response.data)
           this.end_time = true
           this.endTime = response.data.end_time
           this.preview = true
@@ -273,7 +258,6 @@ export default {
           this.set_end_time = false
           this.end_time = false
           this.preview = false
-          console.log(response.data)
           this.pictures = response.data.pictures
           this.audio = 'http://192.168.55.33:8000' + response.data.course.audio
           this.real_preview = true
@@ -281,13 +265,10 @@ export default {
           this.last_index = 0
           this.pic_to_show =
             'http://192.168.55.33:8000' + this.pictures[0].course_picture
-          console.log(this.pic_to_show)
         })
     },
     Play() {
       var vm = this
-      console.log(vm.last_index)
-      console.log(vm.last_time)
       vm.pic_to_show =
         'http://192.168.55.33:8000' + vm.pictures[vm.last_index].course_picture
       var interval = (vm.pictures[vm.last_index].end_time - vm.last_time) * 1000
@@ -303,7 +284,6 @@ export default {
       }, interval)
     },
     Pause() {
-      console.log(this.st)
       clearTimeout(this.st)
       this.last_time = document.getElementById('audio').currentTime
       if (
@@ -330,20 +310,16 @@ export default {
       formData.append('whole_introduction', wholeIntroduction)
       formData.append('Cover_picture', courseCover)
       formData.append('Is_destroy', this.Is_destroy)
-      console.log(this.destroy_time)
       formData.append('distroy_time', this.destroy_time)
       formData.append('price', this.price)
       formData.append('share_rate', this.share_rate)
       formData.append('can_comment', this.can_comment)
-      console.log(new Date())
-      console.log(formData)
       this.$http
         .post(
           'http://192.168.55.33:8000/app/supplement_course_information',
           formData
         )
         .then(response => {
-          console.log(response.data)
           this.rest = false
           this.finish = true
         })

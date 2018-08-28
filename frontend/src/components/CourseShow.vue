@@ -74,18 +74,14 @@ export default {
         )
         .then(response => {
           var res = response.data
-          console.log(res)
           this.title = res.course[0].title
           this.aupath = this.GLOBAL.serverSrc + res.course[0].audio
-          console.log(this.aupath)
           this.content = res.course[0].context
           this.pictures = res.pictures
           this.picpath = this.GLOBAL.serverSrc + this.pictures[0].course_picture
         })
     },
     Play: function() {
-      console.log(this.last_time)
-      console.log(this.last_index)
       var vm = this
       vm.picpath =
         this.GLOBAL.serverSrc + vm.pictures[vm.last_index].course_picture
@@ -155,7 +151,6 @@ export default {
           .post(this.GLOBAL.serverSrc + '/app/notify', request)
           .then(response => {
             this.courseid = response.data.course_id
-            console.log(this.courseid)
             this.get_info()
             this.JudgePrice()
             this.createTakes()
@@ -163,7 +158,6 @@ export default {
       } else {
         // 从路由中获取课程id
         this.courseid = this.$route.query.id
-        console.log(this.courseid)
         this.get_info()
         this.JudgePrice()
         this.createTakes()
@@ -230,14 +224,7 @@ export default {
             courseid: this.courseid
           })
         )
-        .then(
-          response => {
-            console.log('success')
-          },
-          response => {
-            console.log('error')
-          }
-        )
+        .then(response => {}, response => {})
     }
   },
   beforeDestroy() {
@@ -250,14 +237,7 @@ export default {
           studyPoint: this.studyPoint
         })
       )
-      .then(
-        response => {
-          console.log('success')
-        },
-        response => {
-          console.log('error')
-        }
-      )
+      .then(response => {}, response => {})
   }
 }
 </script>

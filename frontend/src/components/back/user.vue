@@ -40,13 +40,11 @@ export default {
   },
   methods: {
     search() {
-      console.log(this.phone_number)
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
         .post('http://192.168.55.33:8000/app/search_user', phoneNumber)
         .then(response => {
           var res = response.data
-          console.log(res)
           this.is_null = res.is_null
           if (this.is_null === false) {
             this.username = res.user_info.user_name

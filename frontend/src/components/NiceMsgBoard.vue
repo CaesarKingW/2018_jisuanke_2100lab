@@ -46,7 +46,6 @@ export default {
       .post(this.GLOBAL.serverSrc + '/app/get_status')
       .then(response => {
         this.user_phone = response.data.list[0].pk
-        console.log(this.user_phone)
       })
     this.show_message()
   },
@@ -65,12 +64,8 @@ export default {
         .then(
           response => {
             this.messages = response.data.list
-            console.log(this.messages)
-            console.log('success')
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     },
     commit_message: function() {
@@ -79,18 +74,14 @@ export default {
         user_phone: this.user_phone,
         course_id: this.course_id
       })
-      console.log(formDate)
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/add_message', formDate)
         .then(
           response => {
             this.show_message()
             this.message = null
-            console.log(response.data)
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     },
     praise: function(messageid, index) {
@@ -100,14 +91,9 @@ export default {
       })
       this.$http.post(this.GLOBAL.serverSrc + '/app/praise', formDate).then(
         response => {
-          var hasPraise = response.data.has_praise
           this.show_message()
-          console.log(response.data)
-          console.log(hasPraise)
         },
-        response => {
-          console.log('error')
-        }
+        response => {}
       )
     }
   }

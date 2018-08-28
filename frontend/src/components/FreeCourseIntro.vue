@@ -75,7 +75,6 @@ export default {
   },
   created: function() {
     this.courseid = this.$route.query.id
-    console.log(this.courseid)
   },
   mounted: function() {
     this.Judgestatus()
@@ -88,7 +87,6 @@ export default {
         .post(this.GLOBAL.serverSrc + '/app/get_status')
         .then(response => {
           this.judge = response.data.is_login
-          console.log(this.judge)
           if (!this.judge) {
             this.$Message.warning('请您先登录')
           }

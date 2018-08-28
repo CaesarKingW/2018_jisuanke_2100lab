@@ -38,41 +38,41 @@ export default {
   mounted: function() {
     this.$http
       .post(this.GLOBAL.serverSrc + '/app/get_status')
-      .then(
-        response => {
-          this.phone = response.data.phonenumber
-          this.nickname = response.data.username
-          this.award = response.data.award
-        }
-      )
+      .then(response => {
+        this.phone = response.data.phonenumber
+        this.nickname = response.data.username
+        this.award = response.data.award
+      })
   }
 }
 </script>
 <style scoped>
 .ShowUserInfo {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
-#phone_div, #award_div {
-    font-size: 30px;
-    margin: 15px;
+#phone_div,
+#award_div {
+  font-size: 30px;
+  margin: 15px;
 }
 #nickname_div {
-    font-size: 22px;
+  font-size: 22px;
 }
 #avatar {
-    border:#99ccff solid 5px;
-    border-radius: 20px;
-    margin: 10px;
+  border: #99ccff solid 5px;
+  border-radius: 20px;
+  margin: 10px;
 }
-#learnt, #bought {
-    font-size: 30px;
-    margin: 15px;
+#learnt,
+#bought {
+  font-size: 30px;
+  margin: 15px;
 }
 #course {
-    font-size: 25px;
+  font-size: 25px;
 }
 </style>

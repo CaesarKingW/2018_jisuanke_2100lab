@@ -72,7 +72,6 @@ export default {
       } else {
         this.if_blank1 = false
         this.blank1 = true
-        console.log(this.formInline.user)
         this.$http
           .post(
             'http://192.168.55.33:8000/app/check',
@@ -82,7 +81,6 @@ export default {
           )
           .then(response => {
             var res = response.data
-            console.log(res)
             this.if_exist = res['if_exist']
             this.prompt1 = true
           })
@@ -97,8 +95,6 @@ export default {
       this.blank2 = true
     },
     Confirm() {
-      console.log(this.formInline.password)
-      console.log(this.formInline.confirm)
       if (this.formInline.password === this.formInline.confirm) {
         this.if_match = true
       } else {
@@ -122,8 +118,6 @@ export default {
             })
           )
           .then(response => {
-            var res = response.data
-            console.log(res)
             alert('注册成功！')
             this.can_login = true
           })
@@ -139,8 +133,6 @@ export default {
           })
         )
         .then(response => {
-          var res = response.data
-          console.log(res)
           alert('登录成功！')
           this.$router.push({ name: 'backstage' })
         })

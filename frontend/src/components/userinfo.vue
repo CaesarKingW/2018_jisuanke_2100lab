@@ -31,11 +31,8 @@ export default {
             this.GLOBAL.serverSrc + '/media/' + obj[0].fields.head_protrait
           this.nickname = obj[0].fields.user_name
           this.amount_of_money = obj[0].fields.welfare
-          console.log('success')
         },
-        response => {
-          console.log('error')
-        }
+        response => {}
       )
   },
   methods: {}

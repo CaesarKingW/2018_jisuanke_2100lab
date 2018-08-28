@@ -77,11 +77,8 @@ export default {
       this.$http
         .post('http://192.168.55.33:8000/app/search_course', word)
         .then(response => {
-          console.log(this.word)
           var res = response.data
-          console.log(res)
           this.data1 = res.courses
-          console.log(this.data1)
         })
     },
     go_to_edit(index) {
@@ -91,17 +88,12 @@ export default {
       })
     },
     remove(index) {
-      console.log(index)
-      console.log(this.data1)
       this.$http
         .post(
           'http://192.168.55.33:8000/app/delete_course',
           JSON.stringify(this.data1[index].id)
         )
-        .then(response => {
-          var res = response.data
-          console.log(res)
-        })
+        .then(response => {})
       this.data1.splice(index, 1)
     }
   }

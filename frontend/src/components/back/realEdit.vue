@@ -39,7 +39,6 @@ export default {
   },
   created: function() {
     this.id = this.$route.params.id
-    console.log(this.id)
     this.$http
       .post(
         'http://192.168.55.33:8000/app/search_one_course',
@@ -47,7 +46,6 @@ export default {
       )
       .then(response => {
         var res = response.data
-        console.log(response.data)
         this.formItem.title = res.course['title']
         this.formItem.brief_introduction = res.course['brief_introduction']
         this.formItem.oldCP =
@@ -86,9 +84,7 @@ export default {
       formData.append('can_comment', this.formItem.can_comment)
       this.$http
         .post('http://192.168.55.33:8000/app/editCourse', formData)
-        .then(response => {
-          console.log(response.data)
-        })
+        .then(response => {})
     }
   }
 }

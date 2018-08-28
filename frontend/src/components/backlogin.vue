@@ -42,13 +42,11 @@ export default {
   },
   methods: {
     handleSubmit() {
-      console.log(this.formInline)
       // eslint-disable-next-line
       var managerlogin = JSON.stringify(this.formInline)
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/manager_login', managerlogin)
         .then(response => {
-          console.log(response.data.data)
           if (response.data.data === 'true') {
             this.$router.push({
               path: '/backstage',
