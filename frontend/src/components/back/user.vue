@@ -1,20 +1,20 @@
 <template>
 <div>
-    <input v-model="phone_number" placeholder="请输入待搜索用户的手机号">
-    <button @click="search()">搜索</button>
+    <Input v-model="phone_number" placeholder="请输入待搜索用户的手机号" style="width: 300px" />
+    <Button @click="search()">搜索</Button>
     <div v-show="is_show">
       <div v-if="is_null==false">
-        <div><img v-bind:src="head_protrait" width=60px height=80px /></div>
-        <p>用户名：<span>{{username}}</span></p>
-        <p>奖励金：<span>{{welfare}}元</span></p>
-        <div>
-            <span>是否是大V：<span>{{is_teacher}}</span></span><button @click="authenticate()">{{authenticate_button}}</button>
+        <div class="userinfo"><img v-bind:src="head_protrait" width=80px height=80px /></div>
+        <p class="userinfo">用户名：<span>{{username}}</span></p>
+        <p class="userinfo">奖励金：<span>{{welfare}}元</span></p>
+        <div class="userinfo">
+            <span>是否是大V：<span>{{is_teacher}}</span></span><Button class="butt" @click="authenticate()" size="small">{{authenticate_button}}</Button>
         </div>
-        <div>
-            <span>是否被禁言：<span>{{can_comment}}</span></span><button @click="forbid_comment()">{{forbid_comment_button}}</button>
+        <div class="userinfo">
+            <span>是否被禁言：<span>{{can_comment}}</span></span><Button class="butt" @click="forbid_comment()" size="small">{{forbid_comment_button}}</Button>
         </div>
       </div>
-      <div v-else>
+      <div v-else class="userinfo">
         对不起，您搜索的用户不存在
       </div>
     </div>
@@ -43,7 +43,7 @@ export default {
       console.log(this.phone_number)
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/search_user', phoneNumber)
+        .post('http://192.168.55.33:8000/app/search_user', phoneNumber)
         .then(response => {
           var res = response.data
           console.log(res)
@@ -51,7 +51,7 @@ export default {
           if (this.is_null === false) {
             this.username = res.user_info.user_name
             this.welfare = res.user_info.welfare
-            this.head_protrait = this.GLOBAL.serverSrc + ':8000' + res.user_info.head_protrait
+            this.head_protrait = 'http://192.168.55.33:8000' + res.user_info.head_protrait
             if (res.user_info.Is_teacher === true) {
               this.is_teacher = '是'
               this.authenticate_button = '取消大V身份'
@@ -82,7 +82,7 @@ export default {
       }
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/authenticate', phoneNumber)
+        .post('http://192.168.55.33:8000/app/authenticate', phoneNumber)
         .then(response => {})
     },
     forbid_comment() {
@@ -97,11 +97,18 @@ export default {
       }
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/forbid_comment', phoneNumber)
+        .post('http://192.168.55.33:8000/app/forbid_comment', phoneNumber)
         .then(response => {})
     }
   }
 }
 </script>
 <style>
+.userinfo{
+  margin: 10px;
+}
+.butt{
+  margin-left: 5px;
+  color:deepskyblue;
+}
 </style>
