@@ -1,6 +1,11 @@
 <template>
 <body>
 <div id="CourseShow">
+    <div class="navibar">
+    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
+    <Divider type="vertical" />
+    </div>
+    <br />
     <div class="title">{{ title }}</div>
     <p class="read_time">浏览量：{{ times }} 次</p>
     <div class="test_pic"><img id="changePic" v-bind:src="picpath"></div>
@@ -81,8 +86,7 @@ export default {
           this.times = res.course[0].view_count
           this.content = res.course[0].context
           this.pictures = res.pictures
-          this.picpath =
-            this.GLOBAL.serverSrc + this.pictures[0].course_picture
+          this.picpath = this.GLOBAL.serverSrc + this.pictures[0].course_picture
         })
     },
     Play: function() {
@@ -195,6 +199,23 @@ export default {
 }
 </script>
 <style>
+.navibar {
+  z-index: 9999;
+  background-color: #fff;
+  position: fixed;
+  width: 100%;
+  height: 80px;
+  top: -15px;
+  opacity: 0.7;
+  padding: 0px;
+  /* padding: 25px; */
+}
+.navi {
+  font-size: 18px;
+  color: #022336;
+  margin-left: 15px;
+  margin-right: 15px;
+}
 .playRoll {
   margin: 0 auto;
   text-align: center;
@@ -259,7 +280,7 @@ export default {
   border: #000 solid 5px;
   border-radius: 20px;
   width: 40%;
-  height: auto;
+  height: 300px;
   margin: 0 auto;
 }
 </style>

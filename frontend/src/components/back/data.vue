@@ -47,14 +47,9 @@
         </DropdownMenu>
     </Dropdown>
     <p class='choose'>的订单总金额为{{money_amount}}.</p>
-<<<<<<< HEAD
-    <div id="main"  class="chart"></div>
-    <div id=""></div>
-=======
     <div id="free_watch"  class="chart"></div>
     <div id="pay_watch"  class="chart"></div>
     <div id="pay_sale"  class="chart"></div>
->>>>>>> 4c04794f9dd23b653b2c083b0d6ffce8a1140028
   </section>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
 <div id="LearntCourse">
     <div>
-        <table >
+        <table class="courseTable">
             <tr>
                 <th>序号</th>
                 <th>课程编号</th>
@@ -39,10 +39,12 @@ export default {
     }
   },
   mounted: function() {
-    this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(response => {
-      this.userPhone = response.data.list[0].pk
-      this.show_takes()
-    })
+    this.$http
+      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .then(response => {
+        this.userPhone = response.data.list[0].pk
+        this.show_takes()
+      })
   },
   methods: {
     show_takes: function() {
@@ -64,3 +66,24 @@ export default {
   }
 }
 </script>
+<style scoped>
+.courseTable {
+  margin-left: 140px;
+  font-size: 15px;
+  margin-top: 20px;
+}
+table,
+td,
+th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 10px;
+}
+th {
+  color: #022336;
+  font-size: 15px;
+}
+</style>
