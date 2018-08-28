@@ -1,22 +1,24 @@
 <template>
 <body>
 <div id="CourseShow">
-    <Divider><h1 class="title">{{ title }}</h1></Divider>
-    <Divider orientation="right"><p class="read_time" style="font-size: 24px;">浏览量：{{ times }} 次</p></Divider>
-    <div class="test_pic"><img id="changePic" v-bind:src="picpath" width=500px height=350px></div>
-    <Divider />
-    <!-- <Progress :percent="45" status="active" /> -->
-    <audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio>
-    <Divider />
-    <Button type="primary" shape="circle" icon="ios-play"></Button>
-    <Divider />
-    <Collapse accordion v-model="value">
-        <Panel style="background-color:#2d8cf0;">
-            <Poptip trigger="hover" style="font-size: 24px;" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
-            <div style="color: white;">文字介绍</div>
+    <div class="navibar">
+    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
+    <Divider type="vertical" />
+    </div>
+    <br />
+    <div class="title">{{ title }}</div>
+    <p class="read_time">浏览量：{{ times }} 次</p>
+    <div class="test_pic"><img id="changePic" v-bind:src="picpath"></div>
+    <div class="playRoll"><audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio></div>
+    <Collapse cLass="collapse" accordion v-model="value">
+        <Panel>
+            <Poptip trigger="hover" id="poptip" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
+            <div>文字介绍</div>
             </Poptip>
-            <div slot="content" style="text-align: left;font-size: 18px;">
-               <div style="overflow: auto;height: 90px;">content</div>
+            <div slot="content" id="slotContent">
+              <div id="scrollBar">
+                 {{ content }}
+              </div>
             </div>
         </Panel>
     </Collapse>
@@ -260,11 +262,54 @@ export default {
 }
 </script>
 <style>
+#slotContent {
+  text-align: left;
+  font-size: 18px;
+}
+#poptip {
+  font-size: 24px;
+}
+.navibar {
+  z-index: 9999;
+  background-color: #fff;
+  position: fixed;
+  width: 100%;
+  height: 80px;
+  top: -15px;
+  opacity: 0.7;
+  padding: 0px;
+  /* padding: 25px; */
+}
+.navi {
+  font-size: 18px;
+  color: #022336;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.playRoll {
+  margin: 0 auto;
+  text-align: center;
+}
+#scrollBar {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 90px;
+}
+#progressRollDiv {
+  width: 60%;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.collapse {
+  text-align: center;
+  width: 60%;
+  margin: 0 auto;
+}
 #CourseShow {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 #title {
@@ -281,8 +326,31 @@ export default {
   text-align: center;
   border-radius: 2px;
 }
+.test_pic {
+  margin: 0 auto;
+  text-align: center;
+}
+.title {
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 30px;
+  font-family: 华文中宋;
+}
+.read_time {
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 微软雅黑;
+  font-size: 16px;
+}
 #changePic {
   border: #000 solid 5px;
   border-radius: 20px;
+  width: 40%;
+  height: 300px;
+  margin: 0 auto;
 }
 </style>
