@@ -1,14 +1,11 @@
 <template>
 <div class="FreeCourseIntro">
-    <!-- 导航栏 -->
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
     <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
-    <!-- 底板 -->
     <div class="myPanel"></div>
-    <!-- 课程信息 -->
     <div class="CoverDiv">
             <img id="testPic" v-bind:src="path">
             </div>
@@ -160,12 +157,13 @@ export default {
   text-align: center;
   color: #fff;
 }
-.FreeCourseIntro {
+/* .FreeCourseIntro {
   text-align: center;
   margin: 0 auto;
-}
+} */
 .CoverDiv {
   margin: 0 auto;
+  text-align: center;
 }
 .ivu-modal {
   top: 0;
@@ -183,8 +181,6 @@ export default {
   border-radius: 8px;
   width: 130px;
   height: 45px;
-  /* margin-top: 20px;
-  margin-bottom: 20px; */
   margin: 0 auto;
   text-align: center;
   position: static;

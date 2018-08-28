@@ -1,6 +1,5 @@
 <template>
     <div id="AllFreeCourse">
-    <!-- 导航栏 -->
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
@@ -21,8 +20,6 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 {{item.fields.brief_introduction}}</div></div>
             </div>
-            <!-- 在免费课程不显示价格属性，在付费课程显示价格属性 -->
-            <!-- 课程价格：{{item.fields.price}} -->
         </div>
       </Card>
       </router-link>
@@ -48,7 +45,8 @@ export default {
           console.log('success')
           for (var i = 0; i < this.imgs.length; i = i + 1) {
             var a =
-              this.GLOBAL.serverSrc + '/media/' +
+              this.GLOBAL.serverSrc +
+              '/media/' +
               this.imgs[i].fields.Cover_picture
             this.imgs[i].fields.Cover_picture = a
           }
@@ -75,9 +73,6 @@ export default {
   display: flex;
   color: #022336;
 }
-/* .CourseCoverDiv {
-  float: left;
-}*/
 .CourseText {
   float: left;
   margin-left: 5%;

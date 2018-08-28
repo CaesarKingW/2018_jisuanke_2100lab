@@ -1,15 +1,15 @@
 <template>
 <div id="UserLogin">
-    <Button id="lab" ghost><router-link to="/home"><div id="button_text">首页 <Icon type="md-log-in" /></div></router-link></Button>
+    <Button id="lab" ghost><router-link to="/home"><div id="buttonText">首页 <Icon type="md-log-in" /></div></router-link></Button>
     <br>
     <br>
-    <div class="log_column">
+    <div class="logColumn">
     <h1>2100实验室</h1>
     <form method="POST" @submit.prevent="Is_normal_nubmer">
     <Input id="inputPhone" type="text" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" v-model="phone_number"/>
     <input type="submit" id="getCodeButton" value="获取验证码" />
     </form>
-    <form id="log_down" method="POST" @submit.prevent="comparecode">
+    <form id="logDown" method="POST" @submit.prevent="comparecode">
     <div class="caseSensitive"><Icon type="ios-alert" />&nbsp;&nbsp;请注意区分验证码大小写！</div>
     <Input type="text" placeholder="请输入验证码" size="large" icon="ios-key-outline" v-model="usercode"/>
     <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement"/> 我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
@@ -60,7 +60,7 @@ export default {
     instance(type) {
       const title = '2100实验室用户协议'
       const content =
-        '<p><ul style="list-style: none;"><li>第一，绝不意气用事。</li><li>第二，绝不漏判任何一件坏事。</li><li>第三，绝对裁判的公正漂亮。</li></ul></p>'
+        '<p>在此处输入用户协议。</p>'
       switch (type) {
         case 'info':
           this.$Modal.info({
@@ -214,9 +214,8 @@ export default {
   height: 41px;
   position: fixed;
   border-radius: 4px;
-  /* background-color: #075182; */
 }
-#button_text {
+#buttonText {
   color: #000;
 }
 #UserLogin {
@@ -224,7 +223,7 @@ export default {
   background-image: url('../assets/BALL.jpg');
   background-repeat: no-repeat;
   background-size:cover;
-  /* background-size: 100% 100%; */
+  background-color: #022336;
   width: 100%;
   height: 100%;
   height: 585px;
@@ -232,7 +231,7 @@ export default {
   /* overflow: hidden; */
   /* background-attachment: fixed; */
 }
-.log_column {
+.logColumn {
   width: 45%;
   margin-left: 52%;
   margin-top: 6%;
@@ -240,7 +239,7 @@ export default {
   -webkit-transition: opacity 1s;
   background-size: 100% 100%;
 }
-.log_column h1 {
+.logColumn h1 {
   background: #075182;
   padding: 20px 0;
   font-size: 160%;
@@ -254,7 +253,7 @@ form {
   background: #fff;
   padding: 2% 3%;
 }
-#log_down {
+#logDown {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }

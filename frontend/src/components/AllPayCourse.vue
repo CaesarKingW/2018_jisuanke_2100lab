@@ -1,22 +1,10 @@
 <template>
     <div id="AllPayCourse">
-    <!-- 导航栏 -->
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
     <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
-    <!-- 底板卡片 -->
-    <!-- <Card id="payCol"></Card> -->
-    <!-- 标题 -->
-    <!-- <Card id="payCol">
-    <div class="allCol">
-    <div class="myContent">
-        <h4><Icon type="md-bookmarks" />&nbsp;所有付费内容</h4>
-    </div>
-    </div>
-    </Card> -->
-    <!-- 所有课程 -->
     <div v-for="item of imgs" :key="item.id">
       <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
       <Card class="courseCard">

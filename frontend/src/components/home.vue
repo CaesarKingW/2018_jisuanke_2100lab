@@ -1,20 +1,30 @@
 <template>
  <div id="home">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-     <!-- 导航栏 -->
+   <meta name="viewport"
+   content="width=device-width, initial-scale=1.0,
+   maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <div class="NaviBar">
-    <router-link to="/home"><a class="navi"><Icon type="md-home" /> 网站首页</a></router-link>
+    <router-link to="/home"><a class="navi">
+      <Icon type="md-home" /> 网站首页
+      </a></router-link>
     <Divider type="vertical" />
-    <router-link to="/AllFreeCourse"><a class="navi"><Icon type="md-bookmarks" /> 免费课程</a></router-link>
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
     <Divider type="vertical" />
-    <router-link to="/AllPayCourse"><a class="navi"><Icon type="logo-usd" /> 付费课程</a></router-link>
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
     <Divider type="vertical" />
-    <router-link to="/PersonalCenter" v-if="judge"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
-    <a class="navi" @click="logout" v-if="judge"><Icon type="md-log-out" /> 退出登录</a>
-    <router-link to="/UserLogin" v-else><a class="navi"><Icon type="md-log-in" /> 用户登录</a></router-link>
-
+    <router-link to="/PersonalCenter" v-if="judge">
+    <a class="navi"><Icon type="ios-contact" /> 个人中心</a>
+    </router-link>
+    <a class="navi" @click="logout" v-if="judge">
+      <Icon type="md-log-out" /> 退出登录</a>
+    <router-link to="/UserLogin" v-else>
+    <a class="navi"><Icon type="md-log-in" /> 用户登录</a>
+    </router-link>
      </div>
-     <!-- 走马灯 -->
      <div align="center" id="carousel" class="carousel">
      <Carousel autoplay v-model="value" loop>
         <CarouselItem>
@@ -28,7 +38,6 @@
         </CarouselItem>
     </Carousel>
     </div>
-    <!-- 免费内容导航框 -->
      <Card id="FreeCol">
     <div class="AllCol">
     <div class="MyContent">
@@ -41,7 +50,6 @@
     </div>
     </div>
      </Card>
-    <!-- 免费内容预览 -->
     <div class="container">
     <div class="item" v-for="item of free_course" :key="item.id">
       <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
@@ -53,7 +61,6 @@
         </div>
     </div>
     <br>
-    <!-- 付费内容导航框 -->
     <Card id="PayCol">
     <div class="AllCol">
     <div class="MyContent">
@@ -66,7 +73,6 @@
     </div>
     </div>
     </Card>
-    <!-- 付费内容预览 -->
     <div class="container">
     <div class="item" v-for="item of paying_course" :key="item.id">
      <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
@@ -76,18 +82,24 @@
       </Card>
      </router-link>
         </div>
-
     </div>
-    <!-- 返回顶部 -->
     <BackTop>
         <div class="top">返回顶端</div>
     </BackTop>
-    <!-- 关于我们卡片 -->
     <Card id="AboutUs">
     <div class="wrapper">
-    <div class="left"><div><Icon size=100 type="ios-people-outline" /></div><div>团队成员</div><div>南开大学软件学院</div><div>佛组</div></div>
-    <div class="middle"><div><Icon size=100 type="ios-school-outline" /></div><div>关于我们</div><div>2100实验室</div><div>专注为3~12岁儿童提供更好的科学启蒙教育</div></div>
-    <div class="right"><div><Icon size=100 type="ios-eye-outline" /></div><div>联系我们</div><div>南开大学泰达学院</div><div>客服电话：15009253698</div></div>
+    <div class="left"><div>
+      <Icon size=100 type="ios-people-outline" /></div>
+      <div>团队成员</div><div>南开大学软件学院</div><div>佛组</div>
+      </div>
+    <div class="middle"><div>
+      <Icon size=100 type="ios-school-outline" /></div><div>关于我们</div><div>2100实验室</div>
+      <div>专注为3~12岁儿童提供更好的科学启蒙教育</div>
+      </div>
+    <div class="right"><div>
+      <Icon size=100 type="ios-eye-outline" /></div><div>联系我们</div><div>南开大学泰达学院</div>
+      <div>客服电话：15009253698</div>
+      </div>
     </div>
     </Card>
  </div>
@@ -121,7 +133,8 @@ export default {
           console.log('success')
           for (var i = 0; i < this.imgs.length; i = i + 1) {
             var a =
-              this.GLOBAL.serverSrc + '/media/' +
+              this.GLOBAL.serverSrc +
+              '/media/' +
               this.imgs[i].fields.Cover_picture
             this.imgs[i].fields.Cover_picture = a
           }
@@ -143,7 +156,8 @@ export default {
           console.log('success')
           for (var i = 0; i < this.paying_imgs.length; i = i + 1) {
             var a =
-              this.GLOBAL.serverSrc + '/media/' +
+              this.GLOBAL.serverSrc +
+              '/media/' +
               this.paying_imgs[i].fields.Cover_picture
             this.paying_imgs[i].fields.Cover_picture = a
           }
@@ -187,21 +201,16 @@ export default {
 }
 </script>
 <style scoped>
-/* .courseCard {
-  padding: 20px;
-} */
 .home {
   margin: 0 auto;
 }
 .CoverPic {
   text-align: center;
-  /* margin-left: 12%; */
   border: black solid 2px;
   border-radius: 3px;
   width: 270px;
   height: 200px;
   margin: auto;
-  /* margin-left: 20px; */
 }
 .CoverTitle {
   text-align: center;
@@ -226,7 +235,6 @@ export default {
   margin-right: 15px;
 }
 .container {
-  width: 100%;
   width: 85%;
   display: flex;
   display: -webkit-flex;
@@ -242,7 +250,6 @@ export default {
   height: 200px;
   margin: 0 auto;
   color: #fff;
-  /* text-align: center; */
 }
 .middle {
   flex-grow: 1;
@@ -287,9 +294,7 @@ export default {
   text-align: center;
 }
 .SeeMore {
-  /* flex-grow: 1; */
   position: static;
-  /* text-align: center; */
 }
 .id {
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
@@ -321,8 +326,6 @@ export default {
   font-size: 18px;
   margin-left: 27px;
   text-align: center;
-  /* flex-grow: 1; */
-  /* text-align: center; */
 }
 .top {
   padding: 12px;

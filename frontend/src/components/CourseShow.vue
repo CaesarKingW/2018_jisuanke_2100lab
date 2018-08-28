@@ -12,10 +12,10 @@
     <div class="playRoll"><audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio></div>
     <Collapse cLass="collapse" accordion v-model="value">
         <Panel>
-            <Poptip trigger="hover" style="font-size: 24px;" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
+            <Poptip trigger="hover" id="poptip" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
             <div>文字介绍</div>
             </Poptip>
-            <div slot="content" style="text-align: left;font-size: 18px;">
+            <div slot="content" id="slotContent">
               <div id="scrollBar">
                  {{ content }}
               </div>
@@ -262,6 +262,13 @@ export default {
 }
 </script>
 <style>
+#slotContent {
+  text-align: left;
+  font-size: 18px;
+}
+#poptip {
+  font-size: 24px;
+}
 .navibar {
   z-index: 9999;
   background-color: #fff;

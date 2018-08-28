@@ -63,7 +63,7 @@
         title="分销课程"
         v-model="modal"
         class-name="vertical-center-modal">
-        <div style="text-align: center; padding:10px;"><span id="thisURL">本页地址：{{ message }}</span>
+        <div id="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <button id="copyButton" type="button"
         v-clipboard:copy="message"
@@ -202,6 +202,10 @@ export default {
 }
 </script>
 <style scoped>
+#urlDiv {
+  text-align: center;
+  padding: 10px;
+}
 #buttons {
   margin: 0 auto;
   text-align: center;
@@ -238,12 +242,9 @@ export default {
   text-align: center;
   color: #fff;
 }
-.PayCourseIntro {
+.coverDiv {
+  margin: 0 auto;
   text-align: center;
-  margin: 0 auto;
-}
-.CoverDiv {
-  margin: 0 auto;
 }
 .ivu-modal {
   top: 0;
@@ -257,8 +258,6 @@ export default {
   border-radius: 8px;
   width: 130px;
   height: 45px;
-  /* margin-top: 20px;
-  margin-bottom: 20px; */
   margin: 0 auto;
   text-align: center;
   position: static;
@@ -290,6 +289,7 @@ export default {
   border: #cccccc solid 2px;
   border-radius: 8px;
   margin: 0 auto;
+  text-align: center;
 }
 .alertButtonDiv {
   margin: 0 auto;
