@@ -37,7 +37,7 @@ export default {
   },
   mounted: function() {
     this.$http
-      .post(this.GLOBAL.serverSrc + 'app/get_status')
+      .post(this.GLOBAL.serverSrc + '/app/get_status')
       .then(
         response => {
           this.phone = response.data.phonenumber

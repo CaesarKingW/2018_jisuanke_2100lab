@@ -21,13 +21,13 @@ export default {
   },
   methods: {
     show_all_course: function() {
-      this.$http.get(this.GLOBAL.serverSrc + 'app/show_paying_course').then(
+      this.$http.get(this.GLOBAL.serverSrc + '/app/show_paying_course').then(
         response => {
           this.imgs = response.data.list
           console.log('success')
           for (var i = 0; i < this.imgs.length; i = i + 1) {
             var a =
-              this.GLOBAL.serverSrc + 'media/' +
+              this.GLOBAL.serverSrc + '/media/' +
               this.imgs[i].fields.Cover_picture
             this.imgs[i].fields.Cover_picture = a
           }

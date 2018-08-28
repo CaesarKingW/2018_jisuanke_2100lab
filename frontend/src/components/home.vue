@@ -115,13 +115,13 @@ export default {
   },
   methods: {
     show_free_course: function() {
-      this.$http.get(this.GLOBAL.serverSrc + 'app/show_free_course').then(
+      this.$http.get(this.GLOBAL.serverSrc + '/app/show_free_course').then(
         response => {
           this.imgs = response.data.list
           console.log('success')
           for (var i = 0; i < this.imgs.length; i = i + 1) {
             var a =
-              this.GLOBAL.serverSrc + 'media/' +
+              this.GLOBAL.serverSrc + '/media/' +
               this.imgs[i].fields.Cover_picture
             this.imgs[i].fields.Cover_picture = a
           }
@@ -137,13 +137,13 @@ export default {
       )
     },
     show_paying_course: function() {
-      this.$http.get(this.GLOBAL.serverSrc + 'app/show_paying_course').then(
+      this.$http.get(this.GLOBAL.serverSrc + '/app/show_paying_course').then(
         response => {
           this.paying_imgs = response.data.list
           console.log('success')
           for (var i = 0; i < this.paying_imgs.length; i = i + 1) {
             var a =
-              this.GLOBAL.serverSrc + 'media/' +
+              this.GLOBAL.serverSrc + '/media/' +
               this.paying_imgs[i].fields.Cover_picture
             this.paying_imgs[i].fields.Cover_picture = a
           }
@@ -161,7 +161,7 @@ export default {
     },
     Judgestatus: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/get_status')
+        .post(this.GLOBAL.serverSrc + '/app/get_status')
         .then(response => {
           this.judge = response.data.is_login
         })
@@ -171,7 +171,7 @@ export default {
     },
     logout: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/del_status')
+        .post(this.GLOBAL.serverSrc + '/app/del_status')
         .then(response => {
           this.judge = response.data.is_login
           if (response.data.username === null) {

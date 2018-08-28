@@ -66,7 +66,7 @@ export default {
   methods: {
     Judgestatus: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/get_status')
+        .post(this.GLOBAL.serverSrc + '/app/get_status')
         .then(response => {
           var judge = response.data.is_login
           // 用户未登录状态下强制访问，跳出404 not found页面
@@ -81,7 +81,7 @@ export default {
     },
     logout: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/del_status')
+        .post(this.GLOBAL.serverSrc + '/app/del_status')
         .then(response => {
           this.judge = response.data.is_login
           if (response.data.username === null) {
