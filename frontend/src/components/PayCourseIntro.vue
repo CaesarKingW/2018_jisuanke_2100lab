@@ -17,26 +17,40 @@
             <Icon type="logo-usd" /> 购买课程
             </Button></div> -->
             <div v-if="judge">
-              <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="IsPaid"><Button  id="buy" type="primary">
-                <Icon type="logo-usd" /> 进入课程</Button></router-link>
-              <div v-else><Button  id="buy" type="primary" v-on:click="alipay()">
-                <Icon type="logo-usd" /> 购买课程</Button></div>
+              <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="IsPaid">
+                <Button id="buy" type="primary">
+                <Icon type="logo-usd" /> 进入课程</Button>
+              </router-link>
+              <div v-else>
+                <Poptip placement="right" v-model="visible">
+          <a><Button  id="buy" type="primary">
+                <Icon type="logo-usd" /> 购买课程</Button></a>
+        <div slot="title"><i>
+                  <Button id="aliPayButton" v-on:click="alipay()">支付宝支付</Button>
+                  <Button id="wxPayButton" v-on:click="wxpay()">微信支付</Button>
+                  <Button id="awardButton" v-on:click="awardpay()">奖励金支付</Button>
+          </i></div>
+        <div slot="content">
+            <a @click="close">关闭标签</a>
+        </div>
+        </Poptip>
+              </div>
             </div>
-            <div v-else><Button  id="buy" type="primary" v-on:click="modall = true">
+            <div v-else><Button id="buy" v-on:click="modal1" type="primary">
             <Icon type="logo-usd" /> 购买课程</Button></div>
-            <Modal v-model="modall" title="温馨提示" @on-ok="ok"
+            <Modal v-model="modal1" title="温馨提示" @on-ok="ok"
             @on-cancel="cancel">
               <p>您必须先登录才能学习课程</p>
             </Modal>
             </div>
         <div class="shareButtonDiv">
           <Button @click="modal = true" id="share" type="primary">
-            <Icon type="ios-card" /> 分销课程</Button>
+            <Icon type="ios-card" /> 分享课程</Button>
             </div>
         <div class="alertButtonDiv">
           <Alert class="alertButton" show-icon>
         <Icon type="ios-trophy-outline" slot="icon"></Icon>
-        <template class="alertText" slot="desc">分销本课程，还可额外获得 {{ award }} 枚奖励币哦！</template>
+        <template class="alertText" slot="desc">分享本课程给他人，他人购买后，你还可以额外获得 {{ award }} 枚奖励币哦！</template>
           </Alert>
         </div>
         <div class="introDiv">
@@ -78,6 +92,7 @@ export default {
       courseid: 1,
       userphone: '',
       value: '1',
+      visible: false,
       // 判断用户是否登录
       judge: false,
       // 判断用户是否支付成功
@@ -97,6 +112,9 @@ export default {
     this.get_specified_course()
   },
   methods: {
+    close() {
+      this.visible = false
+    },
     Judgestatus: function() {
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/get_status')
@@ -184,6 +202,10 @@ export default {
 }
 </script>
 <style scoped>
+#buttons {
+  margin: 0 auto;
+  text-align: center;
+}
 .navibar {
   z-index: 9999;
   background-color: #fff;

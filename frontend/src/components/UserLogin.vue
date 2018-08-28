@@ -44,7 +44,7 @@ export default {
     timedCount: function() {
       document.getElementById('getCodeButton').disabled = true
       document.getElementById('getCodeButton').value =
-        this.count + '后重新获取验证码'
+        this.count + 's后重新获取验证码'
       this.count = this.count - 1
       if (this.count !== 0) {
         let _this = this
