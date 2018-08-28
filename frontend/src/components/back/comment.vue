@@ -1,7 +1,8 @@
 <template>
 <div>
     <div>
-        <input v-model="phone_number" placeholder='请输入用户手机号以搜索其留言'> <button @click="search()">搜索</button>
+        <Input v-model="phone_number" placeholder="请输入待搜索留言用户的手机号" style="width: 300px" />
+        <Button @click="search()">搜索</Button>
     </div>
     <div v-show='is_show'>
     <div v-if = 'if_user===false'>
@@ -33,7 +34,7 @@ export default {
     search() {
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/search_comment', phoneNumber)
+        .post('http://192.168.55.33:8000/app/search_comment', phoneNumber)
         .then(response => {
           var res = response.data
           console.log(res)
@@ -58,7 +59,7 @@ export default {
       console.log(messageId)
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/delete_comment',
+          'http://192.168.55.33:8000/app/delete_comment',
           JSON.stringify({
             message_id: messageId,
             phone_number: this.phone_number
