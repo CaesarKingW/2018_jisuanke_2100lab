@@ -57,7 +57,7 @@ export default {
         this.formItem.Is_destroy = res.course['Is_destroy']
         this.formItem.distroy_time = res.course['distory_time']
         this.formItem.price = res.course['price']
-        this.formItem.share_rate = res.course['share_rate']*100
+        this.formItem.share_rate = res.course['share_rate'] * 100
         this.formItem.can_comment = res.course['can_comment']
       })
   },

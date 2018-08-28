@@ -346,10 +346,6 @@ export default {
           console.log(response.data)
           this.rest = false
           this.finish = true
-          var that = this
-          setTimeout(function() {
-            ;(that.all = false), (that.all = true)
-          }, 3000)
         })
     },
     Change(b) {
