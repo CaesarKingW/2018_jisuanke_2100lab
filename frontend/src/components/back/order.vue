@@ -65,7 +65,6 @@ export default {
       this.$http
         .post('http://192.168.55.33:8000/app/refund', orderNumber)
         .then(response => {
-          var res = response.data
           alert('退款成功！')
           this.status = '已退款'
           this.if_refund = false

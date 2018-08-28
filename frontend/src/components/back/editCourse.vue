@@ -93,9 +93,7 @@ export default {
           'http://192.168.55.33:8000/app/delete_course',
           JSON.stringify(this.data1[index].id)
         )
-        .then(response => {
-          var res = response.data
-        })
+        .then(response => {})
       this.data1.splice(index, 1)
     }
   }

@@ -118,7 +118,6 @@ export default {
             })
           )
           .then(response => {
-            var res = response.data
             alert('注册成功！')
             this.can_login = true
           })
@@ -134,7 +133,6 @@ export default {
           })
         )
         .then(response => {
-          var res = response.data
           alert('登录成功！')
           this.$router.push({ name: 'backstage' })
         })

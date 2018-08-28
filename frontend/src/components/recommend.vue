@@ -60,9 +60,11 @@ export default {
             this.paying_imgs[i].fields.Cover_picture = a
           }
           var length = 0
-          if (this.paying_imgs.length > this.show_number)
+          if (this.paying_imgs.length > this.show_number) {
             length = this.show_number
-          else length = this.paying_imgs.length
+          } else {
+            length = this.paying_imgs.length
+          }
           this.paying_course = this.paying_imgs.slice(0, length)
         },
         response => {}

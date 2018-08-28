@@ -91,7 +91,6 @@ export default {
       })
       this.$http.post(this.GLOBAL.serverSrc + '/app/praise', formDate).then(
         response => {
-          var hasPraise = response.data.has_praise
           this.show_message()
         },
         response => {}
