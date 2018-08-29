@@ -6,9 +6,6 @@ from django.test import Client
 from .utils.yunpian import YunPian
 
 # Create your tests here.
-# 验证get请求
-# class GetTest(TestCase):
-
 
 # 验证post请求
 class PostTest(TestCase):
@@ -72,33 +69,6 @@ class PostTest(TestCase):
         response = self.client.post('/app/get_user_information')
         self.assertEqual(response.status_code, 200)
 
-    # def test_search_user(self):
-    #     response = self.client.post('/app/search_user')
-    #     self.assertEqual(response.status_code, 200)
-
-    # def test_authenticate(self):
-    #     response = self.client.post('/app/authenticate')
-    #     self.assertEqual(response.status_code, 200)
-
-    # def test_forbid_comment(self):
-    #     response = self.client.post('/app/forbid_comment')
-    #     self.assertEqual(response.status_code, 200)
-
-    # def test_search_comment(self):
-    #     response = self.client.post('/app/search_comment')
-    #     self.assertEqual(response.status_code, 200)
-
-    # def test_delete_comment(self):
-    #     response = self.client.post('/app/delete_comment')
-    #     self.assertEqual(response.status_code, 200)
-
-    # def test_search_order(self):
-    #     response = self.client.post('/app/search_order')
-    #     self.assertEqual(response.status_code, 200)
-
-    # def test_refund(self):
-    #     response = self.client.post('/app/refund')
-    #     self.assertEqual(response.status_code, 200)
 
     def test_get_status(self):
         response = self.client.post('/app/get_status')
@@ -116,29 +86,6 @@ class PostTest(TestCase):
         response = self.client.post('/app/notify')
         self.assertEqual(response.status_code, 200)
 
-    # def test_add_img(self):
-    #     response = self.client.post('/app/add_img')
-    #     self.assertEqual(response.status_code, 200)
-
-    # def test_add_audi(self):
-    #     response = self.client.post('/app/add_audi')
-    #     self.assertEqual(response.status_code, 200)
-
-    # def test_set_start_time(self):
-    #     response = self.client.post('/app/set_start_time')
-    #     self.assertEqual(response.status_code, 200)
-
-    # def test_set_end_time(self):
-    #     response = self.client.post('/app/set_end_time')
-    #     self.assertEqual(response.status_code, 200)
-
-    # def test_add_course(self):
-    #     response = self.client.post('/app/add_course')
-    #     self.assertEqual(response.status_code, 200)
-
-    # def test_preview(self):
-    #     response = self.client.post('/app/preview')
-    #     self.assertEqual(response.status_code, 200)
 
     def test_account_destroy(self):
         response = self.client.post('/app/account_destroy')
@@ -152,7 +99,8 @@ class PostTest(TestCase):
         response = self.client.post('/app/show_paying_course')
         self.assertEqual(response.status_code, 200)
 
-#验证短信发送功能
+# 验证短信发送功能
+# 如果不注释，会在每次跑ci的时候发送一条短信，造成短信轰炸，短信服务平台会收回权限，并且这个测试是可以通过的
 # class SendMessage(TestCase):
 #     def test_yunpian(self):
 #         yun_pian = YunPian("264fb31e3ba88e5c55572dd977b2f372")

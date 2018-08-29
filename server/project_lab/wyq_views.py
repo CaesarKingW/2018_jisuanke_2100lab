@@ -130,7 +130,7 @@ def payment(request):
                 alipay_public_key_path=settings.STATIC_ROOT +
                 '/alipay_key_2048.txt',
                 debug=True,  # 默认False,
-                return_url="http://192.168.55.33:8000/#/CourseShow")
+                return_url="http://192.168.55.33:8000/#/PayConfirm")
             url = alipay.direct_pay(
                 subject="测试订单", out_trade_no=orderid + '', total_amount=price)
             re_url = "https://openapi.alipaydev.com/gateway.do?{data}".format(

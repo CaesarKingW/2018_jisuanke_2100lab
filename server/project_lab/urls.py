@@ -28,6 +28,8 @@ urlpatterns = [
     path('show_takes', takes_views.show_takes),
     path('add_or_update_takes', takes_views.add_or_update_takes),
     path('add_new_take', takes_views.add_new_take),
+    path('set_burn', takes_views.set_burn),
+    path('get_burn_status', takes_views.get_burn_status),
     path('show_orders', orders_views.show_orders),
     path('get_order_payment', orders_views.get_order_payment),
     path('search_user', wq_views.search_user),

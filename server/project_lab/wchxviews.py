@@ -70,7 +70,8 @@ def get_course_info(request):
     response = {}
     try:
         if request.method == 'POST':
-            course = Course.objects.get(id=1)
+            id = json.loads(request.body)
+            course = Course.objects.get(id=id)
             course_list = []
             real_course = CourseSerializer(course)
             course_list.append(real_course.data)

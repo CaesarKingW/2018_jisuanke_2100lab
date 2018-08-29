@@ -14,21 +14,21 @@
         <div class="courseTitleDiv"><div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="buyButtonDiv">
             <div v-if="judge">
-              <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="IsPaid">
-                <Button id="buy" type="primary">
-                <Icon type="logo-usd" /> 进入课程</Button>
-              </router-link>
+              <div v-if="IsPaid"><Button  id="buy" type="primary" v-on:click="IsBurn">
+                <Icon type="logo-usd" /> 进入课程</Button></div>
+              <!-- <div v-else><Button  id="buy" type="primary" v-on:click="alipay()">
+                <Icon type="logo-usd" /> 购买课程</Button></div> -->
               <div v-else>
                 <Poptip placement="right" v-model="visible">
           <a><Button  id="buy" type="primary">
                 <Icon type="logo-usd" /> 购买课程</Button></a>
         <div slot="title"><i>
-                  <Button id="aliPayButton" v-on:click="alipay()">支付宝支付</Button>
-                  <Button id="wxPayButton" v-on:click="wxpay()">微信支付</Button>
-                  <Button id="awardButton" v-on:click="awardpay()">奖励金支付</Button>
+                  <Button id="aliPayButton" v-on:click="alipay()"><Icon type="logo-usd" />支付宝支付</Button>
+                  <Button id="wxPayButton" v-on:click="wxpay()"><Icon type="logo-usd" />微信支付</Button>
+                  <Button id="awardButton" v-on:click="awardpay()"><Icon type="logo-usd" />奖励金支付</Button>
           </i></div>
         <div slot="content">
-            <a @click="close">关闭标签</a>
+            <a @click="close">放弃购买关闭</a>
         </div>
         </Poptip>
               </div>
@@ -100,8 +100,8 @@ export default {
       judge: false,
       // 判断用户是否支付成功
       IsPaid: false,
-      burnTime: '',
-      isBurn: true
+      burnTime: null,
+      isBurn: false
     }
   },
   created: function() {
@@ -146,6 +146,8 @@ export default {
             this.content = course[0].fields.brief_introduction
             this.price = course[0].fields.price
             this.award = Math.floor(course[0].fields.share_rate * this.price)
+            this.isBurn = course[0].fields.Is_destroy
+            this.burnTime = course[0].fields.distory_time
           } else {
             this.$router.push({ name: 'home' })
           }
@@ -180,6 +182,12 @@ export default {
           window.location.href = response.data
         })
     },
+    wxpay: function() {
+      this.$Message.warning('抱歉，暂不支持微信支付')
+    },
+    awardpay: function() {
+      this.$Message.warning('兄弟，还是用支付宝吧！！！')
+    },
     ok: function() {
       this.$router.push({ name: 'UserLogin' })
     },
@@ -195,6 +203,27 @@ export default {
         )
         .then(response => {
           this.IsPaid = response.data.order_status
+        })
+    },
+    IsBurn: function() {
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/get_burn_status',
+          JSON.stringify({
+            userphone: this.userphone,
+            courseid: this.courseid
+          })
+        )
+        .then(response => {
+          var isBurn = response.data.status
+          if (isBurn) {
+            this.$router.push({ name: 'ReadAndBurn' })
+          } else {
+            this.$router.push({
+              name: 'CourseShow',
+              query: { id: this.courseid }
+            })
+          }
         })
     }
   }
@@ -306,7 +335,8 @@ export default {
   text-align: center;
 }
 
-.alertButtonDiv,.burnDiv {
+.alertButtonDiv,
+.burnDiv {
   margin: 0 auto;
   text-align: center;
   width: 60%;
