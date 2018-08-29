@@ -112,42 +112,51 @@ export default {
 #loveIcon {
   color: red;
 }
+
 #userName {
   font-size: 18px;
   font-family: 微软雅黑;
 }
+
 #commentIcon {
   font-size: 35px;
 }
+
 #postFont {
   font-size: 25px;
   margin: 0 auto;
 }
+
 #commentAlert {
   text-align: center;
   padding: 20px;
   width: 940px;
   margin-left: 180px;
 }
+
 #commentTitle {
   font-size: 40px;
   font-family: 华文中宋;
   padding: 20px;
 }
+
 #textIcon {
   font-size: 60px;
   padding-top: 2px;
 }
+
 .oneCommentCard {
   /* text-align: center; */
   margin-left: 200px;
   width: 900px;
 }
+
 .oneContentDiv {
   font-family: 华文中宋;
   font-size: 20px;
   color: #666666;
 }
+
 #postColumn {
   width: 900px;
   font-family: 华文中宋;
@@ -155,6 +164,7 @@ export default {
   margin-left: 200px;
   margin-bottom: 30px;
 }
+
 #postButton {
   width: 22%;
   height: 40px;
@@ -168,10 +178,12 @@ export default {
   background-color: #fff;
   cursor: pointer;
 }
+
 #postButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
 }
+
 #likeButton {
   width: 8%;
   height: 30px;
@@ -183,6 +195,7 @@ export default {
   cursor: pointer;
   margin-left: 720px;
 }
+
 #likeButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;

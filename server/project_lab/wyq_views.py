@@ -308,7 +308,6 @@ def pay_sale(request):
     return JsonResponse(response)
 
 
-
 class AliPay(object):
     """
     支付宝支付接口

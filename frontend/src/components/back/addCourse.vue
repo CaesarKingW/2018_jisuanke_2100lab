@@ -1,7 +1,7 @@
 import datetime
 <template>
 <div v-if="all">
-<div v-if="start_add" ><p class="formitem">课程标题：<Input v-model="course_title" placeholder="" style="width: 300px" /></p><div class="formitem">课程简介：<Input v-model="brief_intro" type="textarea" style="width: 300px" /></div><Button class="formitem" @click="addCourse()">新建课程</Button></div>
+<div v-if="start_add" ><p class="formitem">课程标题：<Input v-model="course_title" placeholder="" class="width" /></p><div class="formitem">课程简介：<Input v-model="brief_intro" type="textarea" class="width" /></div><Button class="formitem" @click="addCourse()">新建课程</Button></div>
 <div v-if="upload_audi"><p class="formitem">上传音频</p>
 <p class="formitem"><input type="file" name="audi_upload" >
 <Button @click="AudiUpload()">上传</BUtton></p></div>
@@ -337,23 +337,32 @@ export default {
   width: 50px;
   height: 30px;
 }
+
 #sp {
   width: 90px;
   height: 90px;
 }
+
 #pts {
   width: 150px;
   height: 150px;
 }
+
 #arrow {
   font-size: 20px;
 }
+
 .formitem {
   margin: 15px;
 }
+
 .succeed {
-  text-align: center;
   display: table-cell;
+  text-align: center;
   vertical-align: middle;
+}
+
+.width {
+  width: 300px;
 }
 </style>

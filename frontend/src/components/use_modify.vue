@@ -2,7 +2,7 @@
 <div id="useModify">
     <div>
     <img v-bind:src="path" class="imgDiv" /><img>
-    <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head"/>
+    <input type='file' name='head' id='head' class="none" accept="image/*" v-on:change="Upload_head"/>
     <input type='button' value='上传头像' v-on:click="click_file">
     </div>
     <div>
@@ -99,3 +99,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.none {
+  display: none;
+}
+</style>

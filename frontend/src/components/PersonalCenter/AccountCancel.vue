@@ -55,34 +55,36 @@ export default {
 <style scoped>
 #alertColumn {
   width: 600px;
-  margin-left: 280px;
   margin-top: 50px;
-  background-color: brown;
-  opacity: 0.9;
-  color: white;
+  margin-left: 280px;
   font-size: 19px;
+  color: white;
+  background-color: brown;
   border: rgba(255, 255, 255, 0.8) solid 2px;
+  opacity: 0.9;
 }
+
 #alertTitle {
   font-size: 30px;
   text-align: center;
 }
+
 #cancelButton {
-  text-align: center;
-  margin-left: 325px;
-  margin-top: 20px;
   width: 110px;
   height: 45px;
-  background-color: brown;
-  color: #fff;
-  outline: none;
-  border-radius: 4px;
-  border: rgba(255, 255, 255, 0.8) solid 2px;
-  color: #fff;
-  opacity: 0.9;
+  margin-top: 20px;
+  margin-left: 325px;
   font-size: 16px;
+  color: #fff;
+  text-align: center;
   cursor: pointer;
+  background-color: brown;
+  border: rgba(255, 255, 255, 0.8) solid 2px;
+  border-radius: 4px;
+  outline: none;
+  opacity: 0.9;
 }
+
 #cancelButton:hover {
   cursor: pointer;
   background-color: rgb(202, 53, 53);

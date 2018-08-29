@@ -74,9 +74,11 @@ export default {
 #replyIcon {
   font-size: 30px;
 }
+
 #replyCard {
   border-radius: 0px;
 }
+
 #replySubmit {
   width: 8%;
   height: 28px;
@@ -90,13 +92,16 @@ export default {
   background-color: #fff;
   cursor: pointer;
 }
+
 #submitArea {
   text-align: center;
 }
+
 #replySubmit:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
 }
+
 #replyButton {
   width: 9%;
   text-align: center;
@@ -110,19 +115,23 @@ export default {
   background-color: #fff;
   cursor: pointer;
 }
+
 #replyButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
 }
+
 #replyContent,
 replyUser {
   font-family: 华文中宋;
   font-size: 16px;
 }
+
 #replyContent {
   width: 100%;
   color: gray;
 }
+
 #replyUser {
   font-size: 16px;
   font-family: 微软雅黑;

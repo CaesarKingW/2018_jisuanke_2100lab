@@ -287,9 +287,11 @@ export default {
   text-align: left;
   font-size: 18px;
 }
+
 #poptip {
   font-size: 24px;
 }
+
 .navibar {
   z-index: 9999;
   background-color: #fff;
@@ -299,47 +301,55 @@ export default {
   top: -15px;
   opacity: 0.7;
   padding: 0px;
-  /* padding: 25px; */
 }
+
 .navi {
   font-size: 18px;
   color: #022336;
   margin-left: 15px;
   margin-right: 15px;
 }
+
 .playRoll {
   margin: 0 auto;
   text-align: center;
 }
+
 #scrollBar {
   overflow-y: auto;
   overflow-x: hidden;
   height: 90px;
 }
+
 #progressRollDiv {
   width: 60%;
   text-align: center;
   margin: 0 auto;
   margin-top: 20px;
 }
+
 .collapse {
   text-align: center;
   width: 60%;
   margin: 0 auto;
 }
+
 #CourseShow {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
 #title {
   color: #17233d;
 }
+
 #read_time {
   color: #808695;
   font-size: 14px;
 }
+
 .top {
   padding: 10px;
   background: #2d8cf0;
@@ -347,10 +357,12 @@ export default {
   text-align: center;
   border-radius: 2px;
 }
+
 .test_pic {
   margin: 0 auto;
   text-align: center;
 }
+
 .title {
   margin: 0 auto;
   text-align: center;
@@ -359,6 +371,7 @@ export default {
   font-size: 30px;
   font-family: 华文中宋;
 }
+
 .read_time {
   margin: 0 auto;
   margin-top: 10px;
@@ -367,6 +380,7 @@ export default {
   font-family: 微软雅黑;
   font-size: 16px;
 }
+
 #changePic {
   border: #000 solid 5px;
   border-radius: 20px;

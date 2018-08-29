@@ -104,6 +104,7 @@ export default {
   border: none;
   border-radius: 0px;
 }
+
 .line {
   background-color: #022336;
   color: #fff;
@@ -112,9 +113,11 @@ export default {
   font-family: 华文中宋;
   padding: 10px;
 }
+
 .line:hover {
   background-color: #073550;
 }
+
 .blank {
   background-color: #022336;
   width: 200px;
@@ -122,9 +125,11 @@ export default {
   font-family: 华文中宋;
   padding: 10px;
 }
+
 #navigation {
   float: left;
 }
+
 #myCenter {
   text-align: center;
   font-size: 28px;

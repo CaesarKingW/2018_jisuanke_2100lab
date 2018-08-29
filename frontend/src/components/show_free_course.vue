@@ -4,8 +4,6 @@
             <img v-bind:src= 'item.fields.Cover_picture'/>
             课程标题：{{item.fields.title}}
             课程简介：{{item.fields.brief_introduction}}
-            <!-- 在免费课程不现实价格属性，在付费课程显示价格属性 -->
-            <!-- 课程价格：{{item.fields.price}} -->
         </div>
     </div>
 </template>

@@ -7,7 +7,7 @@ from .utils.yunpian import YunPian
 
 # Create your tests here.
 
-#验证post请求
+# 验证post请求
 class PostTest(TestCase):
     def test_add_message(self):
         response = self.client.post('/app/add_message')
@@ -39,10 +39,6 @@ class PostTest(TestCase):
 
     def test_manager_search(self):
         response = self.client.post('/app/back_log_out')
-        self.assertEqual(response.status_code, 200)
-
-    def test_manager_search(self):
-        response = self.client.post('/app/manager_search')
         self.assertEqual(response.status_code, 200)
 
     def test_manager_change(self):

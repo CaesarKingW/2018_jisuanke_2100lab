@@ -234,10 +234,12 @@ export default {
   text-align: center;
   padding: 10px;
 }
+
 #buttons {
   margin: 0 auto;
   text-align: center;
 }
+
 .navibar {
   z-index: 9999;
   background-color: #fff;
@@ -246,38 +248,46 @@ export default {
   opacity: 0.9;
   padding: 25px;
 }
+
 .navi {
   font-size: 18px;
   color: #022336;
   margin-left: 15px;
   margin-right: 15px;
 }
+
 .myPanel {
   margin: 0 auto;
   height: 90px;
   border: none;
   border-radius: 0px;
 }
+
 .vertical-center-modal {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .ivu-modal {
   top: 0;
 }
+
 .alertText,
 .burnText {
   text-align: center;
   color: #fff;
 }
+
 .coverDiv {
   margin: 0 auto;
   text-align: center;
 }
+
 .ivu-modal {
   top: 0;
 }
+
 #share,
 #buy {
   background-color: #fff;
@@ -291,6 +301,7 @@ export default {
   text-align: center;
   position: static;
 }
+
 .buyButtonDiv,
 .shareButtonDiv {
   margin: 0 auto;
@@ -299,6 +310,7 @@ export default {
   margin-bottom: 25px;
   position: static;
 }
+
 #copyButton {
   width: 50px;
   height: 25px;
@@ -309,9 +321,11 @@ export default {
   color: #fff;
   cursor: pointer;
 }
+
 #copyButton:hover {
   background: #57a3f3;
 }
+
 #testPic {
   width: 360px;
   height: 250px;
@@ -320,6 +334,7 @@ export default {
   margin: 0 auto;
   text-align: center;
 }
+
 .alertButtonDiv,
 .burnDiv {
   margin: 0 auto;
@@ -328,22 +343,26 @@ export default {
   height: 5%;
   margin-top: 10px;
 }
+
 .introDiv {
   width: 60%;
   margin: 0 auto;
   text-align: left;
   margin-top: 20px;
 }
+
 .intro {
   font-size: 19px;
   font-family: 华文中宋;
 }
+
 .introContent {
   font-size: 17px;
   font-size: 17px;
   position: static;
   font-family: 华文中宋;
 }
+
 #courseTitle {
   color: #000;
   font-family: 华文中宋;
@@ -354,6 +373,7 @@ export default {
   text-align: center;
   position: static;
 }
+
 .courseTitleDiv {
   margin: 0 auto;
 }

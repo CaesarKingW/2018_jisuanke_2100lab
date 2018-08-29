@@ -44,7 +44,7 @@ def get_order_payment(request):
         course = Course.objects.get(id=course_id)
         try:
             orders = Order.objects.filter(user_phone=user, course_id=course)
-            for order in orders:    
+            for order in orders:
                 if order.status == "已支付":
                     response['order_status'] = True
                     return JsonResponse(response)
