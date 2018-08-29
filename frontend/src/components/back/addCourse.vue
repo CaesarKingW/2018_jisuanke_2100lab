@@ -1,93 +1,93 @@
 import datetime
 <template>
-    <div v-if="all">
-        <div v-if="start_add">
-            <p class="formitem">课程标题：
-                <Input v-model="course_title" placeholder="" style="width: 300px" />
-            </p>
-            <div class="formitem">课程简介：
-                <Input v-model="brief_intro" type="textarea" style="width: 300px" />
-            </div>
-            <Button class="formitem" @click="addCourse()">新建课程</Button>
-        </div>
-        <div v-if="upload_audi">
-            <p class="formitem">上传音频</p>
-            <p class="formitem">
-                <input type="file" name="audi_upload">
-                <Button @click="AudiUpload()">上传</BUtton>
-            </p>
-        </div>
-        <audio controls="controls" v-if="is_show1" id="aud" class="formitem" v-bind:src="audi" @ended="audioEnded()" preload="auto"></audio>
-        <div>
-            <p v-if="first_notice" class="formitem">开始播放音频前，请上传课程的第一张图片</p>
-            <p v-if="contin" class="formitem">继续上传课程的剩下图片</p>
-            <p v-if="upload_pic" class="formitem"><input type="file" name="pic_upload">
-                <button @click="PicUpload()">上传</button>
-            </p>
-            <div v-if="show_pic" class="formitem"><img v-bind:src="pic" id="sp" /></div>
-            <p class="formitem">
-                <Button v-if="set_start_time" @click="setStartTime()">将音频当前播放点设为图片开始时间</Button>
-                <span v-if="start_time">图片开始时间当前被设置为：{{startTime}}</span>
-            </p>
-            <p v-if="set_end_time">
-                <button @click="setEndTime()">将音频当前播放点设为图片结束时间</button>
-                <span v-if="end_time">图片结束时间当前被设置为：{{endTime}}</span>
-            </p>
-            <p v-if="start_time&&end_time&&!preview">当前图片的开始时间与结束时间均已被设置好，确认提交并继续上传下一张图片吗？
-                <Button @click="continu()">确认</Button>
-            </p>
-            <p v-if="end" class="formitem">音频已播放完，当前图片的结束时间自动被设置为音频的结束时间。</p>
-            <p v-if="preview" class="formitem">所有图片的起讫时间均已被设置,去预览课程！
-                <Button id="go" @click='Preview()'>
-                    <Icon type="ios-arrow-dropright-circle" id="arrow" />
-                </Button>
-            </p>
-        </div>
-        <div v-if="real_preview">
-            <div v-if="show_real_pic" class="formitem">
-                <img v-bind:src="pic_to_show" id="pts" />
-            </div>
-            <div class="formitem">
-                <audio controls="controls" id="audio" v-bind:src="audi" @play="Play()" @pause="Pause()" preload="auto">
-                </audio>
-            </div>
-            <Button class="formitem" :size="buttonSize" type="primary" @click="goToRest()">
-                下一步
-                <Icon type="ios-arrow-forward" />
-            </Button>
-        </div>
-
-        <div v-if="rest">
-            <h1 class="formitem">继续完善第{{course_id}}号课程的信息</h1>
-            <p class="formitem">
-                <Icon type="md-document" />详解：<input type="file" name="whole_introduction"></p>
-            <p class="formitem">
-                <Icon type="md-easel" />课程封面：<input type="file" name="course_cover"></p>
-            <p class="formitem">
-                <Icon type="md-flame" />是否阅后即焚：
-                <i-switch v-model="Is_destroy" />
-            </p>
-            <p class="formitem" v-if="Is_destroy">可阅时长：
-                <InputNumber v-model="destroy_time" />小时</p>
-            <p class="formitem">
-                <Icon type="md-pricetag" />价格：
-                <InputNumber :min="0.00" :step="0.01" v-model="price"></InputNumber>元</p>
-            <p class="formitem" v-if="price>0">
-                <Icon type="md-share-alt" />分销比例：
-                <InputNumber :max="100" v-model="share_rate" :formatter="value => `${value}%`" :parser="value => value.replace('%', '')"></InputNumber>
-            </p>
-            <p class="formitem">
-                <Icon type="ios-chatbubbles" />是否允许用户留言：
-                <i-switch v-model="can_comment" />
-            </p>
-            <p class="formitem">
-                <Button @click="Submit()">提交</Button>
-            </p>
-        </div>
-        <div v-if="finish" class="succeed">
-            第{{course_id}}号课程上传成功！
-        </div>
+  <div v-if="all">
+    <div v-if="start_add">
+      <p class="formitem">课程标题：
+        <Input v-model="course_title" placeholder="" style="width: 300px" />
+      </p>
+      <div class="formitem">课程简介：
+        <Input v-model="brief_intro" type="textarea" style="width: 300px" />
+      </div>
+      <Button class="formitem" @click="addCourse()">新建课程</Button>
     </div>
+    <div v-if="upload_audi">
+      <p class="formitem">上传音频</p>
+      <p class="formitem">
+        <input type="file" name="audi_upload">
+        <Button @click="AudiUpload()">上传</BUtton>
+      </p>
+    </div>
+    <audio controls="controls" v-if="is_show1" id="aud" class="formitem" v-bind:src="audi" @ended="audioEnded()" preload="auto"></audio>
+    <div>
+      <p v-if="first_notice" class="formitem">开始播放音频前，请上传课程的第一张图片</p>
+      <p v-if="contin" class="formitem">继续上传课程的剩下图片</p>
+      <p v-if="upload_pic" class="formitem"><input type="file" name="pic_upload">
+        <button @click="PicUpload()">上传</button>
+      </p>
+      <div v-if="show_pic" class="formitem"><img v-bind:src="pic" id="sp" /></div>
+      <p class="formitem">
+        <Button v-if="set_start_time" @click="setStartTime()">将音频当前播放点设为图片开始时间</Button>
+        <span v-if="start_time">图片开始时间当前被设置为：{{startTime}}</span>
+      </p>
+      <p v-if="set_end_time">
+        <button @click="setEndTime()">将音频当前播放点设为图片结束时间</button>
+        <span v-if="end_time">图片结束时间当前被设置为：{{endTime}}</span>
+      </p>
+      <p v-if="start_time&&end_time&&!preview">当前图片的开始时间与结束时间均已被设置好，确认提交并继续上传下一张图片吗？
+        <Button @click="continu()">确认</Button>
+      </p>
+      <p v-if="end" class="formitem">音频已播放完，当前图片的结束时间自动被设置为音频的结束时间。</p>
+      <p v-if="preview" class="formitem">所有图片的起讫时间均已被设置,去预览课程！
+        <Button id="go" @click='Preview()'>
+          <Icon type="ios-arrow-dropright-circle" id="arrow" />
+        </Button>
+      </p>
+    </div>
+    <div v-if="real_preview">
+      <div v-if="show_real_pic" class="formitem">
+        <img v-bind:src="pic_to_show" id="pts" />
+      </div>
+      <div class="formitem">
+        <audio controls="controls" id="audio" v-bind:src="audi" @play="Play()" @pause="Pause()" preload="auto">
+        </audio>
+      </div>
+      <Button class="formitem" :size="buttonSize" type="primary" @click="goToRest()">
+        下一步
+        <Icon type="ios-arrow-forward" />
+      </Button>
+    </div>
+
+    <div v-if="rest">
+      <h1 class="formitem">继续完善第{{course_id}}号课程的信息</h1>
+      <p class="formitem">
+        <Icon type="md-document" />详解：<input type="file" name="whole_introduction"></p>
+      <p class="formitem">
+        <Icon type="md-easel" />课程封面：<input type="file" name="course_cover"></p>
+      <p class="formitem">
+        <Icon type="md-flame" />是否阅后即焚：
+        <i-switch v-model="Is_destroy" />
+      </p>
+      <p class="formitem" v-if="Is_destroy">可阅时长：
+        <InputNumber v-model="destroy_time" />小时</p>
+      <p class="formitem">
+        <Icon type="md-pricetag" />价格：
+        <InputNumber :min="0.00" :step="0.01" v-model="price"></InputNumber>元</p>
+      <p class="formitem" v-if="price>0">
+        <Icon type="md-share-alt" />分销比例：
+        <InputNumber :max="100" v-model="share_rate" :formatter="value => `${value}%`" :parser="value => value.replace('%', '')"></InputNumber>
+      </p>
+      <p class="formitem">
+        <Icon type="ios-chatbubbles" />是否允许用户留言：
+        <i-switch v-model="can_comment" />
+      </p>
+      <p class="formitem">
+        <Button @click="Submit()">提交</Button>
+      </p>
+    </div>
+    <div v-if="finish" class="succeed">
+      第{{course_id}}号课程上传成功！
+    </div>
+  </div>
 </template>
 <script>
 export default {
@@ -221,8 +221,6 @@ export default {
           alert(
             '图片上传完成，而且新上传的图片的开始时间默认设为音频当前播放点!'
           )
-          // this.set_start_time = true
-
           this.set_end_time = true
           this.pic_id = res.id
           this.$http
@@ -401,23 +399,32 @@ export default {
   width: 50px;
   height: 30px;
 }
+
 #sp {
   width: 90px;
   height: 90px;
 }
+
 #pts {
   width: 150px;
   height: 150px;
 }
+
 #arrow {
   font-size: 20px;
 }
+
 .formitem {
   margin: 15px;
 }
+
 .succeed {
-  text-align: center;
   display: table-cell;
+  text-align: center;
   vertical-align: middle;
+}
+
+.width {
+  width: 300px;
 }
 </style>

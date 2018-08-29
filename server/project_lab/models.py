@@ -86,9 +86,10 @@ class Takes(models.Model):
     id = models.AutoField(primary_key=True)
     user_phone = models.ForeignKey("User", on_delete=models.CASCADE)
     course_id = models.ForeignKey("Course", on_delete=models.CASCADE)
-    start_time = models.DateTimeField(("开始学习时间"), auto_now_add=True)
+    start_time = models.BigIntegerField(("开始学习时间"), default=0)
     last_study_percent = models.FloatField(("上次学习进度"), default=0.0)
     max_study_percent = models.FloatField(("最大学习进度"), default=0.0)
+    burn = models.BooleanField(("已被焚毁"), default=False)
 
 
 # 订单表

@@ -1,16 +1,18 @@
 <style scoped>
 .layout {
-  border: 1px solid #d7dde4;
-  background: #f5f7f9;
   position: relative;
-  border-radius: 4px;
   overflow: hidden;
+  background: #f5f7f9;
+  border: 1px solid #d7dde4;
+  border-radius: 4px;
 }
+
 #text {
-  margin-left: 5px;
   margin-bottom: 5px;
+  margin-left: 5px;
   color: white;
 }
+
 .layout-nav {
   float: right;
   color: white;

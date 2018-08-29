@@ -65,22 +65,25 @@ export default {
 </script>
 <style scoped>
 .courseTable {
+  margin-top: 20px;
   margin-left: 140px;
   font-size: 15px;
-  margin-top: 20px;
 }
+
 table,
 td,
 th {
-  border: 1px solid black;
   border-collapse: collapse;
+  border: 1px solid black;
 }
+
 th,
 td {
   padding: 10px;
 }
+
 th {
-  color: #022336;
   font-size: 15px;
+  color: #022336;
 }
 </style>

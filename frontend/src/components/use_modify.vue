@@ -1,18 +1,18 @@
 <template>
-  <div id="useModify">
+<div id="useModify">
     <div>
-      <img v-bind:src="path" class="imgDiv" /><img>
-      <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head" />
-      <input type='button' value='上传头像' v-on:click="click_file">
+    <img v-bind:src="path" class="imgDiv" /><img>
+    <input type='file' name='head' id='head' class="none" accept="image/*" v-on:change="Upload_head"/>
+    <input type='button' value='上传头像' v-on:click="click_file">
     </div>
     <div>
       昵称：{{oldname}}
-      <form @submit.prevent="modify_nickname">
-        <input type="text" v-model="nickname">
-        <input type="submit" value="确认修改" />
-      </form>
+        <form @submit.prevent="modify_nickname">
+            <input type="text" v-model="nickname">
+            <input type="submit" value="确认修改"/>
+        </form>
     </div>
-  </div>
+</div>
 </template>
 <script>
 export default {
@@ -99,3 +99,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.none {
+  display: none;
+}
+</style>

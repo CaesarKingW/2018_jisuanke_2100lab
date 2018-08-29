@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Input v-model="phone_number" placeholder="请输入待搜索用户的手机号" style="width: 300px" />
+<div>
+    <Input v-model="phone_number" placeholder="请输入待搜索用户的手机号" class='width' />
     <Button @click="search()">搜索</Button>
     <div v-show="is_show">
       <div v-if="is_null==false">
@@ -129,9 +129,14 @@ export default {
 }
 </script>
 <style>
+.width {
+  width: 300px;
+}
+
 .userinfo {
   margin: 10px;
 }
+
 .butt {
   margin-left: 5px;
   color: deepskyblue;

@@ -102,4 +102,7 @@ export default {
 </script>
 
 <style>
+.width {
+  width: 300px;
+}
 </style>

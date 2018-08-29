@@ -101,9 +101,11 @@ export default {
 .auth {
   float: right;
 }
+
 p {
   font-size: 15px;
 }
+
 #username {
   width: 300px;
 }

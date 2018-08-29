@@ -3,3 +3,4 @@ frontend/node_modules/
 server/.vscode/
 .vscode/
 frontend/.vscode/
+node_modules/
