@@ -349,7 +349,6 @@ class AliPay(object):
             "out_trade_no": out_trade_no,
             "total_amount": total_amount,
             "product_code": "FAST_INSTANT_TRADE_PAY",
-            # "qr_pay_mode":4
         }
 
         biz_content.update(kwargs)

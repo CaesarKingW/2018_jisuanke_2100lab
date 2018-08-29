@@ -1,9 +1,9 @@
 <template>
-<div id="useModify">
-    <img  id="avatar" v-bind:src="path" class="imgDiv" /><img>
-    <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head"/>
+  <div id="useModify">
+    <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
+    <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head" />
     <div><input id="uploadButton" type='button' value='上传头像' v-on:click="click_file"></div>
-</div>
+  </div>
 </template>
 <script>
 export default {

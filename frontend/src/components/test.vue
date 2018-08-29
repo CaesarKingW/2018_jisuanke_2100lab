@@ -1,16 +1,17 @@
 <template>
+
   <body>
     <!-- <form action="http://192.168.55.33/app/add_picture" method="post" enctype="multipart/form-data">
         <input type="file" name="fafafa">
         <input type="submit">
     </form> -->
     <div>
-      <input type="file" name="file" id="file_upload"/>
-      <input type="button" value="上传" v-on:click="FileUpload"/>
+      <input type="file" name="file" id="file_upload" />
+      <input type="button" value="上传" v-on:click="FileUpload" />
     </div>
-    <img v-bind:src= path />
-    <img >
-</body>
+    <img v-bind:src=p ath />
+    <img>
+  </body>
 </template>
 <script>
 export default {
@@ -43,8 +44,7 @@ export default {
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/add_picture', formdate, config)
-        .then(response => {
-        })
+        .then(response => {})
     }
   }
 }

@@ -1,55 +1,55 @@
 <template>
-    <div class="PersonalCenter">
-        <Card id="topArea">
-            <div>
-                <Divider id="myCenter">个人中心</Divider>
-            </div>
-        </Card>
-        <div id="navigation">
-        <nav>
+  <div class="PersonalCenter">
+    <Card id="topArea">
+      <div>
+        <Divider id="myCenter">个人中心</Divider>
+      </div>
+    </Card>
+    <div id="navigation">
+      <nav>
         <ul>
-          <router-link to ="/home" exact>
-          <li class="line">
+          <router-link to="/home" exact>
+            <li class="line">
               <Icon type="ios-home" /> 回到首页
-        </li>
-              </router-link>
-          <router-link to ="/PersonalCenter/UserInfo" exact>
-          <li class="line">
+            </li>
+          </router-link>
+          <router-link to="/PersonalCenter/UserInfo" exact>
+            <li class="line">
               <Icon type="ios-contact-outline" /> 个人信息
-        </li>
-              </router-link>
-          <router-link to ="/PersonalCenter/ModifyInfo" exact>
-          <li class="line">
+            </li>
+          </router-link>
+          <router-link to="/PersonalCenter/ModifyInfo" exact>
+            <li class="line">
               <Icon type="ios-hammer-outline" /> 修改信息
-        </li>
-              </router-link>
-          <router-link to ="/PersonalCenter/LearntCourse" exact>
-          <li class="line">
+            </li>
+          </router-link>
+          <router-link to="/PersonalCenter/LearntCourse" exact>
+            <li class="line">
               <Icon type="md-bookmarks" /> 已学课程
-        </li>
-              </router-link>
-          <router-link to ="/PersonalCenter/BoughtCourse" exact>
-          <li class="line">
+            </li>
+          </router-link>
+          <router-link to="/PersonalCenter/BoughtCourse" exact>
+            <li class="line">
               <Icon type="logo-usd" /> 已购课程
-        </li>
-        </router-link>
-          <router-link to ="/PersonalCenter/AccountCancel" exact>
-          <li class="line">
+            </li>
+          </router-link>
+          <router-link to="/PersonalCenter/AccountCancel" exact>
+            <li class="line">
               <Icon type="ios-trash-outline" /> 注销账户
-        </li>
-        </router-link>
-        <router-link to ="/UserLogin" exact>
-          <li  @click="logout"  class="line">
+            </li>
+          </router-link>
+          <router-link to="/UserLogin" exact>
+            <li @click="logout" class="line">
               <Icon type="ios-log-out" /> 退出登录
-        </li>
-        </router-link>
+            </li>
+          </router-link>
           <li class="blank"></li>
         </ul>
       </nav>
-        </div>
-      <router-view></router-view>
-      <foot />
     </div>
+    <router-view></router-view>
+    <foot />
+  </div>
 </template>
 <script>
 export default {

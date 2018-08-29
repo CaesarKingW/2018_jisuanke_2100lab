@@ -1,45 +1,45 @@
 <template>
-  <div >
+  <div>
     <Form ref="formInline" :model="formInline">
-        <FormItem prop="user">
-            <i-input type="text" v-model="formInline.user" placeholder="Username" @on-blur="check()">
-                <Icon type="ios-person-outline" slot="prepend"></Icon>
-            </i-input>
-            <div v-if="blank1">
-                <p v-if="if_blank1" class="blank">
-                    用户名不能为空
-                </p>
-            </div>
-            <div v-if="prompt1">
-            <p v-if="if_exist" id="exist">用户名已存在</p>
-            <p v-else id="notexist">该用户名可使用</p>
-            </div>
-        </FormItem>
-        <FormItem prop="password">
-            <i-input type="password" v-model="formInline.password" placeholder="Password" @on-blur="check_two()">
-                <Icon type="ios-lock-outline" slot="prepend"></Icon>
-            </i-input>
-            <div v-if="blank2">
-                <p v-if="if_blank2" class="blank">
-                    密码不能为空
-                </p>
-            </div>
-        </FormItem>
-        <FormItem prop="confirm">
-            <i-input type="password" v-model="formInline.confirm" placeholder="Password-comfirm" @on-blur="Confirm()">
-            <Icon type="ios-eye-outline" slot="prepend"/>
-            </i-input>
-            <div v-if="prompt2">
-            <p v-if="if_match" id="matched">两次密码一致</p>
-            <p v-else id="unmatched">两次密码不一致</p>
-            </div>
-        </FormItem>
-        <FormItem>
-            <Button type="primary" @click="register()">Register</Button>
-        </FormItem>
-        <FormItem>
-            <Button type="primary" @click="login()" v-if="can_login">使用新注册的帐号登录</Button>
-        </FormItem>
+      <FormItem prop="user">
+        <i-input type="text" v-model="formInline.user" placeholder="Username" @on-blur="check()">
+          <Icon type="ios-person-outline" slot="prepend"></Icon>
+        </i-input>
+        <div v-if="blank1">
+          <p v-if="if_blank1" class="blank">
+            用户名不能为空
+          </p>
+        </div>
+        <div v-if="prompt1">
+          <p v-if="if_exist" id="exist">用户名已存在</p>
+          <p v-else id="notexist">该用户名可使用</p>
+        </div>
+      </FormItem>
+      <FormItem prop="password">
+        <i-input type="password" v-model="formInline.password" placeholder="Password" @on-blur="check_two()">
+          <Icon type="ios-lock-outline" slot="prepend"></Icon>
+        </i-input>
+        <div v-if="blank2">
+          <p v-if="if_blank2" class="blank">
+            密码不能为空
+          </p>
+        </div>
+      </FormItem>
+      <FormItem prop="confirm">
+        <i-input type="password" v-model="formInline.confirm" placeholder="Password-comfirm" @on-blur="Confirm()">
+          <Icon type="ios-eye-outline" slot="prepend" />
+        </i-input>
+        <div v-if="prompt2">
+          <p v-if="if_match" id="matched">两次密码一致</p>
+          <p v-else id="unmatched">两次密码不一致</p>
+        </div>
+      </FormItem>
+      <FormItem>
+        <Button type="primary" @click="register()">Register</Button>
+      </FormItem>
+      <FormItem>
+        <Button type="primary" @click="login()" v-if="can_login">使用新注册的帐号登录</Button>
+      </FormItem>
     </Form>
   </div>
 </template>

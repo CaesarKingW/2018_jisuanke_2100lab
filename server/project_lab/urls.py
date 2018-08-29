@@ -27,15 +27,8 @@ urlpatterns = [
     path('show_takes', takes_views.show_takes),
     path('add_or_update_takes', takes_views.add_or_update_takes),
     path('add_new_take', takes_views.add_new_take),
-    path('show_orders',orders_views.show_orders),
-    path('get_order_payment',orders_views.get_order_payment),
-    path('search_user', wq_views.search_user),
-    path('authenticate', wq_views.authenticate),
-    path('forbid_comment', wq_views.forbid_comment),
-    path('search_comment', wq_views.search_comment),
-    path('delete_comment', wq_views.delete_comment),
-    path('search_order', wq_views.search_order),
-    path('refund', wq_views.refund),
+    path('show_orders', orders_views.show_orders),
+    path('get_order_payment', orders_views.get_order_payment),
     path('get_status', wchxviews.get_status),
     path('del_status', wchxviews.del_status),
     path('payment', wyq_views.payment),
@@ -79,4 +72,5 @@ urlpatterns = [
     path('search_one_course', wq_views.search_one_course),
     path('test', wq_views.test),
     path('editCourse', wq_views.editCourse),
+    path('backstage_logout', wq_views.backstage_logout)
 ]

@@ -1,16 +1,14 @@
 <template>
-    <div id="recommendCourse">
-        <!-- 免费推荐课程 -->
-        <div v-for="item of free_course" :key="item.id">
-            <img v-bind:src= 'item.fields.Cover_picture'/>
-            课程标题：{{item.fields.title}}
-        </div>
-        <!-- 付费推荐课程 -->
-        <div v-for="item of paying_course" :key="item.id">
-            <img v-bind:src= 'item.fields.Cover_picture'/>
-            课程标题：{{item.fields.title}}
-        </div>
+  <div id="recommendCourse">
+    <!-- 免费推荐课程 -->
+    <div v-for="item of free_course" :key="item.id">
+      <img v-bind:src='item.fields.Cover_picture' /> 课程标题：{{item.fields.title}}
     </div>
+    <!-- 付费推荐课程 -->
+    <div v-for="item of paying_course" :key="item.id">
+      <img v-bind:src='item.fields.Cover_picture' /> 课程标题：{{item.fields.title}}
+    </div>
+  </div>
 </template>
 <script>
 export default {
