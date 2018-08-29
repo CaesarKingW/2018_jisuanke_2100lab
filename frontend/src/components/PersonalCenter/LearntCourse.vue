@@ -56,9 +56,26 @@ export default {
         .then(
           response => {
             this.takes = response.data.list
+            var length = this.takes.length
+            for (var i = 0; i < length; i++) {
+              this.takes[i].start_time = this.Format(this.takes[i].start_time)
+            }
           },
           response => {}
         )
+    },
+    Format: function(a) {
+      var date = new Date(a)
+      var Y = date.getFullYear() + '-'
+      var M =
+        (date.getMonth() + 1 < 10
+          ? '0' + (date.getMonth() + 1)
+          : date.getMonth() + 1) + '-'
+      var D = date.getDate() + ' '
+      var h = date.getHours() + ':'
+      var m = date.getMinutes() + ':'
+      var s = date.getSeconds()
+      return Y + M + D + h + m + s
     }
   }
 }
