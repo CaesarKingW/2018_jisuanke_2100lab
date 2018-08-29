@@ -1,10 +1,9 @@
 <template>
 <div id="UserLogin">
-    <Button id="lab" ghost><router-link to="/home"><div id="buttonText">首页 <Icon type="md-log-in" /></div></router-link></Button>
     <br>
     <br>
     <div class="logColumn">
-    <h1>2100实验室</h1>
+    <router-link to="/home"><h1>2100实验室</h1></router-link>
     <form method="POST" @submit.prevent="Is_normal_nubmer">
     <Input id="inputPhone" type="text" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" v-model="phone_number"/>
     <input type="submit" id="getCodeButton" value="获取验证码" />

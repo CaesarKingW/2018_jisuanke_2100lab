@@ -44,18 +44,18 @@
         </CarouselItem>
     </Carousel>
     </div>
-     <Card id="FreeCol">
+    <div id="FreeCol">
     <div class="AllCol">
     <div class="MyContent">
-        <div><Icon type="md-bookmarks" />&nbsp;免费内容</div>
+        <Icon type="md-bookmarks" />&nbsp;免费内容
     </div>
     <div class="SeeMore">
-        <Button id="button" ghost><router-link to="/AllFreeCourse">
+        <router-link to="/AllFreeCourse">
         <span class="ButtonText">查看更多<Icon type="md-log-in" /></span>
-        </router-link></Button>
+        </router-link>
     </div>
     </div>
-     </Card>
+    </div>
     <div class="container">
     <div class="item" v-for="item of free_course" :key="item.id">
       <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
@@ -67,18 +67,18 @@
         </div>
     </div>
     <br>
-    <Card id="PayCol">
+    <div id="PayCol">
     <div class="AllCol">
     <div class="MyContent">
-        <div><Icon type="md-bookmarks" />&nbsp;付费内容</div>
+        <Icon type="md-bookmarks" />&nbsp;付费内容
     </div>
     <div class="SeeMore">
-        <Button id="button" ghost><router-link to="/AllPayCourse">
+        <router-link to="/AllPayCourse">
         <span class="ButtonText">查看更多<Icon type="md-log-in" /></span>
-        </router-link></Button>
+        </router-link>
     </div>
     </div>
-    </Card>
+    </div>
     <div class="container">
     <div class="item" v-for="item of paying_course" :key="item.id">
      <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
@@ -120,7 +120,7 @@ export default {
       free_course: [],
       paying_imgs: [],
       paying_course: [],
-      show_number: 3,
+      show_number: 6,
       path: [],
       judge: false,
       yourname: ''
@@ -244,7 +244,7 @@ export default {
   display: -webkit-flex;
   display: -moz-flex;
   margin: 0 auto;
-  justify-content: space-around;
+  /* justify-content: space-around; */
 }
 
 .wrapper {
@@ -288,7 +288,7 @@ export default {
 #FreeCol,
 #PayCol {
   background-color: #022336;
-  height: 60px;
+  height: 30px;
   width: 85%;
   text-align: center;
   margin: 0 auto;
@@ -299,14 +299,23 @@ export default {
   display: -webkit-flex;
   display: -moz-flex;
   flex-direction: row;
-  height: 40px;
+  height: 35px;
   margin: 0 auto;
   color: #fff;
-  text-align: center;
+  /* text-align: center; */
+}
+
+.MyContent {
+  font-size: 15px;
+  margin-left: 3.5%;
+  width: 90px;
 }
 
 .SeeMore {
-  position: static;
+  font-size: 15px;
+  margin-left: 77%;
+  color: #fff;
+  border: none;
 }
 
 .id {
@@ -337,12 +346,6 @@ export default {
 .carousel {
   width: 85%;
   margin: 0 auto;
-}
-
-.MyContent {
-  font-size: 18px;
-  margin-left: 27px;
-  text-align: center;
 }
 
 .top {

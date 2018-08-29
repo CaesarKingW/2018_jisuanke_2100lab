@@ -4,11 +4,19 @@
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
+    <Divider type="vertical" />
     </div>
     <br />
     <br />
     <br />
-    <div class="title">{{ title }}</div>
+    <div class="title">标题：{{ title }}</div>
     <p class="read_time">浏览量：{{ times }} 次</p>
     <div class="test_pic"><img id="changePic" v-bind:src="picpath"></div>
     <div class="playRoll"><audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio></div>
@@ -343,10 +351,6 @@ export default {
   color: #2c3e50;
 }
 
-#title {
-  color: #17233d;
-}
-
 #read_time {
   color: #808695;
   font-size: 14px;
@@ -372,6 +376,7 @@ export default {
   margin-bottom: 10px;
   font-size: 30px;
   font-family: 华文中宋;
+  color: #17233d;
 }
 
 .read_time {

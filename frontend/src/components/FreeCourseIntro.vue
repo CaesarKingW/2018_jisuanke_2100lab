@@ -3,6 +3,14 @@
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
+    <Divider type="vertical" />
     <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
     <div class="myPanel"></div>
@@ -263,10 +271,6 @@ export default {
   border-radius: 8px;
   margin: 0 auto;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 287924b7f3dae5b90699910f653fe143961d5548
 .alertButtonDiv,
 .burnDiv {
   margin: 0 auto;

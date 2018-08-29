@@ -4,6 +4,14 @@
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
+    <Divider type="vertical" />
     <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
     <!-- 课程信息 -->
@@ -16,8 +24,6 @@
             <div v-if="judge">
               <div v-if="IsPaid"><Button  id="buy" type="primary" v-on:click="IsBurn">
                 <Icon type="logo-usd" /> 进入课程</Button></div>
-              <!-- <div v-else><Button  id="buy" type="primary" v-on:click="alipay()">
-                <Icon type="logo-usd" /> 购买课程</Button></div> -->
               <div v-else>
                 <Poptip placement="right" v-model="visible">
           <a><Button  id="buy" type="primary">

@@ -18,7 +18,7 @@
           <div class="oneContentDiv">
               {{item.content}}
           </div>
-          <button id="likeButton" v-on:click="praise(item.id, index)"><span id="loveIcon">❤</span> ：{{item.praise_count}}</button>
+          <button id="likeButton" v-on:click="praise(item.id, index)"><span id="loveIcon"><Icon type="md-heart" /></span> ：{{item.praise_count}}</button>
           <NiceReply v-bind:title="item.id" v-bind:user_phone="user_phone"></NiceReply>
       </div>
     </Card>
@@ -102,6 +102,7 @@ export default {
 <style scoped>
 #loveIcon {
   color: red;
+  margin-left: -2px;
 }
 
 #userName {
