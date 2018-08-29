@@ -71,14 +71,64 @@ def add_new_take(request):
         req = json.loads(request.body.decode('utf-8'))
         userphone = req['userphone']
         course_id = req['courseid']
+        startPoint = req['beginPoint']
         user = User.objects.get(phone_number=userphone)
         course = Course.objects.get(id=course_id)
         try:
-            Takes.objects.get(user_phone=user, course_id=course)
+            take = Takes.objects.get(user_phone=user, course_id=course)
+            response['startPoint'] = take.start_time
+            response['breakPoint'] = take.last_study_percent
         except:
-            Takes.objects.create(user_phone=user, course_id=course)
+            take = Takes.objects.create(
+                user_phone=user, course_id=course, start_time=startPoint)
+            response['startPoint'] = take.start_time
+            response['breakPoint'] = take.last_study_percent
             course.view_count = course.view_count + 1
             course.save()
+        response['msg'] = 'success'
+        response['errornum'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['errornum'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["POST"])
+def set_burn(request):
+    response = {}
+    try:
+        req = json.loads(request.body.decode('utf-8'))
+        userphone = req['userphone']
+        course_id = req['courseid']
+        user = User.objects.get(phone_number=userphone)
+        course = Course.objects.get(id=course_id)
+        take = Takes.objects.get(user_phone=user, course_id=course)
+        take.burn = True
+        take.save()
+        response['msg'] = 'success'
+        response['errornum'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['errornum'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["POST"])
+def get_burn_status(request):
+    response = {}
+    try:
+        req = json.loads(request.body.decode('utf-8'))
+        userphone = req['userphone']
+        course_id = req['courseid']
+        try:
+            user = User.objects.get(phone_number=userphone)
+            course = Course.objects.get(id=course_id)
+            take = Takes.objects.get(user_phone=user, course_id=course)
+            response['status'] = take.burn
+        except:
+            response['status'] = False
         response['msg'] = 'success'
         response['errornum'] = 0
     except Exception as e:

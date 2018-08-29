@@ -159,8 +159,6 @@ export default {
           alert(
             '图片上传完成，而且新上传的图片的开始时间默认设为音频当前播放点!'
           )
-          // this.set_start_time = true
-
           this.set_end_time = true
           this.pic_id = res.id
           this.$http

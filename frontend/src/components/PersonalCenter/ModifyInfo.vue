@@ -77,7 +77,6 @@ export default {
       // 判断输入的昵称是否符合规范
       var nickname = this.nickname
       if (!nickname.match(/^[(\u4e00-\u9fa5)|(0-9)|(A-Z|(a-z))]+$/)) {
-        // alert('只能含有汉字字母和数字')
         this.$Message.warning(
           '昵称修改失败！注意:昵称只能使用汉字、字母和数字哦！'
         )
