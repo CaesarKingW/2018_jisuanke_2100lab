@@ -4,23 +4,23 @@
     <Button @click="search()">搜索</Button>
     <div v-if="if_show">
       <div v-if="if_exist">
-        <Divider/>
+        <Divider />
         <p>课程处理
           <i-switch v-model="Manage_course" class="auth" />
         </p>
-        <Divider/>
+        <Divider />
         <p>用户管理
           <i-switch v-model="Manage_user" class="auth" />
         </p>
-        <Divider/>
+        <Divider />
         <p>留言管理
           <i-switch v-model="Manage_message" class="auth" />
         </p>
-        <Divider/>
+        <Divider />
         <p>订单处理
           <i-switch v-model="Manage_order" class="auth" />
         </p>
-        <Divider/>
+        <Divider />
         <Button @click="modify_auth()">保存</Button>
       </div>
       <div v-else>

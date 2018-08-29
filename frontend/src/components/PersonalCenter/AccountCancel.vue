@@ -1,15 +1,15 @@
 <template>
-<div class="AccountCancel">
+  <div class="AccountCancel">
     <div id="card">
-        <Card id="alertColumn">
-        <div slot="title" id="alertTitle"><Icon type="md-alert" />  注销警告</div>确认注销后，您的所有个人信息
-        （包括头像、昵称、已学课程及已购课程记录、奖励金等信息）将被清空，
-        并且本手机号码此后将无法再次用于进行注册或登录。
-        进行本操作前请慎重！
-    </Card>
-    <div id="buttonCard"><button id="cancelButton" v-on:click="userDestroy">确认注销</button></div>
+      <Card id="alertColumn">
+        <div slot="title" id="alertTitle">
+          <Icon type="md-alert" /> 注销警告</div>确认注销后，您的所有个人信息 （包括头像、昵称、已学课程及已购课程记录、奖励金等信息）将被清空， 并且本手机号码此后将无法再次用于进行注册或登录。 进行本操作前请慎重！
+      </Card>
+      <div id="buttonCard">
+        <button id="cancelButton" v-on:click="userDestroy">确认注销</button>
+      </div>
     </div>
-</div>
+  </div>
 </template>
 <script>
 export default {

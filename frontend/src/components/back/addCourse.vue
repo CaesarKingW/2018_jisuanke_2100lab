@@ -182,60 +182,74 @@ export default {
     },
     AudiUpload() {
       var formData = new FormData()
-      var fileInfo = document.querySelector('input[name ="audi_upload"]')
-        .files[0]
-      formData.append('file', fileInfo)
-      formData.append('course_id', this.course_id)
-      this.$http
-        .post('http://192.168.55.33:8000/app/add_audi', formData)
-        .then(response => {
-          var res = response.data
-          this.audi = res.audio
-          this.is_show1 = true
-          this.first_notice = true
-          this.upload_pic = true
-          this.upload_audi = false
-          alert(
-            '开始播放音频前，请上传课程的第一张图片，并且第一张图片的开始时间默认设为音频起点！'
-          )
-        })
+      var str = document.querySelector('input[name ="audi_upload"]').value
+      if (str.indexOf('.mp3') < 0 && str.indexOf('.MP3') < 0) {
+        alert('文件类型不正确！请上传.mp3、.MP3类型的文件！')
+      } else {
+        var fileInfo = document.querySelector('input[name="audi_upload"]')
+          .files[0]
+        formData.append('file', fileInfo)
+        formData.append('course_id', this.course_id)
+        this.$http
+          .post('http://192.168.55.33:8000/app/add_audi', formData)
+          .then(response => {
+            var res = response.data
+            this.audi = res.audio
+            this.is_show1 = true
+            this.first_notice = true
+            this.upload_pic = true
+            this.upload_audi = false
+            alert(
+              '开始播放音频前，请上传课程的第一张图片，并且第一张图片的开始时间默认设为音频起点！'
+            )
+          })
+      }
     },
     PicUpload() {
       var formData = new FormData()
-      var fileInfo = document.querySelector('input[name ="pic_upload"]')
-        .files[0]
-      var au = document.getElementById('aud')
-      var duration = au.duration
-      var st = au.currentTime
-      formData.append('file', fileInfo)
-      formData.append('course_id', this.course_id)
-      formData.append('duration', duration)
-      this.$http
-        .post('http://192.168.55.33:8000/app/add_img', formData)
-        .then(response => {
-          var res = response.data
-          this.pic = 'http://192.168.55.33:8000' + res.course_picture
-          this.first_notice = false
-          this.show_pic = true
-          this.upload_pic = false
-          alert(
-            '图片上传完成，而且新上传的图片的开始时间默认设为音频当前播放点!'
-          )
-          this.set_end_time = true
-          this.pic_id = res.id
-          this.$http
-            .post(
-              'http://192.168.55.33:8000/app/set_start_time',
-              JSON.stringify({
-                pic_id: this.pic_id,
-                start_time: st
-              })
+      var str = document.querySelector('input[name ="pic_upload"]').value
+      if (
+        str.indexOf('.jpg') < 0 &&
+        str.indexOf('.png') < 0 &&
+        str.indexOf('.gif') < 0
+      ) {
+        alert('文件类型不正确！请上传.jpg、.png、.gif类型的文件！')
+      } else {
+        var fileInfo = document.querySelector('input[name ="pic_upload"]')
+          .files[0]
+        var au = document.getElementById('aud')
+        var duration = au.duration
+        var st = au.currentTime
+        formData.append('file', fileInfo)
+        formData.append('course_id', this.course_id)
+        formData.append('duration', duration)
+        this.$http
+          .post('http://192.168.55.33:8000/app/add_img', formData)
+          .then(response => {
+            var res = response.data
+            this.pic = 'http://192.168.55.33:8000' + res.course_picture
+            this.first_notice = false
+            this.show_pic = true
+            this.upload_pic = false
+            alert(
+              '图片上传完成，而且新上传的图片的开始时间默认设为音频当前播放点!'
             )
-            .then(response => {
-              this.startTime = st
-              this.start_time = true
-            })
-        })
+            this.set_end_time = true
+            this.pic_id = res.id
+            this.$http
+              .post(
+                'http://192.168.55.33:8000/app/set_start_time',
+                JSON.stringify({
+                  pic_id: this.pic_id,
+                  start_time: st
+                })
+              )
+              .then(response => {
+                this.startTime = st
+                this.start_time = true
+              })
+          })
+      }
     },
     setStartTime() {
       var au = document.getElementById('aud')
