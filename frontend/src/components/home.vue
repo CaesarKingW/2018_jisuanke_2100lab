@@ -29,7 +29,8 @@
      <Carousel autoplay v-model="value" loop>
         <CarouselItem>
             <div class="DemoCarousel"><Card>
-            <div id="RollPicTag"><img class="RollPic" src="../assets/home_1.png"></div>
+            <div id="RollPicTag"><img class="RollPic" src="../assets/home_1.png">
+            </div>
         </Card>
         </div>
         </CarouselItem>
