@@ -1,24 +1,34 @@
 <template>
-<div>
+  <div>
     <Input v-model="phone_number" placeholder="请输入待搜索用户的手机号" class='width' />
     <Button @click="search()">搜索</Button>
     <div v-show="is_show">
       <div v-if="is_null==false">
         <div class="userinfo"><img v-bind:src="head_protrait" width=80px height=80px /></div>
-        <p class="userinfo">用户名：<span>{{username}}</span></p>
-        <p class="userinfo">奖励金：<span>{{welfare}}元</span></p>
+        <p class="userinfo">用户名：
+          <span>{{username}}</span>
+        </p>
+        <p class="userinfo">奖励金：
+          <span>{{welfare}}元</span>
+        </p>
         <div class="userinfo">
-            <span>是否是大V：<span>{{is_teacher}}</span></span><Button class="butt" @click="authenticate()" size="small">{{authenticate_button}}</Button>
+          <span>是否是大V：
+            <span>{{is_teacher}}</span>
+          </span>
+          <Button class="butt" @click="authenticate()" size="small">{{authenticate_button}}</Button>
         </div>
         <div class="userinfo">
-            <span>是否被禁言：<span>{{can_comment}}</span></span><Button class="butt" @click="forbid_comment()" size="small">{{forbid_comment_button}}</Button>
+          <span>是否被禁言：
+            <span>{{can_comment}}</span>
+          </span>
+          <Button class="butt" @click="forbid_comment()" size="small">{{forbid_comment_button}}</Button>
         </div>
       </div>
       <div v-else class="userinfo">
         对不起，您搜索的用户不存在
       </div>
     </div>
-</div>
+  </div>
 </template>
 <script>
 export default {
@@ -38,6 +48,22 @@ export default {
       forbid_comment_button: ''
     }
   },
+  created: function() {
+    this.$http
+      .post('http://192.168.55.33:8000/app/get_mstatus')
+      .then(response => {
+        var res = response.data
+        this.mis_login = res.mis_login
+        if (!this.mis_login) {
+          location.href = '/#/backstageLogin'
+        } else {
+          if (res.manager.Manage_user !== true) {
+            alert('你没有权限访问该网页！')
+            location.href = '/#/backstage'
+          }
+        }
+      })
+  },
   methods: {
     search() {
       var phoneNumber = JSON.stringify(this.phone_number)
@@ -49,7 +75,8 @@ export default {
           if (this.is_null === false) {
             this.username = res.user_info.user_name
             this.welfare = res.user_info.welfare
-            this.head_protrait = 'http://192.168.55.33:8000' + res.user_info.head_protrait
+            this.head_protrait =
+              'http://192.168.55.33:8000' + res.user_info.head_protrait
             if (res.user_info.Is_teacher === true) {
               this.is_teacher = '是'
               this.authenticate_button = '取消大V身份'

@@ -201,36 +201,37 @@ export default new Router({
       path: '/PersonalCenter',
       name: 'PersonalCenter',
       component: PersonalCenter,
-      children: [{
-        path: '/',
-        name: 'UserInfo',
-        component: UserInfo
-      },
-      {
-        path: 'UserInfo',
-        name: 'UserInfo',
-        component: UserInfo
-      },
-      {
-        path: 'ModifyInfo',
-        name: 'ModifyInfo',
-        component: ModifyInfo
-      },
-      {
-        path: 'LearntCourse',
-        name: 'LearntCourse',
-        component: LearntCourse
-      },
-      {
-        path: 'BoughtCourse',
-        name: 'BoughtCourse',
-        component: BoughtCourse
-      },
-      {
-        path: 'AccountCancel',
-        name: 'AccountCancel',
-        component: AccountCancel
-      }
+      children: [
+        {
+          path: '/',
+          name: 'UserInfo',
+          component: UserInfo
+        },
+        {
+          path: 'UserInfo',
+          name: 'UserInfo',
+          component: UserInfo
+        },
+        {
+          path: 'ModifyInfo',
+          name: 'ModifyInfo',
+          component: ModifyInfo
+        },
+        {
+          path: 'LearntCourse',
+          name: 'LearntCourse',
+          component: LearntCourse
+        },
+        {
+          path: 'BoughtCourse',
+          name: 'BoughtCourse',
+          component: BoughtCourse
+        },
+        {
+          path: 'AccountCancel',
+          name: 'AccountCancel',
+          component: AccountCancel
+        }
       ]
     },
     {

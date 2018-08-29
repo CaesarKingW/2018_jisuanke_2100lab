@@ -32,14 +32,15 @@
      <div align="center" id="carousel" class="carousel">
      <Carousel autoplay v-model="value" loop>
         <CarouselItem>
-            <div class="DemoCarousel"><Card>
-            <div id="RollPicTag"><img class="RollPic" src="../assets/home_1.png">
-            </div>
-        </Card>
-        </div>
+          <div class="DemoCarousel">
+            <Card>
+              <div id="RollPicTag"><img class="RollPic" src="../assets/home_1.png">
+              </div>
+            </Card>
+          </div>
         </CarouselItem>
         <CarouselItem>
-            <div class="DemoCarousel"><img class="RollPic" src="../assets/home_2.png"></div>
+          <div class="DemoCarousel"><img class="RollPic" src="../assets/home_2.png"></div>
         </CarouselItem>
     </Carousel>
     </div>
@@ -55,7 +56,7 @@
     </div>
     </div>
     </div>
-    <div class="container">
+    <!-- <div class="container">
     <div class="item" v-for="item of free_course" :key="item.id">
       <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
       <Card class="courseCard">
@@ -63,7 +64,26 @@
             <p><img class="CoverPic" v-bind:src= 'item.fields.Cover_picture'/></p>
       </Card>
       </router-link>
-        </div>
+        </div> -->
+        <!-- <div class="SeeMore">
+          <Button id="button" ghost>
+            <router-link to="/AllFreeCourse">
+              <span class="ButtonText">查看更多
+                <Icon type="md-log-in" />
+              </span>
+            </router-link>
+          </Button>
+        </div> -->
+      <!-- </div> -->
+    <div class="container">
+      <div class="item" v-for="item of free_course" :key="item.id">
+        <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
+          <Card class="courseCard">
+            <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
+            <p><img class="CoverPic" v-bind:src='item.fields.Cover_picture' /></p>
+          </Card>
+        </router-link>
+      </div>
     </div>
     <br>
     <div id="PayCol">
@@ -79,35 +99,47 @@
     </div>
     </div>
     <div class="container">
-    <div class="item" v-for="item of paying_course" :key="item.id">
-     <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
-      <Card class="courseCard">
-         <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
-            <p><img class="CoverPic" v-bind:src= 'item.fields.Cover_picture'/></p>
-      </Card>
-     </router-link>
-        </div>
+      <div class="item" v-for="item of paying_course" :key="item.id">
+        <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
+          <Card class="courseCard">
+            <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
+            <p><img class="CoverPic" v-bind:src='item.fields.Cover_picture' /></p>
+          </Card>
+        </router-link>
+      </div>
     </div>
     <BackTop>
-        <div class="top">返回顶端</div>
+      <div class="top">返回顶端</div>
     </BackTop>
     <Card id="AboutUs">
-    <div class="wrapper">
-    <div class="left"><div>
-      <Icon size=100 type="ios-people-outline" /></div>
-      <div>团队成员</div><div>南开大学软件学院</div><div>佛组</div>
+      <div class="wrapper">
+        <div class="left">
+          <div>
+            <Icon size=100 type="ios-people-outline" />
+          </div>
+          <div>团队成员</div>
+          <div>南开大学软件学院</div>
+          <div>佛组</div>
+        </div>
+        <div class="middle">
+          <div>
+            <Icon size=100 type="ios-school-outline" />
+          </div>
+          <div>关于我们</div>
+          <div>2100实验室</div>
+          <div>专注为3~12岁儿童提供更好的科学启蒙教育</div>
+        </div>
+        <div class="right">
+          <div>
+            <Icon size=100 type="ios-eye-outline" />
+          </div>
+          <div>联系我们</div>
+          <div>南开大学泰达学院</div>
+          <div>客服电话：15009253698</div>
+        </div>
       </div>
-    <div class="middle"><div>
-      <Icon size=100 type="ios-school-outline" /></div><div>关于我们</div><div>2100实验室</div>
-      <div>专注为3~12岁儿童提供更好的科学启蒙教育</div>
-      </div>
-    <div class="right"><div>
-      <Icon size=100 type="ios-eye-outline" /></div><div>联系我们</div><div>南开大学泰达学院</div>
-      <div>客服电话：15009253698</div>
-      </div>
-    </div>
     </Card>
- </div>
+  </div>
 </template>
 <script>
 export default {
@@ -119,7 +151,7 @@ export default {
       free_course: [],
       paying_imgs: [],
       paying_course: [],
-      show_number: 6,
+      show_number: 3,
       path: [],
       judge: false,
       yourname: ''

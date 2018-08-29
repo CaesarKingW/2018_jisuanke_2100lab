@@ -1,5 +1,5 @@
 <template>
-    <div id="AllPayCourse">
+  <div id="AllPayCourse">
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
@@ -22,9 +22,9 @@
     <div id="blank"></div>
     <div v-for="item of imgs" :key="item.id">
       <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
-      <Card class="courseCard">
-        <div class="CourseInfo">
-            <div class="CourseCoverDiv"><img class="courseCover" v-bind:src= 'item.fields.Cover_picture'/></div>
+        <Card class="courseCard">
+          <div class="CourseInfo">
+            <div class="CourseCoverDiv"><img class="courseCover" v-bind:src='item.fields.Cover_picture' /></div>
             <div class="CourseText">
             <div class="CourseTitle">
                 <Icon type="ios-bookmarks" /> 课程标题：<span class="courseTitleContent">{{item.fields.title}}</span></div>
@@ -35,12 +35,12 @@
             <div class="CoursePrice">
                 <Icon type="logo-usd" /> 课程价格：<span class="coursePriceContent">{{item.fields.price}} 元</span>
                 </div>
+              </div>
             </div>
-            </div>
-      </Card>
+        </Card>
       </router-link>
-        </div>
     </div>
+  </div>
 </template>
 <script>
 export default {

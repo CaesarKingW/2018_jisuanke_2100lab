@@ -1,22 +1,34 @@
 <template>
-<div>
+  <div>
     <Input v-model="order_number" placeholder="请输入待搜索的订单号" class='width' />
     <Button @click="search()">搜索</Button>
     <div v-show='is_show'>
-        <div v-if='if_order'>
-            <div>所购课程标题：<span>{{course_title}}</span></div>
-            <div>所购课程ID:<span>{{course_id}}</span></div>
-            <div>支付金额：<span>{{amount_of_money}}元</span></div>
-            <div>支付状态：<span>{{status}}</span></div>
-            <div>创建时间：<span>{{created_at}}</span></div>
-            <div>用户手机号：<span>{{phone_number}}</span></div>
-            <button v-show='if_refund' @click="refund()">退款</button>
+      <div v-if='if_order'>
+        <div>所购课程标题：
+          <span>{{course_title}}</span>
         </div>
-        <div v-else>
-            对不起，您搜索的订单不存在
+        <div>所购课程ID:
+          <span>{{course_id}}</span>
         </div>
+        <div>支付金额：
+          <span>{{amount_of_money}}元</span>
+        </div>
+        <div>支付状态：
+          <span>{{status}}</span>
+        </div>
+        <div>创建时间：
+          <span>{{created_at}}</span>
+        </div>
+        <div>用户手机号：
+          <span>{{phone_number}}</span>
+        </div>
+        <button v-show='if_refund' @click="refund()">退款</button>
+      </div>
+      <div v-else>
+        对不起，您搜索的订单不存在
+      </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -35,6 +47,23 @@ export default {
       created_at: null,
       phone_number: ''
     }
+  },
+  created: function() {
+    this.$http
+      .post('http://192.168.55.33:8000/app/get_mstatus')
+      .then(response => {
+        var res = response.data
+        this.mis_login = res.mis_login
+        if (!this.mis_login) {
+          alert('还没有登录，无权访问该页面！')
+          location.href = '/#/backstageLogin'
+        } else {
+          if (res.manager.Manage_order !== true) {
+            alert('你没有权限访问该网页！')
+            location.href = '/#/backstage'
+          }
+        }
+      })
   },
   methods: {
     search() {

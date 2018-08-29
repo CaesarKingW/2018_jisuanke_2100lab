@@ -1,6 +1,6 @@
 <template>
-<div class="PayCourseIntro">
-  <!-- 导航栏 -->
+  <div class="PayCourseIntro">
+    <!-- 导航栏 -->
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
@@ -22,8 +22,8 @@
         </div>
         <div class="courseTitleDiv"><div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="buyButtonDiv">
-            <div v-if="judge">
-              <div v-if="IsPaid"><Button  id="buy" type="primary" v-on:click="IsBurn">
+        <div v-if="judge">
+            <div v-if="IsPaid"><Button  id="buy" type="primary" v-on:click="IsBurn">
                 <Icon type="logo-usd" /> 进入课程</Button></div>
               <div v-else>
                 <Poptip placement="right" v-model="visible">
@@ -39,26 +39,27 @@
         </div>
         </Poptip>
               </div>
-            </div>
-            <div v-else><Button id="buy" v-on:click="modal1" type="primary">
-            <Icon type="logo-usd" /> 购买课程</Button></div>
-            <Modal v-model="modal1" title="温馨提示" @on-ok="ok"
-            @on-cancel="cancel">
-              <p>您必须先登录才能学习课程</p>
-            </Modal>
-            </div>
-        <div class="shareButtonDiv">
-          <Button @click="modal = true" id="share" type="primary">
-            <Icon type="ios-card" /> 分享课程</Button>
-            </div>
-            <div v-if="isBurn" class="burnDiv">
-        <Alert type="warning" show-icon>
+          </div>
+      <div v-else>
+        <Button id="buy" v-on:click="modal1" type="primary">
+          <Icon type="logo-usd" /> 购买课程</Button>
+      </div>
+      <Modal v-model="modal1" title="温馨提示" @on-ok="ok" @on-cancel="cancel">
+        <p>您必须先登录才能学习课程</p>
+      </Modal>
+    </div>
+    <div class="shareButtonDiv">
+      <Button @click="modal = true" id="share" type="primary">
+        <Icon type="ios-card" /> 分享课程</Button>
+    </div>
+    <div v-if="isBurn" class="burnDiv">
+      <Alert type="warning" show-icon>
         <Icon type="ios-alert" slot="icon"></Icon>
         <template class="burnText" slot="desc">本文为阅后即焚类文章，在初次阅读后{{ burnTime }}小时无法再查看，请注意及时阅读哦！</template>
-        </Alert>
+      </Alert>
     </div>
-        <div class="alertButtonDiv">
-          <Alert class="alertButton" show-icon>
+    <div class="alertButtonDiv">
+      <Alert class="alertButton" show-icon>
         <Icon type="ios-trophy-outline" slot="icon"></Icon>
         <template class="alertText" slot="desc">分享本课程给他人，他人购买后，你还可以额外获得 {{ award }} 枚奖励币哦！</template>
           </Alert>
@@ -76,8 +77,8 @@
         <div id="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
         </div>
         </Modal>
-    <br>
-</div>
+    <br />
+  </div>
 </template>
 <script>
 export default {
@@ -389,6 +390,7 @@ export default {
 @media screen and (max-width: 500px) {
   .navi {
     display: block;
+    color: #000;
   }
   #blank {
     margin-top: 125px;
@@ -396,8 +398,9 @@ export default {
   .navibar {
     z-index: 9999;
     position: fixed;
+    color: #000;
     width: 100%;
-    opacity: 0;
+    opacity: 0.9;
     padding: 25px;
   }
 }

@@ -23,24 +23,24 @@
     <div class="playRoll"><audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio></div>
     <Collapse cLass="collapse" accordion v-model="value">
         <Panel>
-            <Poptip trigger="hover" id="poptip" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
+          <Poptip trigger="hover" id="poptip" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
             <div>文字介绍</div>
-            </Poptip>
-            <div slot="content" id="slotContent">
-              <div id="scrollBar">
-                 {{ content }}
-              </div>
+          </Poptip>
+          <div slot="content" id="slotContent">
+            <div id="scrollBar">
+              {{ content }}
             </div>
+          </div>
         </Panel>
-    </Collapse>
-        <BackTop>
+      </Collapse>
+      <BackTop>
         <div>返回顶端</div>
-    </BackTop>
-    <div v-if="CanComment">
-      <NiceMsgBoard v-bind:course_id = "courseid"></NiceMsgBoard>
+      </BackTop>
+      <div v-if="CanComment">
+        <NiceMsgBoard v-bind:course_id="courseid"></NiceMsgBoard>
+      </div>
     </div>
-</div>
-</body>
+  </body>
 </template>
 <script>
 import NiceMsgBoard from './NiceMsgBoard'

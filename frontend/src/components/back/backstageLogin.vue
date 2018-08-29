@@ -1,29 +1,32 @@
 <template>
-  <div >
+  <div>
     <Form ref="formInline" :model="formInline">
-        <FormItem prop="user">
-            <i-input type="text" v-model="formInline.user" placeholder="Username" @on-blur="check()">
-                <Icon type="ios-person-outline" slot="prepend"></Icon>
-            </i-input>
-            <div v-if="blank1">
-                <p v-if="if_blank1" class="blank">
-                    用户名不能为空
-                </p>
-            </div>
-        </FormItem>
-        <FormItem prop="password">
-            <i-input type="password" v-model="formInline.password" placeholder="Password" @on-blur="check_two()">
-                <Icon type="ios-lock-outline" slot="prepend"></Icon>
-            </i-input>
-            <div v-if="blank2">
-                <p v-if="if_blank2" class="blank">
-                    密码不能为空
-                </p>
-            </div>
-        </FormItem>
-        <FormItem>
-            <Button type="primary" @click="login()">Login</Button>
-        </FormItem>
+      <FormItem prop="user">
+        <i-input type="text" v-model="formInline.user" placeholder="Username" @on-blur="check()">
+          <Icon type="ios-person-outline" slot="prepend"></Icon>
+        </i-input>
+        <div v-if="blank1">
+          <p v-if="if_blank1" class="blank">
+            用户名不能为空
+          </p>
+        </div>
+      </FormItem>
+      <FormItem prop="password">
+        <i-input type="password" v-model="formInline.password" placeholder="Password" @on-blur="check_two()">
+          <Icon type="ios-lock-outline" slot="prepend"></Icon>
+        </i-input>
+        <div v-if="blank2">
+          <p v-if="if_blank2" class="blank">
+            密码不能为空
+          </p>
+        </div>
+      </FormItem>
+      <FormItem>
+        <Button type="primary" @click="login()">Login</Button>
+      </FormItem>
+      <FormItem>
+        <Button type="primary" @click="register()">还没有账号？去注册</Button>
+      </FormItem>
     </Form>
   </div>
 </template>
@@ -74,6 +77,9 @@ export default {
             this.$router.push({ name: 'backstage' })
           })
       }
+    },
+    register() {
+      this.$router.push({ name: 'backstageRegister' })
     }
   }
 }

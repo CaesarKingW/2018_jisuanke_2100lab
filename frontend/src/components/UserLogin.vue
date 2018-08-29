@@ -15,7 +15,7 @@
     <input type="submit" id="login" value="登录" />
     </form>
     </div>
-</div>
+  </div>
 </template>
 <script>
 export default {

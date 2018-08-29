@@ -1,29 +1,32 @@
 <template>
-<div class="ShowUserInfo">
+  <div class="ShowUserInfo">
     <img id="avatar" src="../assets/little_avatar.png">
     <div id="nickname_div">{{ nickname }}</div>
     <div id="phone_div">手机号码：{{ phone }}</div>
-    <div id="award_div">奖励金数：<Icon type="logo-usd" />{{ award }}</div>
-    <router-link to="/ModifyUserInfo"><Button class="button" size="large" type="primary">修改个人信息</Button></router-link>
+    <div id="award_div">奖励金数：
+      <Icon type="logo-usd" />{{ award }}</div>
+    <router-link to="/ModifyUserInfo">
+      <Button class="button" size="large" type="primary">修改个人信息</Button>
+    </router-link>
     <div id="course">
-    <div class="box">
+      <div class="box">
         <Card :bordered="false">
-            <p slot="title">已学课程</p>
-            <ul class="none">
-                <li>实验室制取CO2</li>
-            </ul>
+          <p slot="title">已学课程</p>
+          <ul class="none">
+            <li>实验室制取CO2</li>
+          </ul>
         </Card>
-    </div>
-    <div class="box">
+      </div>
+      <div class="box">
         <Card :bordered="false">
-            <p slot="title">已购课程</p>
-            <ul class="none">
-                <li>自由落体运动</li>
-            </ul>
+          <p slot="title">已购课程</p>
+          <ul class="none">
+            <li>自由落体运动</li>
+          </ul>
         </Card>
+      </div>
     </div>
-    </div>
-</div>
+  </div>
 </template>
 <script>
 export default {
@@ -82,12 +85,12 @@ export default {
 }
 
 .box {
-  background:#eee;
+  background: #eee;
   padding: 20px;
 }
 
-.none{
-  list-style:none;
+.none {
+  list-style: none;
 }
 
 .button {

@@ -1,17 +1,17 @@
 <template>
-<div class="ModifyUserInfo" style="background-color: #c4e1ff;">
+  <div class="ModifyUserInfo" style="background-color: #c4e1ff;">
     <div><img id="avatar" src="../assets/little_avatar.png"></div>
-    <div><Button style="margin: 10px;" size="large" type="primary">上传头像</Button></div>
-    <div id="nickname">昵称：<Input prefix="ios-contact" placeholder="请输入昵称" style="width: auto" /></div>
+    <div>
+      <Button style="margin: 10px;" size="large" type="primary">上传头像</Button>
+    </div>
+    <div id="nickname">昵称：
+      <Input prefix="ios-contact" placeholder="请输入昵称" style="width: auto" />
+    </div>
     <Button type="primary" style="margin: 10px;" size="large" @click="modal = true">确认修改</Button>
-    <Modal
-        v-model="modal"
-        title="修改信息"
-        @on-ok="ok"
-        @on-cancel="cancel">
-        <p>恭喜你，个人信息修改成功！</p>
+    <Modal v-model="modal" title="修改信息" @on-ok="ok" @on-cancel="cancel">
+      <p>恭喜你，个人信息修改成功！</p>
     </Modal>
-</div>
+  </div>
 </template>
 <script>
 export default {

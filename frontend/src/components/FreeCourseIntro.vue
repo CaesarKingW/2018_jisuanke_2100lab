@@ -1,5 +1,5 @@
 <template>
-<div class="FreeCourseIntro">
+  <div class="FreeCourseIntro">
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
@@ -39,24 +39,24 @@
         </div>
     </Modal>
     <div v-if="isBurn" class="burnDiv">
-        <Alert type="error" show-icon>
+      <Alert type="error" show-icon>
         <Icon type="ios-bulb-outline" slot="icon"></Icon>
         <template class="burnText" slot="desc">本文为阅后即焚类文章，在初次阅读后{{ burnTime }}小时无法再查看，请注意及时阅读哦！</template>
-        </Alert>
+      </Alert>
     </div>
     <div class="alertButtonDiv">
-        <Alert show-icon>
+      <Alert show-icon>
         <Icon type="ios-alert" slot="icon"></Icon>
         <template class="alertText" slot="desc">如果你喜欢本课程，就把它分享给朋友吧！ </template>
-    </Alert>
+      </Alert>
     </div>
     <div class="introDiv">
-         <Card class="intro">
-            <p id="title" slot="title">课程简介</p>
-            <p class="introContent">{{content}}</p>
-        </Card>
+      <Card class="intro">
+        <p id="title" slot="title">课程简介</p>
+        <p class="introContent">{{content}}</p>
+      </Card>
     </div>
-</div>
+  </div>
 </template>
 <script>
 export default {
