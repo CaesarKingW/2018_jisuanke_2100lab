@@ -25,6 +25,11 @@
     <a class="navi"><Icon type="md-log-in" /> 用户登录</a>
     </router-link>
      </div>
+     <br />
+    <br />
+    <br />
+    <br />
+    <br />
      <div align="center" id="carousel" class="carousel">
      <Carousel autoplay v-model="value" loop>
         <CarouselItem>

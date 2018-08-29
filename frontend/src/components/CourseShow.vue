@@ -6,6 +6,8 @@
     <Divider type="vertical" />
     </div>
     <br />
+    <br />
+    <br />
     <div class="title">{{ title }}</div>
     <p class="read_time">浏览量：{{ times }} 次</p>
     <div class="test_pic"><img id="changePic" v-bind:src="picpath"></div>

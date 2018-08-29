@@ -3,8 +3,22 @@
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
+    <Divider type="vertical" />
     <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
+    <!-- <div class="myPanel"></div> -->
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
     <div v-for="item of imgs" :key="item.id">
       <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
       <Card class="courseCard">
@@ -72,9 +86,6 @@ export default {
   display: flex;
   color: #022336;
 }
-/* .CourseCoverDiv {
-  float: left;
-}*/
 .CourseText {
   float: left;
   margin-left: 5%;
@@ -160,5 +171,13 @@ export default {
   margin: 0 auto;
   color: #fff;
   text-align: center;
+}
+.myPanel {
+  background-color:red;
+  position: fixed;
+  width: 100%;
+  height: 160px;
+  opacity: 1;
+  padding: 25px;
 }
 </style>
