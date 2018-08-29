@@ -54,24 +54,29 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 #phone_div,
 #award_div {
   font-size: 30px;
   margin: 15px;
 }
+
 #nickname_div {
   font-size: 22px;
 }
+
 #avatar {
   border: #99ccff solid 5px;
   border-radius: 20px;
   margin: 10px;
 }
+
 #learnt,
 #bought {
   font-size: 30px;
   margin: 15px;
 }
+
 #course {
   font-size: 25px;
 }

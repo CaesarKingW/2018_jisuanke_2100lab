@@ -159,46 +159,56 @@ export default {
   opacity: 0.9;
   padding: 25px;
 }
+
 .navi {
   font-size: 18px;
   color: #022336;
   margin-left: 15px;
   margin-right: 15px;
 }
+
 .navi:hover {
   color: #022336;
 }
+
 .intro {
   font-size: 19px;
   font-family: 华文中宋;
 }
+
 .introContent {
   font-size: 17px;
   position: static;
   font-family: 华文中宋;
 }
+
 .myPanel {
   margin: 0 auto;
   height: 90px;
   border: none;
   border-radius: 0px;
 }
+
 .alertText,
 .burnText {
   text-align: center;
   color: #fff;
 }
+
 .CoverDiv {
   margin: 0 auto;
   text-align: center;
 }
+
 .ivu-modal {
   top: 0;
 }
+
 .urlDiv {
   text-align: center;
   padding: 10px;
 }
+
 #share,
 #enter {
   background-color: #fff;
@@ -212,14 +222,17 @@ export default {
   text-align: center;
   position: static;
 }
+
 .vertical-center-modal {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .ivu-modal {
   top: 0;
 }
+
 .enterButtonDiv,
 .shareButtonDiv {
   margin: 0 auto;
@@ -228,6 +241,7 @@ export default {
   margin-bottom: 25px;
   position: static;
 }
+
 #copyButton {
   width: 50px;
   height: 25px;
@@ -237,9 +251,11 @@ export default {
   color: #fff;
   cursor: pointer;
 }
+
 #title {
   font-size: 19px;
 }
+
 #testPic {
   width: 360px;
   height: 250px;
@@ -247,6 +263,10 @@ export default {
   border-radius: 8px;
   margin: 0 auto;
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 287924b7f3dae5b90699910f653fe143961d5548
 .alertButtonDiv,
 .burnDiv {
   margin: 0 auto;
@@ -255,17 +275,20 @@ export default {
   height: 5%;
   margin-top: 10px;
 }
+
 .introDiv {
   width: 60%;
   margin: 0 auto;
   text-align: left;
   margin-top: 20px;
 }
+
 .contentText {
   font-family: 华文中宋;
   font-size: 17px;
   position: static;
 }
+
 #courseTitle {
   color: #000;
   font-family: 华文中宋;
@@ -276,6 +299,7 @@ export default {
   text-align: center;
   position: static;
 }
+
 #courseTitleDiv {
   margin: 0 auto;
 }

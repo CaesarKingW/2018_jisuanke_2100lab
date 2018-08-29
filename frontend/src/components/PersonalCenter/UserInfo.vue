@@ -46,6 +46,7 @@ export default {
 #UserInfo {
   float: center;
 }
+
 #avatar {
   border: #666666 solid 1px;
   border-radius: 8px;
@@ -54,24 +55,28 @@ export default {
   margin-top: 30px;
   margin-left: 100px;
 }
+
 #nickname {
   font-size: 20px;
   font-family: 华文中宋;
   margin-left: 200px;
   margin-top: 5px;
 }
+
 #money {
   font-size: 20px;
   font-family: 华文中宋;
   margin-left: 200px;
   margin-top: 5px;
 }
+
 #phone {
   font-size: 20px;
   font-family: 华文中宋;
   margin-left: 200px;
   margin-top: 5px;
 }
+
 #info {
   margin-left: 100px;
 }

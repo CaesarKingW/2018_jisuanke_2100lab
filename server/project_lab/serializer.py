@@ -93,4 +93,5 @@ class TakesSerializer(serializers.ModelSerializer):
 class Operating_historySerializer(serializers.ModelSerializer):
     class Meta:
         model = Operating_history
-        fields = ('id', 'manager_username', 'operate_type', 'object_type', 'created_at')
+        fields = ('id', 'manager_username', 'operate_type', 'object_type',
+                  'created_at')

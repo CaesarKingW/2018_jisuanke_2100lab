@@ -38,11 +38,13 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 #avatar {
-  border: #99ccff solid 5px;
+  border: #9cf solid 5px;
   border-radius: 20px;
   margin: 10px;
 }
+
 #nickname {
   font-size: 20px;
   margin: 30px;
