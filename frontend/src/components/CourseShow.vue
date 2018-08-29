@@ -16,6 +16,7 @@
     <br />
     <br />
     <br />
+    <div id="blank"></div>
     <div class="title">标题：{{ title }}</div>
     <p class="read_time">浏览量：{{ times }} 次</p>
     <div class="test_pic"><img id="changePic" v-bind:src="picpath"></div>
@@ -190,8 +191,7 @@ export default {
             // 获取课程非内容属性
             this.JudgePrice()
           },
-          response => {
-          }
+          response => {}
         )
     },
     // 获取课程标题和是否免费属性
@@ -331,13 +331,6 @@ export default {
   height: 90px;
 }
 
-#progressRollDiv {
-  width: 60%;
-  text-align: center;
-  margin: 0 auto;
-  margin-top: 20px;
-}
-
 .collapse {
   text-align: center;
   width: 60%;
@@ -367,6 +360,7 @@ export default {
 .test_pic {
   margin: 0 auto;
   text-align: center;
+  margin-left: 20px;
 }
 
 .title {
@@ -394,5 +388,34 @@ export default {
   width: 40%;
   height: 300px;
   margin: 0 auto;
+}
+
+@media screen and (max-width: 500px) {
+  .navi {
+    display: block;
+  }
+  #blank {
+    margin-top: 60px;
+  }
+  #changePic {
+    border: #000 solid 5px;
+    border-radius: 20px;
+    width: 70%;
+    height: 180px;
+    margin-left: -40px;
+  }
+  .test_pic {
+    margin-left: 30px;
+  }
+  .title {
+    /* margin: 0 auto; */
+    text-align: center;
+    /* margin-left: -85px; */
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 30px;
+    font-family: 华文中宋;
+    color: #17233d;
+  }
 }
 </style>

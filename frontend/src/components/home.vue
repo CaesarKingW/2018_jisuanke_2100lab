@@ -1,8 +1,6 @@
 <template>
  <div id="home">
-   <meta name="viewport"
-   content="width=device-width, initial-scale=1.0,
-   maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <div class="NaviBar">
     <router-link to="/home"><a class="navi">
       <Icon type="md-home" /> 网站首页
@@ -19,6 +17,7 @@
     <router-link to="/PersonalCenter" v-if="judge">
     <a class="navi"><Icon type="ios-contact" /> 个人中心</a>
     </router-link>
+    <Divider type="vertical" />
     <a class="navi" @click="logout" v-if="judge">
       <Icon type="md-log-out" /> 退出登录</a>
     <router-link to="/UserLogin" v-else>
@@ -51,7 +50,7 @@
     </div>
     <div class="SeeMore">
         <router-link to="/AllFreeCourse">
-        <span class="ButtonText">查看更多<Icon type="md-log-in" /></span>
+        <div class="ButtonText">查看更多<Icon type="md-log-in" /></div>
         </router-link>
     </div>
     </div>
@@ -74,7 +73,7 @@
     </div>
     <div class="SeeMore">
         <router-link to="/AllPayCourse">
-        <span class="ButtonText">查看更多<Icon type="md-log-in" /></span>
+        <div class="ButtonText">查看更多<Icon type="md-log-in" /></div>
         </router-link>
     </div>
     </div>
@@ -199,7 +198,7 @@ export default {
 }
 </script>
 <style scoped>
-.home {
+#home {
   margin: 0 auto;
 }
 
@@ -219,7 +218,6 @@ export default {
 
 .ButtonText {
   color: #fff;
-  float: right;
 }
 
 .NaviBar {
@@ -314,7 +312,7 @@ export default {
 .SeeMore {
   font-size: 15px;
   margin-left: 77%;
-  color: #fff;
+  color: #000;
   border: none;
 }
 
@@ -354,5 +352,66 @@ export default {
   color: #fff;
   text-align: center;
   border-radius: 2px;
+}
+@media screen and (max-width: 500px) {
+  #FreeCol,
+  #PayCol {
+    background-color: #022336;
+    height: 30px;
+    width: 85%;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .AllCol {
+    color: #fff;
+  }
+
+  .MyContent {
+    font-size: 14px;
+    margin-left: 5%;
+    margin-top: 1%;
+    /* display: inline-block; */
+    white-space: nowrap;
+  }
+  .ButtonText {
+    white-space: nowrap;
+  }
+
+  .SeeMore {
+    font-size: 14px;
+    margin-left: 38%;
+    margin-top: 1%;
+    color: #000;
+    border: none;
+    white-space: nowrap;
+  }
+  .container {
+    display: block;
+  }
+  .CoverPic {
+    width: 100%;
+    height: 180px;
+  }
+  .wrapper {
+    display: block;
+  }
+  #AboutUs {
+    background-color: #022336;
+    height: 600px;
+    /* width: 85%; */
+    margin: 0 auto;
+    text-align: center;
+  }
+  .navi {
+    display: block;
+  }
+  .carousel {
+    margin-top: 165px;
+  }
+  .RollPic {
+    width: 100%;
+    height: 225px;
+  }
 }
 </style>

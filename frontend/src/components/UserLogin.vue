@@ -31,6 +31,9 @@ export default {
     }
   },
   mounted: function() {
+    this.$Message.config({
+      top: 120
+    })
     this.$http
       .post(this.GLOBAL.serverSrc + '/app/get_status')
       .then(response => {
@@ -60,8 +63,7 @@ export default {
     },
     instance(type) {
       const title = '2100实验室用户协议'
-      const content =
-        '<p>在此处输入用户协议。</p>'
+      const content = '<p>在此处输入用户协议。</p>'
       switch (type) {
         case 'info':
           this.$Modal.info({
@@ -213,7 +215,7 @@ export default {
   margin: 0 auto;
   background-image: url('../assets/BALL.jpg');
   background-repeat: no-repeat;
-  background-size:cover;
+  background-size: cover;
   background-color: #022336;
   width: 100%;
   height: 100%;

@@ -14,13 +14,13 @@
     <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
     <div class="myPanel"></div>
+    <div id="blank"></div>
     <div class="CoverDiv">
             <img id="testPic" v-bind:src="path">
             </div>
         <div id="courseTitleDiv">
         <div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="enterButtonDiv">
-        <!-- <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="judge"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link> -->
         <div v-if="judge"><Button id="enter" icon="md-eye" type="primary" v-on:click="IsBurn">进入课程</Button></div>
         <div v-else><Button id="enter" icon="md-eye" type="primary" v-on:click="modall = true">进入课程</Button></div>
             <Modal v-model="modall" title="温馨提示" @on-ok="ok"
@@ -36,11 +36,6 @@
         v-model="modal"
         class-name="vertical-center-modal">
         <div class="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button id="copyButton" type="button"
-        v-clipboard:copy="message"
-        v-clipboard:success="onCopy"
-        v-clipboard:error="onError">复制</button>
         </div>
     </Modal>
     <div v-if="isBurn" class="burnDiv">
@@ -89,6 +84,9 @@ export default {
     this.Judgestatus()
     this.GetUserPhone()
     this.GetSpecifiedCourse()
+    this.$Message.config({
+      top: 120
+    })
   },
   methods: {
     Judgestatus: function() {
@@ -188,6 +186,9 @@ export default {
   font-size: 17px;
   position: static;
   font-family: 华文中宋;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .myPanel {
@@ -306,5 +307,20 @@ export default {
 
 #courseTitleDiv {
   margin: 0 auto;
+}
+@media screen and (max-width: 500px) {
+  .navi {
+    display: block;
+  }
+  #blank {
+    margin-top: 125px;
+  }
+  .navibar {
+    z-index: 9999;
+    position: fixed;
+    width: 100%;
+    opacity: 0;
+    padding: 25px;
+  }
 }
 </style>

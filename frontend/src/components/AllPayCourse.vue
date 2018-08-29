@@ -19,6 +19,7 @@
     <br />
     <br />
     <br />
+    <div id="blank"></div>
     <div v-for="item of imgs" :key="item.id">
       <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
       <Card class="courseCard">
@@ -28,10 +29,9 @@
             <div class="CourseTitle">
                 <Icon type="ios-bookmarks" /> 课程标题：<span class="courseTitleContent">{{item.fields.title}}</span></div>
             <div class="CourseIntro">
-                <Icon type="ios-text" /> 课程简介：<div class="courseIntroContent">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                {{item.fields.brief_introduction}}
-                    </div></div>
+                <Icon type="ios-text" /> 课程简介：
+                <div class="courseIntroContent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {{item.fields.brief_introduction}}</div></div>
             <div class="CoursePrice">
                 <Icon type="logo-usd" /> 课程价格：<span class="coursePriceContent">{{item.fields.price}} 元</span>
                 </div>
@@ -121,7 +121,11 @@ export default {
   font-family: 华文楷体;
   font-size: 20px;
   padding: 3px;
+  width: 250px;
   color: #022336;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .courseCover {
@@ -186,11 +190,77 @@ export default {
   text-align: center;
 }
 .myPanel {
-  background-color:red;
+  background-color: red;
   position: fixed;
   width: 100%;
   height: 160px;
   opacity: 1;
   padding: 25px;
+}
+
+@media screen and (max-width: 500px) {
+  .navi {
+    display: block;
+  }
+  #blank {
+    margin-top: 105px;
+  }
+  .courseCard {
+    width: 100%;
+    height: 160px;
+    margin: 0 auto;
+  }
+  .courseCover {
+    width: 180px;
+    height: 130px;
+    border: #022336 solid 1px;
+    border-radius: 4px;
+  }
+  .courseTitleContent {
+    font-family: 华文细黑;
+  }
+  .CourseInfo {
+    display: flex;
+    color: #022336;
+    /* width: 30%; */
+  }
+  .CourseText {
+    float: left;
+    margin-left: 2%;
+    color: #022336;
+    width: 40%;
+  }
+  .CourseTitle {
+    font-family: 华文中宋;
+    font-size: 14px;
+    /* padding: 1px; */
+    color: #022336;
+  }
+  .CourseIntro {
+    font-family: 华文中宋;
+    font-size: 14px;
+    /* padding: 1px; */
+    color: #022336;
+  }
+  .courseIntroContent {
+    font-family: 华文楷体;
+    font-size: 12px;
+    /* padding: 1px; */
+    color: #022336;
+    width: 90px;
+    color: #022336;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .CoursePrice {
+    font-family: 华文中宋;
+    font-size: 14px;
+    /* padding: 1px; */
+    color: #022336;
+  }
+  .coursePriceContent {
+    font-family: 华文细黑;
+  }
 }
 </style>

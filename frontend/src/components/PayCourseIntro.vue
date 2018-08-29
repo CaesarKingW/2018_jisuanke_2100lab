@@ -16,6 +16,7 @@
     </div>
     <!-- 课程信息 -->
   <div class="myPanel"></div>
+  <div id="blank"></div>
         <div class="coverDiv">
           <img id="testPic" v-bind:src="path">
         </div>
@@ -34,7 +35,7 @@
                   <Button id="awardButton" v-on:click="awardpay()"><Icon type="logo-usd" />奖励金支付</Button>
           </i></div>
         <div slot="content">
-            <a @click="close">放弃购买关闭</a>
+            <a @click="close">放弃购买</a>
         </div>
         </Poptip>
               </div>
@@ -73,11 +74,6 @@
         v-model="modal"
         class-name="vertical-center-modal">
         <div id="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button id="copyButton" type="button"
-        v-clipboard:copy="message"
-        v-clipboard:success="onCopy"
-        v-clipboard:error="onError">复制</button>
         </div>
         </Modal>
     <br>
@@ -120,6 +116,9 @@ export default {
   },
   mounted: function() {
     this.get_specified_course()
+    this.$Message.config({
+      top: 120
+    })
   },
   methods: {
     close() {
@@ -367,6 +366,9 @@ export default {
   font-size: 17px;
   position: static;
   font-family: 华文中宋;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #courseTitle {
@@ -382,5 +384,21 @@ export default {
 
 .courseTitleDiv {
   margin: 0 auto;
+}
+
+@media screen and (max-width: 500px) {
+  .navi {
+    display: block;
+  }
+  #blank {
+    margin-top: 125px;
+  }
+  .navibar {
+    z-index: 9999;
+    position: fixed;
+    width: 100%;
+    opacity: 0;
+    padding: 25px;
+  }
 }
 </style>
