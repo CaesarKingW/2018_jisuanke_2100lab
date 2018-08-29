@@ -1,9 +1,5 @@
 <template>
   <body>
-    <!-- <form action="http://192.168.55.33/app/add_picture" method="post" enctype="multipart/form-data">
-        <input type="file" name="fafafa">
-        <input type="submit">
-    </form> -->
     <div>
       <input type="file" name="file" id="file_upload"/>
       <input type="button" value="上传" v-on:click="FileUpload"/>

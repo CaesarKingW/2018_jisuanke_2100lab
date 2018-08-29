@@ -34,7 +34,8 @@
      <Carousel autoplay v-model="value" loop>
         <CarouselItem>
             <div class="DemoCarousel"><Card>
-            <div id="RollPicTag"><img class="RollPic" src="../assets/home_1.png"></div>
+            <div id="RollPicTag"><img class="RollPic" src="../assets/home_1.png">
+            </div>
         </Card>
         </div>
         </CarouselItem>
@@ -201,6 +202,7 @@ export default {
 .home {
   margin: 0 auto;
 }
+
 .CoverPic {
   text-align: center;
   border: black solid 2px;
@@ -209,14 +211,17 @@ export default {
   height: 200px;
   margin: auto;
 }
+
 .CoverTitle {
   text-align: center;
   font-size: 18px;
 }
+
 .ButtonText {
   color: #fff;
   float: right;
 }
+
 .NaviBar {
   z-index: 9999;
   background-color: #fff;
@@ -225,12 +230,14 @@ export default {
   opacity: 0.9;
   padding: 25px;
 }
+
 .navi {
   font-size: 18px;
   color: #022336;
   margin-left: 15px;
   margin-right: 15px;
 }
+
 .container {
   width: 85%;
   display: flex;
@@ -239,6 +246,7 @@ export default {
   margin: 0 auto;
   justify-content: space-around;
 }
+
 .wrapper {
   display: flex;
   display: -webkit-flex;
@@ -248,23 +256,27 @@ export default {
   margin: 0 auto;
   color: #fff;
 }
+
 .middle {
   flex-grow: 1;
   flex-shrink: 1;
   margin: 0 auto;
 }
+
 .left {
   flex-grow: 1;
   flex-shrink: 1;
   margin: 0 auto;
   text-align: center;
 }
+
 .right {
   flex-grow: 1;
   flex-shrink: 1;
   margin: 0 auto;
   text-align: center;
 }
+
 #AboutUs {
   background-color: #022336;
   height: 220px;
@@ -272,6 +284,7 @@ export default {
   margin: 0 auto;
   text-align: center;
 }
+
 #FreeCol,
 #PayCol {
   background-color: #022336;
@@ -280,6 +293,7 @@ export default {
   text-align: center;
   margin: 0 auto;
 }
+
 .AllCol {
   display: flex;
   display: -webkit-flex;
@@ -290,9 +304,11 @@ export default {
   color: #fff;
   text-align: center;
 }
+
 .SeeMore {
   position: static;
 }
+
 .id {
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
     'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
@@ -304,6 +320,7 @@ export default {
   color: #fff;
   border: none;
 }
+
 .item {
   flex-grow: 1;
   flex-shrink: 1;
@@ -311,19 +328,23 @@ export default {
   margin-bottom: 20px;
   text-align: center;
 }
+
 .RollPic {
   width: 100%;
   height: 450px;
 }
+
 .carousel {
   width: 85%;
   margin: 0 auto;
 }
+
 .MyContent {
   font-size: 18px;
   margin-left: 27px;
   text-align: center;
 }
+
 .top {
   padding: 12px;
   background: rgba(13, 102, 146, 0.9);

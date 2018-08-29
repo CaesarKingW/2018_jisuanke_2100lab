@@ -1,7 +1,7 @@
 <template>
 <div id="useModify">
     <img  id="avatar" v-bind:src="path" class="imgDiv" /><img>
-    <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head"/>
+    <input type='file' name='head' id='head' class="none" accept="image/*" v-on:change="Upload_head"/>
     <div><input id="uploadButton" type='button' value='上传头像' v-on:click="click_file"></div>
 </div>
 </template>
@@ -50,6 +50,7 @@ export default {
 #useModify {
   text-align: center;
 }
+
 #avatar {
   border: #666666 solid 1px;
   border-radius: 8px;
@@ -57,6 +58,7 @@ export default {
   height: 170px;
   margin: 30px;
 }
+
 #uploadButton {
   width: 170px;
   height: 40px;
@@ -69,8 +71,13 @@ export default {
   cursor: pointer;
   text-align: center;
 }
+
 #uploadButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
+}
+
+.none {
+  display: none;
 }
 </style>

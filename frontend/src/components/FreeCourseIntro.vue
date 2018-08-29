@@ -12,7 +12,8 @@
         <div id="courseTitleDiv">
         <div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="enterButtonDiv">
-        <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="judge"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link>
+        <!-- <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="judge"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link> -->
+        <div v-if="judge"><Button id="enter" icon="md-eye" type="primary" v-on:click="IsBurn">进入课程</Button></div>
         <div v-else><Button id="enter" icon="md-eye" type="primary" v-on:click="modall = true">进入课程</Button></div>
             <Modal v-model="modall" title="温馨提示" @on-ok="ok"
         @on-cancel="cancel">
@@ -34,13 +35,13 @@
         v-clipboard:error="onError">复制</button>
         </div>
     </Modal>
-    <div class="burnDiv">
+    <div v-if="isBurn" class="burnDiv">
         <Alert type="error" show-icon>
         <Icon type="ios-bulb-outline" slot="icon"></Icon>
         <template class="burnText" slot="desc">本文为阅后即焚类文章，在初次阅读后{{ burnTime }}小时无法再查看，请注意及时阅读哦！</template>
         </Alert>
     </div>
-    <div v-if="isBurn" class="alertButtonDiv">
+    <div class="alertButtonDiv">
         <Alert show-icon>
         <Icon type="ios-alert" slot="icon"></Icon>
         <template class="alertText" slot="desc">如果你喜欢本课程，就把它分享给朋友吧！ </template>
@@ -69,8 +70,8 @@ export default {
       userphone: '',
       judge: false,
       modall: false,
-      burnTime: '5',
-      isBurn: true
+      burnTime: null,
+      isBurn: false
     }
   },
   created: function() {
@@ -107,6 +108,8 @@ export default {
             this.path =
               this.GLOBAL.serverSrc + '/media/' + course[0].fields.Cover_picture
             this.content = course[0].fields.brief_introduction
+            this.isBurn = course[0].fields.Is_destroy
+            this.burnTime = course[0].fields.distory_time
           } else {
             this.$router.push({ name: 'home' })
           }
@@ -122,7 +125,28 @@ export default {
     ok: function() {
       this.$router.push({ name: 'UserLogin' })
     },
-    cancel: function() {}
+    cancel: function() {},
+    IsBurn: function() {
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/get_burn_status',
+          JSON.stringify({
+            userphone: this.userphone,
+            courseid: this.courseid
+          })
+        )
+        .then(response => {
+          var isBurn = response.data.status
+          if (isBurn) {
+            this.$router.push({ name: 'ReadAndBurn' })
+          } else {
+            this.$router.push({
+              name: 'CourseShow',
+              query: { id: this.courseid }
+            })
+          }
+        })
+    }
   }
 }
 </script>
@@ -135,45 +159,56 @@ export default {
   opacity: 0.9;
   padding: 25px;
 }
+
 .navi {
   font-size: 18px;
   color: #022336;
   margin-left: 15px;
   margin-right: 15px;
 }
+
 .navi:hover {
   color: #022336;
 }
+
 .intro {
   font-size: 19px;
   font-family: 华文中宋;
 }
+
 .introContent {
   font-size: 17px;
   position: static;
   font-family: 华文中宋;
 }
+
 .myPanel {
   margin: 0 auto;
   height: 90px;
   border: none;
   border-radius: 0px;
 }
-.alertText,.burnText {
+
+.alertText,
+.burnText {
   text-align: center;
   color: #fff;
 }
+
 .CoverDiv {
   margin: 0 auto;
   text-align: center;
 }
+
 .ivu-modal {
   top: 0;
 }
+
 .urlDiv {
   text-align: center;
   padding: 10px;
 }
+
 #share,
 #enter {
   background-color: #fff;
@@ -187,14 +222,17 @@ export default {
   text-align: center;
   position: static;
 }
+
 .vertical-center-modal {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .ivu-modal {
   top: 0;
 }
+
 .enterButtonDiv,
 .shareButtonDiv {
   margin: 0 auto;
@@ -203,6 +241,7 @@ export default {
   margin-bottom: 25px;
   position: static;
 }
+
 #copyButton {
   width: 50px;
   height: 25px;
@@ -212,9 +251,11 @@ export default {
   color: #fff;
   cursor: pointer;
 }
+
 #title {
   font-size: 19px;
 }
+
 #testPic {
   width: 360px;
   height: 250px;
@@ -222,24 +263,32 @@ export default {
   border-radius: 8px;
   margin: 0 auto;
 }
-.alertButtonDiv,.burnDiv {
+<<<<<<< HEAD
+
+=======
+>>>>>>> 287924b7f3dae5b90699910f653fe143961d5548
+.alertButtonDiv,
+.burnDiv {
   margin: 0 auto;
   text-align: center;
   width: 60%;
   height: 5%;
   margin-top: 10px;
 }
+
 .introDiv {
   width: 60%;
   margin: 0 auto;
   text-align: left;
   margin-top: 20px;
 }
+
 .contentText {
   font-family: 华文中宋;
   font-size: 17px;
   position: static;
 }
+
 #courseTitle {
   color: #000;
   font-family: 华文中宋;
@@ -250,6 +299,7 @@ export default {
   text-align: center;
   position: static;
 }
+
 #courseTitleDiv {
   margin: 0 auto;
 }

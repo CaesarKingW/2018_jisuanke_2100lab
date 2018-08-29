@@ -54,7 +54,14 @@ export default {
       st: '',
       CanComment: true,
       // 学习进度时间点
-      studyPoint: 0
+      studyPoint: 0,
+      // 开始学习时间
+      startPoint: null,
+      // 是否阅后即焚
+      IsDestroy: false,
+      // 可阅时长
+      duration: null,
+      closeInterval: null
     }
   },
   created: function() {
@@ -96,6 +103,7 @@ export default {
           return
         }
         vm.last_time = vm.pictures[vm.last_index].start_time
+        this.studyPoint = document.getElementById('audio').currentTime
         vm.Play()
       }, interval)
     },
@@ -128,6 +136,7 @@ export default {
       this.last_time = current
       this.last_index = picindex
     },
+    // 判断登录状态，防止用户强制访问
     Judgestatus: function() {
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/get_status')
@@ -145,29 +154,37 @@ export default {
         })
     },
     GetCourseId: function() {
-      var orderId = this.$route.query.out_trade_no
-      if (typeof orderId !== 'undefined') {
-        // 修改订单状态并获取courseid
-        var request = JSON.stringify(orderId)
-        this.$http
-          .post(this.GLOBAL.serverSrc + '/app/notify', request)
-          .then(response => {
-            this.courseid = response.data.course_id
-            this.get_info()
-            this.JudgePrice()
-            this.createTakes()
-          })
-      } else {
-        // 从路由中获取课程id
-        this.courseid = this.$route.query.id
-        this.get_info()
-        this.JudgePrice()
-        this.createTakes()
-      }
+      // 从路由中获取课程id
+      this.courseid = this.$route.query.id
+      // 获取takes记录，取出课程第一次播放的时间戳
+      this.createTakes()
       // 判断此门课程是否存在，不存在则直接调回home页面，
       // 是否为免费，并获取课程标题
       // 若为付费则判断订单状态
-      // this.JudgePrice()
+    },
+    // 若是第一次观看，则加一条takes记录
+    createTakes: function() {
+      var now = Date.parse(new Date())
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/add_new_take',
+          JSON.stringify({
+            userphone: this.userphone,
+            courseid: this.courseid,
+            beginPoint: now
+          })
+        )
+        .then(
+          response => {
+            this.startPoint = response.data.startPoint
+            var breakPoint = response.data.breakPoint
+            document.getElementById('audio').currentTime = breakPoint
+            // 获取课程非内容属性
+            this.JudgePrice()
+          },
+          response => {
+          }
+        )
     },
     // 获取课程标题和是否免费属性
     JudgePrice: function() {
@@ -185,6 +202,11 @@ export default {
             var price = course[0].fields.price
             this.CanComment = course[0].fields.can_comment
             this.times = course[0].fields.view_count
+            this.IsDestroy = course[0].fields.Is_destroy
+            this.duration = course[0].fields.distory_time
+            if (this.IsDestroy) {
+              this.Boom()
+            }
             if (price === 0) {
               this.IsFree = true
             } else {
@@ -193,6 +215,9 @@ export default {
             // 若是付费课程判断用户是否支付完成，未支付完成则直接跳转到主页
             if (!this.IsFree) {
               this.JudgePayment()
+            } else {
+              // 获取免费课程播放所需要的信息
+              this.get_info()
             }
           } else {
             this.$router.push({ name: 'home' })
@@ -214,22 +239,38 @@ export default {
           // 如果是付费课程且未支付则直接跳转到Home页面
           if (!this.IsPaid) {
             this.$router.push({ name: 'home' })
+          } else {
+            // 获取课程播放所需要的信息
+            this.get_info()
           }
         })
     },
-    createTakes: function() {
-      this.$http
-        .post(
-          this.GLOBAL.serverSrc + '/app/add_new_take',
-          JSON.stringify({
-            userphone: this.userphone,
-            courseid: this.courseid
-          })
-        )
-        .then(response => {}, response => {})
+    Boom: function() {
+      let _this = this
+      _this.closeInterval = setInterval(() => {
+        var now = Date.parse(new Date())
+        if (_this.startPoint !== null && _this.duration !== null) {
+          var diff = now - (_this.startPoint + _this.duration * 3600000)
+          if (diff > 0) {
+            _this.SetBurn()
+            _this.$router.push({ name: 'ReadAndBurn' })
+          }
+        }
+      }, 1000)
+    },
+    SetBurn: function() {
+      this.$http.post(
+        this.GLOBAL.serverSrc + '/app/set_burn',
+        JSON.stringify({
+          userphone: this.userphone,
+          courseid: this.courseid
+        })
+      )
     }
   },
+  // vue实例销毁后记录下此次观看进度
   beforeDestroy() {
+    clearInterval(this.closeInterval)
     this.$http
       .post(
         this.GLOBAL.serverSrc + '/app/add_or_update_takes',
@@ -248,9 +289,11 @@ export default {
   text-align: left;
   font-size: 18px;
 }
+
 #poptip {
   font-size: 24px;
 }
+
 .navibar {
   z-index: 9999;
   background-color: #fff;
@@ -260,47 +303,55 @@ export default {
   top: -15px;
   opacity: 0.7;
   padding: 0px;
-  /* padding: 25px; */
 }
+
 .navi {
   font-size: 18px;
   color: #022336;
   margin-left: 15px;
   margin-right: 15px;
 }
+
 .playRoll {
   margin: 0 auto;
   text-align: center;
 }
+
 #scrollBar {
   overflow-y: auto;
   overflow-x: hidden;
   height: 90px;
 }
+
 #progressRollDiv {
   width: 60%;
   text-align: center;
   margin: 0 auto;
   margin-top: 20px;
 }
+
 .collapse {
   text-align: center;
   width: 60%;
   margin: 0 auto;
 }
+
 #CourseShow {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
 #title {
   color: #17233d;
 }
+
 #read_time {
   color: #808695;
   font-size: 14px;
 }
+
 .top {
   padding: 10px;
   background: #2d8cf0;
@@ -308,10 +359,12 @@ export default {
   text-align: center;
   border-radius: 2px;
 }
+
 .test_pic {
   margin: 0 auto;
   text-align: center;
 }
+
 .title {
   margin: 0 auto;
   text-align: center;
@@ -320,6 +373,7 @@ export default {
   font-size: 30px;
   font-family: 华文中宋;
 }
+
 .read_time {
   margin: 0 auto;
   margin-top: 10px;
@@ -328,6 +382,7 @@ export default {
   font-family: 微软雅黑;
   font-size: 16px;
 }
+
 #changePic {
   border: #000 solid 5px;
   border-radius: 20px;

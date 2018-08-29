@@ -186,13 +186,16 @@ export default {
 #inputPhone {
   width: 60%;
 }
+
 .caseSensitive {
   font-size: 13px;
   margin-bottom: 5px;
 }
+
 #codeInput {
   width: 160%;
 }
+
 #lab {
   margin-left: 25%;
   font-size: 18px;
@@ -202,9 +205,11 @@ export default {
   position: fixed;
   border-radius: 4px;
 }
+
 #buttonText {
   color: #000;
 }
+
 #UserLogin {
   margin: 0 auto;
   background-image: url('../assets/BALL.jpg');
@@ -215,9 +220,8 @@ export default {
   height: 100%;
   height: 585px;
   background-size: cover;
-  /* overflow: hidden; */
-  /* background-attachment: fixed; */
 }
+
 .logColumn {
   width: 45%;
   margin-left: 52%;
@@ -226,6 +230,7 @@ export default {
   -webkit-transition: opacity 1s;
   background-size: 100% 100%;
 }
+
 .logColumn h1 {
   background: #075182;
   padding: 20px 0;
@@ -236,14 +241,17 @@ export default {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
+
 form {
   background: #fff;
   padding: 2% 3%;
 }
+
 #logDown {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
+
 #getCodeButton {
   width: 39%;
   height: 33px;
@@ -255,9 +263,11 @@ form {
   color: #fff;
   cursor: pointer;
 }
+
 #getCodeButton:hover {
   background: #285f83;
 }
+
 #login {
   width: 100%;
   height: 33px;
@@ -269,13 +279,16 @@ form {
   color: #fff;
   cursor: pointer;
 }
+
 #login:hover {
   background: #285f83;
 }
+
 #readAgreement {
   margin-top: 8px;
   margin-bottom: 6px;
 }
+
 #agreement {
   text-decoration: underline;
   cursor: pointer;

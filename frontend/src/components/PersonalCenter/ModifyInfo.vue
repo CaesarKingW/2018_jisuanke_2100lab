@@ -2,7 +2,7 @@
 <div id="ModifyInfo">
     <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
     <div>
-      <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head"/>
+      <input type='file' name='head' id='head' class="none" accept="image/*" v-on:change="Upload_head"/>
       <input id="avatarUploadButton" type='button' value='修改头像' v-on:click="click_file">
     </div>
     <div>
@@ -77,7 +77,6 @@ export default {
       // 判断输入的昵称是否符合规范
       var nickname = this.nickname
       if (!nickname.match(/^[(\u4e00-\u9fa5)|(0-9)|(A-Z|(a-z))]+$/)) {
-        // alert('只能含有汉字字母和数字')
         this.$Message.warning(
           '昵称修改失败！注意:昵称只能使用汉字、字母和数字哦！'
         )
@@ -110,23 +109,27 @@ export default {
   width: 120px;
   margin-left: 100px;
 }
+
 #ModifyInfo {
   float: left;
 }
+
 #nickname {
-  font-size: 20px;
-  font-family: 华文中宋;
-  margin-left: 100px;
   margin-top: 5px;
+  margin-left: 100px;
+  font-family: 华文中宋;
+  font-size: 20px;
 }
+
 #avatar {
-  border: #666666 solid 1px;
-  border-radius: 8px;
   width: 120px;
   height: 120px;
   margin: 30px;
   margin-left: 100px;
+  border: #666 solid 1px;
+  border-radius: 8px;
 }
+
 #avatarUploadButton {
   width: 120px;
   height: 40px;
@@ -139,10 +142,12 @@ export default {
   cursor: pointer;
   text-align: center;
 }
+
 #avatarUploadButton:hover {
-  background: rgb(245, 242, 242);
   cursor: pointer;
+  background: rgb(245, 242, 242);
 }
+
 #nameUploadButton {
   width: 120px;
   height: 40px;
@@ -156,8 +161,13 @@ export default {
   cursor: pointer;
   text-align: center;
 }
+
 #nameUploadButton:hover {
-  background: rgb(245, 242, 242);
   cursor: pointer;
+  background: rgb(245, 242, 242);
+}
+
+.none {
+  display: none;
 }
 </style>

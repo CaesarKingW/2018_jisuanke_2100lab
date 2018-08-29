@@ -14,21 +14,21 @@
         <div class="courseTitleDiv"><div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="buyButtonDiv">
             <div v-if="judge">
-              <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="IsPaid">
-                <Button id="buy" type="primary">
-                <Icon type="logo-usd" /> 进入课程</Button>
-              </router-link>
+              <div v-if="IsPaid"><Button  id="buy" type="primary" v-on:click="IsBurn">
+                <Icon type="logo-usd" /> 进入课程</Button></div>
+              <!-- <div v-else><Button  id="buy" type="primary" v-on:click="alipay()">
+                <Icon type="logo-usd" /> 购买课程</Button></div> -->
               <div v-else>
                 <Poptip placement="right" v-model="visible">
           <a><Button  id="buy" type="primary">
                 <Icon type="logo-usd" /> 购买课程</Button></a>
         <div slot="title"><i>
-                  <Button id="aliPayButton" v-on:click="alipay()">支付宝支付</Button>
-                  <Button id="wxPayButton" v-on:click="wxpay()">微信支付</Button>
-                  <Button id="awardButton" v-on:click="awardpay()">奖励金支付</Button>
+                  <Button id="aliPayButton" v-on:click="alipay()"><Icon type="logo-usd" />支付宝支付</Button>
+                  <Button id="wxPayButton" v-on:click="wxpay()"><Icon type="logo-usd" />微信支付</Button>
+                  <Button id="awardButton" v-on:click="awardpay()"><Icon type="logo-usd" />奖励金支付</Button>
           </i></div>
         <div slot="content">
-            <a @click="close">关闭标签</a>
+            <a @click="close">放弃购买关闭</a>
         </div>
         </Poptip>
               </div>
@@ -100,8 +100,8 @@ export default {
       judge: false,
       // 判断用户是否支付成功
       IsPaid: false,
-      burnTime: '',
-      isBurn: true
+      burnTime: null,
+      isBurn: false
     }
   },
   created: function() {
@@ -146,6 +146,8 @@ export default {
             this.content = course[0].fields.brief_introduction
             this.price = course[0].fields.price
             this.award = Math.floor(course[0].fields.share_rate * this.price)
+            this.isBurn = course[0].fields.Is_destroy
+            this.burnTime = course[0].fields.distory_time
           } else {
             this.$router.push({ name: 'home' })
           }
@@ -180,6 +182,12 @@ export default {
           window.location.href = response.data
         })
     },
+    wxpay: function() {
+      this.$Message.warning('抱歉，暂不支持微信支付')
+    },
+    awardpay: function() {
+      this.$Message.warning('兄弟，还是用支付宝吧！！！')
+    },
     ok: function() {
       this.$router.push({ name: 'UserLogin' })
     },
@@ -196,6 +204,27 @@ export default {
         .then(response => {
           this.IsPaid = response.data.order_status
         })
+    },
+    IsBurn: function() {
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/get_burn_status',
+          JSON.stringify({
+            userphone: this.userphone,
+            courseid: this.courseid
+          })
+        )
+        .then(response => {
+          var isBurn = response.data.status
+          if (isBurn) {
+            this.$router.push({ name: 'ReadAndBurn' })
+          } else {
+            this.$router.push({
+              name: 'CourseShow',
+              query: { id: this.courseid }
+            })
+          }
+        })
     }
   }
 }
@@ -205,10 +234,12 @@ export default {
   text-align: center;
   padding: 10px;
 }
+
 #buttons {
   margin: 0 auto;
   text-align: center;
 }
+
 .navibar {
   z-index: 9999;
   background-color: #fff;
@@ -217,38 +248,46 @@ export default {
   opacity: 0.9;
   padding: 25px;
 }
+
 .navi {
   font-size: 18px;
   color: #022336;
   margin-left: 15px;
   margin-right: 15px;
 }
+
 .myPanel {
   margin: 0 auto;
   height: 90px;
   border: none;
   border-radius: 0px;
 }
+
 .vertical-center-modal {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .ivu-modal {
   top: 0;
 }
+
 .alertText,
 .burnText {
   text-align: center;
   color: #fff;
 }
+
 .coverDiv {
   margin: 0 auto;
   text-align: center;
 }
+
 .ivu-modal {
   top: 0;
 }
+
 #share,
 #buy {
   background-color: #fff;
@@ -262,6 +301,7 @@ export default {
   text-align: center;
   position: static;
 }
+
 .buyButtonDiv,
 .shareButtonDiv {
   margin: 0 auto;
@@ -270,6 +310,7 @@ export default {
   margin-bottom: 25px;
   position: static;
 }
+
 #copyButton {
   width: 50px;
   height: 25px;
@@ -280,9 +321,11 @@ export default {
   color: #fff;
   cursor: pointer;
 }
+
 #copyButton:hover {
   background: #57a3f3;
 }
+
 #testPic {
   width: 360px;
   height: 250px;
@@ -291,29 +334,35 @@ export default {
   margin: 0 auto;
   text-align: center;
 }
-.alertButtonDiv,.burnDiv {
+
+.alertButtonDiv,
+.burnDiv {
   margin: 0 auto;
   text-align: center;
   width: 60%;
   height: 5%;
   margin-top: 10px;
 }
+
 .introDiv {
   width: 60%;
   margin: 0 auto;
   text-align: left;
   margin-top: 20px;
 }
+
 .intro {
   font-size: 19px;
   font-family: 华文中宋;
 }
+
 .introContent {
   font-size: 17px;
   font-size: 17px;
   position: static;
   font-family: 华文中宋;
 }
+
 #courseTitle {
   color: #000;
   font-family: 华文中宋;
@@ -324,6 +373,7 @@ export default {
   text-align: center;
   position: static;
 }
+
 .courseTitleDiv {
   margin: 0 auto;
 }

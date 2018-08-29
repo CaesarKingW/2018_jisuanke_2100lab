@@ -1,6 +1,6 @@
 <template>
 <div>
-<Input v-model="word" placeholder="输入课程标题关键字以搜索课程" style="width: 300px" />
+<Input v-model="word" placeholder="输入课程标题关键字以搜索课程" class='width' />
 <Button @click="search()">搜索</Button>
 <Table border stripe :columns="columns1" :data="data1"></Table>
 </div>
@@ -100,4 +100,7 @@ export default {
 }
 </script>
 <style>
+.width {
+  width: 300px;
+}
 </style>
