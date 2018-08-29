@@ -13,41 +13,39 @@
       </router-link>
     </div>
     <!-- 课程信息 -->
-  <div class="myPanel"></div>
-        <div class="coverDiv">
-          <img id="testPic" v-bind:src="path">
+    <div class="myPanel"></div>
+    <div class="coverDiv">
+      <img id="testPic" v-bind:src="path">
+    </div>
+    <div class="courseTitleDiv">
+      <div id="courseTitle">标题：{{ courseTitle }}</div>
+    </div>
+    <div class="buyButtonDiv">
+      <div v-if="judge">
+        <div v-if="IsPaid">
+          <Button id="buy" type="primary" v-on:click="IsBurn">
+            <Icon type="logo-usd" /> 进入课程</Button>
         </div>
-        <div class="courseTitleDiv"><div id="courseTitle">标题：{{ courseTitle }}</div></div>
-        <div class="buyButtonDiv">
-            <div v-if="judge">
-              <div v-if="IsPaid"><Button  id="buy" type="primary" v-on:click="IsBurn">
-                <Icon type="logo-usd" /> 进入课程</Button></div>
-              <!-- <div v-else><Button  id="buy" type="primary" v-on:click="alipay()">
+        <!-- <div v-else><Button  id="buy" type="primary" v-on:click="alipay()">
                 <Icon type="logo-usd" /> 购买课程</Button></div> -->
-              <div v-else>
-                <Poptip placement="right" v-model="visible">
-          <a><Button  id="buy" type="primary">
-                <Icon type="logo-usd" /> 购买课程</Button></a>
-        <div slot="title"><i>
-                  <Button id="aliPayButton" v-on:click="alipay()"><Icon type="logo-usd" />支付宝支付</Button>
-                  <Button id="wxPayButton" v-on:click="wxpay()"><Icon type="logo-usd" />微信支付</Button>
-                  <Button id="awardButton" v-on:click="awardpay()"><Icon type="logo-usd" />奖励金支付</Button>
-          </i></div>
-        <div slot="content">
-            <a @click="close">放弃购买关闭</a>
-        </div>
-        </Poptip>
-              </div>
-            </div>
-            <div v-else><Button id="buy" v-on:click="modal1" type="primary">
-            <Icon type="logo-usd" /> 购买课程</Button></div>
-            <Modal v-model="modal1" title="温馨提示" @on-ok="ok"
-            @on-cancel="cancel">
-              <p>您必须先登录才能学习课程</p>
-            </Modal>
+        <div v-else>
+          <Poptip placement="right" v-model="visible">
+            <a>
+              <Button id="buy" type="primary">
+                <Icon type="logo-usd" /> 购买课程</Button>
+            </a>
+            <div slot="title">
+              <i>
+                <Button id="aliPayButton" v-on:click="alipay()">
+                  <Icon type="logo-usd" />支付宝支付</Button>
+                <Button id="wxPayButton" v-on:click="wxpay()">
+                  <Icon type="logo-usd" />微信支付</Button>
+                <Button id="awardButton" v-on:click="awardpay()">
+                  <Icon type="logo-usd" />奖励金支付</Button>
+              </i>
             </div>
             <div slot="content">
-              <a @click="close">关闭标签</a>
+              <a @click="close">放弃购买关闭</a>
             </div>
           </Poptip>
         </div>
