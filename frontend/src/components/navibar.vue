@@ -1,22 +1,22 @@
 <template>
-    <header class="header">
-      <div>
-        <div class="fl img">
-          <img src="../assets/scienceCaptain.jpg">
-        </div>
-        <div class="fl menutext">
-          <p>2100实验室后台</p>
-        </div>
+  <header class="header">
+    <div>
+      <div class="fl img">
+        <img src="../assets/scienceCaptain.jpg">
       </div>
-      <div class="fr">
-        <div class="fl menutext">
-          <p>{{username}},您好！</p>
-        </div>
-        <div class="fl menutext">
-          <Button @click="logout">登出</Button>
-        </div>
+      <div class="fl menutext">
+        <p>2100实验室后台</p>
       </div>
-    </header>
+    </div>
+    <div class="fr">
+      <div class="fl menutext">
+        <p>{{username}},您好！</p>
+      </div>
+      <div class="fl menutext">
+        <Button @click="logout">登出</Button>
+      </div>
+    </div>
+  </header>
 </template>
 
 <script>

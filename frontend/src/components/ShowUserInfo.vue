@@ -1,5 +1,5 @@
 <template>
-<div class="ShowUserInfo">
+  <div class="ShowUserInfo">
     <img id="avatar" src="../assets/little_avatar.png">
     <div id="nickname_div">{{ nickname }}</div>
     <div id="phone_div">手机号码：{{ phone }}</div>
@@ -21,9 +21,9 @@
                 <li>自由落体运动</li>
             </ul>
         </Card>
+      </div>
     </div>
-    </div>
-</div>
+  </div>
 </template>
 <script>
 export default {

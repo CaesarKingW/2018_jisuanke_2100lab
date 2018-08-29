@@ -82,4 +82,5 @@ urlpatterns = [
     path('search_one_course', wq_views.search_one_course),
     path('test', wq_views.test),
     path('editCourse', wq_views.editCourse),
+    path('backstage_logout', wq_views.backstage_logout)
 ]

@@ -1,35 +1,41 @@
 <template>
-<body>
-<div id="CourseShow">
-    <div class="navibar">
-    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
-    <Divider type="vertical" />
-    </div>
-    <br />
-    <div class="title">{{ title }}</div>
-    <p class="read_time">浏览量：{{ times }} 次</p>
-    <div class="test_pic"><img id="changePic" v-bind:src="picpath"></div>
-    <div class="playRoll"><audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio></div>
-    <Collapse cLass="collapse" accordion v-model="value">
+
+  <body>
+    <div id="CourseShow">
+      <div class="navibar">
+        <router-link to="/home">
+          <a class="navi">
+            <Icon type="ios-home" /> 网站首页</a>
+        </router-link>
+        <Divider type="vertical" />
+      </div>
+      <br />
+      <div class="title">{{ title }}</div>
+      <p class="read_time">浏览量：{{ times }} 次</p>
+      <div class="test_pic"><img id="changePic" v-bind:src="picpath"></div>
+      <div class="playRoll">
+        <audio id="audio" controls preload="auto" v-bind:src="aupath" @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio>
+      </div>
+      <Collapse cLass="collapse" accordion v-model="value">
         <Panel>
-            <Poptip trigger="hover" id="poptip" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
+          <Poptip trigger="hover" id="poptip" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
             <div>文字介绍</div>
-            </Poptip>
-            <div slot="content" id="slotContent">
-              <div id="scrollBar">
-                 {{ content }}
-              </div>
+          </Poptip>
+          <div slot="content" id="slotContent">
+            <div id="scrollBar">
+              {{ content }}
             </div>
+          </div>
         </Panel>
-    </Collapse>
-        <BackTop>
+      </Collapse>
+      <BackTop>
         <div>返回顶端</div>
-    </BackTop>
-    <div v-if="CanComment">
-      <NiceMsgBoard v-bind:course_id = "courseid"></NiceMsgBoard>
+      </BackTop>
+      <div v-if="CanComment">
+        <NiceMsgBoard v-bind:course_id="courseid"></NiceMsgBoard>
+      </div>
     </div>
-</div>
-</body>
+  </body>
 </template>
 <script>
 import NiceMsgBoard from './NiceMsgBoard'
@@ -180,8 +186,7 @@ export default {
             // 获取课程非内容属性
             this.JudgePrice()
           },
-          response => {
-          }
+          response => {}
         )
     },
     // 获取课程标题和是否免费属性

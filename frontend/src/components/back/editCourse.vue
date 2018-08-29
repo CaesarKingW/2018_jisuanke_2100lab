@@ -1,9 +1,9 @@
 <template>
-<div>
-<Input v-model="word" placeholder="输入课程标题关键字以搜索课程" class='width' />
-<Button @click="search()">搜索</Button>
-<Table border stripe :columns="columns1" :data="data1"></Table>
-</div>
+  <div>
+    <Input v-model="word" placeholder="输入课程标题关键字以搜索课程" style="width: 300px" />
+    <Button @click="search()">搜索</Button>
+    <Table border stripe :columns="columns1" :data="data1"></Table>
+  </div>
 </template>
 <script>
 export default {
@@ -70,6 +70,23 @@ export default {
       ],
       data1: []
     }
+  },
+  created: function() {
+    this.$http
+      .post('http://192.168.55.33:8000/app/get_mstatus')
+      .then(response => {
+        var res = response.data
+        this.mis_login = res.mis_login
+        if (!this.mis_login) {
+          alert('还没有登录，无权访问该页面！')
+          location.href = '/#/backstageLogin'
+        } else {
+          if (res.manager.Manage_course !== true) {
+            alert('你没有权限访问该网页！')
+            location.href = '/#/backstage'
+          }
+        }
+      })
   },
   methods: {
     search() {

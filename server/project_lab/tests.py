@@ -7,6 +7,7 @@ from .utils.yunpian import YunPian
 
 # Create your tests here.
 
+
 # 验证post请求
 class PostTest(TestCase):
     def test_add_message(self):
@@ -69,7 +70,6 @@ class PostTest(TestCase):
         response = self.client.post('/app/get_user_information')
         self.assertEqual(response.status_code, 200)
 
-
     def test_get_status(self):
         response = self.client.post('/app/get_status')
         self.assertEqual(response.status_code, 200)
@@ -86,7 +86,6 @@ class PostTest(TestCase):
         response = self.client.post('/app/notify')
         self.assertEqual(response.status_code, 200)
 
-
     def test_account_destroy(self):
         response = self.client.post('/app/account_destroy')
         self.assertEqual(response.status_code, 200)
@@ -98,6 +97,7 @@ class PostTest(TestCase):
     def test_show_paying_course(self):
         response = self.client.post('/app/show_paying_course')
         self.assertEqual(response.status_code, 200)
+
 
 # 验证短信发送功能
 # 如果不注释，会在每次跑ci的时候发送一条短信，造成短信轰炸，短信服务平台会收回权限，并且这个测试是可以通过的

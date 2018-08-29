@@ -12,6 +12,7 @@ from .serializer import OrderSerializer, CourseSerializer
 from .serializer import Course_pictureSerializer, Operating_historySerializer
 from django.contrib import auth
 import string
+from django.contrib.auth.decorators import login_required
 
 
 @require_http_methods(['POST'])
@@ -112,8 +113,7 @@ def delete_comment(request):
     operating_history = Operating_history(
         manager_username=operator,
         operate_type="删除留言",
-        object_type="留言（留言用户：" + m.user_phone.phone_number + ";留言内容：" +
-        m.content + ";留言时间：" + m.created_at + ";留言课程：" + m.course_id)
+        object_type="留言（留言id:" + str(message_id) + ")")
     operating_history.save()
     m.delete()
     n = User.objects.get(phone_number=phone_number)
@@ -464,4 +464,13 @@ def editCourse(request):
     operating_history.save()
     course = CourseSerializer(course)
     response['course'] = course.data
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+@login_required
+def backstage_logout(request):
+    response = {}
+    response['msg'] = 'success'
+    auth.logout(request)
     return JsonResponse(response)
