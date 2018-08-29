@@ -4,16 +4,6 @@ import UserLogin from '@/components/UserLogin'
 import test from '@/components/test'
 import messageboard from '@/components/message_board'
 import home from '@/components/home'
-import backlogin from '@/components/backlogin'
-import backstage from '@/components/backstage'
-import course from '@/components/back/course'
-import comment from '@/components/back/comment'
-import user from '@/components/back/user'
-import order from '@/components/back/order'
-import data from '@/components/back/data'
-import authority from '@/components/back/authority'
-import log from '@/components/back/log'
-import deny from '@/components/back/deny'
 import CourseShow from '@/components/CourseShow'
 import FreeCourseIntro from '@/components/FreeCourseIntro'
 import PayCourseIntro from '@/components/PayCourseIntro'
@@ -23,8 +13,6 @@ import ModifyUserInfo from '@/components/ModifyUserInfo'
 import ReadAndBurn from '@/components/ReadAndBurn'
 import useModify from '@/components/use_modify'
 import NiceMsgBoard from '@/components/NiceMsgBoard'
-import editCourse from '@/components/back/editCourse'
-import addCourse from '@/components/back/addCourse'
 import AllFreeCourse from '@/components/AllFreeCourse'
 import AllPayCourse from '@/components/AllPayCourse'
 import NiceUserModify from '@/components/NiceUserModify'
@@ -38,11 +26,84 @@ import ModifyInfo from '@/components/PersonalCenter/ModifyInfo'
 import LearntCourse from '@/components/PersonalCenter/LearntCourse'
 import BoughtCourse from '@/components/PersonalCenter/BoughtCourse'
 import AccountCancel from '@/components/PersonalCenter/AccountCancel'
-
+import backstage from '@/components/back/backstage'
+import backstageRegister from '@/components/back/backstageRegister'
+import backstageLogin from '@/components/back/backstageLogin'
+import addCourse from '@/components/back/addCourse'
+import editCourse from '@/components/back/editCourse'
+import realEdit from '@/components/back/realEdit'
+import user from '@/components/back/user'
+import comment from '@/components/back/comment'
+import order from '@/components/back/order'
+import data from '@/components/back/data'
+import authority from '@/components/back/authority'
+import operatingHistory from '@/components/back/operatingHistory'
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/backstageRegister',
+      name: 'backstageRegister',
+      component: backstageRegister
+    },
+    {
+      path: '/backstageLogin',
+      name: 'backstageLogin',
+      component: backstageLogin
+    },
+    {
+      path: '/backstage',
+      name: 'backstage',
+      component: backstage,
+      children: [
+        {
+          path: 'addCourse',
+          name: 'addCourse',
+          component: addCourse
+        },
+        {
+          path: 'editCourse',
+          name: 'editCourse',
+          component: editCourse
+        },
+        {
+          path: 'realEdit',
+          name: 'realEdit',
+          component: realEdit
+        },
+        {
+          path: 'user',
+          name: 'user',
+          component: user
+        },
+        {
+          path: 'comment',
+          name: 'comment',
+          component: comment
+        },
+        {
+          path: 'order',
+          name: 'order',
+          component: order
+        },
+        {
+          path: 'data',
+          name: 'data',
+          component: data
+        },
+        {
+          path: 'authority',
+          name: 'authority',
+          component: authority
+        },
+        {
+          path: 'operatingHistory',
+          name: 'operatingHistory',
+          component: operatingHistory
+        }
+      ]
+    }, // 以上均是后台
     {
       path: '/',
       name: 'Login',
@@ -135,11 +196,7 @@ export default new Router({
       name: 'NiceUserModify',
       component: NiceUserModify
     },
-    {
-      path: '/backlogin',
-      name: 'backlogin',
-      component: backlogin
-    },
+
     {
       path: '/PersonalCenter',
       name: 'PersonalCenter',
@@ -173,63 +230,6 @@ export default new Router({
         path: 'AccountCancel',
         name: 'AccountCancel',
         component: AccountCancel
-      }
-      ]
-    },
-    {
-      // path: '/backstage/:user',
-      path: '/backstage',
-      name: 'backstage',
-      component: backstage,
-      children: [{
-        path: 'course',
-        name: 'course',
-        component: course
-      },
-      {
-        path: 'editCourse',
-        name: 'editCourse',
-        component: editCourse
-      },
-      {
-        path: 'addCourse',
-        name: 'addCourse',
-        component: addCourse
-      },
-      {
-        path: 'comment',
-        name: 'comment',
-        component: comment
-      },
-      {
-        path: 'user',
-        name: 'user',
-        component: user
-      },
-      {
-        path: 'order',
-        name: 'order',
-        component: order
-      },
-      {
-        path: 'data',
-        name: 'data',
-        component: data
-      },
-      {
-        path: 'authority',
-        name: 'authority',
-        component: authority
-      },
-      {
-        path: 'log',
-        name: 'log',
-        component: log
-      },
-      {
-        path: 'deny',
-        name: 'deny',
-        component: deny
       }
       ]
     },

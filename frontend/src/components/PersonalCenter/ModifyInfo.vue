@@ -3,13 +3,13 @@
     <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
     <div>
       <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head"/>
-      <input id="avatar_upload_button" type='button' value='修改头像' v-on:click="click_file">
+      <input id="avatarUploadButton" type='button' value='修改头像' v-on:click="click_file">
     </div>
     <div>
       <div id="nickname">当前昵称：<br>{{oldname}}</div>
         <form @submit.prevent="modify_nickname">
-            <div><Input id="name_upload_text" type="text" v-model="nickname" /></div>
-            <div><input id="name_upload_button" type="submit" value="确认修改"/></div>
+            <div><Input id="nameUploadText" type="text" v-model="nickname" /></div>
+            <div><input id="nameUploadButton" type="submit" value="确认修改"/></div>
         </form>
     </div>
 </div>
@@ -39,7 +39,6 @@ export default {
           obj = response.data.list
           this.oldpath = obj[0].fields.head_protrait
           this.user_phone = obj[0].pk
-          console.log(this.user_phone)
           this.oldname = obj[0].fields.user_name
           if (this.oldpath === '') {
             this.path = this.default_avator
@@ -47,11 +46,8 @@ export default {
             this.path = this.GLOBAL.serverSrc + '/media/' + this.oldpath
             this.oldpath = ''
           }
-          console.log('success')
         },
-        response => {
-          console.log('error')
-        }
+        response => {}
       )
     },
     click_file: function() {
@@ -67,9 +63,7 @@ export default {
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
-        .then(response => {
-          console.log(response.data)
-        })
+        .then(response => {})
 
       //  前端读取图片进行预览
       let _this = this
@@ -83,7 +77,6 @@ export default {
       // 判断输入的昵称是否符合规范
       var nickname = this.nickname
       if (!nickname.match(/^[(\u4e00-\u9fa5)|(0-9)|(A-Z|(a-z))]+$/)) {
-        // alert('只能含有汉字字母和数字')
         this.$Message.warning(
           '昵称修改失败！注意:昵称只能使用汉字、字母和数字哦！'
         )
@@ -101,13 +94,10 @@ export default {
         )
         .then(
           response => {
-            console.log('success')
             this.get_old_avator()
             this.nickname = ''
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     }
   }
@@ -115,7 +105,7 @@ export default {
 </script>
 
 <style scoped>
-#name_upload_text {
+#nameUploadText {
   width: 120px;
   margin-left: 100px;
 }
@@ -136,7 +126,7 @@ export default {
   margin: 30px;
   margin-left: 100px;
 }
-#avatar_upload_button {
+#avatarUploadButton {
   width: 120px;
   height: 40px;
   font-size: 20px;
@@ -148,11 +138,11 @@ export default {
   cursor: pointer;
   text-align: center;
 }
-#avatar_upload_button:hover {
+#avatarUploadButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
 }
-#name_upload_button {
+#nameUploadButton {
   width: 120px;
   height: 40px;
   font-size: 20px;
@@ -165,7 +155,7 @@ export default {
   cursor: pointer;
   text-align: center;
 }
-#name_upload_button:hover {
+#nameUploadButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
 }

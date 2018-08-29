@@ -20,11 +20,7 @@ export default {
     }
   },
   methods: {
-    aa() {
-      console.log('this.username')
-      console.log(this.username)
-      console.log('this.username')
-    },
+    aa() {},
     mounted(request) {
       this.username = this.$route.params.user
     }
@@ -44,5 +40,4 @@ export default {
 .fr {
   float: right;
 }
-
 </style>

@@ -1,18 +1,18 @@
 <template>
 <div id="UserLogin">
-    <Button id="lab" ghost><router-link to="/home"><div id="button_text">2100-lab <Icon type="md-log-in" /></div></router-link></Button>
+    <Button id="lab" ghost><router-link to="/home"><div id="buttonText">首页 <Icon type="md-log-in" /></div></router-link></Button>
     <br>
     <br>
-    <div class="log_column">
+    <div class="logColumn">
     <h1>2100实验室</h1>
     <form method="POST" @submit.prevent="Is_normal_nubmer">
-    <Input type="text" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" v-model="phone_number"/>
+    <Input id="inputPhone" type="text" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" v-model="phone_number"/>
     <input type="submit" id="getCodeButton" value="获取验证码" />
     </form>
-    <form id="log_down" method="POST" @submit.prevent="comparecode">
+    <form id="logDown" method="POST" @submit.prevent="comparecode">
     <div class="caseSensitive"><Icon type="ios-alert" />&nbsp;&nbsp;请注意区分验证码大小写！</div>
     <Input type="text" placeholder="请输入验证码" size="large" icon="ios-key-outline" v-model="usercode"/>
-    <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement"/>我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
+    <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement"/> 我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
     <input type="submit" id="login" value="登录" />
     </form>
     </div>
@@ -32,19 +32,21 @@ export default {
     }
   },
   mounted: function() {
-    this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(response => {
-      this.is_login = response.data.is_login
-      if (this.is_login) {
-        this.alert_wrong_status()
-        location.href = '/#/home'
-      }
-    })
+    this.$http
+      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .then(response => {
+        this.is_login = response.data.is_login
+        if (this.is_login) {
+          this.alert_wrong_status()
+          location.href = '/#/home'
+        }
+      })
   },
   methods: {
     timedCount: function() {
       document.getElementById('getCodeButton').disabled = true
       document.getElementById('getCodeButton').value =
-        this.count + '后重新获取验证码'
+        this.count + 's后重新获取验证码'
       this.count = this.count - 1
       if (this.count !== 0) {
         let _this = this
@@ -60,7 +62,7 @@ export default {
     instance(type) {
       const title = '2100实验室用户协议'
       const content =
-        '<p><ul style="list-style: none;"><li>第一，绝不意气用事。</li><li>第二，绝不漏判任何一件坏事。</li><li>第三，绝对裁判的公正漂亮。</li></ul></p>'
+        '<p>在此处输入用户协议。</p>'
       switch (type) {
         case 'info':
           this.$Modal.info({
@@ -108,16 +110,13 @@ export default {
         .post(this.GLOBAL.serverSrc + '/app/get_code_post', phonenumber)
         .then(
           response => {
-            console.log(response.data)
             var Isexists = response.data.Is_exists
             if (Isexists === false) {
               this.alert_wrong_user()
               this.phone_number = null
             }
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     },
     comparecode: function() {
@@ -151,14 +150,7 @@ export default {
       var userphone = JSON.stringify(this.phone_number)
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/register_new_user', userphone)
-        .then(
-          response => {
-            console.log(response.data)
-          },
-          response => {
-            console.log('error')
-          }
-        )
+        .then(response => {}, response => {})
     },
     verify_the_login: function() {
       this.$http
@@ -172,74 +164,69 @@ export default {
         .then(
           response => {
             this.status = response.data.status
-            console.log(this.status)
             if (this.status) {
               this.success_login()
               this.Register_new_user()
               this.phone_number = null
               this.usercode = null
               this.commit_phone = null
-              // this.status = false
               // 用户跳转到主页
               location.href = '/#/home'
             } else {
               this.alert_wrong_code()
-              console.log(this.phone_number)
             }
           },
-          response => {
-            console.log(response.data)
-          }
+          response => {}
         )
     }
   }
 }
 </script>
 <style scoped>
+#inputPhone {
+  width: 60%;
+}
 .caseSensitive {
-  font-size: 14px;
-  font-family: 斜体;
+  font-size: 13px;
   margin-bottom: 5px;
 }
 #codeInput {
   width: 160%;
 }
 #lab {
-  margin-left: 52%;
+  margin-left: 25%;
   font-size: 18px;
-  margin-top: 28px;
+  margin-top: 18.5%;
   margin-bottom: 18px;
   height: 41px;
+  position: fixed;
   border-radius: 4px;
-  border: none;
-  background-color: #075182;
 }
-#lab:hover {
-  background: #285f83;
-}
-#button_text {
-  color: #fff;
+#buttonText {
+  color: #000;
 }
 #UserLogin {
   margin: 0 auto;
   background-image: url('../assets/BALL.jpg');
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size:cover;
+  background-color: #022336;
   width: 100%;
-  height: 583px;
-  /* height: 583px; */
+  height: 100%;
+  height: 585px;
+  background-size: cover;
   /* overflow: hidden; */
   /* background-attachment: fixed; */
 }
-.log_column {
+.logColumn {
   width: 45%;
   margin-left: 52%;
-  margin-top: 1%;
+  margin-top: 6%;
   transition: opacity 1s;
   -webkit-transition: opacity 1s;
   background-size: 100% 100%;
 }
-.log_column h1 {
+.logColumn h1 {
   background: #075182;
   padding: 20px 0;
   font-size: 160%;
@@ -251,14 +238,14 @@ export default {
 }
 form {
   background: #fff;
-  padding: 2% 4%;
+  padding: 2% 3%;
 }
-#log_down {
+#logDown {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
 #getCodeButton {
-  width: 100%;
+  width: 39%;
   height: 33px;
   margin-top: 10px;
   outline: none;
@@ -267,14 +254,6 @@ form {
   background-color: #075182;
   color: #fff;
   cursor: pointer;
-  /* width: 43%; */
-  /* height: 33px;
-  outline: none;
-  border-radius: 4px;
-  border: none;
-  background-color: #075182;
-  color: #fff;
-  cursor: pointer; */
 }
 #getCodeButton:hover {
   background: #285f83;
@@ -294,7 +273,8 @@ form {
   background: #285f83;
 }
 #readAgreement {
-  margin: 6px;
+  margin-top: 8px;
+  margin-bottom: 6px;
 }
 #agreement {
   text-decoration: underline;

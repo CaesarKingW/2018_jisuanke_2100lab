@@ -24,7 +24,6 @@ export default {
           .post(this.GLOBAL.serverSrc + '/app/notify', request)
           .then(response => {
             this.courseid = response.data.course_id
-            console.log(this.courseid)
           })
       }
     },

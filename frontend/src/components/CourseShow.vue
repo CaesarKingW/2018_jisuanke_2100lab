@@ -1,22 +1,24 @@
 <template>
 <body>
 <div id="CourseShow">
-    <Divider><h1 class="title">{{ title }}</h1></Divider>
-    <Divider orientation="right"><p class="read_time" style="font-size: 24px;">浏览量：{{ times }} 次</p></Divider>
-    <div class="test_pic"><img id="changePic" v-bind:src="picpath" width=500px height=350px></div>
-    <Divider />
-    <!-- <Progress :percent="45" status="active" /> -->
-    <audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio>
-    <Divider />
-    <Button type="primary" shape="circle" icon="ios-play"></Button>
-    <Divider />
-    <Collapse accordion v-model="value">
-        <Panel style="background-color:#2d8cf0;">
-            <Poptip trigger="hover" style="font-size: 24px;" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
-            <div style="color: white;">文字介绍</div>
+    <div class="navibar">
+    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
+    <Divider type="vertical" />
+    </div>
+    <br />
+    <div class="title">{{ title }}</div>
+    <p class="read_time">浏览量：{{ times }} 次</p>
+    <div class="test_pic"><img id="changePic" v-bind:src="picpath"></div>
+    <div class="playRoll"><audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio></div>
+    <Collapse cLass="collapse" accordion v-model="value">
+        <Panel>
+            <Poptip trigger="hover" id="poptip" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
+            <div>文字介绍</div>
             </Poptip>
-            <div slot="content" style="text-align: left;font-size: 18px;">
-               <div style="overflow: auto;height: 90px;">content</div>
+            <div slot="content" id="slotContent">
+              <div id="scrollBar">
+                 {{ content }}
+              </div>
             </div>
         </Panel>
     </Collapse>
@@ -79,18 +81,14 @@ export default {
         )
         .then(response => {
           var res = response.data
-          console.log(res)
           this.title = res.course[0].title
           this.aupath = this.GLOBAL.serverSrc + res.course[0].audio
-          console.log(this.aupath)
           this.content = res.course[0].context
           this.pictures = res.pictures
           this.picpath = this.GLOBAL.serverSrc + this.pictures[0].course_picture
         })
     },
     Play: function() {
-      console.log(this.last_time)
-      console.log(this.last_index)
       var vm = this
       vm.picpath =
         this.GLOBAL.serverSrc + vm.pictures[vm.last_index].course_picture
@@ -156,18 +154,15 @@ export default {
     GetCourseId: function() {
       // 从路由中获取课程id
       this.courseid = this.$route.query.id
-      console.log(this.courseid)
       // 获取takes记录，取出课程第一次播放的时间戳
       this.createTakes()
       // 判断此门课程是否存在，不存在则直接调回home页面，
       // 是否为免费，并获取课程标题
       // 若为付费则判断订单状态
-      // this.JudgePrice()
     },
     // 若是第一次观看，则加一条takes记录
     createTakes: function() {
       var now = Date.parse(new Date())
-      console.log(now)
       this.$http
         .post(
           this.GLOBAL.serverSrc + '/app/add_new_take',
@@ -181,15 +176,11 @@ export default {
           response => {
             this.startPoint = response.data.startPoint
             var breakPoint = response.data.breakPoint
-            console.log(breakPoint)
             document.getElementById('audio').currentTime = breakPoint
-            console.log(this.startPoint)
-            console.log('success')
             // 获取课程非内容属性
             this.JudgePrice()
           },
           response => {
-            console.log('error')
           }
         )
     },
@@ -210,12 +201,10 @@ export default {
             this.CanComment = course[0].fields.can_comment
             this.times = course[0].fields.view_count
             this.IsDestroy = course[0].fields.Is_destroy
-            console.log(this.IsDestroy)
             this.duration = course[0].fields.distory_time
             if (this.IsDestroy) {
               this.Boom()
             }
-            console.log(this.duration)
             if (price === 0) {
               this.IsFree = true
             } else {
@@ -260,7 +249,6 @@ export default {
         var now = Date.parse(new Date())
         if (_this.startPoint !== null && _this.duration !== null) {
           var diff = now - (_this.startPoint + _this.duration * 3600000)
-          console.log(diff)
           if (diff > 0) {
             _this.SetBurn()
             _this.$router.push({ name: 'ReadAndBurn' })
@@ -278,12 +266,8 @@ export default {
       )
     }
   },
-  updated() {
-    // this.Boom()
-  },
   // vue实例销毁后记录下此次观看进度
   beforeDestroy() {
-    console.log(this.closeInterval)
     clearInterval(this.closeInterval)
     this.$http
       .post(
@@ -294,23 +278,59 @@ export default {
           studyPoint: this.studyPoint
         })
       )
-      .then(
-        response => {
-          console.log('success')
-        },
-        response => {
-          console.log('error')
-        }
-      )
+      .then(response => {}, response => {})
   }
 }
 </script>
 <style>
+#slotContent {
+  text-align: left;
+  font-size: 18px;
+}
+#poptip {
+  font-size: 24px;
+}
+.navibar {
+  z-index: 9999;
+  background-color: #fff;
+  position: fixed;
+  width: 100%;
+  height: 80px;
+  top: -15px;
+  opacity: 0.7;
+  padding: 0px;
+  /* padding: 25px; */
+}
+.navi {
+  font-size: 18px;
+  color: #022336;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.playRoll {
+  margin: 0 auto;
+  text-align: center;
+}
+#scrollBar {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 90px;
+}
+#progressRollDiv {
+  width: 60%;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.collapse {
+  text-align: center;
+  width: 60%;
+  margin: 0 auto;
+}
 #CourseShow {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 #title {
@@ -327,8 +347,31 @@ export default {
   text-align: center;
   border-radius: 2px;
 }
+.test_pic {
+  margin: 0 auto;
+  text-align: center;
+}
+.title {
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 30px;
+  font-family: 华文中宋;
+}
+.read_time {
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 微软雅黑;
+  font-size: 16px;
+}
 #changePic {
   border: #000 solid 5px;
   border-radius: 20px;
+  width: 40%;
+  height: 300px;
+  margin: 0 auto;
 }
 </style>

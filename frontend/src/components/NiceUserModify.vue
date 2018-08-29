@@ -2,7 +2,7 @@
 <div id="useModify">
     <img  id="avatar" v-bind:src="path" class="imgDiv" /><img>
     <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head"/>
-    <div><input id="upload_button" type='button' value='上传头像' v-on:click="click_file"></div>
+    <div><input id="uploadButton" type='button' value='上传头像' v-on:click="click_file"></div>
 </div>
 </template>
 <script>
@@ -29,20 +29,14 @@ export default {
       // 上传图片到后端
       var formdate = new FormData()
       var fileinfo = document.querySelector('input[type=file]').files[0]
-      // event.targer.files[0];//t.target.file["0"]
       formdate.append('file', fileinfo)
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
-        .then(response => {
-          console.log(response.data)
-          // var resultobj = response.data
-          // this.result = resultobj.msg
-        })
+        .then(response => {})
 
       //  前端读取图片进行预览
       let _this = this
-      //   _this.imgObj = e.target.files['0']
       let fr = new FileReader()
       fr.onload = function() {
         _this.path = fr.result
@@ -63,7 +57,7 @@ export default {
   height: 170px;
   margin: 30px;
 }
-#upload_button {
+#uploadButton {
   width: 170px;
   height: 40px;
   font-size: 20px;
@@ -75,7 +69,7 @@ export default {
   cursor: pointer;
   text-align: center;
 }
-#upload_button:hover {
+#uploadButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
 }

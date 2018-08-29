@@ -41,8 +41,6 @@ export default {
         .then(response => {
           this.oldpath = response.data.oldpath[0].fields.head_protrait
           this.oldname = response.data.oldpath[0].fields.user_name
-          console.log(this.oldname)
-          console.log(this.oldpath)
           if (this.oldpath === '') {
             this.path = this.default_avator
           } else {
@@ -64,9 +62,7 @@ export default {
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
-        .then(response => {
-          console.log(response.data)
-        })
+        .then(response => {})
 
       //  前端读取图片进行预览
       let _this = this
@@ -95,13 +91,9 @@ export default {
         )
         .then(
           response => {
-            console.log(response.date)
-            console.log('success')
             this.get_old_avator()
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     }
   }

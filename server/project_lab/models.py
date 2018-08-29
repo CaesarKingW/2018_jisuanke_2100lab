@@ -57,7 +57,6 @@ class Course(models.Model):
     Cover_picture = models.ImageField(
         ("课程封面"), upload_to='course_picture', blank=True, null=True)
     Is_destroy = models.BooleanField(("是否阅后即焚"), default=False)
-    # 浮点型数字，单位为小时
     distory_time = models.FloatField(("可阅时长"), blank=True, null=True)
     price = models.FloatField(("价格"), blank=True, null=True, default=0.0)
     sale_count = models.PositiveIntegerField(
