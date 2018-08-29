@@ -1,7 +1,7 @@
 <template>
 <div>
-    <input v-model="order_number" placeholder="请输入订单号以查询订单">
-    <button @click="search()">搜索</button>
+    <Input v-model="order_number" placeholder="请输入待搜索的订单号" class='width' />
+    <Button @click="search()">搜索</Button>
     <div v-show='is_show'>
         <div v-if='if_order'>
             <div>所购课程标题：<span>{{course_title}}</span></div>
@@ -38,13 +38,11 @@ export default {
   },
   methods: {
     search() {
-      console.log(this.order_number)
       var orderNumber = JSON.stringify(this.order_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/search_order', orderNumber)
+        .post('http://192.168.55.33:8000/app/search_order', orderNumber)
         .then(response => {
           var res = response.data
-          console.log(res)
           this.if_order = res.if_order
           if (this.if_order === true) {
             this.course_title = res.order_info.course_title
@@ -56,7 +54,6 @@ export default {
             } else {
               this.if_refund = true
             }
-            console.log(this.if_refund)
             this.created_at = res.order_info.create_at
             this.phone_number = res.order_info.user_phone
           }
@@ -66,10 +63,8 @@ export default {
     refund() {
       var orderNumber = JSON.stringify(this.order_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/refund', orderNumber)
+        .post('http://192.168.55.33:8000/app/refund', orderNumber)
         .then(response => {
-          var res = response.data
-          console.log(res)
           alert('退款成功！')
           this.status = '已退款'
           this.if_refund = false
@@ -80,4 +75,7 @@ export default {
 </script>
 
 <style>
+.width {
+  width: 300px;
+}
 </style>

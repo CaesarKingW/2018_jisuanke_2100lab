@@ -2,23 +2,23 @@
 <div class="NiceMsgBoard">
   <div id="commentAlert">
   <Alert show-icon>
-        <div id="comment_title">留言区</div>
-        <Icon id="text_icon" type="md-text" slot="icon"></Icon>
+        <div id="commentTitle">留言区</div>
+        <Icon id="textIcon" type="md-text" slot="icon"></Icon>
   </Alert>
   </div>
   <form method="POST" @submit.prevent="commit_message">
-    <div id="post_font"><Input v-model="message" type="textarea" :rows="4" id="post_column" placeholder="请在此畅所欲言……" /></div>
-    <div id="post_button_area"><input id="post_button" type="submit" value="发送留言" /></div>
+    <div id="postFont"><Input v-model="message" type="textarea" :rows="4"  align = center id="postColumn" placeholder="请在此畅所欲言……" /></div>
+    <div id="postButton_area"><input id="postButton" type="submit" value="发送留言" /></div>
     </form>
   <div v-for="(item, index) of messages" :key="item.id">
     <Divider />
-    <Card class="one_comment_card">
+    <Card class="oneCommentCard">
       <div class="one_comment_div">
-          <div id="user_name"><Icon id="comment_icon" type="md-person" /> 用户：{{item.user_name}}</div>
-          <div class="one_content_div">
+          <div id="userName"><Icon id="commentIcon" type="md-person" /> 用户：{{item.user_name}}</div>
+          <div class="oneContentDiv">
               {{item.content}}
           </div>
-          <button id="like_button" v-on:click="praise(item.id, index)"><span style="color: red">❤</span> ：{{item.praise_count}}</button>
+          <button id="likeButton" v-on:click="praise(item.id, index)"><span id="loveIcon">❤</span> ：{{item.praise_count}}</button>
           <NiceReply v-bind:title="item.id" v-bind:user_phone="user_phone"></NiceReply>
       </div>
     </Card>
@@ -28,14 +28,13 @@
 <script>
 import NiceReply from './NiceReply.vue'
 export default {
+  props: ['course_id'],
   data() {
     return {
       message: null,
       messages: [],
       NiceReply: [],
       NiceReplies: [],
-      // 先假定当前课程为1，用户手机号为17602284691
-      course_id: 1,
       user_phone: ''
     }
   },
@@ -44,29 +43,29 @@ export default {
   },
   mounted: function() {
     this.$http
-      .post(this.GLOBAL.serverSrc + 'app/get_status')
+      .post(this.GLOBAL.serverSrc + '/app/get_status')
       .then(response => {
         this.user_phone = response.data.list[0].pk
-        console.log(this.user_phone)
       })
     this.show_message()
+  },
+  watch: {
+    course_id: function(val, oldval) {
+      this.show_message()
+    }
   },
   methods: {
     show_message: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/show_message',
+          this.GLOBAL.serverSrc + '/app/show_message',
           JSON.stringify(this.course_id)
         )
         .then(
           response => {
             this.messages = response.data.list
-            console.log(this.messages)
-            console.log('success')
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     },
     commit_message: function() {
@@ -75,18 +74,14 @@ export default {
         user_phone: this.user_phone,
         course_id: this.course_id
       })
-      console.log(formDate)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/add_message', formDate)
+        .post(this.GLOBAL.serverSrc + '/app/add_message', formDate)
         .then(
           response => {
             this.show_message()
             this.message = null
-            console.log(response.data)
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     },
     praise: function(messageid, index) {
@@ -94,89 +89,93 @@ export default {
         message_id: messageid,
         user_phone: this.user_phone
       })
-      this.$http.post(this.GLOBAL.serverSrc + 'app/praise', formDate).then(
+      this.$http.post(this.GLOBAL.serverSrc + '/app/praise', formDate).then(
         response => {
-          var hasPraise = response.data.has_praise
           this.show_message()
-          console.log(response.data)
-          console.log(hasPraise)
         },
-        response => {
-          console.log('error')
-        }
+        response => {}
       )
     }
   }
 }
 </script>
 <style scoped>
-.NiceMsgBoard {
-  margin: 0 auto;
+#loveIcon {
+  color: red;
 }
-#user_name {
+
+#userName {
   font-size: 18px;
   font-family: 微软雅黑;
 }
-#comment_icon {
+
+#commentIcon {
   font-size: 35px;
 }
-#post_font {
+
+#postFont {
   font-size: 25px;
+  margin: 0 auto;
 }
+
 #commentAlert {
   text-align: center;
   padding: 20px;
   width: 940px;
   margin-left: 180px;
 }
-#comment_title {
+
+#commentTitle {
   font-size: 40px;
   font-family: 华文中宋;
   padding: 20px;
 }
-#text_icon {
+
+#textIcon {
   font-size: 60px;
   padding-top: 2px;
 }
-.one_comment_card {
+
+.oneCommentCard {
   /* text-align: center; */
   margin-left: 200px;
   width: 900px;
 }
-.one_content_div {
+
+.oneContentDiv {
   font-family: 华文中宋;
   font-size: 20px;
   color: #666666;
 }
-#post_column {
+
+#postColumn {
   width: 900px;
   font-family: 华文中宋;
   font-size: 25px;
   margin-left: 200px;
   margin-bottom: 30px;
 }
-/* #post_button_area {
-  margin-bottom: 30px;
-  margin: 0 auto;
-} */
-#post_button {
-  width: 18%;
+
+#postButton {
+  width: 22%;
   height: 40px;
   font-size: 20px;
   margin-top: 10px;
   margin: 0 auto;
+  margin-left: 520px;
   text-align: center;
-  margin-left: 575px;
   border-radius: 4px;
   border: solid 1px;
   background-color: #fff;
   cursor: pointer;
 }
-#post_button:hover {
+
+#postButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
 }
-#like_button {
+
+#likeButton {
   width: 8%;
   height: 30px;
   font-size: 20px;
@@ -187,7 +186,8 @@ export default {
   cursor: pointer;
   margin-left: 720px;
 }
-#like_button:hover {
+
+#likeButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
 }

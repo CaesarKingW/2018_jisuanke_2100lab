@@ -1,106 +1,87 @@
 <template>
-  <section class="front">
-    <div >
-      <Form>
-        <FormItem>
-          管理员账号:
-          <Input v-model="managername" style="width: 200px;"/>
-          <Button type="primary" @click="search_auth()">搜索</Button>
-        </FormItem>
-      </Form>
-    </div>
-    <Form :model="arrtibute" v-if="auth_page">
-      <Divider orientation="left" style="width: 400px;">管理员{{arrtibute.managername}}的权限</Divider>
-      <FormItem>
-        <Checkbox v-model="arrtibute.super"></Checkbox>
-        <span>权限赋予权限</span>
-        <br>
-        <Checkbox v-model="arrtibute.course"></Checkbox>
-        <span>课程处理权限</span>
-        <br>
-        <Checkbox v-model="arrtibute.message"></Checkbox>
-        <span>留言管理权限</span>
-        <br>
-        <Checkbox v-model="arrtibute.user"></Checkbox>
-        <span>用户管理权限</span>
-        <br>
-        <Checkbox v-model="arrtibute.order"></Checkbox>
-        <span>订单处理权限</span>
-        <br>
-      </FormItem>
-      <br>
-      <Button type="primary" @click="change_manager()">确定</Button>
-      <Modal
-        v-model="modal1"
-        title="提示">
-        <p>管理员权限修改完成！</p>
-    </Modal>
-    </Form>
-    <div v-else>
-      <p>无此用户</p>
-    </div>
-  </section>
+<div>
+<Input v-model="username" placeholder="请输入待搜索管理员的用户名" id="username" />
+<Button @click="search()">搜索</Button>
+<div v-if="if_show">
+  <div v-if="if_exist">
+    <Divider/>
+    <p>课程处理<i-switch v-model="Manage_course" class="auth"/></p>
+    <Divider/>
+    <p>用户管理<i-switch v-model="Manage_user" class="auth"/></p>
+    <Divider/>
+    <p>留言管理<i-switch v-model="Manage_message" class="auth"/></p>
+    <Divider/>
+    <p>订单处理<i-switch v-model="Manage_order" class="auth"/></p>
+    <Divider/>
+    <Button @click="modify_auth()">保存</Button>
+  </div>
+  <div v-else>
+    对不起，您搜索的管理员不存在
+  </div>
+</div>
+</div>
 </template>
-
 <script>
 export default {
-  name: 'authority',
   data() {
     return {
-      modal1: false,
-      auth_page: false,
-      managername: '',
-      arrtibute: {
-        managername: '',
-        super: false,
-        course: false,
-        message: false,
-        user: false,
-        order: false
-      }
+      username: '',
+      Manage_course: null,
+      Manage_user: null,
+      Manage_message: null,
+      Manage_order: null,
+      if_show: false,
+      if_exist: null
     }
   },
   methods: {
-    search_auth() {
-      this.arrtibute.managername = this.managername
-      // eslint-disable-next-line
-      var managername = JSON.stringify(this.managername)
+    search() {
+      var username = JSON.stringify(this.username)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/manager_search', managername)
+        .post('http://192.168.55.33:8000/app/search_manager', username)
         .then(response => {
-          console.log(response.data)
-          if (response.data['data'] !== 'false') {
-            this.auth_page = true
-            this.arrtibute.managername = response.data.username
-            this.arrtibute.super = response.data.Supermanager
-            this.arrtibute.course = response.data.Manage_course
-            this.arrtibute.message = response.data.Manage_message
-            this.arrtibute.user = response.data.Manage_user
-            this.arrtibute.order = response.data.Manage_order
-          } else {
-            this.auth_page = false
+          var res = response.data
+          this.if_exist = res.if_exist
+          if (this.if_exist) {
+            this.Manage_course = res.manager.Manage_course
+            this.Manage_user = res.manager.Manage_user
+            this.Manage_message = res.manager.Manage_message
+            this.Manage_order = res.manager.Manage_order
           }
+          this.if_show = true
         })
     },
-    change_manager() {
-      var managerprops = JSON.stringify(this.arrtibute)
+    modify_auth() {
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/manager_change', managerprops)
+        .post(
+          'http://192.168.55.33:8000/app/modify',
+          JSON.stringify({
+            username: this.username,
+            Manage_course: this.Manage_course,
+            Manage_user: this.Manage_user,
+            Manage_message: this.Manage_message,
+            Manage_order: this.Manage_order
+          })
+        )
         .then(response => {
-          console.log(response.data)
+          alert('修改管理员' + this.username + '权限成功！')
+          this.if_show = false
+          this.username = ''
         })
-      this.modal1 = true
     }
   }
 }
 </script>
+<style>
+.auth {
+  float: right;
+}
 
-<style scoped>
-.front {
-  float: left;
-  padding-top: 5%;
-  padding-bottom: 10px;
-  padding-left: 10%;
-  font-size: 20px;
+p {
+  font-size: 15px;
+}
+
+#username {
+  width: 300px;
 }
 </style>

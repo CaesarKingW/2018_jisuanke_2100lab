@@ -39,12 +39,6 @@ def manager_login(request):
                     response['data'] = 'not_active'
             else:
                 response['data'] = 'not_exit'
-            # info = Manager.objects.get(username=username)
-            # info = info.password + ''
-            # if password == info:
-            #     response['data'] = 'true'
-            # else:
-            #     response['data'] = 'false'
     except Exception as e:
         response['data'] = 'false'
         response['msg'] = str(e)
@@ -130,7 +124,7 @@ def payment(request):
 
             alipay = AliPay(
                 appid="2016091800536766",
-                app_notify_url="http://192.168.55.33:8000/#/app/notify",
+                app_notify_url="http://192.168.55.33:8000/app/notify",
                 app_private_key_path=settings.STATIC_ROOT +
                 '/private_2048.txt',
                 alipay_public_key_path=settings.STATIC_ROOT +
@@ -141,7 +135,6 @@ def payment(request):
                 subject="测试订单", out_trade_no=orderid + '', total_amount=price)
             re_url = "https://openapi.alipaydev.com/gateway.do?{data}".format(
                 data=url)
-            # info = ManagerSerializer(re_url)
             return JsonResponse(re_url, safe=False)
     except Exception as e:
         response['data'] = 'false'
@@ -153,7 +146,7 @@ def payment(request):
 @require_http_methods(['POST', 'GET'])
 def alipay_get(request):
     # 存放post里面所有的数据
-    processed_dict = {}
+    response = {}
     try:
         orderid = json.loads(request.body.decode('utf-8'))
         # 查询数据库中订单记录
@@ -165,12 +158,14 @@ def alipay_get(request):
             info = Course.objects.get(id=courseid)
             info.sale_count = info.sale_count + 1
             info.save()
-        return JsonResponse("success", safe=False)
+            response['course_id'] = courseid
+            response['msg'] = 'success'
+        return JsonResponse(response, safe=False)
     except Exception as e:
-        processed_dict['data'] = 'false'
-        processed_dict['msg'] = str(e)
-        processed_dict['error_num'] = 1
-    return JsonResponse(processed_dict)
+        response['data'] = 'false'
+        response['msg'] = str(e)
+        response['error_num'] = 1
+    return JsonResponse(response)
 
 
 @require_http_methods(['POST', 'GET'])
@@ -265,8 +260,6 @@ def free_watch(request):
             count.append(course.view_count)
         response['title'] = title
         response['count'] = count
-        # response['title'] = courses.title
-        # response['count'] = courses.view_count
         return JsonResponse(response, safe=False)
     except Exception as e:
         response['data'] = 'false'
@@ -287,8 +280,6 @@ def pay_watch(request):
             count.append(course.view_count)
         response['title'] = title
         response['count'] = count
-        # response['title'] = courses.title
-        # response['count'] = courses.view_count
         return JsonResponse(response, safe=False)
     except Exception as e:
         response['data'] = 'false'
@@ -309,15 +300,12 @@ def pay_sale(request):
             count.append(course.sale_count)
         response['title'] = title
         response['count'] = count
-        # response['title'] = courses.title
-        # response['count'] = courses.view_count
         return JsonResponse(response, safe=False)
     except Exception as e:
         response['data'] = 'false'
         response['msg'] = str(e)
         response['error_num'] = 1
     return JsonResponse(response)
-
 
 
 class AliPay(object):

@@ -2,14 +2,14 @@
 <div id="ModifyInfo">
     <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
     <div>
-      <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head"/>
-      <input id="avatar_upload_button" type='button' value='修改头像' v-on:click="click_file">
+      <input type='file' name='head' id='head' class="none" accept="image/*" v-on:change="Upload_head"/>
+      <input id="avatarUploadButton" type='button' value='修改头像' v-on:click="click_file">
     </div>
     <div>
       <div id="nickname">当前昵称：<br>{{oldname}}</div>
         <form @submit.prevent="modify_nickname">
-            <div><Input id="name_upload_text" type="text" v-model="nickname" /></div>
-            <div><input id="name_upload_button" type="submit" value="确认修改"/></div>
+            <div><Input id="nameUploadText" type="text" v-model="nickname" /></div>
+            <div><input id="nameUploadButton" type="submit" value="确认修改"/></div>
         </form>
     </div>
 </div>
@@ -33,25 +33,21 @@ export default {
   },
   methods: {
     get_old_avator: function() {
-      this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(
+      this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(
         response => {
           var obj = []
           obj = response.data.list
           this.oldpath = obj[0].fields.head_protrait
           this.user_phone = obj[0].pk
-          console.log(this.user_phone)
           this.oldname = obj[0].fields.user_name
           if (this.oldpath === '') {
             this.path = this.default_avator
           } else {
-            this.path = this.GLOBAL.serverSrc + 'media/' + this.oldpath
+            this.path = this.GLOBAL.serverSrc + '/media/' + this.oldpath
             this.oldpath = ''
           }
-          console.log('success')
         },
-        response => {
-          console.log('error')
-        }
+        response => {}
       )
     },
     click_file: function() {
@@ -66,10 +62,8 @@ export default {
       formdate.append('user_phone', this.user_phone)
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/update_avator', formdate, config)
-        .then(response => {
-          console.log(response.data)
-        })
+        .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
+        .then(response => {})
 
       //  前端读取图片进行预览
       let _this = this
@@ -93,7 +87,7 @@ export default {
       }
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/update_nickname',
+          this.GLOBAL.serverSrc + '/app/update_nickname',
           JSON.stringify({
             phone_number: this.user_phone,
             nickname: this.nickname
@@ -101,13 +95,10 @@ export default {
         )
         .then(
           response => {
-            console.log('success')
             this.get_old_avator()
             this.nickname = ''
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     }
   }
@@ -115,28 +106,32 @@ export default {
 </script>
 
 <style scoped>
-#name_upload_text {
+#nameUploadText {
   width: 120px;
   margin-left: 100px;
 }
+
 #ModifyInfo {
   float: left;
 }
+
 #nickname {
-  font-size: 20px;
-  font-family: 华文中宋;
-  margin-left: 100px;
   margin-top: 5px;
+  margin-left: 100px;
+  font-family: 华文中宋;
+  font-size: 20px;
 }
+
 #avatar {
-  border: #666666 solid 1px;
-  border-radius: 8px;
   width: 120px;
   height: 120px;
   margin: 30px;
   margin-left: 100px;
+  border: #666 solid 1px;
+  border-radius: 8px;
 }
-#avatar_upload_button {
+
+#avatarUploadButton {
   width: 120px;
   height: 40px;
   font-size: 20px;
@@ -148,11 +143,13 @@ export default {
   cursor: pointer;
   text-align: center;
 }
-#avatar_upload_button:hover {
-  background: rgb(245, 242, 242);
+
+#avatarUploadButton:hover {
   cursor: pointer;
+  background: rgb(245, 242, 242);
 }
-#name_upload_button {
+
+#nameUploadButton {
   width: 120px;
   height: 40px;
   font-size: 20px;
@@ -165,8 +162,13 @@ export default {
   cursor: pointer;
   text-align: center;
 }
-#name_upload_button:hover {
-  background: rgb(245, 242, 242);
+
+#nameUploadButton:hover {
   cursor: pointer;
+  background: rgb(245, 242, 242);
+}
+
+.none {
+  display: none;
 }
 </style>

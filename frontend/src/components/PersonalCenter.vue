@@ -66,7 +66,7 @@ export default {
   methods: {
     Judgestatus: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/get_status')
+        .post(this.GLOBAL.serverSrc + '/app/get_status')
         .then(response => {
           var judge = response.data.is_login
           // 用户未登录状态下强制访问，跳出404 not found页面
@@ -81,7 +81,7 @@ export default {
     },
     logout: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/del_status')
+        .post(this.GLOBAL.serverSrc + '/app/del_status')
         .then(response => {
           this.judge = response.data.is_login
           if (response.data.username === null) {
@@ -104,6 +104,7 @@ export default {
   border: none;
   border-radius: 0px;
 }
+
 .line {
   background-color: #022336;
   color: #fff;
@@ -112,9 +113,11 @@ export default {
   font-family: 华文中宋;
   padding: 10px;
 }
+
 .line:hover {
   background-color: #073550;
 }
+
 .blank {
   background-color: #022336;
   width: 200px;
@@ -122,9 +125,11 @@ export default {
   font-family: 华文中宋;
   padding: 10px;
 }
+
 #navigation {
   float: left;
 }
+
 #myCenter {
   text-align: center;
   font-size: 28px;

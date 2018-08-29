@@ -185,14 +185,14 @@ export default {
     },
     get_user_amount() {
       this.$http
-        .post('http://192.168.55.33:8000/app/user_amount')
+        .post(this.GLOBAL.serverSrc + '/app/user_amount')
         .then(response => {
           this.user_time.all = response.data
         })
     },
     get_order_amount() {
       this.$http
-        .post('http://192.168.55.33:8000/app/order_amount')
+        .post(this.GLOBAL.serverSrc + '/app/order_amount')
         .then(response => {
           this.order_time.week = response.body['week'] + ''
           this.order_time.month = response.body['month'] + ''
@@ -204,7 +204,7 @@ export default {
     },
     get_money_amount() {
       this.$http
-        .post('http://192.168.55.33:8000/app/money_amount')
+        .post(this.GLOBAL.serverSrc + '/app/money_amount')
         .then(response => {
           this.money_time.week = response.body['week']
           this.money_time.month = response.body['month']
@@ -216,10 +216,8 @@ export default {
     },
     get_free_watch() {
       this.$http
-        .post('http://192.168.55.33:8000/app/free_watch')
+        .post(this.GLOBAL.serverSrc + '/app/free_watch')
         .then(response => {
-          console.log(response.data.title)
-          console.log(response.data['title'])
           this.free_watch1 = response.data['title']
           this.free_watch2 = response.data['count']
           this.draw_free_watch('free_watch')
@@ -250,10 +248,8 @@ export default {
     },
     get_pay_watch() {
       this.$http
-        .post('http://192.168.55.33:8000/app/pay_watch')
+        .post(this.GLOBAL.serverSrc + '/app/pay_watch')
         .then(response => {
-          console.log(response.data.title)
-          console.log(response.data['title'])
           this.pay_watch1 = response.data['title']
           this.pay_watch2 = response.data['count']
           this.draw_pay_watch('pay_watch')
@@ -284,10 +280,8 @@ export default {
     },
     get_pay_sale() {
       this.$http
-        .post('http://192.168.55.33:8000/app/pay_sale')
+        .post(this.GLOBAL.serverSrc + '/app/pay_sale')
         .then(response => {
-          console.log(response.data.title)
-          console.log(response.data['title'])
           this.pay_sale1 = response.data['title']
           this.pay_sale2 = response.data['count']
           this.draw_pay_sale('pay_sale')
@@ -320,12 +314,9 @@ export default {
   //  调用
   mounted() {
     this.$nextTick(function() {
-      // this.drawPie('main')
       this.get_user_amount()
       this.get_order_amount()
       this.get_money_amount()
-      // this.get_paid_watch()
-      // this.get_paid_amount()
       this.get_free_watch()
       this.get_pay_watch()
       this.get_pay_sale()

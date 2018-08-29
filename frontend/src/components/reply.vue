@@ -37,17 +37,14 @@ export default {
     show_reply: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/show_reply',
+          this.GLOBAL.serverSrc + '/app/show_reply',
           JSON.stringify(this.title)
         )
         .then(
           response => {
             this.replies = response.data.list
-            console.log('success')
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     },
     dispaly_inputfield: function() {
@@ -59,17 +56,13 @@ export default {
         user_phone: this.user_phone,
         message_id: this.title
       })
-      console.log(formDate)
-      this.$http.post(this.GLOBAL.serverSrc + 'app/add_reply', formDate).then(
+      this.$http.post(this.GLOBAL.serverSrc + '/app/add_reply', formDate).then(
         response => {
           this.show_reply()
           this.IsShow = false
           this.replyContent = null
-          console.log(response.data)
         },
-        response => {
-          console.log('error')
-        }
+        response => {}
       )
     }
   }

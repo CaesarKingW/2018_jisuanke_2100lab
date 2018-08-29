@@ -12,7 +12,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 @require_http_methods(['POST', 'GET'])
 def add_picture(request):
-    response = {}
     try:
         if request.method == 'POST':
             # 获取对象

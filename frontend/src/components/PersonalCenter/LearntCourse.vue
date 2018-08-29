@@ -1,7 +1,7 @@
 <template>
 <div id="LearntCourse">
     <div>
-        <table >
+        <table class="courseTable">
             <tr>
                 <th>序号</th>
                 <th>课程编号</th>
@@ -39,28 +39,51 @@ export default {
     }
   },
   mounted: function() {
-    this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(response => {
-      this.userPhone = response.data.list[0].pk
-      this.show_takes()
-    })
+    this.$http
+      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .then(response => {
+        this.userPhone = response.data.list[0].pk
+        this.show_takes()
+      })
   },
   methods: {
     show_takes: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/show_takes',
+          this.GLOBAL.serverSrc + '/app/show_takes',
           JSON.stringify(this.userPhone)
         )
         .then(
           response => {
             this.takes = response.data.list
-            console.log('success')
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     }
   }
 }
 </script>
+<style scoped>
+.courseTable {
+  margin-top: 20px;
+  margin-left: 140px;
+  font-size: 15px;
+}
+
+table,
+td,
+th {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+th,
+td {
+  padding: 10px;
+}
+
+th {
+  font-size: 15px;
+  color: #022336;
+}
+</style>

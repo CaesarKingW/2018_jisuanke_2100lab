@@ -21,7 +21,7 @@ export default {
     }
   },
   mounted: function() {
-    this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(
+    this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(
       response => {
         var obj = []
         obj = response.data.list
@@ -30,16 +30,13 @@ export default {
         if (this.old_path === '') {
           this.path = this.default_avator
         } else {
-          this.path = this.GLOBAL.serverSrc + 'media/' + this.old_path
+          this.path = this.GLOBAL.serverSrc + '/media/' + this.old_path
           this.old_path = ''
         }
         this.nickname = obj[0].fields.user_name
         this.amount_of_money = obj[0].fields.welfare
-        console.log('success')
       },
-      response => {
-        console.log('error')
-      }
+      response => {}
     )
   },
   methods: {}
@@ -49,6 +46,7 @@ export default {
 #UserInfo {
   float: center;
 }
+
 #avatar {
   border: #666666 solid 1px;
   border-radius: 8px;
@@ -57,25 +55,29 @@ export default {
   margin-top: 30px;
   margin-left: 100px;
 }
+
 #nickname {
   font-size: 20px;
   font-family: 华文中宋;
   margin-left: 200px;
   margin-top: 5px;
 }
+
 #money {
   font-size: 20px;
   font-family: 华文中宋;
   margin-left: 200px;
   margin-top: 5px;
 }
+
 #phone {
   font-size: 20px;
   font-family: 华文中宋;
   margin-left: 200px;
   margin-top: 5px;
 }
+
 #info {
-    margin-left: 100px;
+  margin-left: 100px;
 }
 </style>

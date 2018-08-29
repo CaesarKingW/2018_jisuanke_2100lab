@@ -1,7 +1,7 @@
 <template>
 <div id="BoughtCourse">
     <div>
-        <table >
+        <table class="courseTable">
             <tr>
                 <th>序号</th>
                 <th>订单编号</th>
@@ -47,28 +47,52 @@ export default {
     }
   },
   mounted: function() {
-    this.$http.post(this.GLOBAL.serverSrc + 'app/get_status').then(response => {
-      this.userPhone = response.data.list[0].pk
-      this.show_orders()
-    })
+    this.$http
+      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .then(response => {
+        this.userPhone = response.data.list[0].pk
+        this.show_orders()
+      })
   },
   methods: {
     show_orders: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/show_orders',
+          this.GLOBAL.serverSrc + '/app/show_orders',
           JSON.stringify(this.userPhone)
         )
         .then(
           response => {
             this.orders = response.data.list
-            console.log('success')
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     }
   }
 }
 </script>
+<style scoped>
+.courseTable {
+  margin-top: 20px;
+  margin-left: 140px;
+  font-size: 15px;
+}
+
+table,
+td,
+th {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+th,
+td {
+  padding: 10px;
+}
+
+th {
+  font-size: 15px;
+  color: #022336;
+}
+
+</style>

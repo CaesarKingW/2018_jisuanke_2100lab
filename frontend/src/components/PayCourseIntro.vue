@@ -13,34 +13,60 @@
         </div>
         <div class="courseTitleDiv"><div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="buyButtonDiv">
-          <Button @click="alipay()" id="buy" type="primary">
-            <Icon type="logo-usd" /> 购买课程
-            </Button></div>
+            <div v-if="judge">
+              <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="IsPaid">
+                <Button id="buy" type="primary">
+                <Icon type="logo-usd" /> 进入课程</Button>
+              </router-link>
+              <div v-else>
+                <Poptip placement="right" v-model="visible">
+          <a><Button  id="buy" type="primary">
+                <Icon type="logo-usd" /> 购买课程</Button></a>
+        <div slot="title"><i>
+                  <Button id="aliPayButton" v-on:click="alipay()">支付宝支付</Button>
+                  <Button id="wxPayButton" v-on:click="wxpay()">微信支付</Button>
+                  <Button id="awardButton" v-on:click="awardpay()">奖励金支付</Button>
+          </i></div>
+        <div slot="content">
+            <a @click="close">关闭标签</a>
+        </div>
+        </Poptip>
+              </div>
+            </div>
+            <div v-else><Button id="buy" v-on:click="modal1" type="primary">
+            <Icon type="logo-usd" /> 购买课程</Button></div>
+            <Modal v-model="modal1" title="温馨提示" @on-ok="ok"
+            @on-cancel="cancel">
+              <p>您必须先登录才能学习课程</p>
+            </Modal>
+            </div>
         <div class="shareButtonDiv">
           <Button @click="modal = true" id="share" type="primary">
-            <Icon type="ios-card" /> 分销课程</Button>
+            <Icon type="ios-card" /> 分享课程</Button>
             </div>
+            <div v-if="isBurn" class="burnDiv">
+        <Alert type="warning" show-icon>
+        <Icon type="ios-alert" slot="icon"></Icon>
+        <template class="burnText" slot="desc">本文为阅后即焚类文章，在初次阅读后{{ burnTime }}小时无法再查看，请注意及时阅读哦！</template>
+        </Alert>
+    </div>
         <div class="alertButtonDiv">
           <Alert class="alertButton" show-icon>
         <Icon type="ios-trophy-outline" slot="icon"></Icon>
-        <template class="alertText" slot="desc">分销本课程，还可额外获得 {{ award }} 枚奖励币哦！</template>
+        <template class="alertText" slot="desc">分享本课程给他人，他人购买后，你还可以额外获得 {{ award }} 枚奖励币哦！</template>
           </Alert>
         </div>
         <div class="introDiv">
-          <Collapse v-model="value">
-            <Panel class="intro">
-            课程简介
-            <p slot="content" class="contentText">
-                  {{content}}
-                </p>
-            </Panel>
-          </Collapse>
+          <Card>
+            <p class="intro" slot="title">课程简介</p>
+            <p class="introContent">{{content}}</p>
+        </Card>
         </div>
    <Modal
         title="分销课程"
         v-model="modal"
         class-name="vertical-center-modal">
-        <div style="text-align: center; padding:10px;"><span id="thisURL">本页地址：{{ message }}</span>
+        <div id="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <button id="copyButton" type="button"
         v-clipboard:copy="message"
@@ -61,43 +87,79 @@ export default {
       content: '',
       split1: 0.49,
       modal: false,
+      modall: false,
       message: window.location.href,
       award: 0,
       orderid: '',
       price: 100,
       courseid: 1,
       userphone: '',
-      value: '1'
+      value: '1',
+      visible: false,
+      // 判断用户是否登录
+      judge: false,
+      // 判断用户是否支付成功
+      IsPaid: false,
+      burnTime: '',
+      isBurn: true
     }
   },
   created: function() {
+    // 从路由获取课程id
     this.courseid = this.$route.query.id
-    console.log(this.courseid)
+    // 判断是否登录
+    this.Judgestatus()
+    // 获取用户手机号并判断是否已经支付完成
+    this.GetUserPhone()
   },
   mounted: function() {
-    this.$http
-      .post(this.GLOBAL.serverSrc + 'app/get_status')
-      .then(response => {
-        this.userphone = response.data.list[0].pk
-        console.log(this.userphone)
-      })
-    this.$http
-      .post(
-        this.GLOBAL.serverSrc + 'app/get_specified_course',
-        JSON.stringify(this.courseid)
-      )
-      .then(response => {
-        var course = []
-        course = response.data.list
-        this.courseTitle = course[0].fields.title
-        this.path =
-          this.GLOBAL.serverSrc + 'media/' + course[0].fields.Cover_picture
-        this.content = course[0].fields.brief_introduction
-        this.price = course[0].fields.price
-        this.award = Math.floor(course[0].fields.share_rate * this.price)
-      })
+    this.get_specified_course()
   },
   methods: {
+    close() {
+      this.visible = false
+    },
+    Judgestatus: function() {
+      this.$http
+        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .then(response => {
+          this.judge = response.data.is_login
+          if (this.judge !== true) {
+            this.$Message.warning('请您先登录')
+          }
+        })
+    },
+    get_specified_course: function() {
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/get_specified_course',
+          JSON.stringify(this.courseid)
+        )
+        .then(response => {
+          var exist = response.data.exist
+          if (exist) {
+            var course = []
+            course = response.data.list
+            this.courseTitle = course[0].fields.title
+            this.path =
+              this.GLOBAL.serverSrc + '/media/' + course[0].fields.Cover_picture
+            this.content = course[0].fields.brief_introduction
+            this.price = course[0].fields.price
+            this.award = Math.floor(course[0].fields.share_rate * this.price)
+          } else {
+            this.$router.push({ name: 'home' })
+          }
+        })
+    },
+    GetUserPhone: function() {
+      this.$http
+        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .then(response => {
+          this.userphone = response.data.list[0].pk
+          // 判断支付状态
+          this.JudgePayment()
+        })
+    },
     alipay() {
       var code = ''
       var codeLength = 16
@@ -111,19 +173,44 @@ export default {
       request.orderid = this.orderid
       request.courseid = this.courseid
       request.userphone = this.userphone
-      console.log(request)
       request = JSON.stringify(request)
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/payment', request)
+        .post(this.GLOBAL.serverSrc + '/app/payment', request)
         .then(response => {
-          console.log(response.data)
           window.location.href = response.data
+        })
+    },
+    ok: function() {
+      this.$router.push({ name: 'UserLogin' })
+    },
+    cancel: function() {},
+    JudgePayment: function() {
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/get_order_payment',
+          JSON.stringify({
+            phone_number: this.userphone,
+            course_id: this.courseid
+          })
+        )
+        .then(response => {
+          this.IsPaid = response.data.order_status
         })
     }
   }
 }
 </script>
 <style scoped>
+#urlDiv {
+  text-align: center;
+  padding: 10px;
+}
+
+#buttons {
+  margin: 0 auto;
+  text-align: center;
+}
+
 .navibar {
   z-index: 9999;
   background-color: #fff;
@@ -132,40 +219,46 @@ export default {
   opacity: 0.9;
   padding: 25px;
 }
+
 .navi {
-  font-size: 23px;
+  font-size: 18px;
   color: #022336;
   margin-left: 15px;
   margin-right: 15px;
 }
+
 .myPanel {
   margin: 0 auto;
   height: 90px;
   border: none;
   border-radius: 0px;
 }
+
 .vertical-center-modal {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .ivu-modal {
   top: 0;
 }
-.alertText {
+
+.alertText,
+.burnText {
   text-align: center;
   color: #fff;
 }
-.PayCourseIntro {
+
+.coverDiv {
+  margin: 0 auto;
   text-align: center;
-  margin: 0 auto;
 }
-.CoverDiv {
-  margin: 0 auto;
-}
+
 .ivu-modal {
   top: 0;
 }
+
 #share,
 #buy {
   background-color: #fff;
@@ -175,12 +268,11 @@ export default {
   border-radius: 8px;
   width: 130px;
   height: 45px;
-  /* margin-top: 20px;
-  margin-bottom: 20px; */
   margin: 0 auto;
   text-align: center;
   position: static;
 }
+
 .buyButtonDiv,
 .shareButtonDiv {
   margin: 0 auto;
@@ -189,6 +281,7 @@ export default {
   margin-bottom: 25px;
   position: static;
 }
+
 #copyButton {
   width: 50px;
   height: 25px;
@@ -199,38 +292,47 @@ export default {
   color: #fff;
   cursor: pointer;
 }
+
 #copyButton:hover {
   background: #57a3f3;
 }
+
 #testPic {
   width: 360px;
   height: 250px;
   border: #cccccc solid 2px;
   border-radius: 8px;
   margin: 0 auto;
+  text-align: center;
 }
-.alertButtonDiv {
+
+.alertButtonDiv,.burnDiv {
   margin: 0 auto;
   text-align: center;
   width: 60%;
   height: 5%;
   margin-top: 10px;
 }
+
 .introDiv {
   width: 60%;
   margin: 0 auto;
   text-align: left;
   margin-top: 20px;
 }
+
 .intro {
   font-size: 19px;
   font-family: 华文中宋;
 }
-.contentText {
-  font-family: 华文中宋;
+
+.introContent {
+  font-size: 17px;
   font-size: 17px;
   position: static;
+  font-family: 华文中宋;
 }
+
 #courseTitle {
   color: #000;
   font-family: 华文中宋;
@@ -241,6 +343,7 @@ export default {
   text-align: center;
   position: static;
 }
+
 .courseTitleDiv {
   margin: 0 auto;
 }

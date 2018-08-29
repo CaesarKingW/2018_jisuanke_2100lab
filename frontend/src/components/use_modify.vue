@@ -2,7 +2,7 @@
 <div id="useModify">
     <div>
     <img v-bind:src="path" class="imgDiv" /><img>
-    <input type='file' name='head' id='head' style="display:none" accept="image/*" v-on:change="Upload_head"/>
+    <input type='file' name='head' id='head' class="none" accept="image/*" v-on:change="Upload_head"/>
     <input type='button' value='上传头像' v-on:click="click_file">
     </div>
     <div>
@@ -35,18 +35,16 @@ export default {
     get_old_avator: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/get_old_avator',
+          this.GLOBAL.serverSrc + '/app/get_old_avator',
           JSON.stringify(this.user_phone)
         )
         .then(response => {
           this.oldpath = response.data.oldpath[0].fields.head_protrait
           this.oldname = response.data.oldpath[0].fields.user_name
-          console.log(this.oldname)
-          console.log(this.oldpath)
           if (this.oldpath === '') {
             this.path = this.default_avator
           } else {
-            this.path = this.GLOBAL.serverSrc + 'media/' + this.oldpath
+            this.path = this.GLOBAL.serverSrc + '/media/' + this.oldpath
             this.oldpath = ''
           }
         })
@@ -63,10 +61,8 @@ export default {
       formdate.append('user_phone', this.user_phone)
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
-        .post(this.GLOBAL.serverSrc + 'app/update_avator', formdate, config)
-        .then(response => {
-          console.log(response.data)
-        })
+        .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
+        .then(response => {})
 
       //  前端读取图片进行预览
       let _this = this
@@ -87,7 +83,7 @@ export default {
       }
       this.$http
         .post(
-          this.GLOBAL.serverSrc + 'app/update_nickname',
+          this.GLOBAL.serverSrc + '/app/update_nickname',
           JSON.stringify({
             phone_number: this.user_phone,
             nickname: this.nickname
@@ -95,15 +91,17 @@ export default {
         )
         .then(
           response => {
-            console.log(response.date)
-            console.log('success')
             this.get_old_avator()
           },
-          response => {
-            console.log('error')
-          }
+          response => {}
         )
     }
   }
 }
 </script>
+
+<style scoped>
+.none {
+  display: none;
+}
+</style>

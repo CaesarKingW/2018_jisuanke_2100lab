@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 if 'test' in sys.argv:
     DATABASES = {
-        'default':{
+        'default': {
              'ENGINE': 'django.db.backends.sqlite3',
              'HOST': 'localhost'
         }
@@ -134,7 +134,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-#扩展django user表，自定义管理员表,用户表
+# 扩展django user表，自定义管理员表,用户表
 
 AUTH_USER_MODEL = 'project_lab.Manager'
 # AUTH_USER_MODEL = 'project_lab.User'
@@ -143,9 +143,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '../frontend/dist/static'),
 ]
-#设置静态文件的本地绝对路径
+# 设置静态文件的本地绝对路径
 STATIC_ROOT = os.path.join(BASE_DIR, 'project_lab', 'static')
-#设置动态文件的本地绝对路径
+# 设置动态文件的本地绝对路径
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(STATIC_ROOT, "media").replace('\\', '/')
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
