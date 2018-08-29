@@ -413,6 +413,11 @@ def delete_course(request):
     course = Course.objects.get(id=id)
     course.delete()
     response['msg'] = 'success'
+    operating_history = Operating_history(
+        manager_username=request.user,
+        operate_type='删除课程',
+        object_type="课程（课程id:" + id + ")")
+    operating_history.save()
     return JsonResponse(response)
 
 

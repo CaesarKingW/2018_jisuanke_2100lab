@@ -1,5 +1,5 @@
 <template>
-<div>
+  <div>
     <Input v-model="order_number" placeholder="请输入待搜索的订单号" class='width' />
     <Button @click="search()">搜索</Button>
     <div v-show='is_show'>

@@ -110,7 +110,9 @@ export default {
           'http://192.168.55.33:8000/app/delete_course',
           JSON.stringify(this.data1[index].id)
         )
-        .then(response => {})
+        .then(response => {
+          alert('删除第' + this.data1[index].id + '号课程！')
+        })
       this.data1.splice(index, 1)
     }
   }
