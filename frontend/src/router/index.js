@@ -17,6 +17,7 @@ import deny from '@/components/back/deny'
 import CourseShow from '@/components/CourseShow'
 import FreeCourseIntro from '@/components/FreeCourseIntro'
 import PayCourseIntro from '@/components/PayCourseIntro'
+import PayConfirm from '@/components/PayConfirm'
 import ShowUserInfo from '@/components/ShowUserInfo'
 import ModifyUserInfo from '@/components/ModifyUserInfo'
 import ReadAndBurn from '@/components/ReadAndBurn'
@@ -83,6 +84,11 @@ export default new Router({
       path: '/PayCourseIntro',
       name: 'PayCourseIntro',
       component: PayCourseIntro
+    },
+    {
+      path: '/PayConfirm',
+      name: 'PayConfirm',
+      component: PayConfirm
     },
     {
       path: '/ShowUserInfo',

@@ -50,7 +50,14 @@ export default {
       st: '',
       CanComment: true,
       // 学习进度时间点
-      studyPoint: 0
+      studyPoint: 0,
+      // 开始学习时间
+      startPoint: null,
+      // 是否阅后即焚
+      IsDestroy: false,
+      // 可阅时长
+      duration: null,
+      closeInterval: null
     }
   },
   created: function() {
@@ -96,6 +103,7 @@ export default {
           return
         }
         vm.last_time = vm.pictures[vm.last_index].start_time
+        this.studyPoint = document.getElementById('audio').currentTime
         vm.Play()
       }, interval)
     },
@@ -128,6 +136,7 @@ export default {
       this.last_time = current
       this.last_index = picindex
     },
+    // 判断登录状态，防止用户强制访问
     Judgestatus: function() {
       this.$http
         .post(this.GLOBAL.serverSrc + '/app/get_status')
@@ -145,31 +154,44 @@ export default {
         })
     },
     GetCourseId: function() {
-      var orderId = this.$route.query.out_trade_no
-      if (typeof orderId !== 'undefined') {
-        // 修改订单状态并获取courseid
-        var request = JSON.stringify(orderId)
-        this.$http
-          .post(this.GLOBAL.serverSrc + '/app/notify', request)
-          .then(response => {
-            this.courseid = response.data.course_id
-            console.log(this.courseid)
-            this.get_info()
-            this.JudgePrice()
-            this.createTakes()
-          })
-      } else {
-        // 从路由中获取课程id
-        this.courseid = this.$route.query.id
-        console.log(this.courseid)
-        this.get_info()
-        this.JudgePrice()
-        this.createTakes()
-      }
+      // 从路由中获取课程id
+      this.courseid = this.$route.query.id
+      console.log(this.courseid)
+      // 获取takes记录，取出课程第一次播放的时间戳
+      this.createTakes()
       // 判断此门课程是否存在，不存在则直接调回home页面，
       // 是否为免费，并获取课程标题
       // 若为付费则判断订单状态
       // this.JudgePrice()
+    },
+    // 若是第一次观看，则加一条takes记录
+    createTakes: function() {
+      var now = Date.parse(new Date())
+      console.log(now)
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/add_new_take',
+          JSON.stringify({
+            userphone: this.userphone,
+            courseid: this.courseid,
+            beginPoint: now
+          })
+        )
+        .then(
+          response => {
+            this.startPoint = response.data.startPoint
+            var breakPoint = response.data.breakPoint
+            console.log(breakPoint)
+            document.getElementById('audio').currentTime = breakPoint
+            console.log(this.startPoint)
+            console.log('success')
+            // 获取课程非内容属性
+            this.JudgePrice()
+          },
+          response => {
+            console.log('error')
+          }
+        )
     },
     // 获取课程标题和是否免费属性
     JudgePrice: function() {
@@ -187,6 +209,13 @@ export default {
             var price = course[0].fields.price
             this.CanComment = course[0].fields.can_comment
             this.times = course[0].fields.view_count
+            this.IsDestroy = course[0].fields.Is_destroy
+            console.log(this.IsDestroy)
+            this.duration = course[0].fields.distory_time
+            if (this.IsDestroy) {
+              this.Boom()
+            }
+            console.log(this.duration)
             if (price === 0) {
               this.IsFree = true
             } else {
@@ -195,6 +224,9 @@ export default {
             // 若是付费课程判断用户是否支付完成，未支付完成则直接跳转到主页
             if (!this.IsFree) {
               this.JudgePayment()
+            } else {
+              // 获取免费课程播放所需要的信息
+              this.get_info()
             }
           } else {
             this.$router.push({ name: 'home' })
@@ -216,29 +248,43 @@ export default {
           // 如果是付费课程且未支付则直接跳转到Home页面
           if (!this.IsPaid) {
             this.$router.push({ name: 'home' })
+          } else {
+            // 获取课程播放所需要的信息
+            this.get_info()
           }
         })
     },
-    createTakes: function() {
-      this.$http
-        .post(
-          this.GLOBAL.serverSrc + '/app/add_new_take',
-          JSON.stringify({
-            userphone: this.userphone,
-            courseid: this.courseid
-          })
-        )
-        .then(
-          response => {
-            console.log('success')
-          },
-          response => {
-            console.log('error')
+    Boom: function() {
+      let _this = this
+      _this.closeInterval = setInterval(() => {
+        var now = Date.parse(new Date())
+        if (_this.startPoint !== null && _this.duration !== null) {
+          var diff = now - (_this.startPoint + _this.duration * 3600000)
+          console.log(diff)
+          if (diff > 0) {
+            _this.SetBurn()
+            _this.$router.push({ name: 'ReadAndBurn' })
           }
-        )
+        }
+      }, 1000)
+    },
+    SetBurn: function() {
+      this.$http.post(
+        this.GLOBAL.serverSrc + '/app/set_burn',
+        JSON.stringify({
+          userphone: this.userphone,
+          courseid: this.courseid
+        })
+      )
     }
   },
+  updated() {
+    // this.Boom()
+  },
+  // vue实例销毁后记录下此次观看进度
   beforeDestroy() {
+    console.log(this.closeInterval)
+    clearInterval(this.closeInterval)
     this.$http
       .post(
         this.GLOBAL.serverSrc + '/app/add_or_update_takes',

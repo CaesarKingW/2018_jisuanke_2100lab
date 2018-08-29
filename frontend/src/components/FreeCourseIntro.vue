@@ -15,7 +15,8 @@
         <div id="courseTitleDiv">
         <div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="enterButtonDiv">
-        <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="judge"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link>
+        <!-- <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="judge"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link> -->
+        <div v-if="judge"><Button id="enter" icon="md-eye" type="primary" v-on:click="IsBurn">进入课程</Button></div>
         <div v-else><Button id="enter" icon="md-eye" type="primary" v-on:click="modall = true">进入课程</Button></div>
             <Modal v-model="modall" title="温馨提示" @on-ok="ok"
         @on-cancel="cancel">
@@ -123,7 +124,28 @@ export default {
     ok: function() {
       this.$router.push({ name: 'UserLogin' })
     },
-    cancel: function() {}
+    cancel: function() {},
+    IsBurn: function() {
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/get_burn_status',
+          JSON.stringify({
+            userphone: this.userphone,
+            courseid: this.courseid
+          })
+        )
+        .then(response => {
+          var isBurn = response.data.status
+          if (isBurn) {
+            this.$router.push({ name: 'ReadAndBurn' })
+          } else {
+            this.$router.push({
+              name: 'CourseShow',
+              query: { id: this.courseid }
+            })
+          }
+        })
+    }
   }
 }
 </script>

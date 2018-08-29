@@ -13,12 +13,9 @@
         </div>
         <div class="courseTitleDiv"><div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="buyButtonDiv">
-          <!-- <Button @click="alipay()" id="buy" type="primary">
-            <Icon type="logo-usd" /> 购买课程
-            </Button></div> -->
             <div v-if="judge">
-              <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="IsPaid"><Button  id="buy" type="primary">
-                <Icon type="logo-usd" /> 进入课程</Button></router-link>
+              <div v-if="IsPaid"><Button  id="buy" type="primary" v-on:click="IsBurn">
+                <Icon type="logo-usd" /> 进入课程</Button></div>
               <div v-else><Button  id="buy" type="primary" v-on:click="alipay()">
                 <Icon type="logo-usd" /> 购买课程</Button></div>
             </div>
@@ -182,6 +179,27 @@ export default {
         .then(response => {
           this.IsPaid = response.data.order_status
           console.log(this.IsPaid)
+        })
+    },
+    IsBurn: function() {
+      this.$http
+        .post(
+          this.GLOBAL.serverSrc + '/app/get_burn_status',
+          JSON.stringify({
+            userphone: this.userphone,
+            courseid: this.courseid
+          })
+        )
+        .then(response => {
+          var isBurn = response.data.status
+          if (isBurn) {
+            this.$router.push({ name: 'ReadAndBurn' })
+          } else {
+            this.$router.push({
+              name: 'CourseShow',
+              query: { id: this.courseid }
+            })
+          }
         })
     }
   }
