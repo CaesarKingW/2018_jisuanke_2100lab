@@ -16,8 +16,11 @@
       <Divider />
       <Card class="oneCommentCard">
         <div class="one_comment_div">
-          <div id="userName">
-            <Icon id="commentIcon" type="md-person" /> 用户：{{item.user_name}}</div>
+          <div id="userName" v-if="IsTeacher">
+            <Icon id="commentIcon" type="md-person" />
+            <Icon type="logo-vimeo" id="V" />用户：{{item.user_name}}</div>
+          <div id="userName" v-else>
+            <Icon id="commentIcon" type="md-person" />用户：{{item.user_name}}</div>
           <div class="oneContentDiv">
             {{item.content}}
           </div>
@@ -39,7 +42,9 @@ export default {
       messages: [],
       NiceReply: [],
       NiceReplies: [],
-      user_phone: ''
+      user_phone: '',
+      IsTeacher: false,
+      CanComment: true
     }
   },
   components: {
@@ -50,6 +55,8 @@ export default {
       .post(this.GLOBAL.serverSrc + '/app/get_status')
       .then(response => {
         this.user_phone = response.data.list[0].pk
+        this.CanComment = response.data.list[0].fields.Can_comment
+        this.IsTeacher = response.data.list[0].fields.Is_teacher
       })
     this.show_message()
   },
@@ -73,32 +80,36 @@ export default {
         )
     },
     commit_message: function() {
-      var formDate = JSON.stringify({
-        content: this.message,
-        user_phone: this.user_phone,
-        course_id: this.course_id
-      })
-      this.$http
-        .post(this.GLOBAL.serverSrc + '/app/add_message', formDate)
-        .then(
+      if (this.CanComment) {
+        var formDate = JSON.stringify({
+          content: this.message,
+          user_phone: this.user_phone,
+          course_id: this.course_id
+        })
+        this.$http
+          .post(this.GLOBAL.serverSrc + '/app/add_message', formDate)
+          .then(
+            response => {
+              this.show_message()
+              this.message = null
+            },
+            response => {}
+          )
+      }
+    },
+    praise: function(messageid, index) {
+      if (this.CanComment) {
+        var formDate = JSON.stringify({
+          message_id: messageid,
+          user_phone: this.user_phone
+        })
+        this.$http.post(this.GLOBAL.serverSrc + '/app/praise', formDate).then(
           response => {
             this.show_message()
-            this.message = null
           },
           response => {}
         )
-    },
-    praise: function(messageid, index) {
-      var formDate = JSON.stringify({
-        message_id: messageid,
-        user_phone: this.user_phone
-      })
-      this.$http.post(this.GLOBAL.serverSrc + '/app/praise', formDate).then(
-        response => {
-          this.show_message()
-        },
-        response => {}
-      )
+      }
     }
   }
 }
@@ -194,5 +205,8 @@ export default {
 #likeButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
+}
+#V {
+  color: lightgreen;
 }
 </style>

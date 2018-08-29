@@ -107,7 +107,7 @@ export default {
   padding: 3px;
   color: #022336;
 }
-.cour seCover {
+.courseCover {
   width: 300px;
   height: 200px;
   border: #022336 solid 1px;

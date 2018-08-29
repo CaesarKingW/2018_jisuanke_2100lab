@@ -19,7 +19,6 @@
       <div id="courseTitle">标题：{{ courseTitle }}</div>
     </div>
     <div class="enterButtonDiv">
-      <!-- <router-link :to="{path:'CourseShow', query:{id: courseid}}" v-if="judge"><Button id="enter" icon="md-eye" type="primary">进入课程</Button></router-link> -->
       <div v-if="judge">
         <Button id="enter" icon="md-eye" type="primary" v-on:click="IsBurn">进入课程</Button>
       </div>
@@ -270,9 +269,16 @@ export default {
 }
 <<<<<<<
   head
+  <<<<<<<
+  head
   =======>>>>>>>287924b7f3dae5b90699910f653fe143961d5548
   .alertButtonDiv,
-.burnDiv {
+=======
+  <<<<<<<
+  head
+  =======>>>>>>>287924b7f3dae5b90699910f653fe143961d5548
+  .alertButtonDiv,
+>>>>>>>b3ca2c98027fb8bbb4a791f254a06d19d78be98a .burnDiv {
   margin: 0 auto;
   text-align: center;
   width: 60%;
