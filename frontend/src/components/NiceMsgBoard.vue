@@ -52,7 +52,7 @@ export default {
   },
   mounted: function() {
     this.$http
-      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .post('http://192.168.55.33:8000' + '/app/get_status')
       .then(response => {
         this.user_phone = response.data.list[0].pk
         this.CanComment = response.data.list[0].fields.Can_comment
@@ -69,7 +69,7 @@ export default {
     show_message: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/show_message',
+          'http://192.168.55.33:8000' + '/app/show_message',
           JSON.stringify(this.course_id)
         )
         .then(

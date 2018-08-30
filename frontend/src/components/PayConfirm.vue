@@ -21,7 +21,7 @@ export default {
         // 修改订单状态并获取courseid
         var request = JSON.stringify(orderId)
         this.$http
-          .post(this.GLOBAL.serverSrc + '/app/notify', request)
+          .post('http://192.168.55.33:8000' + '/app/notify', request)
           .then(response => {
             this.courseid = response.data.course_id
           })

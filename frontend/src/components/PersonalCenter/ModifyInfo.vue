@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     get_old_avator: function() {
-      this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(
+      this.$http.post('http://192.168.55.33:8000' + '/app/get_status').then(
         response => {
           var obj = []
           obj = response.data.list
@@ -45,7 +45,7 @@ export default {
           if (this.oldpath === '') {
             this.path = this.default_avator
           } else {
-            this.path = this.GLOBAL.serverSrc + '/media/' + this.oldpath
+            this.path = 'http://192.168.55.33:8000' + '/media/' + this.oldpath
             this.oldpath = ''
           }
         },
@@ -68,7 +68,7 @@ export default {
         }
       }
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
+        .post('http://192.168.55.33:8000' + '/app/update_avator', formdate, config)
         .then(response => {})
 
       //  前端读取图片进行预览
@@ -92,7 +92,7 @@ export default {
       }
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/update_nickname',
+          'http://192.168.55.33:8000' + '/app/update_nickname',
           JSON.stringify({
             phone_number: this.user_phone,
             nickname: this.nickname
