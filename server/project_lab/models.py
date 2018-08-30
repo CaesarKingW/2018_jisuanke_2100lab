@@ -52,8 +52,7 @@ class Course(models.Model):
     brief_introduction = models.TextField('简介')
     audio = models.FileField(("音频"), upload_to='audio/', blank=True, null=True)
     course_duration = models.FloatField(("课程时长"), default=0.0)
-    whole_introduction = models.FileField(
-        ("详解"), upload_to='word/', blank=True, null=True)
+    whole_introduction = models.TextField(("详解"), blank=True, null=True)
     Cover_picture = models.ImageField(
         ("课程封面"), upload_to='course_picture', blank=True, null=True)
     Is_destroy = models.BooleanField(("是否阅后即焚"), default=False)
@@ -66,7 +65,6 @@ class Course(models.Model):
     can_comment = models.BooleanField(("允许用户留言"), default=True)
     created_at = models.DateTimeField(
         default=timezone.now, auto_now=False, auto_now_add=False)
-    exists = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id)
@@ -138,3 +136,12 @@ class Praise(models.Model):
     message_id = models.ForeignKey(
         "Message", verbose_name=("留言编号"), on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
+
+
+# 分享记录表
+class Share(models.Model):
+    id = models.AutoField(primary_key=True)
+    presenter = models.ForeignKey(
+        "User", verbose_name=("分享者"), on_delete=models.CASCADE)
+    receiver = models.CharField(("接受者号码"), max_length=11)
+    course_id = models.IntegerField(("课程编号"))

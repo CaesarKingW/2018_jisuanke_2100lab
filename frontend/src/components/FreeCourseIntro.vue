@@ -35,7 +35,7 @@
         title="分享课程"
         v-model="modal"
         class-name="vertical-center-modal">
-        <div class="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
+        <div class="urlDiv"><span id="thisURL">请将此链接分享给他人：{{ message }}</span>
         </div>
     </Modal>
     <div v-if="isBurn" class="burnDiv">

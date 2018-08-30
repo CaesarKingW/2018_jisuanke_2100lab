@@ -22,38 +22,42 @@
         </div>
         <div class="courseTitleDiv"><div id="courseTitle">标题：{{ courseTitle }}</div></div>
         <div class="buyButtonDiv">
-        <div v-if="judge">
-            <div v-if="IsPaid"><Button  id="buy" type="primary" v-on:click="IsBurn">
-                <Icon type="logo-usd" /> 进入课程</Button></div>
+            <div v-if="judge">
+              <div v-if="IsPaid"><Button  id="buy" type="primary" v-on:click="IsBurn">进入课程</Button>
+              </div>
               <div v-else>
                 <Poptip placement="right" v-model="visible">
-          <a><Button  id="buy" type="primary">
-                <Icon type="logo-usd" /> 购买课程</Button></a>
-        <div slot="title"><i>
+                <a><Button  id="buy" type="primary">
+                <Icon type="logo-usd" />{{ price }} 购买课程</Button></a>
+                <div slot="title">
+                  <i>
                   <Button id="aliPayButton" v-on:click="alipay()"><Icon type="logo-usd" />支付宝支付</Button>
                   <Button id="wxPayButton" v-on:click="wxpay()"><Icon type="logo-usd" />微信支付</Button>
                   <Button id="awardButton" v-on:click="awardpay()"><Icon type="logo-usd" />奖励金支付</Button>
-          </i></div>
-        <div slot="content">
-            <a @click="close">放弃购买</a>
-        </div>
-        </Poptip>
-              </div>
+                  </i>
+                </div>
+                <div slot="content">
+                <a @click="close">放弃购买</a>
+                </div>
+                </Poptip>
+               </div>
+             </div>
+            <div v-else>
+              <Button id="buy" v-on:click="modall = true" type="primary">
+              <Icon type="logo-usd" /><span>{{ price }}</span>购买课程
+              </Button>
+              <Modal v-model="modall" title="温馨提示" @on-ok="ok"
+              @on-cancel="cancel">
+              <p>您必须先登录才能学习课程</p>
+              </Modal>
+            </div>
           </div>
-      <div v-else>
-        <Button id="buy" v-on:click="modal1" type="primary">
-          <Icon type="logo-usd" /> 购买课程</Button>
-      </div>
-      <Modal v-model="modal1" title="温馨提示" @on-ok="ok" @on-cancel="cancel">
-        <p>您必须先登录才能学习课程</p>
-      </Modal>
-    </div>
-    <div class="shareButtonDiv">
-      <Button @click="modal = true" id="share" type="primary">
-        <Icon type="ios-card" /> 分享课程</Button>
-    </div>
-    <div v-if="isBurn" class="burnDiv">
-      <Alert type="warning" show-icon>
+        <div class="shareButtonDiv">
+          <Button @click="modal = true" id="share" type="primary">
+            <Icon type="ios-card" /> 分享课程</Button>
+            </div>
+            <div v-if="isBurn" class="burnDiv">
+        <Alert type="warning" show-icon>
         <Icon type="ios-alert" slot="icon"></Icon>
         <template class="burnText" slot="desc">本文为阅后即焚类文章，在初次阅读后{{ burnTime }}小时无法再查看，请注意及时阅读哦！</template>
       </Alert>
@@ -74,7 +78,7 @@
         title="分销课程"
         v-model="modal"
         class-name="vertical-center-modal">
-        <div id="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
+        <div id="urlDiv"><span id="thisURL">请将此链接分享给他人：{{ message }}</span>
         </div>
         </Modal>
     <br />
@@ -92,9 +96,10 @@ export default {
       modal: false,
       modall: false,
       message: window.location.href,
+      // 分享课程可得奖励金
       award: 0,
       orderid: '',
-      price: 100,
+      price: 55,
       courseid: 1,
       userphone: '',
       value: '1',
@@ -104,7 +109,9 @@ export default {
       // 判断用户是否支付成功
       IsPaid: false,
       burnTime: null,
-      isBurn: false
+      isBurn: false,
+      // 用户奖励金余额
+      AwardOfUser: 0
     }
   },
   created: function() {
@@ -112,8 +119,6 @@ export default {
     this.courseid = this.$route.query.id
     // 判断是否登录
     this.Judgestatus()
-    // 获取用户手机号并判断是否已经支付完成
-    this.GetUserPhone()
   },
   mounted: function() {
     this.get_specified_course()
@@ -132,6 +137,9 @@ export default {
           this.judge = response.data.is_login
           if (this.judge !== true) {
             this.$Message.warning('请您先登录')
+          } else {
+            // 获取用户手机号并判断是否已经支付完成
+            this.GetUserPhone()
           }
         })
     },
@@ -148,7 +156,9 @@ export default {
             course = response.data.list
             this.courseTitle = course[0].fields.title
             this.path =
-              'http://192.168.55.33:8000' + '/media/' + course[0].fields.Cover_picture
+              'http://192.168.55.33:8000' +
+              '/media/' +
+              course[0].fields.Cover_picture
             this.content = course[0].fields.brief_introduction
             this.price = course[0].fields.price
             this.award = Math.floor(course[0].fields.share_rate * this.price)
@@ -163,9 +173,16 @@ export default {
       this.$http
         .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
+          // 获取手机号
           this.userphone = response.data.list[0].pk
+          // 获取用户账户奖励金
+          this.AwardOfUser = response.data.list[0].fields.welfare
           // 判断支付状态
           this.JudgePayment()
+          // 生成专属邀请链接
+          this.ShareEncode()
+          // 判断是否为分享链接
+          this.IsShare()
         })
     },
     alipay() {
@@ -192,7 +209,42 @@ export default {
       this.$Message.warning('抱歉，暂不支持微信支付')
     },
     awardpay: function() {
-      this.$Message.warning('兄弟，还是用支付宝吧！！！')
+      if (this.AwardOfUser > this.price) {
+        var r = confirm('确认使用奖励金支付？')
+        if (r) {
+          var left = this.AwardOfUser - this.price
+          this.$http
+            .post(
+              this.GLOBAL.serverSrc + '/app/awardpay',
+              JSON.stringify({
+                userphone: this.userphone,
+                courseid: this.courseid,
+                userAward: left,
+                price: this.price
+              })
+            )
+            .then(response => {
+              this.AwardOfUser = left
+              this.$Message.success(
+                '支付' +
+                  this.price +
+                  '元，您的奖励金余额为:' +
+                  this.AwardOfUser +
+                  '元'
+              )
+              this.$router.push({
+                name: 'CourseShow',
+                query: { id: this.courseid }
+              })
+            })
+        } else {
+          // 取消支付
+        }
+      } else {
+        this.$Message.warning(
+          '抱歉，您的奖励金不足以支付，请您选择其它支付方式'
+        )
+      }
     },
     ok: function() {
       this.$router.push({ name: 'UserLogin' })
@@ -231,6 +283,60 @@ export default {
             })
           }
         })
+    },
+    // 对用户手机号进行简单编码
+    ShareEncode: function() {
+      var refer = ['*', '^', '@', '(', '!', ')', '%', '#', '&', '$']
+      var code = ''
+      var temp = this.userphone
+      for (var i = 0; i < 11; i++) {
+        var index = temp % 10
+        temp = (temp - index) / 10
+        code += refer[index]
+      }
+      var shareCode = escape(code)
+      this.message =
+        this.GLOBAL.serverSrc +
+        '/#/PayCourseIntro?id=' +
+        this.courseid +
+        '&code=' +
+        shareCode
+    },
+    IsShare: function() {
+      var code = this.$route.query.code
+      // 判断是否为分享链接
+      if (typeof code !== 'undefined') {
+        // 对code进行译码
+        var decode = unescape(code)
+        var str = decode.split('')
+        var presenter = 0
+        var refer = ['*', '^', '@', '(', '!', ')', '%', '#', '&', '$']
+        for (var i = 0; i < str.length; i++) {
+          var temp = refer.indexOf(str[i])
+          presenter += temp * Math.pow(10, i)
+        }
+        if (presenter !== this.userphone) {
+          // 将分享记录插入表中
+          // 如果presenter不存在，插入失败，弹出邀请链接错误
+          this.$http
+            .post(
+              this.GLOBAL.serverSrc + '/app/add_share',
+              JSON.stringify({
+                presenter: presenter,
+                courseid: this.courseid,
+                receiver: this.userphone
+              })
+            )
+            .then(response => {
+              var status = response.data.status
+              if (!status) {
+                this.$Message.error('邀请链接错误，请重新进入')
+              }
+            })
+        } else {
+          this.$Message.warning('抱歉，您不可以自己分享给自己的！')
+        }
+      }
     }
   }
 }
