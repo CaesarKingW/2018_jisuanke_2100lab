@@ -43,9 +43,17 @@ export default {
 }
 </script>
 <style scoped>
-/* #UserInfo {
-  float: center;
-} */
+#UserInfo {
+  border: #f1f1f1 solid 2px;
+  border-radius: 8px;
+  width: 420px;
+  height: 200px;
+  margin-left: 350px;
+  margin-top: 40px;
+}
+#UserInfo:hover {
+  box-shadow: 5px 5px 2px #888888;
+}
 
 #avatar {
   border: #666666 solid 1px;
@@ -53,7 +61,7 @@ export default {
   width: 120px;
   height: 120px;
   margin-top: 30px;
-  margin-left: 565px;
+  margin-left: 20px;
 }
 
 #nickname {
@@ -78,7 +86,8 @@ export default {
 }
 
 #info {
-  margin-left: 470px;
+  margin-left: 55px;
+  margin-top: -140px;
 }
 @media screen and (max-width: 500px) {
   #avatar {
