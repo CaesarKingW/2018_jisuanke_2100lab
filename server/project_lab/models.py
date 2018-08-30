@@ -137,3 +137,12 @@ class Praise(models.Model):
     message_id = models.ForeignKey(
         "Message", verbose_name=("留言编号"), on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
+
+
+# 分享记录表
+class Share(models.Model):
+    id = models.AutoField(primary_key=True)
+    presenter = models.ForeignKey(
+        "User", verbose_name=("分享者"), on_delete=models.CASCADE)
+    receiver = models.CharField(("接受者号码"), max_length=11)
+    course_id = models.IntegerField(("课程编号"))
