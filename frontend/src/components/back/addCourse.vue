@@ -140,23 +140,23 @@ export default {
       finish: false
     }
   },
-  created: function() {
-    this.$http
-      .post('http://192.168.55.33:8000/app/get_mstatus')
-      .then(response => {
-        var res = response.data
-        this.mis_login = res.mis_login
-        if (!this.mis_login) {
-          alert('还没有登录，无权访问该页面！')
-          location.href = '/#/backstageLogin'
-        } else {
-          if (res.manager.Manage_course !== true) {
-            alert('你没有权限访问该网页！')
-            location.href = '/#/backstage'
-          }
-        }
-      })
-  },
+  // created: function() {
+  //   this.$http
+  //     .post('http://192.168.55.33:8000/app/get_mstatus')
+  //     .then(response => {
+  //       var res = response.data
+  //       this.mis_login = res.mis_login
+  //       if (!this.mis_login) {
+  //         alert('还没有登录，无权访问该页面！')
+  //         location.href = '/#/backstageLogin'
+  //       } else {
+  //         if (res.manager.Manage_course !== true) {
+  //           alert('你没有权限访问该网页！')
+  //           location.href = '/#/backstage'
+  //         }
+  //       }
+  //     })
+  // },
   methods: {
     addCourse() {
       this.$http
