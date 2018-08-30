@@ -1,4 +1,0 @@
-pip install requests
-pip install djangorestframework
-pip install pycryptodome
-pip install django-cors-headers

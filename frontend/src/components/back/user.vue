@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Input v-model="phone_number" placeholder="请输入待搜索用户的手机号" class='width' />
+    <Input v-model="phone_number" placeholder="请输入待搜索用户的手机号" id="phone_number"/>
     <Button @click="search()">搜索</Button>
     <div v-show="is_show">
       <div v-if="is_null==false">
@@ -129,7 +129,7 @@ export default {
 }
 </script>
 <style>
-.width {
+#phone_number {
   width: 300px;
 }
 

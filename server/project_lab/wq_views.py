@@ -1,6 +1,6 @@
 from django.core import serializers
 from .models import User, Message, Course, Order, Course_picture, Manager
-from .models import Operating_history
+from .models import Operating_history, Invite_code
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse
@@ -186,8 +186,13 @@ def add_course(request):
 
 @require_http_methods(['POST'])
 def add_img(request):
-    course_id = request.POST.get('course_id')
+    course_id = int(request.POST.get('course_id'))
     duration = float(request.POST.get('duration'))
+    course = Course.objects.get(id=course_id)
+    count = int(request.POST.get('count'))
+    if count == 1:
+        pics = Course_picture.objects.filter(course_id=course)
+        pics.delete()
     course = Course.objects.get(id=course_id)
     course.course_duration = duration
     course.save()
@@ -251,7 +256,7 @@ def preview(request):
 def supplement_course_information(request):
     response = {}
     course = Course.objects.get(id=request.POST.get('id'))
-    course.whole_introduction = request.FILES.get('whole_introduction')
+    course.whole_introduction = request.POST.get('whole_introduction')
     course.Cover_picture = request.FILES.get('Cover_picture')
     course.Is_destroy = buer(request.POST.get('Is_destroy'))
     course.price = float(request.POST.get('price'))
@@ -454,7 +459,7 @@ def editCourse(request):
     course = Course.objects.get(id=request.POST.get('id'))
     course.title = request.POST.get('title')
     course.brief_introduction = request.POST.get('brief_introduction')
-    course.whole_introduction = request.FILES.get('whole_introduction')
+    course.whole_introduction = request.POST.get('whole_introduction')
     course.Cover_picture = request.FILES.get('Cover_picture')
     course.Is_destroy = buer(request.POST.get('Is_destroy'))
     course.price = float(request.POST.get('price'))
@@ -479,4 +484,43 @@ def backstage_logout(request):
     response = {}
     response['msg'] = 'success'
     auth.logout(request)
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+def modify_code(request):
+    code = json.loads(request.body)
+    try:
+        invite_code = Invite_code.objects.get(id=1)
+        invite_code.code = code
+        invite_code.save()
+    except:
+        invite_code = Invite_code(code=code)
+        invite_code.save()
+    response = {}
+    response['msg'] = 'success'
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+def get_code(request):
+    response = {}
+    try:
+        code = Invite_code.objects.get(id=1)
+        response['code'] = code.code
+    except:
+        response['code'] = ''
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+def half(request):
+    id = json.loads(request.body)
+    response = {}
+    try:
+        course = Course.objects.get(id=id)
+        course.delete()
+        response['msg'] = '1'
+    except:
+        response['msg'] = '0'
     return JsonResponse(response)

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <Input v-model="phone_number" placeholder="请输入待搜索留言用户的手机号" style="width: 300px" />
+    <Input v-model="phone_number" placeholder="请输入待搜索留言用户的手机号" id="comment"/>
       <Button @click="search()">搜索</Button>
     </div>
     <div v-show='is_show'>
@@ -102,7 +102,7 @@ export default {
 </script>
 
 <style>
-.width {
+#comment {
   width: 300px;
 }
 </style>

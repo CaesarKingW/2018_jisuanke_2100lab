@@ -2,7 +2,7 @@
   <div>
     <Form ref="formInline" :model="formInline">
       <FormItem prop="user">
-        <i-input type="text" v-model="formInline.user" placeholder="Username" @on-blur="check()">
+        <i-input type="text" v-model="formInline.user" placeholder="用户名" @on-blur="check()">
           <Icon type="ios-person-outline" slot="prepend"></Icon>
         </i-input>
         <div v-if="blank1">
@@ -16,7 +16,7 @@
         </div>
       </FormItem>
       <FormItem prop="password">
-        <i-input type="password" v-model="formInline.password" placeholder="Password" @on-blur="check_two()">
+        <i-input type="password" v-model="formInline.password" placeholder="密码" @on-blur="check_two()">
           <Icon type="ios-lock-outline" slot="prepend"></Icon>
         </i-input>
         <div v-if="blank2">
@@ -26,7 +26,7 @@
         </div>
       </FormItem>
       <FormItem prop="confirm">
-        <i-input type="password" v-model="formInline.confirm" placeholder="Password-comfirm" @on-blur="Confirm()">
+        <i-input type="password" v-model="formInline.confirm" placeholder="密码确认" @on-blur="Confirm()">
           <Icon type="ios-eye-outline" slot="prepend" />
         </i-input>
         <div v-if="prompt2">
@@ -35,7 +35,16 @@
         </div>
       </FormItem>
       <FormItem>
-        <Button type="primary" @click="register()">Register</Button>
+        <i-input type="text" v-model="formInline.invite_code" placeholder="邀请码" @on-blur="check_three()">
+          <Icon type="md-share" slot="prepend" />
+        </i-input>
+        <div v-if="prompt3">
+          <p v-if="if_right" id="correct">邀请码正确</p>
+          <p v-else id="wrong">邀请码错误</p>
+        </div>
+      </FormItem>
+      <FormItem>
+        <Button type="primary" @click="register()">注册</Button>
       </FormItem>
       <FormItem>
         <Button type="primary" @click="login()" v-if="can_login">使用新注册的帐号登录</Button>
@@ -56,11 +65,14 @@ export default {
       if_blank1: null,
       blank2: false,
       if_blank2: null,
+      prompt3: false,
+      if_right: null,
       can_login: false,
       formInline: {
         user: '',
         password: '',
-        confirm: ''
+        confirm: '',
+        invite_code: ''
       }
     }
   },
@@ -102,12 +114,25 @@ export default {
       }
       this.prompt2 = true
     },
+    check_three() {
+      this.$http
+        .post('http://192.168.55.33:8000/app/get_code')
+        .then(response => {
+          if (this.formInline.invite_code !== response.data.code) {
+            this.if_right = false
+          } else {
+            this.if_right = true
+          }
+          this.prompt3 = true
+        })
+    },
     register() {
       if (
         this.if_blank1 === false &&
         this.if_blank2 === false &&
         this.if_exist === false &&
-        this.if_match === true
+        this.if_match === true &&
+        this.if_right === true
       ) {
         this.$http
           .post(
@@ -142,13 +167,15 @@ export default {
 </script>
 <style>
 #matched,
-#notexist {
+#notexist,
+#correct {
   color: green;
 }
 
 #unmatched,
 #exist,
-.blank {
+.blank,
+#wrong {
   color: red;
 }
 </style>

@@ -2,7 +2,7 @@
   <div>
     <Form ref="formInline" :model="formInline">
       <FormItem prop="user">
-        <i-input type="text" v-model="formInline.user" placeholder="Username" @on-blur="check()">
+        <i-input type="text" v-model="formInline.user" placeholder="用户名" @on-blur="check()">
           <Icon type="ios-person-outline" slot="prepend"></Icon>
         </i-input>
         <div v-if="blank1">
@@ -10,9 +10,12 @@
             用户名不能为空
           </p>
         </div>
+        <div v-if="!if_exist" class="blank">
+          <p>用户名不存在</p>
+        </div>
       </FormItem>
       <FormItem prop="password">
-        <i-input type="password" v-model="formInline.password" placeholder="Password" @on-blur="check_two()">
+        <i-input type="password" v-model="formInline.password" placeholder="密码" @on-blur="check_two()">
           <Icon type="ios-lock-outline" slot="prepend"></Icon>
         </i-input>
         <div v-if="blank2">
@@ -22,7 +25,7 @@
         </div>
       </FormItem>
       <FormItem>
-        <Button type="primary" @click="login()">Login</Button>
+        <Button type="primary" @click="login()">登录</Button>
       </FormItem>
       <FormItem>
         <Button type="primary" @click="register()">还没有账号？去注册</Button>
@@ -39,6 +42,7 @@ export default {
       if_blank1: null,
       blank2: false,
       if_blank2: null,
+      if_exist: null,
       formInline: {
         user: '',
         password: ''
@@ -52,6 +56,14 @@ export default {
         this.blank1 = true
       } else {
         this.if_blank1 = false
+        this.$http
+          .post(
+            'http://192.168.55.33:8000/app/check',
+            JSON.stringify({ username: this.formInline.user })
+          )
+          .then(response => {
+            this.if_exist = response.data.if_exist
+          })
       }
     },
     check_two() {
@@ -73,8 +85,13 @@ export default {
             })
           )
           .then(response => {
-            alert('登录成功！')
-            this.$router.push({ name: 'backstage' })
+            var res = response.data
+            if (res.pw_right === true) {
+              alert('登录成功！')
+              this.$router.push({ name: 'backstage' })
+            } else {
+              alert('密码错误！')
+            }
           })
       }
     },
