@@ -136,3 +136,39 @@ def get_burn_status(request):
         response['errornum'] = 1
 
     return JsonResponse(response)
+
+
+@require_http_methods(["POST"])
+def add_share(request):
+    response = {}
+    try:
+        req = json.loads(request.body.decode('utf-8'))
+        receiver = req['receiver']
+        course_id = req['courseid']
+        presenter_number = req['presenter']
+        try:
+            presenter = User.objects.get(phone_number=presenter_number)
+            try:
+                Share.objects.get(
+                    presenter=presenter,
+                    receiver=receiver,
+                    course_id=course_id,
+                )
+                response['status'] = True
+            except:
+                Share.objects.create(
+                    presenter=presenter,
+                    receiver=receiver,
+                    course_id=course_id,
+                )
+                response['status'] = True
+        except:
+            response['status'] = False
+        response['receiver'] = receiver
+        response['msg'] = 'success'
+        response['errornum'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['errornum'] = 1
+
+    return JsonResponse(response)

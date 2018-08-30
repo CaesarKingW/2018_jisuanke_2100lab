@@ -94,9 +94,10 @@ export default {
           var res = response.data
           this.title = res.course[0].title
           this.aupath = 'http://192.168.55.33:8000' + res.course[0].audio
-          this.content = res.course[0].context
+          this.content = res.course[0].whole_introduction
           this.pictures = res.pictures
-          this.picpath = 'http://192.168.55.33:8000' + this.pictures[0].course_picture
+          this.picpath =
+            'http://192.168.55.33:8000' + this.pictures[0].course_picture
         })
     },
     Play: function() {
