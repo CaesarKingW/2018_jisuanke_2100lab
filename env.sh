@@ -1,4 +1,9 @@
 echo 'Startting config environment!'
+cd frontend
+npm install
+npm run build
+cd ..
+cd server
 pip install requests
 pip install djangorestframework
 pip install pycryptodome
