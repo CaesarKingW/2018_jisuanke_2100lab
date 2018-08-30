@@ -74,7 +74,7 @@ export default {
 <style scoped>
 .courseTable {
   margin-top: 20px;
-  margin-left: 140px;
+  margin-left: 330px;
   font-size: 15px;
 }
 
@@ -93,5 +93,29 @@ td {
 th {
   font-size: 15px;
   color: #022336;
+}
+@media screen and (max-width: 500px) {
+  .courseTable {
+    margin-top: 20px;
+    font-size: 10px;
+    margin-left: -1px;
+  }
+
+  table,
+  td,
+  th {
+    border-collapse: collapse;
+    border: 1px solid black;
+  }
+
+  th,
+  td {
+    padding: 3px;
+  }
+
+  th {
+    font-size: 10px;
+    color: #022336;
+  }
 }
 </style>

@@ -24,7 +24,7 @@
       <Header>
         <span id="text">2100实验室</span>
         <span class="layout-nav">{{username}}/
-          <Button @click="logout()" type="text" ghost>登出</span>
+          <Button @click="logout()" type="text" ghost>登出</Button></span>
       </Header>
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">

@@ -137,4 +137,38 @@ replyUser {
   font-size: 16px;
   font-family: 微软雅黑;
 }
+
+@media screen and (max-width: 500px) {
+  #replyButton {
+    width: 17%;
+    text-align: center;
+    height: 30px;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    border-radius: 4px;
+    border: solid 1px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+  #replyButton:hover {
+    background: rgb(245, 242, 242);
+    cursor: pointer;
+  }
+  #replySubmit {
+    width: 17%;
+    height: 28px;
+    text-align: center;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    border-radius: 4px;
+    border: solid 1px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+}
 </style>

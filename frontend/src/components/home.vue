@@ -1,37 +1,36 @@
 <template>
-  <div id="home">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0,
-   maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+ <div id="home">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <div class="NaviBar">
-      <router-link to="/home">
-        <a class="navi">
-          <Icon type="md-home" /> 网站首页
-        </a>
-      </router-link>
-      <Divider type="vertical" />
-      <router-link to="/AllFreeCourse">
-        <a class="navi">
-          <Icon type="md-bookmarks" /> 免费课程</a>
-      </router-link>
-      <Divider type="vertical" />
-      <router-link to="/AllPayCourse">
-        <a class="navi">
-          <Icon type="logo-usd" /> 付费课程</a>
-      </router-link>
-      <Divider type="vertical" />
-      <router-link to="/PersonalCenter" v-if="judge">
-        <a class="navi">
-          <Icon type="ios-contact" /> 个人中心</a>
-      </router-link>
-      <a class="navi" @click="logout" v-if="judge">
-        <Icon type="md-log-out" /> 退出登录</a>
-      <router-link to="/UserLogin" v-else>
-        <a class="navi">
-          <Icon type="md-log-in" /> 用户登录</a>
-      </router-link>
-    </div>
-    <div align="center" id="carousel" class="carousel">
-      <Carousel autoplay v-model="value" loop>
+    <router-link to="/home"><a class="navi">
+      <Icon type="md-home" /> 网站首页
+      </a></router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/PersonalCenter" v-if="judge">
+    <a class="navi"><Icon type="ios-contact" /> 个人中心</a>
+    </router-link>
+    <Divider type="vertical" />
+    <a class="navi" @click="logout" v-if="judge">
+      <Icon type="md-log-out" /> 退出登录</a>
+    <router-link to="/UserLogin" v-else>
+    <a class="navi"><Icon type="md-log-in" /> 用户登录</a>
+    </router-link>
+     </div>
+     <br />
+    <br />
+    <br />
+    <br />
+    <br />
+     <div align="center" id="carousel" class="carousel">
+     <Carousel autoplay v-model="value" loop>
         <CarouselItem>
           <div class="DemoCarousel">
             <Card>
@@ -43,15 +42,30 @@
         <CarouselItem>
           <div class="DemoCarousel"><img class="RollPic" src="../assets/home_2.png"></div>
         </CarouselItem>
-      </Carousel>
+    </Carousel>
     </div>
-    <Card id="FreeCol">
-      <div class="AllCol">
-        <div class="MyContent">
-          <div>
-            <Icon type="md-bookmarks" />&nbsp;免费内容</div>
-        </div>
-        <div class="SeeMore">
+    <div id="FreeCol">
+    <div class="AllCol">
+    <div class="MyContent">
+        <Icon type="md-bookmarks" />&nbsp;免费内容
+    </div>
+    <div class="SeeMore">
+        <router-link to="/AllFreeCourse">
+        <div class="ButtonText">查看更多<Icon type="md-log-in" /></div>
+        </router-link>
+    </div>
+    </div>
+    </div>
+    <!-- <div class="container">
+    <div class="item" v-for="item of free_course" :key="item.id">
+      <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
+      <Card class="courseCard">
+         <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
+            <p><img class="CoverPic" v-bind:src= 'item.fields.Cover_picture'/></p>
+      </Card>
+      </router-link>
+        </div> -->
+        <!-- <div class="SeeMore">
           <Button id="button" ghost>
             <router-link to="/AllFreeCourse">
               <span class="ButtonText">查看更多
@@ -59,9 +73,8 @@
               </span>
             </router-link>
           </Button>
-        </div>
-      </div>
-    </Card>
+        </div> -->
+      <!-- </div> -->
     <div class="container">
       <div class="item" v-for="item of free_course" :key="item.id">
         <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
@@ -73,23 +86,18 @@
       </div>
     </div>
     <br>
-    <Card id="PayCol">
-      <div class="AllCol">
-        <div class="MyContent">
-          <div>
-            <Icon type="md-bookmarks" />&nbsp;付费内容</div>
-        </div>
-        <div class="SeeMore">
-          <Button id="button" ghost>
-            <router-link to="/AllPayCourse">
-              <span class="ButtonText">查看更多
-                <Icon type="md-log-in" />
-              </span>
-            </router-link>
-          </Button>
-        </div>
-      </div>
-    </Card>
+    <div id="PayCol">
+    <div class="AllCol">
+    <div class="MyContent">
+        <Icon type="md-bookmarks" />&nbsp;付费内容
+    </div>
+    <div class="SeeMore">
+        <router-link to="/AllPayCourse">
+        <div class="ButtonText">查看更多<Icon type="md-log-in" /></div>
+        </router-link>
+    </div>
+    </div>
+    </div>
     <div class="container">
       <div class="item" v-for="item of paying_course" :key="item.id">
         <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
@@ -222,7 +230,7 @@ export default {
 }
 </script>
 <style scoped>
-.home {
+#home {
   margin: 0 auto;
 }
 
@@ -242,7 +250,6 @@ export default {
 
 .ButtonText {
   color: #fff;
-  float: right;
 }
 
 .NaviBar {
@@ -267,7 +274,7 @@ export default {
   display: -webkit-flex;
   display: -moz-flex;
   margin: 0 auto;
-  justify-content: space-around;
+  /* justify-content: space-around; */
 }
 
 .wrapper {
@@ -311,7 +318,7 @@ export default {
 #FreeCol,
 #PayCol {
   background-color: #022336;
-  height: 60px;
+  height: 30px;
   width: 85%;
   text-align: center;
   margin: 0 auto;
@@ -322,14 +329,23 @@ export default {
   display: -webkit-flex;
   display: -moz-flex;
   flex-direction: row;
-  height: 40px;
+  height: 35px;
   margin: 0 auto;
   color: #fff;
-  text-align: center;
+  /* text-align: center; */
+}
+
+.MyContent {
+  font-size: 15px;
+  margin-left: 3.5%;
+  width: 90px;
 }
 
 .SeeMore {
-  position: static;
+  font-size: 15px;
+  margin-left: 77%;
+  color: #000;
+  border: none;
 }
 
 .id {
@@ -362,17 +378,72 @@ export default {
   margin: 0 auto;
 }
 
-.MyContent {
-  font-size: 18px;
-  margin-left: 27px;
-  text-align: center;
-}
-
 .top {
   padding: 12px;
   background: rgba(13, 102, 146, 0.9);
   color: #fff;
   text-align: center;
   border-radius: 2px;
+}
+@media screen and (max-width: 500px) {
+  #FreeCol,
+  #PayCol {
+    background-color: #022336;
+    height: 30px;
+    width: 85%;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .AllCol {
+    color: #fff;
+  }
+
+  .MyContent {
+    font-size: 14px;
+    margin-left: 5%;
+    margin-top: 1%;
+    /* display: inline-block; */
+    white-space: nowrap;
+  }
+  .ButtonText {
+    white-space: nowrap;
+  }
+
+  .SeeMore {
+    font-size: 14px;
+    margin-left: 38%;
+    margin-top: 1%;
+    color: #000;
+    border: none;
+    white-space: nowrap;
+  }
+  .container {
+    display: block;
+  }
+  .CoverPic {
+    width: 100%;
+    height: 180px;
+  }
+  .wrapper {
+    display: block;
+  }
+  #AboutUs {
+    background-color: #022336;
+    height: 600px;
+    /* width: 85%; */
+    margin: 0 auto;
+    text-align: center;
+  }
+  .navi {
+    display: block;
+  }
+  .carousel {
+    margin-top: 165px;
+  }
+  .RollPic {
+    width: 100%;
+    height: 225px;
+  }
 }
 </style>

@@ -1,43 +1,42 @@
 <template>
   <div class="FreeCourseIntro">
     <div class="navibar">
-      <router-link to="/home">
-        <a class="navi">
-          <Icon type="ios-home" /> 网站首页</a>
-      </router-link>
-      <Divider type="vertical" />
-      <router-link to="/PersonalCenter">
-        <a class="navi">
-          <Icon type="ios-contact" /> 个人中心</a>
-      </router-link>
+    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
     <div class="myPanel"></div>
+    <div id="blank"></div>
     <div class="CoverDiv">
-      <img id="testPic" v-bind:src="path">
-    </div>
-    <div id="courseTitleDiv">
-      <div id="courseTitle">标题：{{ courseTitle }}</div>
-    </div>
-    <div class="enterButtonDiv">
-      <div v-if="judge">
-        <Button id="enter" icon="md-eye" type="primary" v-on:click="IsBurn">进入课程</Button>
-      </div>
-      <div v-else>
-        <Button id="enter" icon="md-eye" type="primary" v-on:click="modall = true">进入课程</Button>
-      </div>
-      <Modal v-model="modall" title="温馨提示" @on-ok="ok" @on-cancel="cancel">
-        <p>您必须先登录才能学习课程</p>
-      </Modal>
-    </div>
-    <div class="shareButtonDiv">
-      <Button @click="modal = true" id="share" icon="md-share" type="primary">分享课程</Button>
-    </div>
-    <Modal title="分享课程" v-model="modal" class-name="vertical-center-modal">
-      <div class="urlDiv">
-        <span id="thisURL">本页地址：{{ message }}</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button id="copyButton" type="button" v-clipboard:copy="message" v-clipboard:success="onCopy" v-clipboard:error="onError">复制</button>
-      </div>
+            <img id="testPic" v-bind:src="path">
+            </div>
+        <div id="courseTitleDiv">
+        <div id="courseTitle">标题：{{ courseTitle }}</div></div>
+        <div class="enterButtonDiv">
+        <div v-if="judge"><Button id="enter" icon="md-eye" type="primary" v-on:click="IsBurn">进入课程</Button></div>
+        <div v-else><Button id="enter" icon="md-eye" type="primary" v-on:click="modall = true">进入课程</Button></div>
+            <Modal v-model="modall" title="温馨提示" @on-ok="ok"
+        @on-cancel="cancel">
+              <p>您必须先登录才能学习课程</p>
+            </Modal>
+            </div>
+        <div class="shareButtonDiv">
+            <Button @click="modal = true" id="share" icon="md-share" type="primary">分享课程</Button>
+        </div>
+        <Modal
+        title="分享课程"
+        v-model="modal"
+        class-name="vertical-center-modal">
+        <div class="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
+        </div>
     </Modal>
     <div v-if="isBurn" class="burnDiv">
       <Alert type="error" show-icon>
@@ -85,6 +84,9 @@ export default {
     this.Judgestatus()
     this.GetUserPhone()
     this.GetSpecifiedCourse()
+    this.$Message.config({
+      top: 120
+    })
   },
   methods: {
     Judgestatus: function() {
@@ -184,6 +186,9 @@ export default {
   font-size: 17px;
   position: static;
   font-family: 华文中宋;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .myPanel {
@@ -267,18 +272,8 @@ export default {
   border-radius: 8px;
   margin: 0 auto;
 }
-<<<<<<<
-  head
-  <<<<<<<
-  head
-  =======>>>>>>>287924b7f3dae5b90699910f653fe143961d5548
-  .alertButtonDiv,
-=======
-  <<<<<<<
-  head
-  =======>>>>>>>287924b7f3dae5b90699910f653fe143961d5548
-  .alertButtonDiv,
->>>>>>>b3ca2c98027fb8bbb4a791f254a06d19d78be98a .burnDiv {
+.alertButtonDiv,
+.burnDiv {
   margin: 0 auto;
   text-align: center;
   width: 60%;
@@ -312,5 +307,20 @@ export default {
 
 #courseTitleDiv {
   margin: 0 auto;
+}
+@media screen and (max-width: 500px) {
+  .navi {
+    display: block;
+  }
+  #blank {
+    margin-top: 125px;
+  }
+  .navibar {
+    z-index: 9999;
+    position: fixed;
+    width: 100%;
+    opacity: 0;
+    padding: 25px;
+  }
 }
 </style>

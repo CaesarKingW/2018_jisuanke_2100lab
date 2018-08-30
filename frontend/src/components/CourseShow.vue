@@ -1,22 +1,27 @@
 <template>
-
-  <body>
-    <div id="CourseShow">
-      <div class="navibar">
-        <router-link to="/home">
-          <a class="navi">
-            <Icon type="ios-home" /> 网站首页</a>
-        </router-link>
-        <Divider type="vertical" />
-      </div>
-      <br />
-      <div class="title">{{ title }}</div>
-      <p class="read_time">浏览量：{{ times }} 次</p>
-      <div class="test_pic"><img id="changePic" v-bind:src="picpath"></div>
-      <div class="playRoll">
-        <audio id="audio" controls preload="auto" v-bind:src="aupath" @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio>
-      </div>
-      <Collapse cLass="collapse" accordion v-model="value">
+<body>
+<div id="CourseShow">
+    <div class="navibar">
+    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    </div>
+    <br />
+    <br />
+    <br />
+    <div id="blank"></div>
+    <div class="title">标题：{{ title }}</div>
+    <p class="read_time">浏览量：{{ times }} 次</p>
+    <div class="test_pic"><img id="changePic" v-bind:src="picpath"></div>
+    <div class="playRoll"><audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio></div>
+    <Collapse cLass="collapse" accordion v-model="value">
         <Panel>
           <Poptip trigger="hover" id="poptip" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
             <div>文字介绍</div>
@@ -326,13 +331,6 @@ export default {
   height: 90px;
 }
 
-#progressRollDiv {
-  width: 60%;
-  text-align: center;
-  margin: 0 auto;
-  margin-top: 20px;
-}
-
 .collapse {
   text-align: center;
   width: 60%;
@@ -344,10 +342,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-}
-
-#title {
-  color: #17233d;
 }
 
 #read_time {
@@ -366,6 +360,7 @@ export default {
 .test_pic {
   margin: 0 auto;
   text-align: center;
+  margin-left: 20px;
 }
 
 .title {
@@ -375,6 +370,7 @@ export default {
   margin-bottom: 10px;
   font-size: 30px;
   font-family: 华文中宋;
+  color: #17233d;
 }
 
 .read_time {
@@ -392,5 +388,34 @@ export default {
   width: 40%;
   height: 300px;
   margin: 0 auto;
+}
+
+@media screen and (max-width: 500px) {
+  .navi {
+    display: block;
+  }
+  #blank {
+    margin-top: 60px;
+  }
+  #changePic {
+    border: #000 solid 5px;
+    border-radius: 20px;
+    width: 70%;
+    height: 180px;
+    margin-left: -40px;
+  }
+  .test_pic {
+    margin-left: 30px;
+  }
+  .title {
+    /* margin: 0 auto; */
+    text-align: center;
+    /* margin-left: -85px; */
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 30px;
+    font-family: 华文中宋;
+    color: #17233d;
+  }
 }
 </style>
