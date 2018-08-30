@@ -40,7 +40,7 @@ export default {
   },
   mounted: function() {
     this.$http
-      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .post('http://192.168.55.33:8000' + '/app/get_status')
       .then(response => {
         this.userPhone = response.data.list[0].pk
         this.show_takes()
@@ -50,7 +50,7 @@ export default {
     show_takes: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/show_takes',
+          'http://192.168.55.33:8000' + '/app/show_takes',
           JSON.stringify(this.userPhone)
         )
         .then(

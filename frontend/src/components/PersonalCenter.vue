@@ -66,7 +66,7 @@ export default {
   methods: {
     Judgestatus: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
           var judge = response.data.is_login
           // 用户未登录状态下强制访问，跳出404 not found页面
@@ -81,7 +81,7 @@ export default {
     },
     logout: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/del_status')
+        .post('http://192.168.55.33:8000' + '/app/del_status')
         .then(response => {
           this.judge = response.data.is_login
           if (response.data.username === null) {
@@ -89,7 +89,7 @@ export default {
           } else {
             this.yourname = response.data.username
           }
-          location.href = this.GLOBAL.serverSrc + '#/UserLogin'
+          location.href = 'http://192.168.55.33:8000' + '#/UserLogin'
           this.alert_log_out()
         })
     }

@@ -85,7 +85,7 @@ export default {
   methods: {
     Judgestatus: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
           this.judge = response.data.is_login
           if (!this.judge) {
@@ -96,7 +96,7 @@ export default {
     GetSpecifiedCourse: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_specified_course',
+          'http://192.168.55.33:8000' + '/app/get_specified_course',
           JSON.stringify(this.courseid)
         )
         .then(response => {
@@ -106,7 +106,7 @@ export default {
             course = response.data.list
             this.courseTitle = course[0].fields.title
             this.path =
-              this.GLOBAL.serverSrc + '/media/' + course[0].fields.Cover_picture
+              'http://192.168.55.33:8000' + '/media/' + course[0].fields.Cover_picture
             this.content = course[0].fields.brief_introduction
             this.isBurn = course[0].fields.Is_destroy
             this.burnTime = course[0].fields.distory_time
@@ -117,7 +117,7 @@ export default {
     },
     GetUserPhone: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
           this.userphone = response.data.list[0].pk
         })
@@ -129,7 +129,7 @@ export default {
     IsBurn: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_burn_status',
+          'http://192.168.55.33:8000' + '/app/get_burn_status',
           JSON.stringify({
             userphone: this.userphone,
             courseid: this.courseid

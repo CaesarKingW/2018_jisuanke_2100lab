@@ -185,14 +185,14 @@ export default {
     },
     get_user_amount() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/user_amount')
+        .post('http://192.168.55.33:8000' + '/app/user_amount')
         .then(response => {
           this.user_time.all = response.data
         })
     },
     get_order_amount() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/order_amount')
+        .post('http://192.168.55.33:8000' + '/app/order_amount')
         .then(response => {
           this.order_time.week = response.body['week'] + ''
           this.order_time.month = response.body['month'] + ''
@@ -204,7 +204,7 @@ export default {
     },
     get_money_amount() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/money_amount')
+        .post('http://192.168.55.33:8000' + '/app/money_amount')
         .then(response => {
           this.money_time.week = response.body['week']
           this.money_time.month = response.body['month']
@@ -216,7 +216,7 @@ export default {
     },
     get_free_watch() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/free_watch')
+        .post('http://192.168.55.33:8000' + '/app/free_watch')
         .then(response => {
           this.free_watch1 = response.data['title']
           this.free_watch2 = response.data['count']
@@ -248,7 +248,7 @@ export default {
     },
     get_pay_watch() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/pay_watch')
+        .post('http://192.168.55.33:8000' + '/app/pay_watch')
         .then(response => {
           this.pay_watch1 = response.data['title']
           this.pay_watch2 = response.data['count']
@@ -280,7 +280,7 @@ export default {
     },
     get_pay_sale() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/pay_sale')
+        .post('http://192.168.55.33:8000' + '/app/pay_sale')
         .then(response => {
           this.pay_sale1 = response.data['title']
           this.pay_sale2 = response.data['count']

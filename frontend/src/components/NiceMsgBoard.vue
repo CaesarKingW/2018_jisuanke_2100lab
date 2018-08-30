@@ -43,7 +43,7 @@ export default {
   },
   mounted: function() {
     this.$http
-      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .post('http://192.168.55.33:8000' + '/app/get_status')
       .then(response => {
         this.user_phone = response.data.list[0].pk
       })
@@ -58,7 +58,7 @@ export default {
     show_message: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/show_message',
+          'http://192.168.55.33:8000' + '/app/show_message',
           JSON.stringify(this.course_id)
         )
         .then(
@@ -75,7 +75,7 @@ export default {
         course_id: this.course_id
       })
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/add_message', formDate)
+        .post('http://192.168.55.33:8000' + '/app/add_message', formDate)
         .then(
           response => {
             this.show_message()
@@ -89,7 +89,7 @@ export default {
         message_id: messageid,
         user_phone: this.user_phone
       })
-      this.$http.post(this.GLOBAL.serverSrc + '/app/praise', formDate).then(
+      this.$http.post('http://192.168.55.33:8000' + '/app/praise', formDate).then(
         response => {
           this.show_message()
         },

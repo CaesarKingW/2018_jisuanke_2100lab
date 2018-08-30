@@ -39,7 +39,7 @@ export default {
     show_reply: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/show_reply',
+          'http://192.168.55.33:8000' + '/app/show_reply',
           JSON.stringify(this.title)
         )
         .then(
@@ -58,7 +58,7 @@ export default {
         user_phone: this.user_phone,
         message_id: this.title
       })
-      this.$http.post(this.GLOBAL.serverSrc + '/app/add_reply', formDate).then(
+      this.$http.post('http://192.168.55.33:8000' + '/app/add_reply', formDate).then(
         response => {
           this.show_reply()
           this.IsShow = false

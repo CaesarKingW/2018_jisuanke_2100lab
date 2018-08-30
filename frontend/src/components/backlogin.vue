@@ -44,7 +44,7 @@ export default {
     handleSubmit() {
       var managerlogin = JSON.stringify(this.formInline)
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/manager_login', managerlogin)
+        .post('http://192.168.55.33:8000' + '/app/manager_login', managerlogin)
         .then(response => {
           if (response.data.data === 'true') {
             this.$router.push({

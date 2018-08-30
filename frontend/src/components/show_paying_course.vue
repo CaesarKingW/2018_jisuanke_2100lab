@@ -21,12 +21,12 @@ export default {
   },
   methods: {
     show_all_course: function() {
-      this.$http.get(this.GLOBAL.serverSrc + '/app/show_paying_course').then(
+      this.$http.get('http://192.168.55.33:8000' + '/app/show_paying_course').then(
         response => {
           this.imgs = response.data.list
           for (var i = 0; i < this.imgs.length; i = i + 1) {
             var a =
-              this.GLOBAL.serverSrc +
+              'http://192.168.55.33:8000' +
               '/media/' +
               this.imgs[i].fields.Cover_picture
             this.imgs[i].fields.Cover_picture = a
