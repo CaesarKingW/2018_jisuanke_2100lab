@@ -1,28 +1,53 @@
 <template>
-<div>
-<Input v-model="username" placeholder="请输入待搜索管理员的用户名" id="username" />
-<Button @click="search()">搜索</Button>
-<div v-if="if_show">
-  <div v-if="if_exist">
-    <Divider/>
-    <p>课程处理<i-switch v-model="Manage_course" class="auth"/></p>
-    <Divider/>
-    <p>用户管理<i-switch v-model="Manage_user" class="auth"/></p>
-    <Divider/>
-    <p>留言管理<i-switch v-model="Manage_message" class="auth"/></p>
-    <Divider/>
-    <p>订单处理<i-switch v-model="Manage_order" class="auth"/></p>
-    <Divider/>
-    <Button @click="modify_auth()">保存</Button>
+  <div>
+    <Input v-model="username" placeholder="请输入待搜索管理员的用户名" id="username" />
+    <Button @click="search()">搜索</Button>
+    <div v-if="if_show">
+      <div v-if="if_exist">
+        <Divider />
+        <p>课程处理
+          <i-switch v-model="Manage_course" class="auth" />
+        </p>
+        <Divider />
+        <p>用户管理
+          <i-switch v-model="Manage_user" class="auth" />
+        </p>
+        <Divider />
+        <p>留言管理
+          <i-switch v-model="Manage_message" class="auth" />
+        </p>
+        <Divider />
+        <p>订单处理
+          <i-switch v-model="Manage_order" class="auth" />
+        </p>
+        <Divider />
+        <Button @click="modify_auth()">保存</Button>
+      </div>
+      <div v-else>
+        对不起，您搜索的管理员不存在
+      </div>
+    </div>
   </div>
-  <div v-else>
-    对不起，您搜索的管理员不存在
-  </div>
-</div>
-</div>
 </template>
 <script>
 export default {
+  created: function() {
+    this.$http
+      .post('http://192.168.55.33:8000/app/get_mstatus')
+      .then(response => {
+        var res = response.data
+        this.mis_login = res.mis_login
+        if (!this.mis_login) {
+          alert('还没有登录，无权访问该页面！')
+          location.href = '/#/backstageLogin'
+        } else {
+          if (res.manager.Supermanager !== true) {
+            alert('你没有权限访问该网页！')
+            location.href = '/#/backstage'
+          }
+        }
+      })
+  },
   data() {
     return {
       username: '',

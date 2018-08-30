@@ -1,12 +1,13 @@
 <template>
+
   <body>
     <div>
-      <input type="file" name="file" id="file_upload"/>
-      <input type="button" value="上传" v-on:click="FileUpload"/>
+      <input type="file" name="file" id="file_upload" />
+      <input type="button" value="上传" v-on:click="FileUpload" />
     </div>
-    <img v-bind:src= path />
-    <img >
-</body>
+    <img v-bind:src=p ath />
+    <img>
+  </body>
 </template>
 <script>
 export default {

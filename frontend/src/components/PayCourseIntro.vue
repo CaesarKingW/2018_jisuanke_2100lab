@@ -1,81 +1,94 @@
 <template>
-<div class="PayCourseIntro">
-  <!-- 导航栏 -->
+  <div class="PayCourseIntro">
+    <!-- 导航栏 -->
     <div class="navibar">
-    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
-    <Divider type="vertical" />
-    <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
+      <router-link to="/home">
+        <a class="navi">
+          <Icon type="ios-home" /> 网站首页</a>
+      </router-link>
+      <Divider type="vertical" />
+      <router-link to="/PersonalCenter">
+        <a class="navi">
+          <Icon type="ios-contact" /> 个人中心</a>
+      </router-link>
     </div>
     <!-- 课程信息 -->
-  <div class="myPanel"></div>
-        <div class="coverDiv">
-          <img id="testPic" v-bind:src="path">
+    <div class="myPanel"></div>
+    <div class="coverDiv">
+      <img id="testPic" v-bind:src="path">
+    </div>
+    <div class="courseTitleDiv">
+      <div id="courseTitle">标题：{{ courseTitle }}</div>
+    </div>
+    <div class="buyButtonDiv">
+      <div v-if="judge">
+        <div v-if="IsPaid">
+          <Button id="buy" type="primary" v-on:click="IsBurn">
+            <Icon type="logo-usd" /> 进入课程</Button>
         </div>
-        <div class="courseTitleDiv"><div id="courseTitle">标题：{{ courseTitle }}</div></div>
-        <div class="buyButtonDiv">
-            <div v-if="judge">
-              <div v-if="IsPaid"><Button  id="buy" type="primary" v-on:click="IsBurn">
-                <Icon type="logo-usd" /> 进入课程</Button></div>
-              <!-- <div v-else><Button  id="buy" type="primary" v-on:click="alipay()">
+        <!-- <div v-else><Button  id="buy" type="primary" v-on:click="alipay()">
                 <Icon type="logo-usd" /> 购买课程</Button></div> -->
-              <div v-else>
-                <Poptip placement="right" v-model="visible">
-          <a><Button  id="buy" type="primary">
-                <Icon type="logo-usd" /> 购买课程</Button></a>
-        <div slot="title"><i>
-                  <Button id="aliPayButton" v-on:click="alipay()"><Icon type="logo-usd" />支付宝支付</Button>
-                  <Button id="wxPayButton" v-on:click="wxpay()"><Icon type="logo-usd" />微信支付</Button>
-                  <Button id="awardButton" v-on:click="awardpay()"><Icon type="logo-usd" />奖励金支付</Button>
-          </i></div>
-        <div slot="content">
-            <a @click="close">放弃购买关闭</a>
+        <div v-else>
+          <Poptip placement="right" v-model="visible">
+            <a>
+              <Button id="buy" type="primary">
+                <Icon type="logo-usd" /> 购买课程</Button>
+            </a>
+            <div slot="title">
+              <i>
+                <Button id="aliPayButton" v-on:click="alipay()">
+                  <Icon type="logo-usd" />支付宝支付</Button>
+                <Button id="wxPayButton" v-on:click="wxpay()">
+                  <Icon type="logo-usd" />微信支付</Button>
+                <Button id="awardButton" v-on:click="awardpay()">
+                  <Icon type="logo-usd" />奖励金支付</Button>
+              </i>
+            </div>
+            <div slot="content">
+              <a @click="close">放弃购买关闭</a>
+            </div>
+          </Poptip>
         </div>
-        </Poptip>
-              </div>
-            </div>
-            <div v-else><Button id="buy" v-on:click="modal1" type="primary">
-            <Icon type="logo-usd" /> 购买课程</Button></div>
-            <Modal v-model="modal1" title="温馨提示" @on-ok="ok"
-            @on-cancel="cancel">
-              <p>您必须先登录才能学习课程</p>
-            </Modal>
-            </div>
-        <div class="shareButtonDiv">
-          <Button @click="modal = true" id="share" type="primary">
-            <Icon type="ios-card" /> 分享课程</Button>
-            </div>
-            <div v-if="isBurn" class="burnDiv">
-        <Alert type="warning" show-icon>
+      </div>
+      <div v-else>
+        <Button id="buy" v-on:click="modal1" type="primary">
+          <Icon type="logo-usd" /> 购买课程</Button>
+      </div>
+      <Modal v-model="modal1" title="温馨提示" @on-ok="ok" @on-cancel="cancel">
+        <p>您必须先登录才能学习课程</p>
+      </Modal>
+    </div>
+    <div class="shareButtonDiv">
+      <Button @click="modal = true" id="share" type="primary">
+        <Icon type="ios-card" /> 分享课程</Button>
+    </div>
+    <div v-if="isBurn" class="burnDiv">
+      <Alert type="warning" show-icon>
         <Icon type="ios-alert" slot="icon"></Icon>
         <template class="burnText" slot="desc">本文为阅后即焚类文章，在初次阅读后{{ burnTime }}小时无法再查看，请注意及时阅读哦！</template>
-        </Alert>
+      </Alert>
     </div>
-        <div class="alertButtonDiv">
-          <Alert class="alertButton" show-icon>
+    <div class="alertButtonDiv">
+      <Alert class="alertButton" show-icon>
         <Icon type="ios-trophy-outline" slot="icon"></Icon>
         <template class="alertText" slot="desc">分享本课程给他人，他人购买后，你还可以额外获得 {{ award }} 枚奖励币哦！</template>
-          </Alert>
-        </div>
-        <div class="introDiv">
-          <Card>
-            <p class="intro" slot="title">课程简介</p>
-            <p class="introContent">{{content}}</p>
-        </Card>
-        </div>
-   <Modal
-        title="分销课程"
-        v-model="modal"
-        class-name="vertical-center-modal">
-        <div id="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
+      </Alert>
+    </div>
+    <div class="introDiv">
+      <Card>
+        <p class="intro" slot="title">课程简介</p>
+        <p class="introContent">{{content}}</p>
+      </Card>
+    </div>
+    <Modal title="分销课程" v-model="modal" class-name="vertical-center-modal">
+      <div id="urlDiv">
+        <span id="thisURL">本页地址：{{ message }}</span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button id="copyButton" type="button"
-        v-clipboard:copy="message"
-        v-clipboard:success="onCopy"
-        v-clipboard:error="onError">复制</button>
-        </div>
-        </Modal>
+        <button id="copyButton" type="button" v-clipboard:copy="message" v-clipboard:success="onCopy" v-clipboard:error="onError">复制</button>
+      </div>
+    </Modal>
     <br>
-</div>
+  </div>
 </template>
 <script>
 export default {

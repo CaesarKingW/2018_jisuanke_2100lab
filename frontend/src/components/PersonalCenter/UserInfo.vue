@@ -1,12 +1,12 @@
 <template>
-<div id="UserInfo">
+  <div id="UserInfo">
     <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
-     <div id="info">
-       <div id="nickname">昵称：{{nickname}}</div>
-       <div id="phone">手机号码：{{user_phone}}</div>
-       <div id="money">奖励金：{{amount_of_money}}</div>
-     </div>
-</div>
+    <div id="info">
+      <div id="nickname">昵称：{{nickname}}</div>
+      <div id="phone">手机号码：{{user_phone}}</div>
+      <div id="money">奖励金：{{amount_of_money}}</div>
+    </div>
+  </div>
 </template>
 <script>
 export default {

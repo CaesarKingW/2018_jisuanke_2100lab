@@ -1,22 +1,22 @@
 <template>
-<div id="messageboard">
-  <h1>评论区</h1>
-  <div v-for="(item, index) of messages" :key="item.id">
+  <div id="messageboard">
+    <h1>评论区</h1>
+    <div v-for="(item, index) of messages" :key="item.id">
       <div>
-          <h4>用户：{{item.user_phone}}</h4>
-          <h4>
-              {{item.content}}
-          </h4>
-          <button v-on:click="praise(item.pk, index)">👍 :{{item.praise_count}}</button>
-          <!-- #v-bind将"  "内内容解释为表达式 -->
-          <reply v-bind:title="item.pk" v-bind:user_phone="user_phone"></reply>
+        <h4>用户：{{item.user_phone}}</h4>
+        <h4>
+          {{item.content}}
+        </h4>
+        <button v-on:click="praise(item.pk, index)">👍 :{{item.praise_count}}</button>
+        <!-- #v-bind将"  "内内容解释为表达式 -->
+        <reply v-bind:title="item.pk" v-bind:user_phone="user_phone"></reply>
       </div>
-  </div>
+    </div>
     <form method="POST" @submit.prevent="commit_message">
-    <input type="input" name="留言" v-model="message"/>
-    <input type="submit" value="留言"/>
+      <input type="input" name="留言" v-model="message" />
+      <input type="submit" value="留言" />
     </form>
-</div>
+  </div>
 </template>
 <script>
 import reply from './reply.vue'
@@ -42,7 +42,7 @@ export default {
     show_message: function() {
       this.$http
         .post(
-          'http://192.168.55.33:8000' + '/app/show_message',
+          this.GLOBAL.serverSrc + '/app/show_message',
           JSON.stringify(this.course_id)
         )
         .then(
@@ -59,7 +59,7 @@ export default {
         course_id: this.course_id
       })
       this.$http
-        .post('http://192.168.55.33:8000' + '/app/add_message', formDate)
+        .post(this.GLOBAL.serverSrc + '/app/add_message', formDate)
         .then(
           response => {
             this.show_message()
@@ -72,7 +72,7 @@ export default {
         message_id: messageid,
         user_phone: this.user_phone
       })
-      this.$http.post('http://192.168.55.33:8000' + '/app/praise', formDate).then(
+      this.$http.post(this.GLOBAL.serverSrc + '/app/praise', formDate).then(
         response => {
           this.show_message()
         },

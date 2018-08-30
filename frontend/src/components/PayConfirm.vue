@@ -1,8 +1,8 @@
 <template>
-    <div id ="PayConfirm">
-        <p>您已成功支付，请点击确认</p>
-        <input type="button" value="确认" v-on:click="Confirm" />
-    </div>
+  <div id="PayConfirm">
+    <p>您已成功支付，请点击确认</p>
+    <input type="button" value="确认" v-on:click="Confirm" />
+  </div>
 </template>
 <script>
 export default {

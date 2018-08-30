@@ -1,55 +1,91 @@
 <template>
   <section class="fl">
     <Dropdown>
-        <a href="javascript:void(0)">
-            <p class='choose'>{{droptext_user}}</p>
-            <Icon type="ios-arrow-down"></Icon>
-        </a>
-        <DropdownMenu slot="list">
-            <DropdownItem disabled><p @click='time_to_now("week")'>本周</p></DropdownItem>
-            <DropdownItem disabled><p @click='time_to_now("month")'>本月</p></DropdownItem>
-            <DropdownItem disabled><p @click='time_to_now("season")'>季度</p></DropdownItem>
-            <DropdownItem disabled><p @click='time_to_now("semi_year")'>半年</p></DropdownItem>
-            <DropdownItem disabled><p @click='time_to_now("year")'>全年</p></DropdownItem>
-            <DropdownItem><p @click='time_to_now("all")'>全部</p></DropdownItem>
-        </DropdownMenu>
+      <a href="javascript:void(0)">
+        <p class='choose'>{{droptext_user}}</p>
+        <Icon type="ios-arrow-down"></Icon>
+      </a>
+      <DropdownMenu slot="list">
+        <DropdownItem disabled>
+          <p @click='time_to_now("week")'>本周</p>
+        </DropdownItem>
+        <DropdownItem disabled>
+          <p @click='time_to_now("month")'>本月</p>
+        </DropdownItem>
+        <DropdownItem disabled>
+          <p @click='time_to_now("season")'>季度</p>
+        </DropdownItem>
+        <DropdownItem disabled>
+          <p @click='time_to_now("semi_year")'>半年</p>
+        </DropdownItem>
+        <DropdownItem disabled>
+          <p @click='time_to_now("year")'>全年</p>
+        </DropdownItem>
+        <DropdownItem>
+          <p @click='time_to_now("all")'>全部</p>
+        </DropdownItem>
+      </DropdownMenu>
     </Dropdown>
     <p class='choose'>注册的用户总数为{{user_amount}}.</p>
     <br>
     <Dropdown>
-        <a href="javascript:void(0)">
-            <p class='choose'>{{droptext_order}}</p>
-            <Icon type="ios-arrow-down"></Icon>
-        </a>
-        <DropdownMenu slot="list">
-            <DropdownItem><p @click='order_to_now("week")'>本周</p></DropdownItem>
-            <DropdownItem><p @click='order_to_now("month")'>本月</p></DropdownItem>
-            <DropdownItem><p @click='order_to_now("season")'>季度</p></DropdownItem>
-            <DropdownItem><p @click='order_to_now("semi_year")'>半年</p></DropdownItem>
-            <DropdownItem><p @click='order_to_now("year")'>全年</p></DropdownItem>
-            <DropdownItem><p @click='order_to_now("all")'>全部</p></DropdownItem>
-        </DropdownMenu>
+      <a href="javascript:void(0)">
+        <p class='choose'>{{droptext_order}}</p>
+        <Icon type="ios-arrow-down"></Icon>
+      </a>
+      <DropdownMenu slot="list">
+        <DropdownItem>
+          <p @click='order_to_now("week")'>本周</p>
+        </DropdownItem>
+        <DropdownItem>
+          <p @click='order_to_now("month")'>本月</p>
+        </DropdownItem>
+        <DropdownItem>
+          <p @click='order_to_now("season")'>季度</p>
+        </DropdownItem>
+        <DropdownItem>
+          <p @click='order_to_now("semi_year")'>半年</p>
+        </DropdownItem>
+        <DropdownItem>
+          <p @click='order_to_now("year")'>全年</p>
+        </DropdownItem>
+        <DropdownItem>
+          <p @click='order_to_now("all")'>全部</p>
+        </DropdownItem>
+      </DropdownMenu>
     </Dropdown>
     <p class='choose'>的订单总数为{{order_amount}}.</p>
     <br>
     <Dropdown>
-        <a href="javascript:void(0)">
-            <p class='choose'>{{droptext_money}}</p>
-            <Icon type="ios-arrow-down"></Icon>
-        </a>
-        <DropdownMenu slot="list">
-            <DropdownItem><p @click='money_to_now("week")'>本周</p></DropdownItem>
-            <DropdownItem><p @click='money_to_now("month")'>本月</p></DropdownItem>
-            <DropdownItem><p @click='money_to_now("season")'>季度</p></DropdownItem>
-            <DropdownItem><p @click='money_to_now("semi_year")'>半年</p></DropdownItem>
-            <DropdownItem><p @click='money_to_now("year")'>全年</p></DropdownItem>
-            <DropdownItem><p @click='money_to_now("all")'>全部</p></DropdownItem>
-        </DropdownMenu>
+      <a href="javascript:void(0)">
+        <p class='choose'>{{droptext_money}}</p>
+        <Icon type="ios-arrow-down"></Icon>
+      </a>
+      <DropdownMenu slot="list">
+        <DropdownItem>
+          <p @click='money_to_now("week")'>本周</p>
+        </DropdownItem>
+        <DropdownItem>
+          <p @click='money_to_now("month")'>本月</p>
+        </DropdownItem>
+        <DropdownItem>
+          <p @click='money_to_now("season")'>季度</p>
+        </DropdownItem>
+        <DropdownItem>
+          <p @click='money_to_now("semi_year")'>半年</p>
+        </DropdownItem>
+        <DropdownItem>
+          <p @click='money_to_now("year")'>全年</p>
+        </DropdownItem>
+        <DropdownItem>
+          <p @click='money_to_now("all")'>全部</p>
+        </DropdownItem>
+      </DropdownMenu>
     </Dropdown>
     <p class='choose'>的订单总金额为{{money_amount}}.</p>
-    <div id="free_watch"  class="chart"></div>
-    <div id="pay_watch"  class="chart"></div>
-    <div id="pay_sale"  class="chart"></div>
+    <div id="free_watch" class="chart"></div>
+    <div id="pay_watch" class="chart"></div>
+    <div id="pay_sale" class="chart"></div>
   </section>
 </template>
 

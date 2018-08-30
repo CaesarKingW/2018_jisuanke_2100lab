@@ -1,42 +1,42 @@
 <template>
-<div id="BoughtCourse">
+  <div id="BoughtCourse">
     <div>
-        <table class="courseTable">
-            <tr>
-                <th>序号</th>
-                <th>订单编号</th>
-                <th>课程编号</th>
-                <th>课程标题</th>
-                <th>支付金额</th>
-                <th>订单状态</th>
-                <th>发起订单时间</th>
-            </tr>
-            <tr v-for="(item, index) of orders" :key="item">
-                <td>
-                    {{index + 1}}
-                </td>
-                <td>
-                    {{item.Order_number}}
-                </td>
-                <td>
-                    {{item.course_id}}
-                </td>
-                <td>
-                    {{item.course_title}}
-                </td>
-                <td>
-                    {{item.amount_of_money}}
-                </td>
-                <td>
-                    {{item.status}}
-                </td>
-                <td>
-                    {{item.create_at}}
-                </td>
-            </tr>
-        </table>
+      <table class="courseTable">
+        <tr>
+          <th>序号</th>
+          <th>订单编号</th>
+          <th>课程编号</th>
+          <th>课程标题</th>
+          <th>支付金额</th>
+          <th>订单状态</th>
+          <th>发起订单时间</th>
+        </tr>
+        <tr v-for="(item, index) of orders" :key="item">
+          <td>
+            {{index + 1}}
+          </td>
+          <td>
+            {{item.Order_number}}
+          </td>
+          <td>
+            {{item.course_id}}
+          </td>
+          <td>
+            {{item.course_title}}
+          </td>
+          <td>
+            {{item.amount_of_money}}
+          </td>
+          <td>
+            {{item.status}}
+          </td>
+          <td>
+            {{item.create_at}}
+          </td>
+        </tr>
+      </table>
     </div>
-</div>
+  </div>
 </template>
 <script>
 export default {
@@ -94,5 +94,4 @@ th {
   font-size: 15px;
   color: #022336;
 }
-
 </style>

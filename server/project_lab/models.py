@@ -66,6 +66,7 @@ class Course(models.Model):
     can_comment = models.BooleanField(("允许用户留言"), default=True)
     created_at = models.DateTimeField(
         default=timezone.now, auto_now=False, auto_now_add=False)
+    exists = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id)

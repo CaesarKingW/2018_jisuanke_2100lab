@@ -1,11 +1,12 @@
 <template>
-<div class="ReadAndBurn">
+  <div class="ReadAndBurn">
     <img src="../assets/flame.png">
     <h1>您查看的内容已经被焚毁了哦(´∩ω∩｀)</h1>
     <router-link to="/home">
-    <Button id="backHome"><Icon type="ios-home" size=20 /> 回到主页</Button>
+      <Button id="backHome">
+        <Icon type="ios-home" size=20 /> 回到主页</Button>
     </router-link>
-</div>
+  </div>
 </template>
 <style>
 #backHome {

@@ -1,29 +1,36 @@
 <template>
-<div class="NiceMsgBoard">
-  <div id="commentAlert">
-  <Alert show-icon>
+  <div class="NiceMsgBoard">
+    <div id="commentAlert">
+      <Alert show-icon>
         <div id="commentTitle">留言区</div>
         <Icon id="textIcon" type="md-text" slot="icon"></Icon>
-  </Alert>
-  </div>
-  <form method="POST" @submit.prevent="commit_message">
-    <div id="postFont"><Input v-model="message" type="textarea" :rows="4"  align = center id="postColumn" placeholder="请在此畅所欲言……" /></div>
-    <div id="postButton_area"><input id="postButton" type="submit" value="发送留言" /></div>
-    </form>
-  <div v-for="(item, index) of messages" :key="item.id">
-    <Divider />
-    <Card class="oneCommentCard">
-      <div class="one_comment_div">
-          <div id="userName"><Icon id="commentIcon" type="md-person" /> 用户：{{item.user_name}}</div>
-          <div class="oneContentDiv">
-              {{item.content}}
-          </div>
-          <button id="likeButton" v-on:click="praise(item.id, index)"><span id="loveIcon">❤</span> ：{{item.praise_count}}</button>
-          <NiceReply v-bind:title="item.id" v-bind:user_phone="user_phone"></NiceReply>
+      </Alert>
+    </div>
+    <form method="POST" @submit.prevent="commit_message">
+      <div id="postFont">
+        <Input v-model="message" type="textarea" :rows="4" align=c enter id="postColumn" placeholder="请在此畅所欲言……" />
       </div>
-    </Card>
+      <div id="postButton_area"><input id="postButton" type="submit" value="发送留言" /></div>
+    </form>
+    <div v-for="(item, index) of messages" :key="item.id">
+      <Divider />
+      <Card class="oneCommentCard">
+        <div class="one_comment_div">
+          <div id="userName" v-if="IsTeacher">
+            <Icon id="commentIcon" type="md-person" />
+            <Icon type="logo-vimeo" id="V" />用户：{{item.user_name}}</div>
+          <div id="userName" v-else>
+            <Icon id="commentIcon" type="md-person" />用户：{{item.user_name}}</div>
+          <div class="oneContentDiv">
+            {{item.content}}
+          </div>
+          <button id="likeButton" v-on:click="praise(item.id, index)">
+            <span id="loveIcon">❤</span> ：{{item.praise_count}}</button>
+          <NiceReply v-bind:title="item.id" v-bind:user_phone="user_phone"></NiceReply>
+        </div>
+      </Card>
+    </div>
   </div>
-</div>
 </template>
 <script>
 import NiceReply from './NiceReply.vue'
@@ -35,7 +42,9 @@ export default {
       messages: [],
       NiceReply: [],
       NiceReplies: [],
-      user_phone: ''
+      user_phone: '',
+      IsTeacher: false,
+      CanComment: true
     }
   },
   components: {
@@ -46,6 +55,8 @@ export default {
       .post('http://192.168.55.33:8000' + '/app/get_status')
       .then(response => {
         this.user_phone = response.data.list[0].pk
+        this.CanComment = response.data.list[0].fields.Can_comment
+        this.IsTeacher = response.data.list[0].fields.Is_teacher
       })
     this.show_message()
   },
@@ -69,32 +80,36 @@ export default {
         )
     },
     commit_message: function() {
-      var formDate = JSON.stringify({
-        content: this.message,
-        user_phone: this.user_phone,
-        course_id: this.course_id
-      })
-      this.$http
-        .post('http://192.168.55.33:8000' + '/app/add_message', formDate)
-        .then(
+      if (this.CanComment) {
+        var formDate = JSON.stringify({
+          content: this.message,
+          user_phone: this.user_phone,
+          course_id: this.course_id
+        })
+        this.$http
+          .post(this.GLOBAL.serverSrc + '/app/add_message', formDate)
+          .then(
+            response => {
+              this.show_message()
+              this.message = null
+            },
+            response => {}
+          )
+      }
+    },
+    praise: function(messageid, index) {
+      if (this.CanComment) {
+        var formDate = JSON.stringify({
+          message_id: messageid,
+          user_phone: this.user_phone
+        })
+        this.$http.post(this.GLOBAL.serverSrc + '/app/praise', formDate).then(
           response => {
             this.show_message()
-            this.message = null
           },
           response => {}
         )
-    },
-    praise: function(messageid, index) {
-      var formDate = JSON.stringify({
-        message_id: messageid,
-        user_phone: this.user_phone
-      })
-      this.$http.post('http://192.168.55.33:8000' + '/app/praise', formDate).then(
-        response => {
-          this.show_message()
-        },
-        response => {}
-      )
+      }
     }
   }
 }
@@ -190,5 +205,8 @@ export default {
 #likeButton:hover {
   background: rgb(245, 242, 242);
   cursor: pointer;
+}
+#V {
+  color: lightgreen;
 }
 </style>
