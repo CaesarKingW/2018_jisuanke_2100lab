@@ -14,7 +14,7 @@ import datetime
       <p class="formitem">上传音频</p>
       <p class="formitem">
         <input type="file" name="audi_upload">
-        <Button @click="AudiUpload()">上传</BUtton>
+        <Button @click="AudiUpload()">上传</Button>
       </p>
     </div>
     <audio controls="controls" v-if="is_show1" id="aud" class="formitem" v-bind:src="audi" @ended="audioEnded()" preload="auto"></audio>
@@ -60,7 +60,7 @@ import datetime
     <div v-if="rest">
       <h1 class="formitem">继续完善第{{course_id}}号课程的信息</h1>
       <p class="formitem">
-        <Icon type="md-document" />详解：<input type="file" name="whole_introduction"></p>
+        <Icon type="md-document" />详解：<Input type="textarea" v-model="wholeIntroduction"></p>
       <p class="formitem">
         <Icon type="md-easel" />课程封面：<input type="file" name="course_cover"></p>
       <p class="formitem">
@@ -68,13 +68,13 @@ import datetime
         <i-switch v-model="Is_destroy" />
       </p>
       <p class="formitem" v-if="Is_destroy">可阅时长：
-        <InputNumber v-model="destroy_time" />小时</p>
+        <InputNumber :min="0" v-model="destroy_time" />小时</p>
       <p class="formitem">
         <Icon type="md-pricetag" />价格：
         <InputNumber :min="0.00" :step="0.01" v-model="price"></InputNumber>元</p>
       <p class="formitem" v-if="price>0">
         <Icon type="md-share-alt" />分销比例：
-        <InputNumber :max="100" v-model="share_rate" :formatter="value => `${value}%`" :parser="value => value.replace('%', '')"></InputNumber>
+        <InputNumber :min="0" :max="100" v-model="share_rate" :formatter="value => `${value}%`" :parser="value => value.replace('%', '')"></InputNumber>
       </p>
       <p class="formitem">
         <Icon type="ios-chatbubbles" />是否允许用户留言：
@@ -137,7 +137,9 @@ export default {
       share_rate: null,
       can_comment: false,
       add_course: false,
-      finish: false
+      finish: false,
+      real_finished: false,
+      wholeIntroduction: ''
     }
   },
   created: function() {
@@ -156,6 +158,13 @@ export default {
           }
         }
       })
+  },
+  beforeDestroy: function() {
+    if (this.real_finished === false) {
+      this.$http
+        .post('http://192.168.55.33:8000/app/half', JSON.stringify(this.course_id))
+        .then(response => {})
+    }
   },
   methods: {
     addCourse() {
@@ -228,6 +237,7 @@ export default {
         formData.append('file', fileInfo)
         formData.append('course_id', this.course_id)
         formData.append('duration', duration)
+        formData.append('count', 0)
         this.$http
           .post('http://192.168.55.33:8000/app/add_img', formData)
           .then(response => {
@@ -380,13 +390,10 @@ export default {
     },
     Submit() {
       var formData = new FormData()
-      var wholeIntroduction = document.querySelector(
-        'input[name ="whole_introduction"]'
-      ).files[0]
       var courseCover = document.querySelector('input[name ="course_cover"]')
         .files[0]
       formData.append('id', this.course_id)
-      formData.append('whole_introduction', wholeIntroduction)
+      formData.append('whole_introduction', this.wholeIntroduction)
       formData.append('Cover_picture', courseCover)
       formData.append('Is_destroy', this.Is_destroy)
       formData.append('distroy_time', this.destroy_time)
@@ -401,6 +408,7 @@ export default {
         .then(response => {
           this.rest = false
           this.finish = true
+          this.real_finished = true
           var that = this
           setTimeout(function() {
             that.$router.push({ name: 'backstage' })

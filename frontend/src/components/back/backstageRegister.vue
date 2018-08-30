@@ -24,6 +24,15 @@
         </div>
       </FormItem>
       <FormItem>
+        <i-input type="text" v-model="formInline.invite_code" placeholder="邀请码" @on-blur="check_three()">
+          <Icon type="md-share" slot="prepend" />
+        </i-input>
+        <div v-if="prompt3">
+          <p v-if="if_right" id="correct">邀请码正确</p>
+          <p v-else id="wrong">邀请码错误</p>
+        </div>
+      </FormItem>
+      <FormItem>
        <div id="regBtnDiv"><Button type="primary" id="regButton" @click="register()">立刻注册</Button></div>
       </FormItem>
       <FormItem>
@@ -46,11 +55,14 @@ export default {
       if_blank1: null,
       blank2: false,
       if_blank2: null,
+      prompt3: false,
+      if_right: null,
       can_login: false,
       formInline: {
         user: '',
         password: '',
-        confirm: ''
+        confirm: '',
+        invite_code: ''
       }
     }
   },
@@ -101,12 +113,25 @@ export default {
       }
       this.prompt2 = true
     },
+    check_three() {
+      this.$http
+        .post('http://192.168.55.33:8000/app/get_code')
+        .then(response => {
+          if (this.formInline.invite_code !== response.data.code) {
+            this.if_right = false
+          } else {
+            this.if_right = true
+          }
+          this.prompt3 = true
+        })
+    },
     register() {
       if (
         this.if_blank1 === false &&
         this.if_blank2 === false &&
         this.if_exist === false &&
-        this.if_match === true
+        this.if_match === true &&
+        this.if_right === true
       ) {
         this.$http
           .post(

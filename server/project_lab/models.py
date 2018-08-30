@@ -138,6 +138,11 @@ class Praise(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
 
+class Invite_code(models.Model):
+    id = models.AutoField(primary_key=True)
+    code = models.CharField("邀请码", max_length=4)
+
+
 # 分享记录表
 class Share(models.Model):
     id = models.AutoField(primary_key=True)

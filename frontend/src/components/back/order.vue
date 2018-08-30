@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Input v-model="order_number" placeholder="请输入待搜索的订单号" class='width' />
+    <Input v-model="order_number" placeholder="请输入待搜索的订单号" id="order"/>
     <Button @click="search()">搜索</Button>
     <div v-show='is_show'>
       <div v-if='if_order'>
@@ -104,7 +104,7 @@ export default {
 </script>
 
 <style>
-.width {
+#order {
   width: 300px;
 }
 </style>

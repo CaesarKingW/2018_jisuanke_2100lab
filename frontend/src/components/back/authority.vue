@@ -1,33 +1,39 @@
 <template>
-  <div>
-    <Input v-model="username" placeholder="请输入待搜索管理员的用户名" id="username" />
-    <Button @click="search()">搜索</Button>
-    <div v-if="if_show">
-      <div v-if="if_exist">
-        <Divider />
-        <p>课程处理
-          <i-switch v-model="Manage_course" class="auth" />
-        </p>
-        <Divider />
-        <p>用户管理
-          <i-switch v-model="Manage_user" class="auth" />
-        </p>
-        <Divider />
-        <p>留言管理
-          <i-switch v-model="Manage_message" class="auth" />
-        </p>
-        <Divider />
-        <p>订单处理
-          <i-switch v-model="Manage_order" class="auth" />
-        </p>
-        <Divider />
-        <Button @click="modify_auth()">保存</Button>
+  <Tabs>
+    <TabPane label="修改管理员权限">
+      <Input v-model="username" placeholder="请输入待搜索管理员的用户名" id="username" />
+      <Button @click="search()">搜索</Button>
+      <div v-if="if_show">
+        <div v-if="if_exist">
+          <Divider />
+          <p>课程处理
+            <i-switch v-model="Manage_course" class="auth" />
+          </p>
+          <Divider />
+          <p>用户管理
+            <i-switch v-model="Manage_user" class="auth" />
+          </p>
+          <Divider />
+          <p>留言管理
+            <i-switch v-model="Manage_message" class="auth" />
+          </p>
+          <Divider />
+          <p>订单处理
+            <i-switch v-model="Manage_order" class="auth" />
+          </p>
+          <Divider />
+          <Button @click="modify_auth()">保存</Button>
+        </div>
+        <div v-else>
+          对不起，您搜索的管理员不存在
+        </div>
       </div>
-      <div v-else>
-        对不起，您搜索的管理员不存在
-      </div>
-    </div>
-  </div>
+    </TabPane>
+    <TabPane label="设置邀请码">
+      <Input v-model="invite_code" id="code" />
+      <Button @click="modify_code()">保存</Button>
+    </TabPane>
+  </Tabs>
 </template>
 <script>
 export default {
@@ -44,12 +50,19 @@ export default {
           if (res.manager.Supermanager !== true) {
             alert('你没有权限访问该网页！')
             location.href = '/#/backstage'
+          } else {
+            this.$http
+              .post('http://192.168.55.33:8000/app/get_code')
+              .then(response => {
+                this.invite_code = response.data.code
+              })
           }
         }
       })
   },
   data() {
     return {
+      invite_code: '',
       username: '',
       Manage_course: null,
       Manage_user: null,
@@ -60,6 +73,15 @@ export default {
     }
   },
   methods: {
+    modify_code() {
+      var inviteCode = JSON.stringify(this.invite_code)
+      this.$http
+        .post('http://192.168.55.33:8000/app/modify_code', inviteCode)
+        .then(response => {
+          var res = response.data
+          this.invite_code = res.code
+        })
+    },
     search() {
       var username = JSON.stringify(this.username)
       this.$http
@@ -97,7 +119,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 .auth {
   float: right;
 }
@@ -106,7 +128,8 @@ p {
   font-size: 15px;
 }
 
-#username {
+#username,
+#code {
   width: 300px;
 }
 </style>
