@@ -80,25 +80,25 @@ export default {
       authority: false
     }
   },
-  // created: function() {
-  //   this.$http
-  //     .post('http://192.168.55.33:8000/app/get_mstatus')
-  //     .then(response => {
-  //       var res = response.data
-  //       this.mis_login = res.mis_login
-  //       if (!this.mis_login) {
-  //         alert('还没有登录，无权访问该页面！')
-  //         location.href = '/#/backstageLogin'
-  //       } else {
-  //         this.username = res.manager.username
-  //         this.course = res.manager.Manage_course
-  //         this.user = res.manager.Manage_user
-  //         this.order = res.manager.Manage_order
-  //         this.message = res.manager.Manage_message
-  //         this.authority = res.manager.Supermanager
-  //       }
-  //     })
-  // },
+  created: function() {
+    this.$http
+      .post('http://192.168.55.33:8000/app/get_mstatus')
+      .then(response => {
+        var res = response.data
+        this.mis_login = res.mis_login
+        if (!this.mis_login) {
+          alert('还没有登录，无权访问该页面！')
+          location.href = '/#/backstageLogin'
+        } else {
+          this.username = res.manager.username
+          this.course = res.manager.Manage_course
+          this.user = res.manager.Manage_user
+          this.order = res.manager.Manage_order
+          this.message = res.manager.Manage_message
+          this.authority = res.manager.Supermanager
+        }
+      })
+  },
   methods: {
     logout() {
       this.$http

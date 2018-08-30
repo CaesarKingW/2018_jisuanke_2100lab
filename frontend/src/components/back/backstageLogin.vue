@@ -9,22 +9,12 @@
           <Icon type="ios-person-outline" slot="prepend"></Icon>
         </i-input>
         </div>
-        <!-- <div id="ifBlank1" v-if="blank1">
-          <p v-if="if_blank1" class="blank">
-            <Icon size=16 type="ios-alert-outline" /> 用户名不能为空
-          </p>
-        </div> -->
       </FormItem>
       <FormItem prop="password">
         <div id="pwdInputDiv"><i-input type="password" v-model="formInline.password" placeholder="请输入密码" @on-blur="check_two()">
           <Icon type="ios-lock-outline" slot="prepend"></Icon>
         </i-input>
         </div>
-        <!-- <div v-if="blank2">
-          <p v-if="if_blank2" class="blank">
-            <Icon size=16 type="ios-alert-outline" /> 密码不能为空
-          </p>
-        </div> -->
       </FormItem>
       <FormItem>
         <Button id="loginButton" type="primary" @click="login()">立刻登录</Button>
