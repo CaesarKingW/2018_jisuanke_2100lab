@@ -116,6 +116,7 @@ def delete_comment(request):
         object_type="留言（留言id:" + str(message_id) + ")")
     operating_history.save()
     m.exists = False
+    m.save()
     n = User.objects.get(phone_number=phone_number)
     messages = Message.objects.filter(user_phone=n)
     response['if_comment'] = True

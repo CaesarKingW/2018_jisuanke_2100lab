@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('phone_number', 'user_name', 'head_protrait', 'welfare',
-                  'Can_comment', 'Is_teacher')
+                  'Can_comment', 'Is_teacher', 'exists')
 
 
 class ManagerSerializer(serializers.ModelSerializer):
@@ -24,7 +24,7 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ('id', 'user_phone', 'course_title', 'user_name', 'course_id',
-                  'content', 'created_at', 'praise_count')
+                  'content', 'created_at', 'praise_count','exists')
 
     def get_course_title(self, obj):
         return obj.course_id.title
