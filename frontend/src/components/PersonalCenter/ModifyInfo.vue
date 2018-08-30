@@ -113,16 +113,12 @@ export default {
 <style scoped>
 #nameUploadText {
   width: 120px;
-  margin-left: 100px;
-}
-
-#ModifyInfo {
-  float: left;
+  margin-left: 550px;
 }
 
 #nickname {
   margin-top: 5px;
-  margin-left: 100px;
+  margin-left: 550px;
   font-family: 华文中宋;
   font-size: 20px;
 }
@@ -131,7 +127,7 @@ export default {
   width: 120px;
   height: 120px;
   margin: 30px;
-  margin-left: 100px;
+  margin-left: 550px;
   border: #666 solid 1px;
   border-radius: 8px;
 }
@@ -140,7 +136,7 @@ export default {
   width: 120px;
   height: 40px;
   font-size: 20px;
-  margin-left: 100px;
+  margin-left: 550px;
   outline: none;
   border-radius: 4px;
   border: #666666 solid 1px;
@@ -158,7 +154,7 @@ export default {
   width: 120px;
   height: 40px;
   font-size: 20px;
-  margin-left: 100px;
+  margin-left: 550px;
   margin-top: 30px;
   outline: none;
   border-radius: 4px;
@@ -175,5 +171,70 @@ export default {
 
 .none {
   display: none;
+}
+
+@media screen and (max-width: 500px) {
+  #nameUploadText {
+    width: 120px;
+    margin-left: 150px;
+    z-index: -1;
+  }
+
+  #nickname {
+    margin-top: 5px;
+    margin-left: 150px;
+    font-family: 华文中宋;
+    font-size: 20px;
+  }
+
+  #avatar {
+    width: 120px;
+    height: 120px;
+    margin: 30px;
+    margin-left: 150px;
+    border: #666 solid 1px;
+    border-radius: 8px;
+  }
+
+  #avatarUploadButton {
+    width: 120px;
+    height: 40px;
+    font-size: 20px;
+    margin-left: 150px;
+    outline: none;
+    border-radius: 4px;
+    border: #666666 solid 1px;
+    background-color: #fff;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  #avatarUploadButton:hover {
+    cursor: pointer;
+    background: rgb(245, 242, 242);
+  }
+
+  #nameUploadButton {
+    width: 120px;
+    height: 40px;
+    font-size: 20px;
+    margin-left: 150px;
+    margin-top: 30px;
+    outline: none;
+    border-radius: 4px;
+    border: #666666 solid 1px;
+    background-color: #fff;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  #nameUploadButton:hover {
+    cursor: pointer;
+    background: rgb(245, 242, 242);
+  }
+
+  .none {
+    display: none;
+  }
 }
 </style>

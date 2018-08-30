@@ -43,9 +43,9 @@ export default {
 }
 </script>
 <style scoped>
-#UserInfo {
+/* #UserInfo {
   float: center;
-}
+} */
 
 #avatar {
   border: #666666 solid 1px;
@@ -53,31 +53,63 @@ export default {
   width: 120px;
   height: 120px;
   margin-top: 30px;
-  margin-left: 100px;
+  margin-left: 565px;
 }
 
 #nickname {
   font-size: 20px;
   font-family: 华文中宋;
-  margin-left: 200px;
-  margin-top: 5px;
+  margin-left: 100px;
+  margin-top: 20px;
 }
 
 #money {
   font-size: 20px;
   font-family: 华文中宋;
-  margin-left: 200px;
+  margin-left: 100px;
   margin-top: 5px;
 }
 
 #phone {
   font-size: 20px;
   font-family: 华文中宋;
-  margin-left: 200px;
+  margin-left: 100px;
   margin-top: 5px;
 }
 
 #info {
-  margin-left: 100px;
+  margin-left: 470px;
+}
+@media screen and (max-width: 500px) {
+  #avatar {
+    border: #666666 solid 1px;
+    border-radius: 8px;
+    width: 120px;
+    height: 120px;
+    margin-top: 30px;
+    margin-left: 150px;
+  }
+
+  #nickname {
+    font-size: 20px;
+    font-family: 华文中宋;
+    margin-top: 20px;
+  }
+
+  #money {
+    font-size: 20px;
+    font-family: 华文中宋;
+    margin-top: 5px;
+  }
+
+  #phone {
+    font-size: 20px;
+    font-family: 华文中宋;
+    margin-top: 5px;
+  }
+
+  #info {
+    margin-left: 70px;
+  }
 }
 </style>
