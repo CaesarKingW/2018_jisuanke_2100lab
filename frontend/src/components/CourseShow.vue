@@ -4,32 +4,43 @@
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
     <Divider type="vertical" />
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
+    <Divider type="vertical" />
     </div>
     <br />
-    <div class="title">{{ title }}</div>
+    <br />
+    <br />
+    <div id="blank"></div>
+    <div class="title">标题：{{ title }}</div>
     <p class="read_time">浏览量：{{ times }} 次</p>
     <div class="test_pic"><img id="changePic" v-bind:src="picpath"></div>
     <div class="playRoll"><audio id="audio" controls preload="auto" v-bind:src="aupath"  @play="Play()" @pause="Pause()" @seeked="Dragged()"></audio></div>
     <Collapse cLass="collapse" accordion v-model="value">
         <Panel>
-            <Poptip trigger="hover" id="poptip" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
+          <Poptip trigger="hover" id="poptip" title="文字介绍信息" content="点击可展开或折叠文字介绍。">
             <div>文字介绍</div>
-            </Poptip>
-            <div slot="content" id="slotContent">
-              <div id="scrollBar">
-                 {{ content }}
-              </div>
+          </Poptip>
+          <div slot="content" id="slotContent">
+            <div id="scrollBar">
+              {{ content }}
             </div>
+          </div>
         </Panel>
-    </Collapse>
-        <BackTop>
+      </Collapse>
+      <BackTop>
         <div>返回顶端</div>
-    </BackTop>
-    <div v-if="CanComment">
-      <NiceMsgBoard v-bind:course_id = "courseid"></NiceMsgBoard>
+      </BackTop>
+      <div v-if="CanComment">
+        <NiceMsgBoard v-bind:course_id="courseid"></NiceMsgBoard>
+      </div>
     </div>
-</div>
-</body>
+  </body>
 </template>
 <script>
 import NiceMsgBoard from './NiceMsgBoard'
@@ -76,22 +87,23 @@ export default {
     get_info: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_course_info',
+          'http://192.168.55.33:8000' + '/app/get_course_info',
           JSON.stringify(this.courseid)
         )
         .then(response => {
           var res = response.data
           this.title = res.course[0].title
-          this.aupath = this.GLOBAL.serverSrc + res.course[0].audio
-          this.content = res.course[0].context
+          this.aupath = 'http://192.168.55.33:8000' + res.course[0].audio
+          this.content = res.course[0].whole_introduction
           this.pictures = res.pictures
-          this.picpath = this.GLOBAL.serverSrc + this.pictures[0].course_picture
+          this.picpath =
+            'http://192.168.55.33:8000' + this.pictures[0].course_picture
         })
     },
     Play: function() {
       var vm = this
       vm.picpath =
-        this.GLOBAL.serverSrc + vm.pictures[vm.last_index].course_picture
+        'http://192.168.55.33:8000' + vm.pictures[vm.last_index].course_picture
       var interval = (vm.pictures[vm.last_index].end_time - vm.last_time) * 1000
       vm.st = setTimeout(function() {
         vm.last_index = vm.last_index + 1
@@ -137,7 +149,7 @@ export default {
     // 判断登录状态，防止用户强制访问
     Judgestatus: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
           var judge = response.data.is_login
           // 用户未登录状态下强制访问，跳出404 not found页面
@@ -165,7 +177,7 @@ export default {
       var now = Date.parse(new Date())
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/add_new_take',
+          'http://192.168.55.33:8000' + '/app/add_new_take',
           JSON.stringify({
             userphone: this.userphone,
             courseid: this.courseid,
@@ -180,15 +192,14 @@ export default {
             // 获取课程非内容属性
             this.JudgePrice()
           },
-          response => {
-          }
+          response => {}
         )
     },
     // 获取课程标题和是否免费属性
     JudgePrice: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_specified_course',
+          'http://192.168.55.33:8000' + '/app/get_specified_course',
           JSON.stringify(this.courseid)
         )
         .then(response => {
@@ -226,7 +237,7 @@ export default {
     JudgePayment: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_order_payment',
+          'http://192.168.55.33:8000' + '/app/get_order_payment',
           JSON.stringify({
             phone_number: this.userphone,
             course_id: this.courseid
@@ -258,7 +269,7 @@ export default {
     },
     SetBurn: function() {
       this.$http.post(
-        this.GLOBAL.serverSrc + '/app/set_burn',
+        'http://192.168.55.33:8000' + '/app/set_burn',
         JSON.stringify({
           userphone: this.userphone,
           courseid: this.courseid
@@ -271,7 +282,7 @@ export default {
     clearInterval(this.closeInterval)
     this.$http
       .post(
-        this.GLOBAL.serverSrc + '/app/add_or_update_takes',
+        'http://192.168.55.33:8000' + '/app/add_or_update_takes',
         JSON.stringify({
           userphone: this.userphone,
           courseid: this.courseid,
@@ -321,13 +332,6 @@ export default {
   height: 90px;
 }
 
-#progressRollDiv {
-  width: 60%;
-  text-align: center;
-  margin: 0 auto;
-  margin-top: 20px;
-}
-
 .collapse {
   text-align: center;
   width: 60%;
@@ -339,10 +343,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-}
-
-#title {
-  color: #17233d;
 }
 
 #read_time {
@@ -361,6 +361,7 @@ export default {
 .test_pic {
   margin: 0 auto;
   text-align: center;
+  margin-left: 20px;
 }
 
 .title {
@@ -370,6 +371,7 @@ export default {
   margin-bottom: 10px;
   font-size: 30px;
   font-family: 华文中宋;
+  color: #17233d;
 }
 
 .read_time {
@@ -387,5 +389,34 @@ export default {
   width: 40%;
   height: 300px;
   margin: 0 auto;
+}
+
+@media screen and (max-width: 500px) {
+  .navi {
+    display: block;
+  }
+  #blank {
+    margin-top: 60px;
+  }
+  #changePic {
+    border: #000 solid 5px;
+    border-radius: 20px;
+    width: 70%;
+    height: 180px;
+    margin-left: -40px;
+  }
+  .test_pic {
+    margin-left: 30px;
+  }
+  .title {
+    /* margin: 0 auto; */
+    text-align: center;
+    /* margin-left: -85px; */
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 30px;
+    font-family: 华文中宋;
+    color: #17233d;
+  }
 }
 </style>

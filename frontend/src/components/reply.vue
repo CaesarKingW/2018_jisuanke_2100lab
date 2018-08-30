@@ -1,19 +1,19 @@
 <template>
-<div id="reply">
+  <div id="reply">
     <button v-on:click="dispaly_inputfield">回复</button>
-       <form v-show="IsShow" @submit.prevent="commit_reply()">
-        <input type="text" v-model="replyContent">
-        <input type="submit" value="确定"/>
-      </form>
+    <form v-show="IsShow" @submit.prevent="commit_reply()">
+      <input type="text" v-model="replyContent">
+      <input type="submit" value="确定" />
+    </form>
     <div v-for="r of replies" :key="r.key">
-              <h5>
-                 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;{{r.fields.user_phone}}
-              </h5>
-              <h4>
-                  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;{{r.fields.content}}
-              </h4>
-          </div>
-</div>
+      <h5>
+        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;{{r.fields.user_phone}}
+      </h5>
+      <h4>
+        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;{{r.fields.content}}
+      </h4>
+    </div>
+  </div>
 </template>
 <script>
 export default {

@@ -1,13 +1,22 @@
 <template>
-<div class="PayCourseIntro">
-  <!-- 导航栏 -->
+  <div class="PayCourseIntro">
+    <!-- 导航栏 -->
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
     <Divider type="vertical" />
     <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
     <!-- 课程信息 -->
   <div class="myPanel"></div>
+  <div id="blank"></div>
         <div class="coverDiv">
           <img id="testPic" v-bind:src="path">
         </div>
@@ -51,10 +60,10 @@
         <Alert type="warning" show-icon>
         <Icon type="ios-alert" slot="icon"></Icon>
         <template class="burnText" slot="desc">本文为阅后即焚类文章，在初次阅读后{{ burnTime }}小时无法再查看，请注意及时阅读哦！</template>
-        </Alert>
+      </Alert>
     </div>
-        <div class="alertButtonDiv">
-          <Alert class="alertButton" show-icon>
+    <div class="alertButtonDiv">
+      <Alert class="alertButton" show-icon>
         <Icon type="ios-trophy-outline" slot="icon"></Icon>
         <template class="alertText" slot="desc">分享本课程给他人，他人购买后，你还可以额外获得 {{ award }} 枚奖励币哦！</template>
           </Alert>
@@ -69,12 +78,11 @@
         title="分销课程"
         v-model="modal"
         class-name="vertical-center-modal">
-        <div id="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div id="urlDiv"><span id="thisURL">请将此链接分享给他人：{{ message }}</span>
         </div>
         </Modal>
-    <br>
-</div>
+    <br />
+  </div>
 </template>
 <script>
 export default {
@@ -114,6 +122,9 @@ export default {
   },
   mounted: function() {
     this.get_specified_course()
+    this.$Message.config({
+      top: 120
+    })
   },
   methods: {
     close() {
@@ -121,7 +132,7 @@ export default {
     },
     Judgestatus: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
           this.judge = response.data.is_login
           if (this.judge !== true) {
@@ -135,7 +146,7 @@ export default {
     get_specified_course: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_specified_course',
+          'http://192.168.55.33:8000' + '/app/get_specified_course',
           JSON.stringify(this.courseid)
         )
         .then(response => {
@@ -145,7 +156,9 @@ export default {
             course = response.data.list
             this.courseTitle = course[0].fields.title
             this.path =
-              this.GLOBAL.serverSrc + '/media/' + course[0].fields.Cover_picture
+              'http://192.168.55.33:8000' +
+              '/media/' +
+              course[0].fields.Cover_picture
             this.content = course[0].fields.brief_introduction
             this.price = course[0].fields.price
             this.award = Math.floor(course[0].fields.share_rate * this.price)
@@ -158,7 +171,7 @@ export default {
     },
     GetUserPhone: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
           // 获取手机号
           this.userphone = response.data.list[0].pk
@@ -187,7 +200,7 @@ export default {
       request.userphone = this.userphone
       request = JSON.stringify(request)
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/payment', request)
+        .post('http://192.168.55.33:8000' + '/app/payment', request)
         .then(response => {
           window.location.href = response.data
         })
@@ -240,7 +253,7 @@ export default {
     JudgePayment: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_order_payment',
+          'http://192.168.55.33:8000' + '/app/get_order_payment',
           JSON.stringify({
             phone_number: this.userphone,
             course_id: this.courseid
@@ -253,7 +266,7 @@ export default {
     IsBurn: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_burn_status',
+          'http://192.168.55.33:8000' + '/app/get_burn_status',
           JSON.stringify({
             userphone: this.userphone,
             courseid: this.courseid
@@ -276,12 +289,10 @@ export default {
       var refer = ['*', '^', '@', '(', '!', ')', '%', '#', '&', '$']
       var code = ''
       var temp = this.userphone
-      console.log(code)
       for (var i = 0; i < 11; i++) {
         var index = temp % 10
         temp = (temp - index) / 10
         code += refer[index]
-        console.log(code[i])
       }
       var shareCode = escape(code)
       this.message =
@@ -304,7 +315,6 @@ export default {
           var temp = refer.indexOf(str[i])
           presenter += temp * Math.pow(10, i)
         }
-        console.log(presenter)
         if (presenter !== this.userphone) {
           // 将分享记录插入表中
           // 如果presenter不存在，插入失败，弹出邀请链接错误
@@ -320,11 +330,11 @@ export default {
             .then(response => {
               var status = response.data.status
               if (!status) {
-                alert('邀请链接错误，请重新进入')
+                this.$Message.error('邀请链接错误，请重新进入')
               }
             })
         } else {
-          alert('抱歉，您不可以自己分享给自己的！')
+          this.$Message.warning('抱歉，您不可以自己分享给自己的！')
         }
       }
     }
@@ -463,6 +473,9 @@ export default {
   font-size: 17px;
   position: static;
   font-family: 华文中宋;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #courseTitle {
@@ -478,5 +491,23 @@ export default {
 
 .courseTitleDiv {
   margin: 0 auto;
+}
+
+@media screen and (max-width: 500px) {
+  .navi {
+    display: block;
+    color: #000;
+  }
+  #blank {
+    margin-top: 125px;
+  }
+  .navibar {
+    z-index: 9999;
+    position: fixed;
+    color: #000;
+    width: 100%;
+    opacity: 0.9;
+    padding: 25px;
+  }
 }
 </style>

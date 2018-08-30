@@ -12,6 +12,7 @@ from .serializer import OrderSerializer, CourseSerializer
 from .serializer import Course_pictureSerializer, Operating_historySerializer
 from django.contrib import auth
 import string
+from django.contrib.auth.decorators import login_required
 
 
 @require_http_methods(['POST'])
@@ -85,7 +86,7 @@ def search_comment(request):
     response['if_comment'] = True
     try:
         user = User.objects.get(phone_number=phone_number)
-        messages = Message.objects.filter(user_phone=user)
+        messages = Message.objects.filter(user_phone=user, exists=True)
         if messages.count() == 0:
             response['if_comment'] = False
             return JsonResponse(response)
@@ -112,10 +113,9 @@ def delete_comment(request):
     operating_history = Operating_history(
         manager_username=operator,
         operate_type="删除留言",
-        object_type="留言（留言用户：" + m.user_phone.phone_number + ";留言内容：" +
-        m.content + ";留言时间：" + m.created_at + ";留言课程：" + m.course_id)
+        object_type="留言（留言id:" + str(message_id) + ")")
     operating_history.save()
-    m.delete()
+    m.exists = False
     n = User.objects.get(phone_number=phone_number)
     messages = Message.objects.filter(user_phone=n)
     response['if_comment'] = True
@@ -260,6 +260,7 @@ def supplement_course_information(request):
         course.distory_time = float(request.POST.get('distroy_time'))
     if float(request.POST.get('price')) > 0:
         course.share_rate = float(request.POST.get('share_rate')) / 100
+    course.exists = True
     course.save()
     operating_history = Operating_history(
         manager_username=request.user,
@@ -413,6 +414,11 @@ def delete_course(request):
     course = Course.objects.get(id=id)
     course.delete()
     response['msg'] = 'success'
+    operating_history = Operating_history(
+        manager_username=request.user,
+        operate_type='删除课程',
+        object_type="课程（课程id:" + id + ")")
+    operating_history.save()
     return JsonResponse(response)
 
 
@@ -464,4 +470,13 @@ def editCourse(request):
     operating_history.save()
     course = CourseSerializer(course)
     response['course'] = course.data
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+@login_required
+def backstage_logout(request):
+    response = {}
+    response['msg'] = 'success'
+    auth.logout(request)
     return JsonResponse(response)

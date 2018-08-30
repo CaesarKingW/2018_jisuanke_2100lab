@@ -1,23 +1,49 @@
 <template>
-<Tabs value="name1">
-        <TabPane label="音画同步" name="name1">
-            音画同步
-        </TabPane>
-        <TabPane label="其他" name="name2">
-            <Form :model="formItem" :label-width="150">
-                <FormItem label="标题"><Input v-model="formItem.title"/></FormItem>
-                <FormItem label="简介"><Input v-model="formItem.brief_introduction" type="textarea"/></FormItem>
-                <FormItem label="详解"><div><p>当前：<a :href="formItem.oldWI" target="_blank">（当前详解）</a></p><p>修改：<input type=file id="newWI"/></p></div></FormItem>
-                <FormItem label="课程封面："><p>当前：<a :href=formItem.oldCP target="_blank">（当前封面）</a></p><p>修改：<input type=file id="newCP"/></p></FormItem>
-                <FormItem label="是否阅后即焚:"><i-switch v-model="formItem.Is_destroy"></i-switch></FormItem>
-                <FormItem label="可阅时长：" v-if="this.formItem.Is_destroy"><InputNumber v-model="formItem.distroy_time"/>小时</FormItem>
-                <FormItem label="价格"><InputNumber v-model="formItem.price"/>元</FormItem>
-                <FormItem label="分销比例" v-if="formItem.price>0"><InputNumber :max="100" v-model="formItem.share_rate" :formatter="value => `${value}%`" :parser="value => value.replace('%', '')"/></FormItem>
-                <FormItem label="允许用户留言"><i-switch v-model="formItem.can_comment"></i-switch></FormItem>
-                <FormItem><Button type="primary" @click="save_modify()">保存修改</Button></FormItem>
-            </Form>
-        </TabPane>
-</Tabs>
+  <Tabs value="name1">
+    <TabPane label="音画同步" name="name1">
+      音画同步
+    </TabPane>
+    <TabPane label="其他" name="name2">
+      <Form :model="formItem" :label-width="150">
+        <FormItem label="标题">
+          <Input v-model="formItem.title" />
+        </FormItem>
+        <FormItem label="简介">
+          <Input v-model="formItem.brief_introduction" type="textarea" />
+        </FormItem>
+        <FormItem label="详解">
+          <div>
+            <p>当前：
+              <a :href="formItem.oldWI" target="_blank">（当前详解）</a>
+            </p>
+            <p>修改：<input type=file id="newWI" /></p>
+          </div>
+        </FormItem>
+        <FormItem label="课程封面：">
+          <p>当前：
+            <a :href=formItem.oldCP target="_blank">（当前封面）</a>
+          </p>
+          <p>修改：<input type=file id="newCP" /></p>
+        </FormItem>
+        <FormItem label="是否阅后即焚:">
+          <i-switch v-model="formItem.Is_destroy"></i-switch>
+        </FormItem>
+        <FormItem label="可阅时长：" v-if="this.formItem.Is_destroy">
+          <InputNumber v-model="formItem.distroy_time" />小时</FormItem>
+        <FormItem label="价格">
+          <InputNumber v-model="formItem.price" />元</FormItem>
+        <FormItem label="分销比例" v-if="formItem.price>0">
+          <InputNumber :max="100" v-model="formItem.share_rate" :formatter="value => `${value}%`" :parser="value => value.replace('%', '')" />
+        </FormItem>
+        <FormItem label="允许用户留言">
+          <i-switch v-model="formItem.can_comment"></i-switch>
+        </FormItem>
+        <FormItem>
+          <Button type="primary" @click="save_modify()">保存修改</Button>
+        </FormItem>
+      </Form>
+    </TabPane>
+  </Tabs>
 </template>
 <script>
 export default {
@@ -38,25 +64,42 @@ export default {
     }
   },
   created: function() {
-    this.id = this.$route.params.id
     this.$http
-      .post(
-        'http://192.168.55.33:8000/app/search_one_course',
-        JSON.stringify(this.id)
-      )
+      .post('http://192.168.55.33:8000/app/get_mstatus')
       .then(response => {
         var res = response.data
-        this.formItem.title = res.course['title']
-        this.formItem.brief_introduction = res.course['brief_introduction']
-        this.formItem.oldCP =
-          'http://192.168.55.33:8000' + res.course['Cover_picture']
-        this.formItem.oldWI =
-          'http://192.168.55.33:8000' + res.course['whole_introduction']
-        this.formItem.Is_destroy = res.course['Is_destroy']
-        this.formItem.distroy_time = res.course['distory_time']
-        this.formItem.price = res.course['price']
-        this.formItem.share_rate = res.course['share_rate'] * 100
-        this.formItem.can_comment = res.course['can_comment']
+        this.mis_login = res.mis_login
+        if (!this.mis_login) {
+          alert('还没有登录，无权访问该页面！')
+          location.href = '/#/backstageLogin'
+        } else {
+          if (res.manager.Manage_course !== true) {
+            alert('你没有权限访问该网页！')
+            location.href = '/#/backstage'
+          } else {
+            this.id = this.$route.params.id
+            this.$http
+              .post(
+                'http://192.168.55.33:8000/app/search_one_course',
+                JSON.stringify(this.id)
+              )
+              .then(response => {
+                var res = response.data
+                this.formItem.title = res.course['title']
+                this.formItem.brief_introduction =
+                  res.course['brief_introduction']
+                this.formItem.oldCP =
+                  'http://192.168.55.33:8000' + res.course['Cover_picture']
+                this.formItem.oldWI =
+                  'http://192.168.55.33:8000' + res.course['whole_introduction']
+                this.formItem.Is_destroy = res.course['Is_destroy']
+                this.formItem.distroy_time = res.course['distory_time']
+                this.formItem.price = res.course['price']
+                this.formItem.share_rate = res.course['share_rate'] * 100
+                this.formItem.can_comment = res.course['can_comment']
+              })
+          }
+        }
       })
   },
   methods: {

@@ -1,11 +1,20 @@
 <template>
-<div class="FreeCourseIntro">
+  <div class="FreeCourseIntro">
     <div class="navibar">
     <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
     <Divider type="vertical" />
     <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
     <div class="myPanel"></div>
+    <div id="blank"></div>
     <div class="CoverDiv">
             <img id="testPic" v-bind:src="path">
             </div>
@@ -26,33 +35,28 @@
         title="分享课程"
         v-model="modal"
         class-name="vertical-center-modal">
-        <div class="urlDiv"><span id="thisURL">本页地址：{{ message }}</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button id="copyButton" type="button"
-        v-clipboard:copy="message"
-        v-clipboard:success="onCopy"
-        v-clipboard:error="onError">复制</button>
+        <div class="urlDiv"><span id="thisURL">请将此链接分享给他人：{{ message }}</span>
         </div>
     </Modal>
     <div v-if="isBurn" class="burnDiv">
-        <Alert type="error" show-icon>
+      <Alert type="error" show-icon>
         <Icon type="ios-bulb-outline" slot="icon"></Icon>
         <template class="burnText" slot="desc">本文为阅后即焚类文章，在初次阅读后{{ burnTime }}小时无法再查看，请注意及时阅读哦！</template>
-        </Alert>
+      </Alert>
     </div>
     <div class="alertButtonDiv">
-        <Alert show-icon>
+      <Alert show-icon>
         <Icon type="ios-alert" slot="icon"></Icon>
         <template class="alertText" slot="desc">如果你喜欢本课程，就把它分享给朋友吧！ </template>
-    </Alert>
+      </Alert>
     </div>
     <div class="introDiv">
-         <Card class="intro">
-            <p id="title" slot="title">课程简介</p>
-            <p class="introContent">{{content}}</p>
-        </Card>
+      <Card class="intro">
+        <p id="title" slot="title">课程简介</p>
+        <p class="introContent">{{content}}</p>
+      </Card>
     </div>
-</div>
+  </div>
 </template>
 <script>
 export default {
@@ -80,11 +84,14 @@ export default {
     this.Judgestatus()
     this.GetUserPhone()
     this.GetSpecifiedCourse()
+    this.$Message.config({
+      top: 120
+    })
   },
   methods: {
     Judgestatus: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
           this.judge = response.data.is_login
           if (!this.judge) {
@@ -95,7 +102,7 @@ export default {
     GetSpecifiedCourse: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_specified_course',
+          'http://192.168.55.33:8000' + '/app/get_specified_course',
           JSON.stringify(this.courseid)
         )
         .then(response => {
@@ -105,7 +112,7 @@ export default {
             course = response.data.list
             this.courseTitle = course[0].fields.title
             this.path =
-              this.GLOBAL.serverSrc + '/media/' + course[0].fields.Cover_picture
+              'http://192.168.55.33:8000' + '/media/' + course[0].fields.Cover_picture
             this.content = course[0].fields.brief_introduction
             this.isBurn = course[0].fields.Is_destroy
             this.burnTime = course[0].fields.distory_time
@@ -116,7 +123,7 @@ export default {
     },
     GetUserPhone: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
           this.userphone = response.data.list[0].pk
         })
@@ -128,7 +135,7 @@ export default {
     IsBurn: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_burn_status',
+          'http://192.168.55.33:8000' + '/app/get_burn_status',
           JSON.stringify({
             userphone: this.userphone,
             courseid: this.courseid
@@ -179,6 +186,9 @@ export default {
   font-size: 17px;
   position: static;
   font-family: 华文中宋;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .myPanel {
@@ -262,10 +272,6 @@ export default {
   border-radius: 8px;
   margin: 0 auto;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 287924b7f3dae5b90699910f653fe143961d5548
 .alertButtonDiv,
 .burnDiv {
   margin: 0 auto;
@@ -301,5 +307,20 @@ export default {
 
 #courseTitleDiv {
   margin: 0 auto;
+}
+@media screen and (max-width: 500px) {
+  .navi {
+    display: block;
+  }
+  #blank {
+    margin-top: 125px;
+  }
+  .navibar {
+    z-index: 9999;
+    position: fixed;
+    width: 100%;
+    opacity: 0;
+    padding: 25px;
+  }
 }
 </style>

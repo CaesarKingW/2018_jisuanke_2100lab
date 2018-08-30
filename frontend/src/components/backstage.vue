@@ -1,5 +1,6 @@
 /* eslint-disable */
 <template>
+
   <body>
     <navibar :username="username" />
     <leftnav/>

@@ -1,9 +1,9 @@
 <template>
-<div id="useModify">
-    <img  id="avatar" v-bind:src="path" class="imgDiv" /><img>
-    <input type='file' name='head' id='head' class="none" accept="image/*" v-on:change="Upload_head"/>
+  <div id="useModify">
+    <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
+    <input type='file' name='head' id='head' class="none" accept="image/*" v-on:change="Upload_head" />
     <div><input id="uploadButton" type='button' value='上传头像' v-on:click="click_file"></div>
-</div>
+  </div>
 </template>
 <script>
 export default {
@@ -22,7 +22,7 @@ export default {
     Upload_head: function(e) {
       // 上传当前手机号到后端
       this.$http.post(
-        this.GLOBAL.serverSrc + '/app/get_user_phone',
+        'http://192.168.55.33:8000' + '/app/get_user_phone',
         JSON.stringify({ user_phone: this.user_phone })
       )
 
@@ -32,7 +32,7 @@ export default {
       formdate.append('file', fileinfo)
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
+        .post('http://192.168.55.33:8000' + '/app/update_avator', formdate, config)
         .then(response => {})
 
       //  前端读取图片进行预览

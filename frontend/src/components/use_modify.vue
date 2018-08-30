@@ -1,18 +1,18 @@
 <template>
-<div id="useModify">
+  <div id="useModify">
     <div>
-    <img v-bind:src="path" class="imgDiv" /><img>
-    <input type='file' name='head' id='head' class="none" accept="image/*" v-on:change="Upload_head"/>
-    <input type='button' value='上传头像' v-on:click="click_file">
+      <img v-bind:src="path" class="imgDiv" /><img>
+      <input type='file' name='head' id='head' class="none" accept="image/*" v-on:change="Upload_head" />
+      <input type='button' value='上传头像' v-on:click="click_file">
     </div>
     <div>
       昵称：{{oldname}}
-        <form @submit.prevent="modify_nickname">
-            <input type="text" v-model="nickname">
-            <input type="submit" value="确认修改"/>
-        </form>
+      <form @submit.prevent="modify_nickname">
+        <input type="text" v-model="nickname">
+        <input type="submit" value="确认修改" />
+      </form>
     </div>
-</div>
+  </div>
 </template>
 <script>
 export default {
@@ -35,7 +35,7 @@ export default {
     get_old_avator: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_old_avator',
+          'http://192.168.55.33:8000' + '/app/get_old_avator',
           JSON.stringify(this.user_phone)
         )
         .then(response => {
@@ -44,7 +44,7 @@ export default {
           if (this.oldpath === '') {
             this.path = this.default_avator
           } else {
-            this.path = this.GLOBAL.serverSrc + '/media/' + this.oldpath
+            this.path = 'http://192.168.55.33:8000' + '/media/' + this.oldpath
             this.oldpath = ''
           }
         })
@@ -61,7 +61,7 @@ export default {
       formdate.append('user_phone', this.user_phone)
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
+        .post('http://192.168.55.33:8000' + '/app/update_avator', formdate, config)
         .then(response => {})
 
       //  前端读取图片进行预览
@@ -83,7 +83,7 @@ export default {
       }
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/update_nickname',
+          'http://192.168.55.33:8000' + '/app/update_nickname',
           JSON.stringify({
             phone_number: this.user_phone,
             nickname: this.nickname

@@ -1,42 +1,42 @@
 <template>
-<div id="BoughtCourse">
+  <div id="BoughtCourse">
     <div>
-        <table class="courseTable">
-            <tr>
-                <th>序号</th>
-                <th>订单编号</th>
-                <th>课程编号</th>
-                <th>课程标题</th>
-                <th>支付金额</th>
-                <th>订单状态</th>
-                <th>发起订单时间</th>
-            </tr>
-            <tr v-for="(item, index) of orders" :key="item">
-                <td>
-                    {{index + 1}}
-                </td>
-                <td>
-                    {{item.Order_number}}
-                </td>
-                <td>
-                    {{item.course_id}}
-                </td>
-                <td>
-                    {{item.course_title}}
-                </td>
-                <td>
-                    {{item.amount_of_money}}
-                </td>
-                <td>
-                    {{item.status}}
-                </td>
-                <td>
-                    {{item.create_at}}
-                </td>
-            </tr>
-        </table>
+      <table class="courseTable">
+        <tr>
+          <th>序号</th>
+          <th>订单编号</th>
+          <th>课程编号</th>
+          <th>课程标题</th>
+          <th>支付金额</th>
+          <th>订单状态</th>
+          <th>发起订单时间</th>
+        </tr>
+        <tr v-for="(item, index) of orders" :key="item">
+          <td>
+            {{index + 1}}
+          </td>
+          <td>
+            {{item.Order_number}}
+          </td>
+          <td>
+            {{item.course_id}}
+          </td>
+          <td>
+            {{item.course_title}}
+          </td>
+          <td>
+            {{item.amount_of_money}}
+          </td>
+          <td>
+            {{item.status}}
+          </td>
+          <td>
+            {{item.create_at}}
+          </td>
+        </tr>
+      </table>
     </div>
-</div>
+  </div>
 </template>
 <script>
 export default {
@@ -48,7 +48,7 @@ export default {
   },
   mounted: function() {
     this.$http
-      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .post('http://192.168.55.33:8000' + '/app/get_status')
       .then(response => {
         this.userPhone = response.data.list[0].pk
         this.show_orders()
@@ -58,7 +58,7 @@ export default {
     show_orders: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/show_orders',
+          'http://192.168.55.33:8000' + '/app/show_orders',
           JSON.stringify(this.userPhone)
         )
         .then(
@@ -74,7 +74,7 @@ export default {
 <style scoped>
 .courseTable {
   margin-top: 20px;
-  margin-left: 140px;
+  margin-left: 330px;
   font-size: 15px;
 }
 
@@ -94,5 +94,28 @@ th {
   font-size: 15px;
   color: #022336;
 }
+@media screen and (max-width: 500px) {
+  .courseTable {
+    margin-top: 20px;
+    font-size: 10px;
+    margin-left: -1px;
+  }
 
+  table,
+  td,
+  th {
+    border-collapse: collapse;
+    border: 1px solid black;
+  }
+
+  th,
+  td {
+    padding: 3px;
+  }
+
+  th {
+    font-size: 10px;
+    color: #022336;
+  }
+}
 </style>

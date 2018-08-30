@@ -1,18 +1,20 @@
 <template>
-<div id="ModifyInfo">
+  <div id="ModifyInfo">
     <img id="avatar" v-bind:src="path" class="imgDiv" /><img>
     <div>
-      <input type='file' name='head' id='head' class="none" accept="image/*" v-on:change="Upload_head"/>
+      <input type='file' name='head' id='head' class="none" accept="image/*" v-on:change="Upload_head" />
       <input id="avatarUploadButton" type='button' value='修改头像' v-on:click="click_file">
     </div>
     <div>
       <div id="nickname">当前昵称：<br>{{oldname}}</div>
-        <form @submit.prevent="modify_nickname">
-            <div><Input id="nameUploadText" type="text" v-model="nickname" /></div>
-            <div><input id="nameUploadButton" type="submit" value="确认修改"/></div>
-        </form>
+      <form @submit.prevent="modify_nickname">
+        <div>
+          <Input id="nameUploadText" type="text" v-model="nickname" />
+        </div>
+        <div><input id="nameUploadButton" type="submit" value="确认修改" /></div>
+      </form>
     </div>
-</div>
+  </div>
 </template>
 <script>
 export default {
@@ -33,7 +35,7 @@ export default {
   },
   methods: {
     get_old_avator: function() {
-      this.$http.post(this.GLOBAL.serverSrc + '/app/get_status').then(
+      this.$http.post('http://192.168.55.33:8000' + '/app/get_status').then(
         response => {
           var obj = []
           obj = response.data.list
@@ -43,7 +45,7 @@ export default {
           if (this.oldpath === '') {
             this.path = this.default_avator
           } else {
-            this.path = this.GLOBAL.serverSrc + '/media/' + this.oldpath
+            this.path = 'http://192.168.55.33:8000' + '/media/' + this.oldpath
             this.oldpath = ''
           }
         },
@@ -60,9 +62,13 @@ export default {
       // 获取上传的第一份文件event.targer.files[0];//t.target.file["0"]
       formdate.append('file', fileinfo)
       formdate.append('user_phone', this.user_phone)
-      let config = { headers: { 'Content-Type': 'multipart/form-data' } }
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/update_avator', formdate, config)
+        .post('http://192.168.55.33:8000' + '/app/update_avator', formdate, config)
         .then(response => {})
 
       //  前端读取图片进行预览
@@ -86,7 +92,7 @@ export default {
       }
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/update_nickname',
+          'http://192.168.55.33:8000' + '/app/update_nickname',
           JSON.stringify({
             phone_number: this.user_phone,
             nickname: this.nickname
@@ -107,16 +113,12 @@ export default {
 <style scoped>
 #nameUploadText {
   width: 120px;
-  margin-left: 100px;
-}
-
-#ModifyInfo {
-  float: left;
+  margin-left: 550px;
 }
 
 #nickname {
   margin-top: 5px;
-  margin-left: 100px;
+  margin-left: 550px;
   font-family: 华文中宋;
   font-size: 20px;
 }
@@ -125,7 +127,7 @@ export default {
   width: 120px;
   height: 120px;
   margin: 30px;
-  margin-left: 100px;
+  margin-left: 550px;
   border: #666 solid 1px;
   border-radius: 8px;
 }
@@ -134,7 +136,7 @@ export default {
   width: 120px;
   height: 40px;
   font-size: 20px;
-  margin-left: 100px;
+  margin-left: 550px;
   outline: none;
   border-radius: 4px;
   border: #666666 solid 1px;
@@ -152,7 +154,7 @@ export default {
   width: 120px;
   height: 40px;
   font-size: 20px;
-  margin-left: 100px;
+  margin-left: 550px;
   margin-top: 30px;
   outline: none;
   border-radius: 4px;
@@ -169,5 +171,70 @@ export default {
 
 .none {
   display: none;
+}
+
+@media screen and (max-width: 500px) {
+  #nameUploadText {
+    width: 120px;
+    margin-left: 150px;
+    z-index: -1;
+  }
+
+  #nickname {
+    margin-top: 5px;
+    margin-left: 150px;
+    font-family: 华文中宋;
+    font-size: 20px;
+  }
+
+  #avatar {
+    width: 120px;
+    height: 120px;
+    margin: 30px;
+    margin-left: 150px;
+    border: #666 solid 1px;
+    border-radius: 8px;
+  }
+
+  #avatarUploadButton {
+    width: 120px;
+    height: 40px;
+    font-size: 20px;
+    margin-left: 150px;
+    outline: none;
+    border-radius: 4px;
+    border: #666666 solid 1px;
+    background-color: #fff;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  #avatarUploadButton:hover {
+    cursor: pointer;
+    background: rgb(245, 242, 242);
+  }
+
+  #nameUploadButton {
+    width: 120px;
+    height: 40px;
+    font-size: 20px;
+    margin-left: 150px;
+    margin-top: 30px;
+    outline: none;
+    border-radius: 4px;
+    border: #666666 solid 1px;
+    background-color: #fff;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  #nameUploadButton:hover {
+    cursor: pointer;
+    background: rgb(245, 242, 242);
+  }
+
+  .none {
+    display: none;
+  }
 }
 </style>

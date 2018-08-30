@@ -1,8 +1,6 @@
 <template>
  <div id="home">
-   <meta name="viewport"
-   content="width=device-width, initial-scale=1.0,
-   maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <div class="NaviBar">
     <router-link to="/home"><a class="navi">
       <Icon type="md-home" /> 网站首页
@@ -19,39 +17,46 @@
     <router-link to="/PersonalCenter" v-if="judge">
     <a class="navi"><Icon type="ios-contact" /> 个人中心</a>
     </router-link>
+    <Divider type="vertical" />
     <a class="navi" @click="logout" v-if="judge">
       <Icon type="md-log-out" /> 退出登录</a>
     <router-link to="/UserLogin" v-else>
     <a class="navi"><Icon type="md-log-in" /> 用户登录</a>
     </router-link>
      </div>
+     <br />
+    <br />
+    <br />
+    <br />
+    <br />
      <div align="center" id="carousel" class="carousel">
      <Carousel autoplay v-model="value" loop>
         <CarouselItem>
-            <div class="DemoCarousel"><Card>
-            <div id="RollPicTag"><img class="RollPic" src="../assets/home_1.png">
-            </div>
-        </Card>
-        </div>
+          <div class="DemoCarousel">
+            <Card>
+              <div id="RollPicTag"><img class="RollPic" src="../assets/home_1.png">
+              </div>
+            </Card>
+          </div>
         </CarouselItem>
         <CarouselItem>
-            <div class="DemoCarousel"><img class="RollPic" src="../assets/home_2.png"></div>
+          <div class="DemoCarousel"><img class="RollPic" src="../assets/home_2.png"></div>
         </CarouselItem>
     </Carousel>
     </div>
-     <Card id="FreeCol">
+    <div id="FreeCol">
     <div class="AllCol">
     <div class="MyContent">
-        <div><Icon type="md-bookmarks" />&nbsp;免费内容</div>
+        <Icon type="md-bookmarks" />&nbsp;免费内容
     </div>
     <div class="SeeMore">
-        <Button id="button" ghost><router-link to="/AllFreeCourse">
-        <span class="ButtonText">查看更多<Icon type="md-log-in" /></span>
-        </router-link></Button>
+        <router-link to="/AllFreeCourse">
+        <div class="ButtonText">查看更多<Icon type="md-log-in" /></div>
+        </router-link>
     </div>
     </div>
-     </Card>
-    <div class="container">
+    </div>
+    <!-- <div class="container">
     <div class="item" v-for="item of free_course" :key="item.id">
       <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
       <Card class="courseCard">
@@ -59,51 +64,82 @@
             <p><img class="CoverPic" v-bind:src= 'item.fields.Cover_picture'/></p>
       </Card>
       </router-link>
-        </div>
+        </div> -->
+        <!-- <div class="SeeMore">
+          <Button id="button" ghost>
+            <router-link to="/AllFreeCourse">
+              <span class="ButtonText">查看更多
+                <Icon type="md-log-in" />
+              </span>
+            </router-link>
+          </Button>
+        </div> -->
+      <!-- </div> -->
+    <div class="container">
+      <div class="item" v-for="item of free_course" :key="item.id">
+        <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
+          <Card class="courseCard">
+            <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
+            <p><img class="CoverPic" v-bind:src='item.fields.Cover_picture' /></p>
+          </Card>
+        </router-link>
+      </div>
     </div>
     <br>
-    <Card id="PayCol">
+    <div id="PayCol">
     <div class="AllCol">
     <div class="MyContent">
-        <div><Icon type="md-bookmarks" />&nbsp;付费内容</div>
+        <Icon type="md-bookmarks" />&nbsp;付费内容
     </div>
     <div class="SeeMore">
-        <Button id="button" ghost><router-link to="/AllPayCourse">
-        <span class="ButtonText">查看更多<Icon type="md-log-in" /></span>
-        </router-link></Button>
+        <router-link to="/AllPayCourse">
+        <div class="ButtonText">查看更多<Icon type="md-log-in" /></div>
+        </router-link>
     </div>
     </div>
-    </Card>
+    </div>
     <div class="container">
-    <div class="item" v-for="item of paying_course" :key="item.id">
-     <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
-      <Card class="courseCard">
-         <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
-            <p><img class="CoverPic" v-bind:src= 'item.fields.Cover_picture'/></p>
-      </Card>
-     </router-link>
-        </div>
+      <div class="item" v-for="item of paying_course" :key="item.id">
+        <router-link :to="{path:'PayCourseIntro', query:{id: item.pk}}">
+          <Card class="courseCard">
+            <p class="CoverTitle" slot="title">{{item.fields.title}}</p>
+            <p><img class="CoverPic" v-bind:src='item.fields.Cover_picture' /></p>
+          </Card>
+        </router-link>
+      </div>
     </div>
     <BackTop>
-        <div class="top">返回顶端</div>
+      <div class="top">返回顶端</div>
     </BackTop>
     <Card id="AboutUs">
-    <div class="wrapper">
-    <div class="left"><div>
-      <Icon size=100 type="ios-people-outline" /></div>
-      <div>团队成员</div><div>南开大学软件学院</div><div>佛组</div>
+      <div class="wrapper">
+        <div class="left">
+          <div>
+            <Icon size=100 type="ios-people-outline" />
+          </div>
+          <div>团队成员</div>
+          <div>南开大学软件学院</div>
+          <div>佛组</div>
+        </div>
+        <div class="middle">
+          <div>
+            <Icon size=100 type="ios-school-outline" />
+          </div>
+          <div>关于我们</div>
+          <div>2100实验室</div>
+          <div>专注为3~12岁儿童提供更好的科学启蒙教育</div>
+        </div>
+        <div class="right">
+          <div>
+            <Icon size=100 type="ios-eye-outline" />
+          </div>
+          <div>联系我们</div>
+          <div>南开大学泰达学院</div>
+          <div>客服电话：15009253698</div>
+        </div>
       </div>
-    <div class="middle"><div>
-      <Icon size=100 type="ios-school-outline" /></div><div>关于我们</div><div>2100实验室</div>
-      <div>专注为3~12岁儿童提供更好的科学启蒙教育</div>
-      </div>
-    <div class="right"><div>
-      <Icon size=100 type="ios-eye-outline" /></div><div>联系我们</div><div>南开大学泰达学院</div>
-      <div>客服电话：15009253698</div>
-      </div>
-    </div>
     </Card>
- </div>
+  </div>
 </template>
 <script>
 export default {
@@ -128,12 +164,12 @@ export default {
   },
   methods: {
     show_free_course: function() {
-      this.$http.get(this.GLOBAL.serverSrc + '/app/show_free_course').then(
+      this.$http.get('http://192.168.55.33:8000' + '/app/show_free_course').then(
         response => {
           this.imgs = response.data.list
           for (var i = 0; i < this.imgs.length; i = i + 1) {
             var a =
-              this.GLOBAL.serverSrc +
+              'http://192.168.55.33:8000' +
               '/media/' +
               this.imgs[i].fields.Cover_picture
             this.imgs[i].fields.Cover_picture = a
@@ -147,12 +183,12 @@ export default {
       )
     },
     show_paying_course: function() {
-      this.$http.get(this.GLOBAL.serverSrc + '/app/show_paying_course').then(
+      this.$http.get('http://192.168.55.33:8000' + '/app/show_paying_course').then(
         response => {
           this.paying_imgs = response.data.list
           for (var i = 0; i < this.paying_imgs.length; i = i + 1) {
             var a =
-              this.GLOBAL.serverSrc +
+              'http://192.168.55.33:8000' +
               '/media/' +
               this.paying_imgs[i].fields.Cover_picture
             this.paying_imgs[i].fields.Cover_picture = a
@@ -168,7 +204,7 @@ export default {
     },
     Judgestatus: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
           this.judge = response.data.is_login
         })
@@ -178,7 +214,7 @@ export default {
     },
     logout: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/del_status')
+        .post('http://192.168.55.33:8000' + '/app/del_status')
         .then(response => {
           this.judge = response.data.is_login
           if (response.data.username === null) {
@@ -186,7 +222,7 @@ export default {
           } else {
             this.yourname = response.data.username
           }
-          location.href = this.GLOBAL.serverSrc + '#/UserLogin'
+          location.href = 'http://192.168.55.33:8000' + '#/UserLogin'
           this.alert_log_out()
         })
     }
@@ -194,7 +230,7 @@ export default {
 }
 </script>
 <style scoped>
-.home {
+#home {
   margin: 0 auto;
 }
 
@@ -214,7 +250,6 @@ export default {
 
 .ButtonText {
   color: #fff;
-  float: right;
 }
 
 .NaviBar {
@@ -239,7 +274,7 @@ export default {
   display: -webkit-flex;
   display: -moz-flex;
   margin: 0 auto;
-  justify-content: space-around;
+  /* justify-content: space-around; */
 }
 
 .wrapper {
@@ -283,7 +318,7 @@ export default {
 #FreeCol,
 #PayCol {
   background-color: #022336;
-  height: 60px;
+  height: 30px;
   width: 85%;
   text-align: center;
   margin: 0 auto;
@@ -294,14 +329,23 @@ export default {
   display: -webkit-flex;
   display: -moz-flex;
   flex-direction: row;
-  height: 40px;
+  height: 35px;
   margin: 0 auto;
   color: #fff;
-  text-align: center;
+  /* text-align: center; */
+}
+
+.MyContent {
+  font-size: 15px;
+  margin-left: 3.5%;
+  width: 90px;
 }
 
 .SeeMore {
-  position: static;
+  font-size: 15px;
+  margin-left: 77%;
+  color: #000;
+  border: none;
 }
 
 .id {
@@ -334,17 +378,72 @@ export default {
   margin: 0 auto;
 }
 
-.MyContent {
-  font-size: 18px;
-  margin-left: 27px;
-  text-align: center;
-}
-
 .top {
   padding: 12px;
   background: rgba(13, 102, 146, 0.9);
   color: #fff;
   text-align: center;
   border-radius: 2px;
+}
+@media screen and (max-width: 500px) {
+  #FreeCol,
+  #PayCol {
+    background-color: #022336;
+    height: 30px;
+    width: 85%;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .AllCol {
+    color: #fff;
+  }
+
+  .MyContent {
+    font-size: 14px;
+    margin-left: 5%;
+    margin-top: 1%;
+    /* display: inline-block; */
+    white-space: nowrap;
+  }
+  .ButtonText {
+    white-space: nowrap;
+  }
+
+  .SeeMore {
+    font-size: 14px;
+    margin-left: 38%;
+    margin-top: 1%;
+    color: #000;
+    border: none;
+    white-space: nowrap;
+  }
+  .container {
+    display: block;
+  }
+  .CoverPic {
+    width: 100%;
+    height: 180px;
+  }
+  .wrapper {
+    display: block;
+  }
+  #AboutUs {
+    background-color: #022336;
+    height: 600px;
+    /* width: 85%; */
+    margin: 0 auto;
+    text-align: center;
+  }
+  .navi {
+    display: block;
+  }
+  .carousel {
+    margin-top: 165px;
+  }
+  .RollPic {
+    width: 100%;
+    height: 225px;
+  }
 }
 </style>

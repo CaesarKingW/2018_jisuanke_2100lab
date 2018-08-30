@@ -3,12 +3,12 @@
     <p class="text">2100lab后台管理员登陆</p>
     <Form ref="formInline" :model="formInline" :rules="ruleInline" label-position="centre" :label-width="100">
       <FormItem prop="user" label="用户名：">
-        <Input type="text" v-model="formInline.user" placeholder="Username" class="input"/>
-          <Icon type="ios-person-outline" slot="prepend"></Icon>
+        <Input type="text" v-model="formInline.user" placeholder="Username" class="input" />
+        <Icon type="ios-person-outline" slot="prepend"></Icon>
       </FormItem>
       <FormItem prop="password" label="密码：">
-        <Input type="password" v-model="formInline.password" placeholder="Password" class="input"/>
-          <Icon type="ios-lock-outline" slot="prepend"></Icon>
+        <Input type="password" v-model="formInline.password" placeholder="Password" class="input" />
+        <Icon type="ios-lock-outline" slot="prepend"></Icon>
       </FormItem>
       <FormItem>
         <Button type="primary" @click="handleSubmit()">登录</Button>
@@ -44,7 +44,7 @@ export default {
     handleSubmit() {
       var managerlogin = JSON.stringify(this.formInline)
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/manager_login', managerlogin)
+        .post('http://192.168.55.33:8000' + '/app/manager_login', managerlogin)
         .then(response => {
           if (response.data.data === 'true') {
             this.$router.push({

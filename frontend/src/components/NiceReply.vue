@@ -1,21 +1,22 @@
 <template>
-<div id="reply">
+  <div id="reply">
     <button id="replyButton" v-on:click="dispaly_inputfield">回复</button>
-       <form v-show="IsShow" @submit.prevent="commit_reply()">
+    <form v-show="IsShow" @submit.prevent="commit_reply()">
       <Input id="replyContent" placeholder="说说你对这条留言的看法吧" type="textarea" v-model="replyContent" />
-      <div id="submitArea"><input id="replySubmit" type="submit" value="确定"/></div>
+      <div id="submitArea"><input id="replySubmit" type="submit" value="确定" /></div>
     </form>
     <div v-for="r of replies" :key="r.key">
       <Card id="replyCard">
         <div id="replyUser">
-        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<Icon id="replyIcon" type="md-chatboxes" /> 用户:{{r.user_name}}
+          &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+          <Icon id="replyIcon" type="md-chatboxes" /> 用户:{{r.user_name}}
         </div>
         <div id="replyContent">
-        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;{{r.content}}
+          &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;{{r.content}}
         </div>
       </Card>
     </div>
-</div>
+  </div>
 </template>
 <script>
 export default {
@@ -39,7 +40,7 @@ export default {
     show_reply: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/show_reply',
+          'http://192.168.55.33:8000' + '/app/show_reply',
           JSON.stringify(this.title)
         )
         .then(
@@ -58,7 +59,7 @@ export default {
         user_phone: this.user_phone,
         message_id: this.title
       })
-      this.$http.post(this.GLOBAL.serverSrc + '/app/add_reply', formDate).then(
+      this.$http.post('http://192.168.55.33:8000' + '/app/add_reply', formDate).then(
         response => {
           this.show_reply()
           this.IsShow = false
@@ -135,5 +136,39 @@ replyUser {
 #replyUser {
   font-size: 16px;
   font-family: 微软雅黑;
+}
+
+@media screen and (max-width: 500px) {
+  #replyButton {
+    width: 17%;
+    text-align: center;
+    height: 30px;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    border-radius: 4px;
+    border: solid 1px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+  #replyButton:hover {
+    background: rgb(245, 242, 242);
+    cursor: pointer;
+  }
+  #replySubmit {
+    width: 17%;
+    height: 28px;
+    text-align: center;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    border-radius: 4px;
+    border: solid 1px;
+    background-color: #fff;
+    cursor: pointer;
+  }
 }
 </style>

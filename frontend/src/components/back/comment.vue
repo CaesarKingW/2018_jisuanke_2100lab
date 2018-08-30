@@ -1,21 +1,25 @@
 <template>
-<div>
+  <div>
     <div>
-        <Input v-model="phone_number" placeholder="请输入待搜索留言用户的手机号" class="width" />
-        <Button @click="search()">搜索</Button>
+      <Input v-model="phone_number" placeholder="请输入待搜索留言用户的手机号" style="width: 300px" />
+      <Button @click="search()">搜索</Button>
     </div>
     <div v-show='is_show'>
-    <div v-if = 'if_user===false'>
+      <div v-if='if_user===false'>
         对不起，您搜索的用户不存在
-    </div>
-    <div v-else-if='if_comment===false'>
+      </div>
+      <div v-else-if='if_comment===false'>
         对不起，不存在您所搜索的用户的留言
+      </div>
+      <div v-else>
+        <ul>
+          <li v-for="message in messages" :key="message.id">用户{{phone_number}}在{{message.created_at}}时对第{{message.course_id}}号课程《{{message.course_title}}》发表评论“{{message.content}}”。
+            <button @click="delete_comment(message.id)">删除</button>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div v-else>
-        <ul><li v-for="message in messages" :key="message.id">用户{{phone_number}}在{{message.created_at}}时对第{{message.course_id}}号课程《{{message.course_title}}》发表评论“{{message.content}}”。<button @click="delete_comment(message.id)">删除</button></li></ul>
-    </div>
-    </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -31,6 +35,23 @@ export default {
     }
   },
   methods: {
+    created: function() {
+      this.$http
+        .post('http://192.168.55.33:8000/app/get_mstatus')
+        .then(response => {
+          var res = response.data
+          this.mis_login = res.mis_login
+          if (!this.mis_login) {
+            alert('还没有登录，无权访问该页面！')
+            location.href = '/#/backstageLogin'
+          } else {
+            if (res.manager.Manage_comment !== true) {
+              alert('你没有权限访问该网页！')
+              location.href = '/#/backstage'
+            }
+          }
+        })
+    },
     search() {
       var phoneNumber = JSON.stringify(this.phone_number)
       this.$http
