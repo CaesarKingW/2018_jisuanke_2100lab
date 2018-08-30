@@ -60,7 +60,7 @@ import datetime
     <div v-if="rest">
       <h1 class="formitem">继续完善第{{course_id}}号课程的信息</h1>
       <p class="formitem">
-        <Icon type="md-document" />详解：<Input type="textarea" v-model="wholeIntroduction"></p>
+        <Icon type="md-document" />详解：<Input type="textarea" v-model="wholeIntroduction"/></p>
       <p class="formitem">
         <Icon type="md-easel" />课程封面：<input type="file" name="course_cover"></p>
       <p class="formitem">
