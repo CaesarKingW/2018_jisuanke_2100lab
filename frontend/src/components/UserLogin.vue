@@ -197,20 +197,6 @@ export default {
   width: 160%;
 }
 
-#lab {
-  margin-left: 25%;
-  font-size: 18px;
-  margin-top: 18.5%;
-  margin-bottom: 18px;
-  height: 41px;
-  position: fixed;
-  border-radius: 4px;
-}
-
-#buttonText {
-  color: #000;
-}
-
 #UserLogin {
   margin: 0 auto;
   background-image: url('../assets/BALL.jpg');
@@ -224,8 +210,8 @@ export default {
 }
 
 .logColumn {
-  width: 45%;
-  margin-left: 52%;
+  width: 35%;
+  margin-left: 57%;
   margin-top: 6%;
   transition: opacity 1s;
   -webkit-transition: opacity 1s;
@@ -294,5 +280,40 @@ form {
   text-decoration: underline;
   cursor: pointer;
   color: #0000d6;
+}
+
+@media screen and (max-width: 500px) {
+  #UserLogin {
+    margin: 0 auto;
+    background-image: url('../assets/aboutUS底板.png');
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
+    background-color: red;
+    width: 100%;
+    height: 812px;
+    background-size: cover;
+  }
+  #inputPhone {
+    width: 60%;
+  }
+  .logColumn {
+    width: 95%;
+    margin-left: 2%;
+    margin-top: 30%;
+    transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    background-size: 100% 100%;
+  }
+
+  .logColumn h1 {
+    background: #075182;
+    padding: 20px 0;
+    font-size: 160%;
+    font-weight: 15px;
+    text-align: center;
+    color: #fff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
 }
 </style>
