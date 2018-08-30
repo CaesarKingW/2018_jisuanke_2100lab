@@ -127,7 +127,7 @@ export default {
     },
     Judgestatus: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
           this.judge = response.data.is_login
           if (this.judge !== true) {
@@ -138,7 +138,7 @@ export default {
     get_specified_course: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_specified_course',
+          'http://192.168.55.33:8000' + '/app/get_specified_course',
           JSON.stringify(this.courseid)
         )
         .then(response => {
@@ -148,7 +148,7 @@ export default {
             course = response.data.list
             this.courseTitle = course[0].fields.title
             this.path =
-              this.GLOBAL.serverSrc + '/media/' + course[0].fields.Cover_picture
+              'http://192.168.55.33:8000' + '/media/' + course[0].fields.Cover_picture
             this.content = course[0].fields.brief_introduction
             this.price = course[0].fields.price
             this.award = Math.floor(course[0].fields.share_rate * this.price)
@@ -161,7 +161,7 @@ export default {
     },
     GetUserPhone: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
           this.userphone = response.data.list[0].pk
           // 判断支付状态
@@ -183,7 +183,7 @@ export default {
       request.userphone = this.userphone
       request = JSON.stringify(request)
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/payment', request)
+        .post('http://192.168.55.33:8000' + '/app/payment', request)
         .then(response => {
           window.location.href = response.data
         })
@@ -201,7 +201,7 @@ export default {
     JudgePayment: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_order_payment',
+          'http://192.168.55.33:8000' + '/app/get_order_payment',
           JSON.stringify({
             phone_number: this.userphone,
             course_id: this.courseid
@@ -214,7 +214,7 @@ export default {
     IsBurn: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_burn_status',
+          'http://192.168.55.33:8000' + '/app/get_burn_status',
           JSON.stringify({
             userphone: this.userphone,
             courseid: this.courseid

@@ -86,7 +86,7 @@ def search_comment(request):
     response['if_comment'] = True
     try:
         user = User.objects.get(phone_number=phone_number)
-        messages = Message.objects.filter(user_phone=user)
+        messages = Message.objects.filter(user_phone=user, exists=True)
         if messages.count() == 0:
             response['if_comment'] = False
             return JsonResponse(response)
@@ -115,7 +115,7 @@ def delete_comment(request):
         operate_type="删除留言",
         object_type="留言（留言id:" + str(message_id) + ")")
     operating_history.save()
-    m.delete()
+    m.exists = False
     n = User.objects.get(phone_number=phone_number)
     messages = Message.objects.filter(user_phone=n)
     response['if_comment'] = True
@@ -260,6 +260,7 @@ def supplement_course_information(request):
         course.distory_time = float(request.POST.get('distroy_time'))
     if float(request.POST.get('price')) > 0:
         course.share_rate = float(request.POST.get('share_rate')) / 100
+    course.exists = True
     course.save()
     operating_history = Operating_history(
         manager_username=request.user,

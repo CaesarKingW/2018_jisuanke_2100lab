@@ -174,7 +174,7 @@ export default {
           }
           if (res['msg'] === true) {
             this.course_id = res.course.id
-            alert('新建课程成功！去上传课程音频！')
+            alert('去上传课程音频！')
             this.upload_audi = true
             this.start_add = false
           }
@@ -211,9 +211,14 @@ export default {
       if (
         str.indexOf('.jpg') < 0 &&
         str.indexOf('.png') < 0 &&
-        str.indexOf('.gif') < 0
+        str.indexOf('.gif') < 0 &&
+        str.indexOf('.JPG') < 0 &&
+        str.indexOf('.PNG') < 0 &&
+        str.indexOf('.GIF') < 0
       ) {
-        alert('文件类型不正确！请上传.jpg、.png、.gif类型的文件！')
+        alert(
+          '文件类型不正确！请上传.jpg、.png、.gif、.JPG、.PNG、.GIF类型的文件！'
+        )
       } else {
         var fileInfo = document.querySelector('input[name ="pic_upload"]')
           .files[0]
@@ -396,6 +401,10 @@ export default {
         .then(response => {
           this.rest = false
           this.finish = true
+          var that = this
+          setTimeout(function() {
+            that.$router.push({ name: 'backstage' })
+          }, 3000)
         })
     },
     Change(b) {

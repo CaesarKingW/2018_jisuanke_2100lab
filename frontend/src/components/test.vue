@@ -22,11 +22,11 @@ export default {
   },
   methods: {
     show_picture: function() {
-      this.$http.get(this.GLOBAL.serverSrc + '/app/show_picture').then(
+      this.$http.get('http://192.168.55.33:8000' + '/app/show_picture').then(
         response => {
           this.img = response.data.img
           this.path =
-            this.GLOBAL.serverSrc +
+            'http://192.168.55.33:8000' +
             '/media/' +
             this.img[0].fields.course_picture
         },
@@ -39,8 +39,9 @@ export default {
       formdate.append('file', fileinfo)
       let config = { headers: { 'Content-Type': 'multipart/form-data' } }
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/add_picture', formdate, config)
-        .then(response => {})
+        .post('http://192.168.55.33:8000' + '/app/add_picture', formdate, config)
+        .then(response => {
+        })
     }
   }
 }

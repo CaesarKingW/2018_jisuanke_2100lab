@@ -35,7 +35,7 @@ export default {
       top: 120
     })
     this.$http
-      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .post('http://192.168.55.33:8000' + '/app/get_status')
       .then(response => {
         this.is_login = response.data.is_login
         if (this.is_login) {
@@ -108,7 +108,7 @@ export default {
     getcode: function() {
       var phonenumber = JSON.stringify(this.phone_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_code_post', phonenumber)
+        .post('http://192.168.55.33:8000' + '/app/get_code_post', phonenumber)
         .then(
           response => {
             var Isexists = response.data.Is_exists
@@ -150,13 +150,13 @@ export default {
     Register_new_user: function() {
       var userphone = JSON.stringify(this.phone_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/register_new_user', userphone)
+        .post('http://192.168.55.33:8000' + '/app/register_new_user', userphone)
         .then(response => {}, response => {})
     },
     verify_the_login: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_user_code',
+          'http://192.168.55.33:8000' + '/app/get_user_code',
           JSON.stringify({
             phone_number: this.phone_number,
             code: this.usercode

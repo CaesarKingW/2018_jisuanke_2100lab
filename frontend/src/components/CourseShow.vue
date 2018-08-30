@@ -87,22 +87,22 @@ export default {
     get_info: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_course_info',
+          'http://192.168.55.33:8000' + '/app/get_course_info',
           JSON.stringify(this.courseid)
         )
         .then(response => {
           var res = response.data
           this.title = res.course[0].title
-          this.aupath = this.GLOBAL.serverSrc + res.course[0].audio
+          this.aupath = 'http://192.168.55.33:8000' + res.course[0].audio
           this.content = res.course[0].context
           this.pictures = res.pictures
-          this.picpath = this.GLOBAL.serverSrc + this.pictures[0].course_picture
+          this.picpath = 'http://192.168.55.33:8000' + this.pictures[0].course_picture
         })
     },
     Play: function() {
       var vm = this
       vm.picpath =
-        this.GLOBAL.serverSrc + vm.pictures[vm.last_index].course_picture
+        'http://192.168.55.33:8000' + vm.pictures[vm.last_index].course_picture
       var interval = (vm.pictures[vm.last_index].end_time - vm.last_time) * 1000
       vm.st = setTimeout(function() {
         vm.last_index = vm.last_index + 1
@@ -148,7 +148,7 @@ export default {
     // 判断登录状态，防止用户强制访问
     Judgestatus: function() {
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_status')
+        .post('http://192.168.55.33:8000' + '/app/get_status')
         .then(response => {
           var judge = response.data.is_login
           // 用户未登录状态下强制访问，跳出404 not found页面
@@ -176,7 +176,7 @@ export default {
       var now = Date.parse(new Date())
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/add_new_take',
+          'http://192.168.55.33:8000' + '/app/add_new_take',
           JSON.stringify({
             userphone: this.userphone,
             courseid: this.courseid,
@@ -198,7 +198,7 @@ export default {
     JudgePrice: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_specified_course',
+          'http://192.168.55.33:8000' + '/app/get_specified_course',
           JSON.stringify(this.courseid)
         )
         .then(response => {
@@ -236,7 +236,7 @@ export default {
     JudgePayment: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_order_payment',
+          'http://192.168.55.33:8000' + '/app/get_order_payment',
           JSON.stringify({
             phone_number: this.userphone,
             course_id: this.courseid
@@ -268,7 +268,7 @@ export default {
     },
     SetBurn: function() {
       this.$http.post(
-        this.GLOBAL.serverSrc + '/app/set_burn',
+        'http://192.168.55.33:8000' + '/app/set_burn',
         JSON.stringify({
           userphone: this.userphone,
           courseid: this.courseid
@@ -281,7 +281,7 @@ export default {
     clearInterval(this.closeInterval)
     this.$http
       .post(
-        this.GLOBAL.serverSrc + '/app/add_or_update_takes',
+        'http://192.168.55.33:8000' + '/app/add_or_update_takes',
         JSON.stringify({
           userphone: this.userphone,
           courseid: this.courseid,
