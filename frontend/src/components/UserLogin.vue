@@ -1,29 +1,19 @@
 <template>
-  <div id="UserLogin">
-    <Button id="lab" ghost>
-      <router-link to="/home">
-        <div id="buttonText">首页
-          <Icon type="md-log-in" />
-        </div>
-      </router-link>
-    </Button>
+<div id="UserLogin">
     <br>
     <br>
     <div class="logColumn">
-      <h1>2100实验室</h1>
-      <form method="POST" @submit.prevent="Is_normal_nubmer">
-        <Input id="inputPhone" type="text" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" v-model="phone_number" />
-        <input type="submit" id="getCodeButton" value="获取验证码" />
-      </form>
-      <form id="logDown" method="POST" @submit.prevent="comparecode">
-        <div class="caseSensitive">
-          <Icon type="ios-alert" />&nbsp;&nbsp;请注意区分验证码大小写！</div>
-        <Input type="text" placeholder="请输入验证码" size="large" icon="ios-key-outline" v-model="usercode" />
-        <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement" /> 我认真阅读并接受
-          <span id="agreement" @click="instance('info')">本站协议</span>
-        </div>
-        <input type="submit" id="login" value="登录" />
-      </form>
+    <router-link to="/home"><h1>2100实验室</h1></router-link>
+    <form method="POST" @submit.prevent="Is_normal_nubmer">
+    <Input id="inputPhone" type="text" placeholder="请输入手机号码" size="large" icon="ios-phone-portrait" v-model="phone_number"/>
+    <input type="submit" id="getCodeButton" value="获取验证码" />
+    </form>
+    <form id="logDown" method="POST" @submit.prevent="comparecode">
+    <div class="caseSensitive"><Icon type="ios-alert" />&nbsp;&nbsp;请注意区分验证码大小写！</div>
+    <Input type="text" placeholder="请输入验证码" size="large" icon="ios-key-outline" v-model="usercode"/>
+    <div><input v-bind:checked="isChecked" v-on:click="handleDisabled" type="checkbox" id="readAgreement"/> 我认真阅读并接受<span id="agreement" @click="instance('info')">本站协议</span></div>
+    <input type="submit" id="login" value="登录" />
+    </form>
     </div>
   </div>
 </template>
@@ -41,8 +31,11 @@ export default {
     }
   },
   mounted: function() {
+    this.$Message.config({
+      top: 120
+    })
     this.$http
-      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .post('http://192.168.55.33:8000' + '/app/get_status')
       .then(response => {
         this.is_login = response.data.is_login
         if (this.is_login) {
@@ -115,7 +108,7 @@ export default {
     getcode: function() {
       var phonenumber = JSON.stringify(this.phone_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/get_code_post', phonenumber)
+        .post('http://192.168.55.33:8000' + '/app/get_code_post', phonenumber)
         .then(
           response => {
             var Isexists = response.data.Is_exists
@@ -157,13 +150,13 @@ export default {
     Register_new_user: function() {
       var userphone = JSON.stringify(this.phone_number)
       this.$http
-        .post(this.GLOBAL.serverSrc + '/app/register_new_user', userphone)
+        .post('http://192.168.55.33:8000' + '/app/register_new_user', userphone)
         .then(response => {}, response => {})
     },
     verify_the_login: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/get_user_code',
+          'http://192.168.55.33:8000' + '/app/get_user_code',
           JSON.stringify({
             phone_number: this.phone_number,
             code: this.usercode
@@ -204,20 +197,6 @@ export default {
   width: 160%;
 }
 
-#lab {
-  margin-left: 25%;
-  font-size: 18px;
-  margin-top: 18.5%;
-  margin-bottom: 18px;
-  height: 41px;
-  position: fixed;
-  border-radius: 4px;
-}
-
-#buttonText {
-  color: #000;
-}
-
 #UserLogin {
   margin: 0 auto;
   background-image: url('../assets/BALL.jpg');
@@ -231,8 +210,8 @@ export default {
 }
 
 .logColumn {
-  width: 45%;
-  margin-left: 52%;
+  width: 35%;
+  margin-left: 57%;
   margin-top: 6%;
   transition: opacity 1s;
   -webkit-transition: opacity 1s;
@@ -301,5 +280,40 @@ form {
   text-decoration: underline;
   cursor: pointer;
   color: #0000d6;
+}
+
+@media screen and (max-width: 500px) {
+  #UserLogin {
+    margin: 0 auto;
+    background-image: url('../assets/aboutUS底板.png');
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
+    background-color: red;
+    width: 100%;
+    height: 812px;
+    background-size: cover;
+  }
+  #inputPhone {
+    width: 60%;
+  }
+  .logColumn {
+    width: 95%;
+    margin-left: 2%;
+    margin-top: 30%;
+    transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    background-size: 100% 100%;
+  }
+
+  .logColumn h1 {
+    background: #075182;
+    padding: 20px 0;
+    font-size: 160%;
+    font-weight: 15px;
+    text-align: center;
+    color: #fff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
 }
 </style>

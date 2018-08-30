@@ -40,7 +40,7 @@ export default {
   },
   mounted: function() {
     this.$http
-      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .post('http://192.168.55.33:8000' + '/app/get_status')
       .then(response => {
         this.userPhone = response.data.list[0].pk
         this.show_takes()
@@ -50,7 +50,7 @@ export default {
     show_takes: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/show_takes',
+          'http://192.168.55.33:8000' + '/app/show_takes',
           JSON.stringify(this.userPhone)
         )
         .then(
@@ -83,7 +83,7 @@ export default {
 <style scoped>
 .courseTable {
   margin-top: 20px;
-  margin-left: 140px;
+  margin-left: 420px;
   font-size: 15px;
 }
 
@@ -102,5 +102,29 @@ td {
 th {
   font-size: 15px;
   color: #022336;
+}
+@media screen and (max-width: 500px) {
+  .courseTable {
+    margin-top: 20px;
+    margin-left: 2px;
+    font-size: 15px;
+  }
+
+  table,
+  td,
+  th {
+    border-collapse: collapse;
+    border: 1px solid black;
+  }
+
+  th,
+  td {
+    padding: 10px;
+  }
+
+  th {
+    font-size: 15px;
+    color: #022336;
+  }
 }
 </style>

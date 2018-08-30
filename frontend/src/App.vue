@@ -19,8 +19,8 @@ export default {
   opacity: 1;
   text-align: center;
   font-size: 14px;
-  position:fixed;
+  position: fixed;
   bottom: 0;
-  right:420px;
+  right: 420px;
 }
 </style>

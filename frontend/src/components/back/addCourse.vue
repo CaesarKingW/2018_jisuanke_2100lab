@@ -2,13 +2,13 @@ import datetime
 <template>
   <div v-if="all">
     <div v-if="start_add">
-      <p class="formitem">课程标题：
-        <Input v-model="course_title" placeholder="" style="width: 300px" />
+      <p id="title" class="formitem">课程标题：
+        <Input id="titleInput" v-model="course_title" placeholder="" style="width: 300px" />
       </p>
-      <div class="formitem">课程简介：
-        <Input v-model="brief_intro" type="textarea" style="width: 300px" />
+      <div id="intro" class="formitem">课程简介：
+        <Input id="introInput" v-model="brief_intro" type="textarea" style="width: 300px" />
       </div>
-      <Button class="formitem" @click="addCourse()">新建课程</Button>
+      <Button id="newCourseButton" class="formitem" @click="addCourse()">新建课程</Button>
     </div>
     <div v-if="upload_audi">
       <p class="formitem">上传音频</p>

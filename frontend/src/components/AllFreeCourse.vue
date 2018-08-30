@@ -1,16 +1,24 @@
 <template>
   <div id="AllFreeCourse">
     <div class="navibar">
-      <router-link to="/home">
-        <a class="navi">
-          <Icon type="ios-home" /> 网站首页</a>
-      </router-link>
-      <Divider type="vertical" />
-      <router-link to="/PersonalCenter">
-        <a class="navi">
-          <Icon type="ios-contact" /> 个人中心</a>
-      </router-link>
+    <router-link to="/home"><a class="navi"><Icon type="ios-home" /> 网站首页</a></router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllFreeCourse">
+    <a class="navi"><Icon type="md-bookmarks" /> 免费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/AllPayCourse">
+    <a class="navi"><Icon type="logo-usd" /> 付费课程</a>
+    </router-link>
+    <Divider type="vertical" />
+    <router-link to="/PersonalCenter"><a class="navi"><Icon type="ios-contact" /> 个人中心</a></router-link>
     </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div id="blank"></div>
     <div v-for="item of imgs" :key="item.id">
       <router-link :to="{path:'FreeCourseIntro', query:{id: item.pk}}">
         <Card class="courseCard">
@@ -47,7 +55,7 @@ export default {
   },
   methods: {
     show_all_course: function() {
-      this.$http.get(this.GLOBAL.serverSrc + '/app/show_free_course').then(
+      this.$http.get('http://192.168.55.33:8000' + '/app/show_free_course').then(
         response => {
           this.imgs = response.data.list
           for (var i = 0; i < this.imgs.length; i = i + 1) {
@@ -70,22 +78,18 @@ export default {
   width: 650px;
   margin: 0 auto;
 }
-
 .courseTitleContent {
   font-family: 华文细黑;
 }
-
 .CourseInfo {
   display: flex;
   color: #022336;
 }
-
 .CourseText {
   float: left;
   margin-left: 5%;
   color: #022336;
 }
-
 .CourseTitle {
   padding: 5px;
   font-family: 华文中宋;
@@ -93,19 +97,22 @@ export default {
   padding: 5px;
   color: #022336;
 }
-
 .CourseIntro {
   font-family: 华文中宋;
   font-size: 25px;
   padding: 5px;
   color: #022336;
 }
-
 .courseIntroContent {
   font-family: 华文楷体;
   font-size: 22px;
   padding: 3px;
   color: #022336;
+  width: 250px;
+  color: #022336;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .courseCover {
   width: 300px;
@@ -130,41 +137,60 @@ export default {
   margin-right: 15px;
 }
 
-#button {
-  font-size: 20px;
-  color: #fff;
-  margin-top: 6px;
-}
-
-.buttonText {
-  color: #fff;
-}
-
-#freeCol {
-  background-color: #022336;
-  height: 80px;
-  width: 100%;
-  border: none;
-  border-radius: 0px;
-  position: fixed;
-  z-index: 9998;
-  opacity: 0.7;
-}
-
-.myContent {
-  font-size: 25px;
-  flex-grow: 3;
-  text-align: center;
-}
-
-.allCol {
-  display: flex;
-  display: -webkit-flex;
-  display: -moz-flex;
-  flex-direction: row;
-  height: 90px;
-  margin: 0 auto;
-  color: #fff;
-  text-align: center;
+@media screen and (max-width: 500px) {
+  .navi {
+    display: block;
+  }
+  #blank {
+    margin-top: 105px;
+  }
+  .courseCard {
+    width: 100%;
+    height: 160px;
+    margin: 0 auto;
+  }
+  .courseCover {
+    width: 180px;
+    height: 130px;
+    border: #022336 solid 1px;
+    border-radius: 4px;
+  }
+  .courseTitleContent {
+    font-family: 华文细黑;
+  }
+  .CourseInfo {
+    display: flex;
+    color: #022336;
+    /* width: 30%; */
+  }
+  .CourseText {
+    float: left;
+    margin-left: 2%;
+    color: #022336;
+    width: 40%;
+  }
+  .CourseTitle {
+    font-family: 华文中宋;
+    font-size: 15px;
+    /* padding: 1px; */
+    color: #022336;
+  }
+  .CourseIntro {
+    font-family: 华文中宋;
+    font-size: 15px;
+    /* padding: 1px; */
+    color: #022336;
+  }
+  .courseIntroContent {
+    font-family: 华文楷体;
+    font-size: 12px;
+    /* padding: 1px; */
+    color: #022336;
+    width: 90px;
+    color: #022336;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 </style>

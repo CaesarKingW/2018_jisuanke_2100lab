@@ -22,7 +22,7 @@ export default {
   mounted: function() {
     // 获取登录用户手机号
     this.$http
-      .post(this.GLOBAL.serverSrc + '/app/get_status')
+      .post('http://192.168.55.33:8000' + '/app/get_status')
       .then(response => {
         this.userPhone = response.data.list[0].pk
       })
@@ -31,14 +31,14 @@ export default {
     userDestroy: function() {
       this.$http
         .post(
-          this.GLOBAL.serverSrc + '/app/account_destroy',
+          'http://192.168.55.33:8000' + '/app/account_destroy',
           JSON.stringify(this.userPhone)
         )
         .then(
           response => {
             this.getSuccessCancel()
             this.$http
-              .post(this.GLOBAL.serverSrc + '/app/del_status')
+              .post('http://192.168.55.33:8000' + '/app/del_status')
               .then(response => {
                 this.$router.push({ name: 'UserLogin' })
               })
@@ -54,14 +54,14 @@ export default {
 </script>
 <style scoped>
 #alertColumn {
-  width: 600px;
+  width: 370px;
   margin-top: 50px;
-  margin-left: 280px;
+  margin-left: 430px;
   font-size: 19px;
   color: white;
   background-color: brown;
   border: rgba(255, 255, 255, 0.8) solid 2px;
-  opacity: 0.9;
+  z-index: -1;
 }
 
 #alertTitle {
@@ -73,7 +73,7 @@ export default {
   width: 110px;
   height: 45px;
   margin-top: 20px;
-  margin-left: 325px;
+  margin-left: 561px;
   font-size: 16px;
   color: #fff;
   text-align: center;
@@ -82,11 +82,47 @@ export default {
   border: rgba(255, 255, 255, 0.8) solid 2px;
   border-radius: 4px;
   outline: none;
-  opacity: 0.9;
 }
 
 #cancelButton:hover {
   cursor: pointer;
   background-color: rgb(202, 53, 53);
+}
+@media screen and (max-width: 500px) {
+  #alertColumn {
+    width: 370px;
+    margin-top: 50px;
+    margin-left: 20px;
+    font-size: 19px;
+    color: white;
+    background-color: brown;
+    border: rgba(255, 255, 255, 0.8) solid 2px;
+    z-index: -1;
+  }
+
+  #alertTitle {
+    font-size: 30px;
+    text-align: center;
+  }
+
+  #cancelButton {
+    width: 110px;
+    height: 45px;
+    margin-top: 20px;
+    margin-left: 140px;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    background-color: brown;
+    border: rgba(255, 255, 255, 0.8) solid 2px;
+    border-radius: 4px;
+    outline: none;
+  }
+
+  #cancelButton:hover {
+    cursor: pointer;
+    background-color: rgb(202, 53, 53);
+  }
 }
 </style>

@@ -21,6 +21,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime, timedelta
 from django.db.models import Sum, Count
+import math
 
 
 @require_http_methods(['POST', 'GET'])
@@ -29,7 +30,8 @@ def manager_login(request):
     try:
         if request.method == 'POST':
             username = json.loads(request.body.decode('utf-8'))['user']
-            password = json.loads(request.body.decode('utf-8'))['password'] + ''
+            password = json.loads(
+                request.body.decode('utf-8'))['password'] + ''
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
@@ -152,9 +154,21 @@ def alipay_get(request):
         # 查询数据库中订单记录
         info = Order.objects.get(Order_number=orderid)
         courseid = info.course_id.id
+        course = info.course_id
+        receiver_phone = info.user_phone.phone_number
         if info.status == '未完成':
             info.status = "已支付"
             info.save()
+            try:
+                share = Share.objects.get(
+                    receiver=receiver_phone, course_id=courseid)
+                award_plus = math.floor(course.price * course.share_rate)
+                presenter = share.presenter
+                presenter.welfare = presenter.welfare + award_plus
+                presenter.save()
+                response['add_award'] = 'success'
+            except:
+                response['add_award'] = 'fail'
             info = Course.objects.get(id=courseid)
             info.sale_count = info.sale_count + 1
             info.save()
@@ -272,7 +286,8 @@ def free_watch(request):
 def pay_watch(request):
     response = {}
     try:
-        courses = Course.objects.filter(price__gt=0.0).order_by('-view_count')[:10]
+        courses = Course.objects.filter(
+            price__gt=0.0).order_by('-view_count')[:10]
         title = []
         count = []
         for course in courses:
@@ -292,7 +307,8 @@ def pay_watch(request):
 def pay_sale(request):
     response = {}
     try:
-        courses = Course.objects.filter(price__gt=0.0).order_by('-sale_count')[:10]
+        courses = Course.objects.filter(
+            price__gt=0.0).order_by('-sale_count')[:10]
         title = []
         count = []
         for course in courses:
@@ -309,10 +325,7 @@ def pay_sale(request):
 
 
 class AliPay(object):
-    """
-    支付宝支付接口
-    """
-
+    # 支付宝支付接口
     def __init__(self,
                  appid,
                  app_notify_url,
