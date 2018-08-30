@@ -51,7 +51,7 @@
             <Input v-model="formItem.brief_introduction" type="textarea" />
           </FormItem>
           <FormItem label="详解">
-            <Input type="textarea" v-model="formItem.whole_introduction"/>
+            <Input type="textarea" v-model="formItem.whole_introduction" />
           </FormItem>
           <FormItem label="课程封面：">
             <p>当前：
@@ -110,7 +110,6 @@ export default {
         title: '',
         brief_introduction: '',
         oldCP: '',
-        oldWI: '',
         Is_destroy: null,
         distroy_time: null,
         price: null,
@@ -148,8 +147,7 @@ export default {
                   res.course['brief_introduction']
                 this.formItem.oldCP =
                   'http://192.168.55.33:8000' + res.course['Cover_picture']
-                this.formItem.oldWI =
-                  'http://192.168.55.33:8000' + res.course['whole_introduction']
+                this.formItem.whole_introduction = res.course['whole_introduction']
                 this.formItem.Is_destroy = res.course['Is_destroy']
                 this.formItem.distroy_time = res.course['distory_time']
                 this.formItem.price = res.course['price']
@@ -361,10 +359,7 @@ export default {
       formData.append('id', this.id)
       formData.append('title', this.formItem.title)
       formData.append('brief_introduction', this.formItem.brief_introduction)
-      formData.append(
-        'whole_introduction',
-        this.formItem.whole_introduction
-      )
+      formData.append('whole_introduction', this.formItem.whole_introduction)
       formData.append(
         'Cover_picture',
         document.getElementById('newCP').files[0]
