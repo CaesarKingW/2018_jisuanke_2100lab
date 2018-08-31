@@ -87,5 +87,10 @@ urlpatterns = [
     path('backstage_logout', wq_views.backstage_logout),
     path('modify_code', wq_views.modify_code),
     path('get_code', wq_views.get_code),
-    path('half', wq_views.half)
+    path('half', wq_views.half),
+    path('get_all_courses', wq_views.get_all_courses),
+    path('get_all_users', wq_views.get_all_users),
+    path('delete_user', wq_views.delete_user),
+    path('get_all_messages', wq_views.get_all_messages),
+    path('get_all_orders', wq_views.get_all_orders)
 ]

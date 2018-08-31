@@ -21,7 +21,7 @@ def search_user(request):
     phone_number = json.loads(request.body)
     res = {}
     try:
-        user = User.objects.get(phone_number=phone_number)
+        user = User.objects.get(phone_number=phone_number, exists=True)
         res['is_null'] = False
         user = UserSerializer(user)
         res['user_info'] = user.data
@@ -80,32 +80,21 @@ def forbid_comment(request):
 
 @require_http_methods(['POST'])
 def search_comment(request):
-    phone_number = json.loads(request.body)
+    word = json.loads(request.body)
     response = {}
-    response['if_user'] = True
-    response['if_comment'] = True
-    try:
-        user = User.objects.get(phone_number=phone_number)
-        messages = Message.objects.filter(user_phone=user, exists=True)
-        if messages.count() == 0:
-            response['if_comment'] = False
-            return JsonResponse(response)
-        else:
-            real_messages = []
-            for message in messages:
-                real_message = MessageSerializer(message)
-                real_messages.append(real_message.data)
-            response['messages'] = real_messages
-    except:
-        response['if_user'] = False
-        return JsonResponse(response)
+    response['msg'] = word
+    messages = Message.objects.filter(content__contains=word, exists=True)
+    real_messages = []
+    for message in messages:
+        real_message = MessageSerializer(message)
+        real_messages.append(real_message.data)
+    response['messages'] = real_messages
     return JsonResponse(response)
 
 
 @require_http_methods(['POST'])
 def delete_comment(request):
-    phone_number = json.loads(request.body)['phone_number']
-    message_id = json.loads(request.body)['message_id']
+    message_id = json.loads(request.body)
     response = {}
     response['if_user'] = True
     m = Message.objects.get(id=message_id)
@@ -113,22 +102,10 @@ def delete_comment(request):
     operating_history = Operating_history(
         manager_username=operator,
         operate_type="删除留言",
-        object_type="留言（留言id:" + str(message_id) + ")")
+        object_type="留言（留言id:{message_id})".format(message_id=message_id))
     operating_history.save()
     m.exists = False
     m.save()
-    n = User.objects.get(phone_number=phone_number)
-    messages = Message.objects.filter(user_phone=n)
-    response['if_comment'] = True
-    if messages.count() == 0:
-        response['if_comment'] = False
-        return JsonResponse(response)
-    real_messages = []
-    for message in messages:
-        real_message = MessageSerializer(message)
-        real_messages.append(real_message.data)
-    response['messages'] = real_messages
-
     return JsonResponse(response)
 
 
@@ -524,4 +501,63 @@ def half(request):
         response['msg'] = '1'
     except:
         response['msg'] = '0'
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+def get_all_courses(request):
+    courses = Course.objects.all()
+    real_courses = []
+    for course in courses:
+        real_course = CourseSerializer(course)
+        real_courses.append(real_course.data)
+    response = {}
+    response['courses'] = real_courses
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+def get_all_users(request):
+    users = User.objects.filter(exists=True)
+    real_users = []
+    for user in users:
+        real_user = UserSerializer(user)
+        real_users.append(real_user.data)
+    response = {}
+    response['users'] = real_users
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+def delete_user(request):
+    phone_number = json.loads(request.body)
+    user = User.objects.get(phone_number=phone_number)
+    user.exists = False
+    user.save()
+    response = {}
+    response['msg'] = 'success'
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+def get_all_messages(request):
+    messages = Message.objects.filter(exists=True)
+    real_messages = []
+    response = {}
+    for message in messages:
+        real_message = MessageSerializer(message)
+        real_messages.append(real_message.data)
+    response['messages'] = real_messages
+    return JsonResponse(response)
+
+
+@require_http_methods(['POST'])
+def get_all_orders(request):
+    orders = Order.objects.all()
+    real_orders = []
+    response = {}
+    for order in orders:
+        real_order = OrderSerializer(order)
+        real_orders.append(real_order.data)
+    response['orders'] = real_orders
     return JsonResponse(response)

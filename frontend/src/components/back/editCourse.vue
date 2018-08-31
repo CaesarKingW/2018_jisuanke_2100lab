@@ -3,6 +3,7 @@
     <Input v-model="word" placeholder="输入课程标题关键字以搜索课程" id="word" />
     <Button @click="search()">搜索</Button>
     <Table border stripe :columns="columns1" :data="data1"></Table>
+    <Page :total="amount_of_courses" :page-size="10" :current="1" @on-change="changePage">
   </div>
 </template>
 <script>
@@ -68,7 +69,10 @@ export default {
           }
         }
       ],
-      data1: []
+      data1: [],
+      all_data: [],
+      amount_of_courses: 0,
+      currentPage: 1
     }
   },
   created: function() {
@@ -84,18 +88,64 @@ export default {
           if (res.manager.Manage_course !== true) {
             alert('你没有权限访问该网页！')
             location.href = '/#/backstage'
+          } else {
+            this.$http
+              .post('http://192.168.55.33:8000/app/get_all_courses')
+              .then(response => {
+                var res = response.data
+                this.all_data = res.courses
+                this.amount_of_courses = this.all_data.length
+                console.log(this.amount_of_courses)
+                if (this.amount_of_courses <= 10) {
+                  this.data1 = this.all_data
+                } else {
+                  for (var i = 0; i < 10; i++) {
+                    this.data1.push(this.all_data[i])
+                  }
+                }
+                console.log(this.data1)
+              })
           }
         }
       })
   },
   methods: {
+    changePage(currentPage) {
+      var left = this.amount_of_courses - (currentPage - 1) * 10
+      var arr = []
+      if (left <= 10) {
+        for (var j = (currentPage - 1) * 10; j < this.amount_of_courses; j++) {
+          arr.push(this.all_data[j])
+        }
+      } else {
+        for (
+          var k = (currentPage - 1) * 10;
+          k < (currentPage - 1) * 10 + 10;
+          k++
+        ) {
+          arr.push(this.all_data[k])
+        }
+      }
+      this.data1 = arr
+      console.log(this.data1)
+    },
     search() {
       var word = JSON.stringify(this.word)
       this.$http
         .post('http://192.168.55.33:8000/app/search_course', word)
         .then(response => {
           var res = response.data
-          this.data1 = res.courses
+          this.all_data = res.courses
+          this.amount_of_courses = this.all_data.length
+          var arr = []
+          if (this.amount_of_courses <= 10) {
+            arr = this.all_data
+          } else {
+            for (var i = 0; i < 10; i++) {
+              arr.push(this.all_data[i])
+            }
+          }
+          this.data1 = arr
         })
     },
     go_to_edit(index) {

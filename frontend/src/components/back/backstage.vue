@@ -37,13 +37,13 @@
               <MenuItem name="1-1" to="/backstage/addCourse">新建课程</MenuItem>
               <MenuItem name="1-2" to="/backstage/editCourse">编辑课程</MenuItem>
             </Submenu>
-            <MenuItem name="2" to="/backstage/user" v-if="user">
+            <MenuItem name="2" to="/backstage/alluser" v-if="user">
             <Icon type="md-contact" /> 用户管理
             </MenuItem>
-            <MenuItem name="3" to="/backstage/comment" v-if="message">
+            <MenuItem name="3" to="/backstage/allcomment" v-if="message">
             <Icon type="ios-chatboxes" /> 留言管理
             </MenuItem>
-            <MenuItem name="4" to="/backstage/order" v-if="order">
+            <MenuItem name="4" to="/backstage/allorder" v-if="order">
             <Icon type="ios-keypad"></Icon>
             订单处理
             </MenuItem>

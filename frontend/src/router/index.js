@@ -38,6 +38,9 @@ import order from '@/components/back/order'
 import data from '@/components/back/data'
 import authority from '@/components/back/authority'
 import operatingHistory from '@/components/back/operatingHistory'
+import alluser from '@/components/back/alluser'
+import allcomment from '@/components/back/allcomment'
+import allorder from '@/components/back/allorder'
 Vue.use(Router)
 
 export default new Router({
@@ -57,6 +60,21 @@ export default new Router({
       name: 'backstage',
       component: backstage,
       children: [
+        {
+          path: 'alluser',
+          name: 'alluser',
+          component: alluser
+        },
+        {
+          path: 'allcomment',
+          name: 'allcomment',
+          component: allcomment
+        },
+        {
+          path: 'allorder',
+          name: 'allorder',
+          component: allorder
+        },
         {
           path: 'addCourse',
           name: 'addCourse',
