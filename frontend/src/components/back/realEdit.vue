@@ -147,7 +147,8 @@ export default {
                   res.course['brief_introduction']
                 this.formItem.oldCP =
                   'http://192.168.55.33:8000' + res.course['Cover_picture']
-                this.formItem.whole_introduction = res.course['whole_introduction']
+                this.formItem.whole_introduction =
+                  res.course['whole_introduction']
                 this.formItem.Is_destroy = res.course['Is_destroy']
                 this.formItem.distroy_time = res.course['distory_time']
                 this.formItem.price = res.course['price']

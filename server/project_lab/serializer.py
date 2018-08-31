@@ -24,7 +24,7 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ('id', 'user_phone', 'course_title', 'user_name', 'course_id',
-                  'content', 'created_at', 'praise_count','exists')
+                  'content', 'created_at', 'praise_count', 'exists')
 
     def get_course_title(self, obj):
         return obj.course_id.title
@@ -47,14 +47,18 @@ class ReplySerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     course_title = serializers.SerializerMethodField()
+    phone_number = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
         fields = ('Order_number', 'user_phone', 'course_id', 'course_title',
-                  'amount_of_money', 'status', 'create_at')
+                  'amount_of_money', 'status', 'create_at', 'phone_number')
 
     def get_course_title(self, obj):
         return obj.course_id.title
+
+    def get_phone_number(self, obj):
+        return obj.user_phone.phone_number
 
 
 class CourseSerializer(serializers.ModelSerializer):
