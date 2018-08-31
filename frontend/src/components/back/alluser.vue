@@ -18,7 +18,7 @@ export default {
         },
         {
           title: '昵称',
-          key: 'username'
+          key: 'user_name'
         },
         {
           title: '奖励金',
