@@ -57,7 +57,7 @@ export default {
               .then(response => {
                 var res = response.data
                 var user = res.user_info
-                this.username = user.username
+                this.username = user.user_name
                 this.welfare = user.welfare
                 this.head_protrait = user.head_protrait
                 if (user.Is_teacher === true) {

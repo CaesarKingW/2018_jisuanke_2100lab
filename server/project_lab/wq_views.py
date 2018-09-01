@@ -167,10 +167,6 @@ def add_img(request):
     course_id = int(request.POST.get('course_id'))
     duration = float(request.POST.get('duration'))
     course = Course.objects.get(id=course_id)
-    count = int(request.POST.get('count'))
-    if count == 1:
-        pics = Course_picture.objects.filter(course_id=course)
-        pics.delete()
     course = Course.objects.get(id=course_id)
     course.course_duration = duration
     course.save()
