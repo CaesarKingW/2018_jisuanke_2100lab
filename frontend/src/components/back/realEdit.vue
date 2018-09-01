@@ -78,7 +78,7 @@
         </Form>
       </TabPane>
     </Tabs>
-    <div v-if="formItem.finish">第{{id}}号课程编辑成功！</div>
+    <div v-if="finish">第{{id}}号课程编辑成功！</div>
   </div>
 </template>
 <script>
@@ -106,6 +106,7 @@ export default {
       pic_to_show: null,
       audi: null,
       count: 0,
+      finish: false,
       formItem: {
         title: '',
         brief_introduction: '',
@@ -115,7 +116,6 @@ export default {
         price: null,
         share_rate: null,
         can_comment: null,
-        finish: false,
         whole_introduction: ''
       }
     }
@@ -378,8 +378,8 @@ export default {
         .post('http://192.168.55.33:8000/app/editCourse', formData)
         .then(response => {
           this.all = false
-          this.formItem.finish = true
           var that = this
+          that.finish = true
           setTimeout(function() {
             that.$router.push({ name: 'backstage' })
           }, 3000)

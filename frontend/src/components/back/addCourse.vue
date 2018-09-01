@@ -60,7 +60,7 @@ import datetime
     <div v-if="rest">
       <h1 class="formitem">继续完善第{{course_id}}号课程的信息</h1>
       <p class="formitem">
-        <Icon type="md-document" />详解：<input type="file" name="whole_introduction"></p>
+        <Icon type="md-document" />详解：<input type="textfield" v-model="wholeIntroduction" name="whole_introduction"></p>
       <p class="formitem">
         <Icon type="md-easel" />课程封面：<input type="file" name="course_cover"></p>
       <p class="formitem">
@@ -137,7 +137,8 @@ export default {
       share_rate: null,
       can_comment: false,
       add_course: false,
-      finish: false
+      finish: false,
+      wholeIntroduction: ''
     }
   },
   created: function() {
@@ -174,6 +175,7 @@ export default {
           }
           if (res['msg'] === true) {
             this.course_id = res.course.id
+            console.log(this.course_id)
             alert('去上传课程音频！')
             this.upload_audi = true
             this.start_add = false
@@ -380,13 +382,10 @@ export default {
     },
     Submit() {
       var formData = new FormData()
-      var wholeIntroduction = document.querySelector(
-        'input[name ="whole_introduction"]'
-      ).files[0]
       var courseCover = document.querySelector('input[name ="course_cover"]')
         .files[0]
       formData.append('id', this.course_id)
-      formData.append('whole_introduction', wholeIntroduction)
+      formData.append('whole_introduction', this.wholeIntroduction)
       formData.append('Cover_picture', courseCover)
       formData.append('Is_destroy', this.Is_destroy)
       formData.append('distroy_time', this.destroy_time)
